@@ -1,0 +1,138 @@
+# @(#)96        1.2  src/rspc/objclass/disk.ide.730mb.add, rspccfg, rspc41J, 9520A_all 5/16/95 15:46:06
+#
+# COMPONENT_NAME: (IDEDISK) IDE Disk Device Driver ODM info
+#
+# FUNCTIONS: disk.ide.730mb
+#
+# ORIGINS: 27
+#
+# IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+# combined with the aggregated modules for this product)
+#                  SOURCE MATERIALS
+# (C) COPYRIGHT International Business Machines Corp. 1995
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+# Stanzas for populating the IDE Disk Device Driver predefined values
+# for a 730 Mbyte hard disk drive.
+# See src/bos/usr/lib/methods/common/ide.msg for NLS messages
+#
+
+PdDv:
+        type = "730mb"
+        class = "disk"
+        subclass = "ide"
+        prefix = "hdisk"
+        devid = ""
+        base = 1
+        has_vpd = 1
+        detectable = 1
+        chgstatus = 0
+        bus_ext = 0
+        fru = 1
+        led = 0x095A
+        setno = 3
+        msgno = 2
+        catalog = "ide.cat"
+        DvDr = "idedisk"
+        Define = "/usr/lib/methods/define_rspc"
+        Configure = "/usr/lib/methods/cfgidedisk"
+        Change = "/usr/lib/methods/chgdisk"
+        Unconfigure = "/usr/lib/methods/ucfgdevice"
+        Undefine = "/usr/lib/methods/undefine"
+        Start = ""
+        Stop = ""
+        inventory_only = 0
+        uniquetype = "disk/ide/730mb"
+
+PdAt:
+        uniquetype = "disk/ide/730mb"
+        attribute = "pv"
+        deflt = "no"
+        values = "no,yes,clear"
+        width = ""
+        type = "R"
+        generic = "U"
+        rep = "sl"
+        nls_index = 0
+
+PdAt:
+        uniquetype = "disk/ide/730mb"
+        attribute = "pvid"
+        deflt = "none"
+        values = ""
+        width = ""
+        type = "R"
+        generic = "D"
+        rep = "s"
+        nls_index = 1
+
+PdAt:
+        uniquetype = "disk/ide/730mb"
+        attribute = "model_name"
+        deflt = "WDC AC2700F         "
+        values = ""
+        width = ""
+        type = "R"
+        generic = "D"
+        rep = "s"
+        nls_index = 11
+
+PdAt:
+        uniquetype = "disk/ide/730mb"
+        attribute = "rw_timeout"
+        deflt = "10"
+        values = "1-1000,1"
+        width = ""
+        type = "R"
+        generic = "D"
+        rep = "nr"
+        nls_index = 8
+
+PdAt:
+        uniquetype = "disk/ide/730mb"
+        attribute = "start_timeout"
+        deflt = "15"
+        values = "1-1000,1"
+        width = ""
+        type = "R"
+        generic = "D"
+        rep = "nr"
+        nls_index = 10
+
+PdAt:
+        uniquetype = "disk/ide/730mb"
+        attribute = "vpd_map"
+        deflt = "SN1414C,RL2E08C,TM3628C"
+        values = ""
+        width = ""
+        type = "V"
+        generic = ""
+        rep = "sl"
+        nls_index = 0
+
+PdAt:
+        uniquetype = disk/ide/730mb
+        attribute = pm_dev_itime
+        deflt = "1800"
+        values = "0-1800,1"
+        width = ""
+        type = R
+        generic = ""
+        rep = nr
+        nls_index = 0
+
+PdAt:
+        uniquetype = disk/ide/730mb
+        attribute = pm_dev_stime
+        deflt = "1800"
+        values = "0-1800,1"
+        width = ""
+        type = R
+        generic = ""
+        rep = nr
+        nls_index = 0

@@ -1,0 +1,688 @@
+# @(#)05  1.4  src/rspc/objclass/sm_vca.add, pcivca, rspc41J, 9510A 3/6/95 22:44:47
+#
+#  COMPONENT_NAME: (PCIVCA) 
+#
+#  FUNCTIONS: G10 Graphics with Motion Video Adapter Interfaces (SMIT)
+#
+#  ORIGINS: 27
+#
+#  IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+#  combined with the aggregated modules for this product)
+#                   SOURCE MATERIALS
+#  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+#  All Rights Reserved
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+#       SMIT Menu objects
+#
+
+#-----------------------------------------------------------------------------
+# Add a PCI Video Capture Adapter
+#-----------------------------------------------------------------------------
+# The following SMIT functions are supported by the dialogues in this
+# file:
+#
+#    <G10 Graphics with Motion Video Adapter>
+#       List All G10 Graphics with Motion Video Adapters
+#       Remove a G10 Graphics with Motion Video Adapter
+#       Configure a Defined G10 Graphics with Motion Video Adapter
+#       Generate an Error Report
+#       Trace a G10 Graphics with Motion Video Adapter
+
+
+# --------------------------------------------------------------------------
+# List All Multimedia Video Capture Adapters
+# This uses a ghost dialogue to list all the defined Multimedia Video Capture
+# Adapters.
+# The lsdev command is executed from this dialogue.
+# --------------------------------------------------------------------------
+
+sm_cmd_hdr:
+    id                        = "lsvca"
+    option_id                 = ""
+    has_name_select           = "n"
+    name                      = "List All G10 Graphics with Motion Video Adapters"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 771
+    cmd_to_exec               = "lsdev -C -t vca ; lsdev -C -t ccd"
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+# --------------------------------------------------------------------------
+# Add a Multimedia Video Capture Adapter
+# This allows a Multimedia Video Capture Adapter to be added by defining 
+# and configuring it.
+# --------------------------------------------------------------------------
+
+sm_name_hdr:
+    id                        = "makvca"
+    next_id                   = "makvca_"
+    option_id                 = "vca_predef_opt"
+    has_name_select           = "n"
+    name                      = "Add a G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 772
+    type                      = "c"
+    ghost                     = "y"
+    cmd_to_classify           = "\
+class () # str1 str2 str3\n\
+{\n\
+echo $1 | sed 's/^\\([^ ]*\\)[ ]*\\([^ ]*\\)[ ]*/\\1_\\2:\\1:\\2:/'\n\
+}\n\
+class "
+    cmd_to_classify_postfix   = "_rawname"
+    raw_field_name            = ""
+    cooked_field_name         = "_cookedname:type:subclass:desc"
+    next_type                 = "n"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "vca_predef_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Device Type"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 19
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "a"
+    cmd_to_list               = "lsdev -P -t vca -F \"type subclass description\" ; lsdev -P -t ccd -F \"type subclass description\"" | sort
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_name_hdr:
+    id                        = "makvca_vca_pci"
+    next_id                   = "makvca_vca_pci_hdr"
+    option_id                 = "makvca_parent_opt"
+    has_name_select           = "y"
+    name                      = "Add a G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 772
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "parent"
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_hdr:
+    id                        = "makvca_vca_pci_hdr"
+    option_id                 = "vca_add,vca_conn_add"
+    has_name_select           = "y"
+    name                      = "Add a G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 772
+    cmd_to_exec               = "mkdev -c adapter -s pci -t vca "
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "n"
+    cmd_to_discover           = "lsattr -c adapter "
+    cmd_to_discover_postfix   = "-s subclass -t type -D -O"
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_name_hdr:
+    id                        = "makvca_ccd_vca"
+    next_id                   = "makvca_ccd_vca_hdr"
+    option_id                 = "makvca_parent_opt"
+    has_name_select           = "y"
+    name                      = "Add a G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 772
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "parent"
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_hdr:
+    id                        = "makvca_ccd_vca_hdr"
+    option_id                 = ""
+    has_name_select           = "y"
+    name                      = "Add a G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 772
+    cmd_to_exec               = "\
+xx(){\n\
+  mkdev -l vca0 > /dev/null \n\
+  if [ $? != 0 ]; then \n\
+       exit 1 \n\
+  fi \n\
+  lsattr -l ccd0 -E -O > /dev/null 2>&1 \n\
+  if [ $? != 0 ]; then \n\
+       echo 'Method error \(/usr/lib/methods/cfgpcivca\):' \n\
+       echo '            Specified device was not detected.' \n\
+       exit 1 \n\
+  fi \n\
+  lsdev -C -t ccd | awk '{print $1,$2}' \n\
+} \n\
+xx"
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "makvca_parent_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Parent Adapter "
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 1
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsparent -C "
+    cmd_to_list_postfix       = "-k subclass"
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "makvca_opt"
+    id_seq_num                = "010"
+    disc_field_name           = "logicname"
+    name                      = "G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 776
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-l "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "vca_add"
+    id_seq_num                = "001"
+    disc_field_name           = "type"
+    name                      = "Device type"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 15
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-t "
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "vca_add"
+    id_seq_num                = "002"
+    disc_field_name           = "subclass"
+    name                      = "Device interface"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 16
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-s "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "vca_add"
+    id_seq_num                = "003"
+    disc_field_name           = "desc"
+    name                      = "Description"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 7
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "vca_add"
+    id_seq_num                = "004"
+    disc_field_name           = "parent"
+    name                      = "Parent adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 2
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-p "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "vca_conn_add"
+    id_seq_num                = "005"
+    disc_field_name           = "port"
+    name                      = "CONNECTION address"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 5
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-w "
+    cmd_to_list_mode          = "a"
+    cmd_to_list               = "echo \"128\""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "ccd_conn_add"
+    id_seq_num                = "005"
+    disc_field_name           = "port"
+    name                      = "CONNECTION address"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 5
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "+"
+    prefix                    = "-w "
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsconn "
+    cmd_to_list_postfix       = "-p parent -k subclass"
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+# --------------------------------------------------------------------------
+#  Remove a vca device driver
+# --------------------------------------------------------------------------
+
+sm_name_hdr:
+    id                        = "rmvca"
+    next_id                   = "rmvca_hdr"
+    option_id                 = "vca_ln_opt"
+    has_name_select           = "n"
+    name                      = "Remove a G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 773
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "logicname"
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_hdr:
+    id                        = "rmvca_hdr"
+    option_id                 = "rmvca_opt"
+    has_name_select           = "y"
+    name                      = "Remove a G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 773
+    cmd_to_exec               = "rmdev "
+    ask                       = "y"
+    exec_mode                 = ""
+    ghost                     = "n"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "rmvca_opt"
+    id_seq_num                = "010"
+    disc_field_name           = "logicname"
+    name                      = "G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 776
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-l "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "rmvca_opt"
+    id_seq_num                = "020"
+    disc_field_name           = ""
+    name                      = "KEEP definition in database"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 10
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = ",-d "
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+# --------------------------------------------------------------------------
+# This allows a Multimedia Video Capture device that is defined 
+# but not configured to be configured.  
+# A name selector is used to put up a list of the "defined"
+# Multimedia Video Capture Adapter devices for the user to select from.  
+# The dialogue then uses the mkdev command to configure the selected device.
+# --------------------------------------------------------------------------
+
+sm_name_hdr:
+    id                        = "cfgvca"
+    next_id                   = "cfgvca_hdr"
+    option_id                 = "vca_ln_opt"
+    has_name_select           = "n"
+    name                      = "Configure a G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 774
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "logicname"
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_hdr:
+    id                        = "cfgvca_hdr"
+    option_id                 = "cfgvca_opt"
+    has_name_select           = "y"
+    name                      = "Configure a G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 774
+    cmd_to_exec               = "mkdev "
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "cfgvca_opt"
+    id_seq_num                = "010"
+    disc_field_name           = "logicname"
+    name                      = "G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 776
+    op_type                   = ""
+    entry_type                = ""
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-l "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "vca_ln_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "G10 Graphics with Motion Video Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 25
+    name_msg_id               = 776
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -C -t vca ; lsdev -C -t ccd"
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+# --------------------------------------------------------------------------
+
+sm_menu_opt:
+    id                        = "video"
+    id_seq_num                = "010"
+    next_id                   = "lsvca"
+    text                      = "List All G10 Graphics with Motion Video Adapters"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 771 
+    next_type                 = "d"
+    alias                     = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "video"
+    id_seq_num                = "020"
+    next_id                   = "makvca"
+    text                      = "Add a G10 Graphics with Motion Video Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 772
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "video"
+    id_seq_num                = "030"
+    next_id                   = "rmvca"
+    text                      = "Remove a G10 Graphics with Motion Video Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 773
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "video"
+    id_seq_num                = "040"
+    next_id                   = "cfgvca"
+    text                      = "Configure a G10 Graphics with Motion Video Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 774
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "video"
+    id_seq_num                = "050"
+    next_id                   = "errpt"
+    text                      = "Generate an Error Report"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 88
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = "1800203"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "video"
+    id_seq_num                = "060"
+    next_id                   = "trace_link"
+    text                      = "Trace a G10 Graphics with Motion Video Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 775
+    next_type                 = "m"
+    alias                     = ""
+    help_msg_id               = "1800204"
+    help_msg_loc              = ""

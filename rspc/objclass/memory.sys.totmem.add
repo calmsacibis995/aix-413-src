@@ -1,0 +1,68 @@
+* @(#)64 1.3 src/rspc/objclass/memory.sys.totmem.add, rspccfg, rspc41J, 9516B_all 4/20/95 16:46:14
+* 
+*  COMPONENT_NAME: (rspccfg) memory.sys.totmem.add
+* 
+*  FUNCTIONS:
+* 
+*  ORIGINS: 27
+* 
+*  (C) COPYRIGHT International Business Machines Corp. 1995
+*  All Rights Reserved
+*  Licensed Materials - Property of IBM
+* 
+*  US Government Users Restricted Rights - Use, duplication or
+*  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+
+* total memory card
+PdDv:
+	type = totmem
+	class = memory
+	subclass = sys
+	prefix = mem
+	devid = ""
+	base = 0
+	has_vpd = 0
+	detectable = 1
+	chgstatus = 0
+	bus_ext = 0
+	led = 0x812
+	setno = 1
+	msgno = 55
+	fru = 1
+	catalog = devices.cat
+	DvDr = ""
+	Define = "/usr/lib/methods/define_rspc"
+	Configure = ""
+	Change = ""
+	Unconfigure = ""
+	Undefine = "/usr/lib/methods/undefine"
+	Start = ""
+	Stop = ""
+	uniquetype = memory/sys/totmem
+
+# total memory size in Mbytes
+PdAt:
+	uniquetype = "memory/sys/totmem"
+	attribute = "size"
+	deflt = "0"
+	values = "0-512,1"
+	width = ""
+	type = "R"
+	generic = "D"
+	rep = "nr"
+	nls_index = 56
+
+
+# total good memory size in Mbytes
+PdAt:
+	uniquetype = "memory/sys/totmem"
+	attribute = "goodsize"
+	deflt = "0"
+	values = "0-512,1"
+	width = ""
+	type = "R"
+	generic = "D"
+	rep = "nr"
+	nls_index = 57

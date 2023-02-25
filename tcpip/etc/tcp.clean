@@ -1,0 +1,106 @@
+#! /bin/bsh
+# @(#)98      1.15  src/tcpip/etc/tcp.clean, tcpip, tcpip411, GOLD410 3/18/93 08:48:06
+# 
+# COMPONENT_NAME: TCPIP tcp.clean
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+####################################################################
+# tcp.clean - 
+#	stops TCP/IP daemons, brings down network interfaces, and
+#	removes lock files
+####################################################################
+trap "exec > /dev/null ; exec 2> /dev/null" 13
+
+
+####################################################################
+# daemonstop -
+#	stops daemons using src and kill
+# args:
+#	$1: name of daemon
+#	$2: non-null if we should use src to stop the daemon
+#
+daemonstop()
+{
+	# first try using src
+	[ -n "$2" ] && stopsrc -s $1 >/dev/null 2>&1
+
+	# then get rough
+	pid=`ps -e | awk '$NF == "'$1'" { print $1; exit }'`
+	if [ -n "$pid" ] ; then
+		kill $pid 2>/dev/null
+		sleep 1
+		kill -9 $pid 2>/dev/null
+	fi
+}
+################################# usage #######################################
+#
+# NAME: usage()
+#
+# DESCRIPTION: Issue "usage" message and exit.
+#
+# INPUT: 
+#        None
+#
+# OUTPUT:
+#        Error messages (Standard Error)
+#
+# RETURN VALUE DESCRIPTION:
+#                           2
+#
+# NOTE: This function will not return (i.e., it will exit the entire
+#       script with exit status of 2).
+#
+usage(){
+   cat <<- HERE >&2
+   Usage:  $NAME
+
+   Example: $NAME
+
+HERE
+   exit 2			# don't return
+}
+
+NAME=$0
+
+####################################################################
+#
+# Stop all the daemons
+#
+src_running=`ps -e | awk '$NF == "srcmstr" { print $1; exit }'`
+echo "Stopping TCP/IP daemons:\c" > /dev/console
+for daemon in \
+	lpd \
+	routed \
+	gated \
+	sendmail \
+	inetd \
+	named \
+	timed \
+	rwhod \
+	iptrace \
+	snmpd \
+	rshd \
+	rlogind \
+	telnetd \
+	syslogd ; do
+		echo " $daemon\c" >  /dev/console
+		daemonstop $daemon "$src_running"
+done
+
+# Remove lock files
+#
+echo "\nRemoving TCP/IP lock files" > /dev/console
+rm -f /etc/locks/lpd
+
+exit 0

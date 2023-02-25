@@ -1,0 +1,254 @@
+* File name: emenuz.frm
+* @(#)85	1.4  src/tenplus/e2/common/emenuz.fsz, tenplus, tenplus411, GOLD410 3/23/93 11:49:40
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ 
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 2
+	Flags = 0x1
+
+/invtext:
+	Type = 1
+	Count = 14
+
+/invtext/0:
+	Value = "[title                                                                         ]"
+
+/invtext/1:
+	Type = 0
+
+/invtext/2:
+	Value = "[prompt                                                                        ]"
+
+/invtext/3:
+	Type = 0
+
+/invtext/4:
+	Type = 0
+
+/invtext/5:
+	Value = "[subtitle                                                                      ]"
+
+/invtext/6:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/7:
+	Value = "\001[desc                               ]\001[type]\001[name                           ]\001"
+
+/invtext/8:
+	Value = "\027\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\005"
+
+/invtext/9:
+	Value = "\001[wtext_1                                                                     ]\001"
+
+/invtext/10:
+	Value = "\001                                                                              \001"
+
+/invtext/11:
+	Value = "\027\021\004                                        \023\021\004                                 \001"
+
+/invtext/12:
+	Value = "\001`\001[wtext_2                               ]\001`\001[wtext_3                        ]\001"
+
+/invtext/13:
+	Value = "\006\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/fields:
+	Type = 1
+	Count = 11
+
+/fields/0:
+	Type = 1
+	Count = 4
+
+/fields/0/number:
+	Value = "1"
+
+/fields/0/name:
+	Value = "title"
+
+/fields/0/cat-msgno:
+	Value = "%-F_EMENUZ_TITLE"
+
+/fields/0/cat-deftxt:
+	Value = "                             Details of MENU Option                             "
+
+/fields/1:
+	Type = 1
+	Count = 4
+
+/fields/1/number:
+	Value = "2"
+
+/fields/1/name:
+	Value = "prompt"
+
+/fields/1/cat-msgno:
+	Value = "%-F_EMENUZ_PROMPT"
+
+/fields/1/cat-deftxt:
+	Value = "          Touch USE to continue editing, ZOOM-OUT to see Menu Options.          "
+
+/fields/2:
+	Type = 1
+	Count = 4
+
+/fields/2/number:
+	Value = "3"
+
+/fields/2/name:
+	Value = "subtitle"
+
+/fields/2/cat-msgno:
+	Value = "%-F_EMENUZ_SUBTITLE"
+
+/fields/2/cat-deftxt:
+	Value = "      Description shown in menu         Type       Name of file or program      "
+
+	Type = 1
+	Count = 5
+
+/fields/3:
+	Type = 1
+	Count = 4
+
+/fields/3/number:
+	Value = "4"
+
+/fields/3/name:
+	Value = "desc"
+
+/fields/3/data-path:
+	Value = "desc"
+
+/fields/3/no-zoom:
+	Value = "x"
+
+/fields/4:
+	Type = 1
+	Count = 4
+
+/fields/4/number:
+	Value = "5"
+
+/fields/4/name:
+	Value = "type"
+
+/fields/4/data-path:
+	Value = "type"
+
+/fields/4/no-zoom:
+	Value = "x"
+
+/fields/5:
+	Type = 1
+	Count = 4
+
+/fields/5/number:
+	Value = "6"
+
+/fields/5/name:
+	Value = "name"
+
+/fields/5/data-path:
+	Value = "name"
+
+/fields/5/no-zoom:
+	Value = "x"
+
+/fields/6:
+	Type = 1
+	Count = 4
+
+/fields/6/number:
+	Value = "7"
+
+/fields/6/name:
+	Value = "wtext_1"
+
+/fields/6/cat-msgno:
+	Value = "%-F_EMENUZ_WTEXT_1"
+
+/fields/6/cat-deftxt:
+	Value = "Flags:  any non-space character means true                                    "
+/fields/7:
+	Type = 1
+	Count = 4
+
+/fields/7/number:
+	Value = "8"
+
+/fields/7/name:
+	Value = "sync"
+
+/fields/7/data-path:
+	Value = "sync"
+
+/fields/7/no-zoom:
+	Value = "x"
+
+/fields/8:
+	Type = 1
+	Count = 4
+
+/fields/8/number:
+	Value = "9"
+
+/fields/8/name:
+	Value = "wtext_2"
+
+/fields/8/cat-msgno:
+	Value = "%-F_EMENUZ_WTEXT_2"
+
+/fields/8/cat-deftxt:
+	Value = "Sync and reopen file              "
+
+/fields/9:
+	Type = 1
+	Count = 4
+
+/fields/9/number:
+	Value = "10"
+
+/fields/9/name:
+	Value = "save"
+
+/fields/9/data-path:
+	Value = "save"
+
+/fields/9/no-zoom:
+	Value = "x"
+
+/fields/10:
+	Type = 1
+	Count = 4
+
+/fields/10/number:
+	Value = "11"
+
+/fields/10/name:
+	Value = "wtext_3"
+
+/fields/10/cat-msgno:
+	Value = "%-F_EMENUZ_WTEXT_3"
+
+/fields/10/cat-deftxt:
+	Value = "Save all files                         "
+

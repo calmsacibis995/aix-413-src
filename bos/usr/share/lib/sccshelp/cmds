@@ -1,0 +1,142 @@
+* @(#)25     1.5 3/16/93 17:14:28
+*
+* COMPONENT_NAME: CMDSCCS       source code control system
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1989, 1993
+* All Rights Reserved
+* Licansed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+*
+*	Synopsis of SCCS commands
+*
+-admin
+Usage: admin {-n|-i[Name]} [-f{l{a|Number ...}|
+        {b|cNumber|dSID|fNumber|j|mModule|n|qText|tType}} ...]
+        [-fv[Program]] [-m MRList] [-a Login ...] [-r Number.Number]
+        [-t File] [-y[Comment]] File ...
+        Creates and initializes SCCS files.
+
+        Usage: admin [-a Login ...] [-e Login ...] [-f{l{a|Number ...}|
+        b|cNumber|dSID|fNumber|i|j|mModule|n|qText|tType} ...]
+        [-d{l{a|Number ...}|b|c|d|f|i|j|m|n|q|t} ...] [-dv|-fv[Program]]
+        [-t[File]] File ...
+        Changes existing SCCS files.
+-bdiff
+Usage: bdiff {File1 -|File1 File2|- File 2} [Number] [-s]
+	Uses diff to find differences in very large files.
+-cdc
+Usage: cdc -r SID [-m[MRList]] [-y[Comment]] {File ...|-}
+	Changes the commentary associated with an SCCS delta.
+-comb
+Usage: comb [-os] [-p SID|-c List] [File|Directory|-] ...
+	Combines SCCS deltas.
+-delta
+Usage: delta [-nps] [-g List] [-r SID] [-m MRList] [-y[Comment]] [ File ...|-]
+	Creates a delta (an update) in a Source Code Control System (SCCS) file.
+-get
+Usage: get [-begklLmnpst] [-c Cutoff] [-i List] [-r SID] [-w String] [-x List] 
+	File ...
+	or
+	get [-begkmnpst] [-c Cutoff] [-i List] [-r SID] [-w String] [-x List]
+	[-l[p]] File ...
+	Creates a specified version of a Source Code Control System (SCCS) file.
+-sccshelp
+sccshelp {Command|Error Code} ...
+	Displays information about SCCS commands and error codes.
+-prs
+Usage: [-a ...] [-d String ...] [-r SID [-e|-l]|-c Cutoff {-e|-l}
+	{File ...|Directory ...|-}
+For a description of recognized data keywords, key in the following:
+	sccshelp prs_kywds
+-prs_kywds
+
+
+     List of Data Keywords Recognized by the "prs" Command
+
+ Data                             SCCS File          Value         Format
+Keyword       Data Item            Section           Type           Type
+
+ :Dt:   Whole delta line      Delta Table   Delta information      Single
+ :DL:   Delta line statistics         "         :Li:/:Ld:/:Lu:       S
+ :Li:   Lines inserted by Delta       "              nnnnn           S
+ :Ld:   Lines deleted by Delta        "              nnnnn           S
+ :Lu:   Lines unchanged by Delta      "              nnnnn           S
+ :DT:   Delta type                    "              D or R          S
+  :I:   SCCS ID string (SID)          "          :R:.:L:.:B:.:S:     S
+  :R:   Release number                "              nnnn            S
+  :L:   Level number                  "              nnnn            S
+  :B:   Branch number                 "              nnnn            S
+  :S:   Sequence number               "              nnnn            S
+  :D:   Date Delta created            "          :Dy:/:Dm:/:Dd:      S
+ :Dy:   Year Delta created            "               nn             S
+ :Dm:   Month Delta created           "               nn             S
+ :Dd:   Day Delta created             "               nn             S
+  :T:   Time Delta created            "          :Th:::Tm:::Ts:      S
+ :Th:   Hour Delta created            "               nn             S
+ :Tm:   Minute Delta created          "               nn             S
+ :Ts:   Second Delta created          "               nn             S
+  :P:   Programmer who created Delta  "             logname          S
+ :DS:   Delta sequence number         "              nnnn            S
+ :DP:   Previous Delta number         "              nnnn            S
+ :DI:   Deltas incl,excl,ignored      "         :Dn:/:Dx:/:Dg:       S
+ :Dn:   Deltas included               "             :DS: ...         S
+ :Dx:   Deltas excluded               "             :DS: ...         S
+ :Dg:   Deltas ignored                "             :DS: ...         S
+ :MR:   MR numbers for Delta          "              text            Multiline
+  :C:   Comments for Delta            "              text            M
+ :UN:   User names                User Names         text            M
+ :FL:   Header flag list            Flags            text            M
+  :Y:   Module type flag              "              text            S
+ :MF:   MR validation flag            "            yes or no         S
+ :MP:   MR validation pgm.            "              text            S
+ :KF:   Kywd error/warning flag       "            yes or no         S
+ :BF:   Branch flag                   "            yes or no         S
+  :J:   Joint edit flag               "            yes or no         S
+ :LK:   Locked releases               "             :R: ...          S
+  :Q:   User defined keyword          "              text            S
+  :M:   Module name flag              "           module name        S
+ :FB:   Floor boundary                "               :R:            S
+ :CB:   Ceiling boundary              "               :R:            S
+ :Ds:   Default SID                   "               :I:            S
+ :ND:   Null delta flag set           "            yes or no         S
+ :FD:   Descriptive text           Comments          text            M
+ :BD:   Body                         Body            text            M
+ :GB:   Text in a g-file              "              text            M
+  :W:   A "what" string              N/A          :Z::M:\\tab:I:     S
+  :A:   A "what" string              N/A       :Z::Y: :M: :I::Z:     S
+  :Z:   A "what" string delimiter    N/A             @(#)            S
+  :F:   SCCS file name               N/A             text            S
+ :PN:   SCCS path name               N/A           path name         S
+-rmdel
+Usage: rmdel -r SID {File ...|Directory|-}
+	Removes a delta from a Source Code Control System file.
+-sact
+Usage: sact File ...
+	Displays current Source Code Control System (SCCS) file editing
+	status.
+-sccs
+Usage: sccs [-d Path] [-p Path] [-r] Command [CommandFlag...] [File...]
+	Runs SCCS programs as an interface between SCCS and the user.
+-sccsdiff
+Usage: sccsdiff -rSID1 -rSID2 [-p] [-sNumber] File ...
+	Compares two versions of a Source Code Control System (SCCS) file.
+-unget
+Usage: unget [-ns] [-r SID] File ...
+	Cancels a previous get command.
+-val
+val [-m Name] [-r SID] [-s] [-y Type] {File ...|-}
+	Validates Source Code Control System (SCCS) files.
+-vc
+Usage: vc [-ats] [-cCharacter] [Keyword=Value ...]
+	Substitutes assigned values in place of keywords.
+-what
+what [-s] File ...
+	Displays identifying information in files.

@@ -1,0 +1,23 @@
+#!/unix
+* @(#)54	1.1  src/rspc/kernext/pm/pmmi/pmmi.exp, pwrsysx, rspc411, 9435A411a 8/29/94 18:34:20";
+*
+*   COMPONENT_NAME: PWRSYSX
+*
+*   FUNCTIONS: Power Management Kernel Code
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*   (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+*   All Rights Reserved
+*
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+pm_control_state	syscall
+pm_control_parameter	syscall
+pm_event_query		syscall
+pm_battery_control	syscall
+pm_system_event_query	syscall

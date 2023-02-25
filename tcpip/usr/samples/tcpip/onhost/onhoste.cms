@@ -1,0 +1,49 @@
+/*static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/onhoste.cms, tcpip, tcpip411, GOLD410 8/14/90 16:26:07";
+ *
+ * COMPONENT_NAME: TCPIP onhoste.cms
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1986, 1988, 1989
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ * RISC System/6000 is a trademark of International Business Machines
+   Corporation.
+*/
+/*
+    AIXwhat is @(#) onhoste.cms 1.4 PASC 1.4
+ */ version='onhost - version 1.1 - VM/CMS'
+/*
+ * onhoste generates onhost command end flag with encoded return code
+ */
+ 
+'set autoread on'  /* so we pick up the vm read at the workstation */
+arg ret .
+if ret = '' then ret = 0  /* return code zero if no return code */
+retcode = ret
+if 1=datatype(ret,W) then
+  ret = d2x(ret,8)  /* encode return code in hex; other end decodes it */
+  else
+  ret = '99999999'  /* return code if non-numeric return code */
+/* generate a distinctive line *exactly* as hostconnect expects it */
+ 
+say 'RetCode:'ret'; OnHost End of Command Flag'
+exit retcode

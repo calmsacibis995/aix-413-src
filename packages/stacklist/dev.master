@@ -1,0 +1,96 @@
+/* @(#)79        1.6  src/packages/stacklist/dev.master, pkg, pkg41J, 9525G_all 6/20/95 17:18:48                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List INTERNAL Development Tapes
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+#define SERVER
+#define ENCINABASE
+#define ENCINAMSG
+#define DCE
+#define DCECLIENT
+#define DCECDMF
+#define DCECDS
+#define DCESECUR
+#define DCEEDFS
+#define DCEDFSNFS
+#define DCETOOLS
+#define DES
+#define ENCINAGATEWAY
+#define ENCINAMONITOR
+#define HACMP
+#define HACMPCLVM
+#define PERFMGR
+#define SX25
+#define SOFT5080
+#define SOFT5080JAPAN
+#define SNA
+#define SNAUNLIMIT
+#include <aix.master>
+#include <blkmux.master>
+#include <cics.master>
+#include <des.master>
+#include <dce.master>
+#include <dps.master>
+#include <dsmit.master>
+#include <encina.master>
+#include <essl.master>
+#include <hacmp.master>
+#include <hcon.master>
+#include <hyper.master>
+#include <icraft.master>
+#include <infoxl.master>
+#include <internet_server.master>
+#include <netware.master>
+#include <opengl.master>
+#include <perf.master>
+#include <pex.master>
+#include <sna.master>
+#include <soft5080.master>
+#include <sx25.master>
+#include <uimx.master>
+#include <ums.master>
+#include <wabi.master>
+#include <netbios.master>
+/* Baby Blue is being built and shipped for Austin internal use only */
+devices.mca.efc6
+/* Mayflower disk support */
+devices.ssa.disk
+/* Insignia - SoftWindows for internal use by anyone who has a key */
+SoftWindows
+/* AFS for development use only */
+afs
+/* KDBX for development use only */
+kdbx
+/* FSF is added here waiting on a final decision to its status. */
+fsf
+/* C Set Compiler packages for Austin Development use only */
+xlC.C
+xlC.C.data
+xlC.C++
+xlC.C++.data
+xlC.C.readme.ibm
+xlC.info.en_US.C
+xlC.info.en_US.C++
+xlC.ipf.en_US.C++
+xlC.loc.en_US.C++
+xlC.ps.en_US.C
+xlC.ps.en_US.C++
+xldb
+ipfx.rte
+ipfx.msg.rte
+sde.Dt
+sde.tools
+sde.loc.ja_JP
+sde.loc.Ja_JP
+/* cxia128 adapter not shipped in 41J */
+devices.isa.cxia128

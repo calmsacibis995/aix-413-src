@@ -1,0 +1,30 @@
+# @(#) 24 1.1 src/bos/usr/sys/inst.data/sys_bundles/DCE-Client.def, pkgbos, bos41J, 9522A_all 5/30/95 18:07:57
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: DCE-Client.def 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+# AIX  DCE-Client  "Bundle" Definition File
+# These product options will be installed by the customer selecting the 
+# DCE-Client installation bundle from the Easy or Advanced Installation Tasks.
+#
+#
+################################################################
+# DCE Client Filesets
+dce.client.core.rte
+dce.xdsxom.rte
+dce.pthreads.rte
+dce.compat.client.core.smit
+# DFS Filesets
+dce.client.dfs.rte
+dce.dfs_server.rte
+dce.compat.dfs_server.smit
+dce.compat.client.dfs.smit

@@ -1,0 +1,30 @@
+# @(#)19        1.2  src/packages/bos/rcs/Makefile, pkgrcs, pkg411, GOLD410 2/10/94 16:32:43
+#
+# COMPONENT_NAME: pkgrcs
+#
+# FUNCTIONS: 
+#
+# ORIGINS: 27
+#
+# IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+# combined with the aggregated modules for this product)
+#                  SOURCE MATERIALS
+# (C) COPYRIGHT International Business Machines Corp. 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+VPATH		= ${MAKETOP}/bos/objclass/${TARGET_MACHINE}
+
+BFF		= bos.rcs
+
+ILIST		= ${BFF}
+IDIR		= /
+
+OPTIONS		= bos.rcs
+ROOT_OPTIONS	= bos.rcs
+
+.include <packdep.mk>
+
+.include <${RULES_MK}>

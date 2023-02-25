@@ -1,0 +1,82 @@
+static char sccsid[] = "@(#)68	1.3  src/tcpip/usr/lib/libisode/rtsapselect.c, isodelib7, tcpip411, GOLD410 4/5/93 16:18:19";
+/*
+ * COMPONENT_NAME: (ISODELIB7) ISODE Libraries, Release 7
+ *
+ * FUNCTIONS: RtSelectMask
+ *
+ * ORIGINS: 60
+ *
+ * FILE:	src/tcpip/usr/lib/libisode/rtsapselect.c
+ */
+
+/* rtsapselect.c - RTPM: map descriptors */
+
+#ifndef	lint
+static char *rcsid = "$Header: /vikings/u/snmp/projects/harriet/RCS/src/tcpip/usr/lib/libisode/rtsapselect.c,v 1.2 93/02/05 17:10:26 snmp Exp $";
+#endif
+
+/* 
+ * $Header: /vikings/u/snmp/projects/harriet/RCS/src/tcpip/usr/lib/libisode/rtsapselect.c,v 1.2 93/02/05 17:10:26 snmp Exp $
+ *
+ *
+ * $Log:	rtsapselect.c,v $
+ * Revision 1.2  93/02/05  17:10:26  snmp
+ * ANSI - D67743
+ * 
+ * Revision 7.1  91/02/22  09:42:42  mrose
+ * Interim 6.8
+ * 
+ * Revision 6.0  89/03/18  23:43:31  mrose
+ * Release 5.0
+ * 
+ */
+
+/*
+ *				  NOTICE
+ *
+ *    Acquisition, use, and distribution of this module and related
+ *    materials are subject to the restrictions of a license agreement.
+ *    Consult the Preface in the User's Manual for the full terms of
+ *    this agreement.
+ *
+ */
+
+
+/* LINTLIBRARY */
+
+#include <stdio.h>
+#include <signal.h>
+#include <isode/rtpkt.h>
+
+/*    map association descriptors for select() */
+
+int	RtSelectMask (sd, mask, nfds, rti)
+int	sd;
+fd_set *mask;
+int    *nfds;
+struct RtSAPindication *rti;
+{
+    SBV	    smask;
+    int     result;
+    register struct assocblk   *acb;
+
+    missingP (mask);
+    missingP (nfds);
+    missingP (rti);
+
+    smask = sigioblock ();
+
+    rtsapPsig (acb, sd);
+
+    if (acb -> acb_flags & ACB_PLEASE) {
+	(void) sigiomask (smask);
+
+	return rtsaplose (rti, RTS_WAITING, NULLCP, NULLCP);
+    }
+
+    result = (*acb -> acb_rtselectmask) (acb, mask, nfds, rti);
+
+    (void) sigiomask (smask);
+
+    return result;
+}

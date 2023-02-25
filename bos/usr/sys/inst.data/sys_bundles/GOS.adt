@@ -1,0 +1,28 @@
+# @(#) 55 1.5 src/bos/usr/sys/inst.data/sys_bundles/GOS.adt, pkg, bos41J, 9517A_all 4/24/95 14:06:28
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: GOS.adt 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1995
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Base Graphical Operating System (GOS) App. Dev. "Bundle" Concatenation File
+# This  is an APPLY ONLY file and is not installed on the target system. 
+# It's contents along with GOS.autoi and GOS.client are added to the
+#  App-Dev.bnd file found in /usr/sys/inst.data/sys_bundles when AIXwindows
+# is installed.
+#
+################################################################
+# AIXwindows Application Development
+X11.adt
+# AIXwindows Samples
+X11.samples
+# Desktop Application Development
+X11.Dt.adt

@@ -1,0 +1,178 @@
+$ $Nmenu
+$ $*@(#)43	1.2  src/tenplus/helpers/editorprf/menu.psz, tenplus, tenplus411, GOLD410 7/26/93 15:53:34
+
+$ $*COMPONENT_NAME: (INED) INed Editor
+$ $*
+$ $*ORIGINS:  9, 10, 27
+$ $*
+$ $*This module contains IBM CONFIDENTIAL code. -- (IBM
+$ $*Confidential Restricted when combined with the aggregated
+$ $*modules for this product)                  SOURCE MATERIALS
+$ $*(C) COPYRIGHT International Business Machines Corp. 1985, 1990
+$ $*All Rights Reserved
+$ $*
+$ $*US Government Users Restricted Rights - Use, duplication or
+$ $*disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$quote "
+
+$set 1
+$ $%1
+$ $.0
+$ $:/menu
+$ $%3
+$ $.0
+$ $:/menu/form
+$ $"pmenu"
+$ $%3
+$ $.0
+$ $:/menu/desc
+AA "%+P_MENU_OPT\n\
+MENU Options"
+$ $%1
+$ $.0
+$ $:/menu/data
+$ $%1
+$ $.0
+$ $:/menu/data/*
+$ $%3
+$ $.0
+$ $:/menu/data/*/name
+$ $"$HOME"
+$ $%3
+$ $.0
+$ $:/menu/data/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/menu/data/*/desc
+AB "%+P_HOME_DIR\n\
+Show Your Home Directory."
+$ $$
+$ $%1
+$ $.0
+$ $:/menu/data/*
+$ $%3
+$ $.0
+$ $:/menu/data/*/name
+ZZ "%+P_CONT\n\
+echo \"Press Ctrl-D to continue editing\"; export PS1; PS1='eshell> '; exec sh"
+$ This line is a shell command.  The punctuation, including quotes, must
+$ remain exactly as it is.  Translate only "Press" and "to continue editing".
+$ $%3
+$ $.0
+$ $:/menu/data/*/type
+$ $"screen"
+$ $%3
+$ $.0
+$ $:/menu/data/*/sync
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/data/*/save
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/data/*/desc
+AC "%+P_EXEC_SHELL\n\
+Execute shell commands."
+$ $$
+$ $%1
+$ $.0
+$ $:/menu/data/*
+$ $%3
+$ $.0
+$ $:/menu/data/*/name
+ZY "%+P_SHELL_COMM\n\
+\\_Shell command to run:\\+"
+$  TRANSLATOR:  in this message, please include the sequences \_
+$  and \+ exactly as shown.
+$ $%3
+$ $.0
+$ $:/menu/data/*/type
+$ $"popbox"
+$ $%3
+$ $.0
+$ $:/menu/data/*/desc
+AD "%+P_RUN_COMM\n\
+Run a Shell Command within a Box."
+$ $$
+$ $%1
+$ $.0
+$ $:/menu/data/*
+$ $%3
+$ $.0
+$ $:/menu/data/*/name
+$ $"$HOME/profiles"
+$ $%3
+$ $.0
+$ $:/menu/data/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/menu/data/*/desc
+AE "%+P_SHOW_PROF\n\
+Show Your Profiles Directory."
+$ $$
+$ $%1
+$ $.0
+$ $:/menu/data/*
+$ $%3
+$ $.0
+$ $:/menu/data/*/name
+$ $"$HOME/profiles/editorprf"
+$ $%3
+$ $.0
+$ $:/menu/data/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/menu/data/*/desc
+AF "%+P_EDIT_PROF\n\
+Edit Your Editor Profile."
+$ $$
+$ $%1
+$ $.0
+$ $:/menu/data/*
+$ $%3
+$ $.0
+$ $:/menu/data/*/name
+$ $"housekeep"
+$ $%3
+$ $.0
+$ $:/menu/data/*/type
+$ $"popbox"
+$ $%3
+$ $.0
+$ $:/menu/data/*/sync
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/data/*/save
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/data/*/desc
+AG "%+P_RM_TEMP\n\
+Remove Temporary Files."
+$ Here, "housekeep" means to remove unused temporary files that the editor
+$ has abandoned in your directories.
+$ $$
+$ $%1
+$ $.0
+$ $:/menu/data/*
+$ $%3
+$ $.0
+$ $:/menu/data/*/name
+$ $"history"
+$ $%3
+$ $.0
+$ $:/menu/data/*/type
+$ $"helper"
+$ $%3
+$ $.0
+$ $:/menu/data/*/desc
+AH "%+P_DISP_HIST\n\
+Display the History of the Current File."
+$ $$
+$ $$
+$ $$

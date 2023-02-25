@@ -1,0 +1,47 @@
+$ $Nwatchfiles
+$ $*@(#)47	1.1  src/tenplus/helpers/editorprf/watchfil.psz, tenplus, tenplus411, GOLD410 3/17/93 14:02:44
+
+$ $*COMPONENT_NAME: (INED) INed Editor
+$ $*
+$ $*ORIGINS:  9, 10, 27
+$ $*
+$ $*This module contains IBM CONFIDENTIAL code. -- (IBM
+$ $*Confidential Restricted when combined with the aggregated
+$ $*modules for this product)                  SOURCE MATERIALS
+$ $*(C) COPYRIGHT International Business Machines Corp. 1985, 1991
+$ $*All Rights Reserved
+$ $*
+$ $*US Government Users Restricted Rights - Use, duplication or
+$ $*disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$quote "
+
+$set 1
+$ $%1
+$ $.0
+$ $:/watchfiles
+$ $%3
+$ $.0
+$ $:/watchfiles/form
+$ $"pwatch"
+$ $%3
+$ $.0
+$ $:/watchfiles/desc
+AA "%+P_FWATCH\n\
+Files the Editor Should Watch."
+$ $%1
+$ $.0
+$ $:/watchfiles/data
+$ $%1
+$ $.0
+$ $:/watchfiles/data/*
+$ $%3
+$ $.0
+$ $:/watchfiles/data/*/name
+$ $"$HOME/.reminder"
+$ $%3
+$ $.0
+$ $:/watchfiles/data/*/prog
+$ $"$SYS/bin/showrem -d"
+$ $$
+$ $$
+$ $$

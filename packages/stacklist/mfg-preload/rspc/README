@@ -1,0 +1,103 @@
+# @(#) 67 1.3 src/packages/stacklist/mfg-preload/rspc/README, pkg, pkg412, 9445C412a 10/21/94 10:08:10
+#
+#   COMPONENT_NAME: PKG - Manufacturing Preload using DOS Data Diskette
+#
+#   FUNCTIONS: Manufacturing Preload Based on DOS Data diskette Information 
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+This directory contains manufacturing preload files that are to be used
+by Raliegh manufacturing to preload Sandalfoot and Sandalbow systems with
+AIXv4. These files:
+	preload		preload customization script
+	preload.bnd     preload auto install customization list - Sandalfoot
+	preload.bnd.40p preload auto install customization list - Sandalbow 
+	preload.dat     preload customization data - Sandalfoot
+	preload.ver	preload verification script
+
+must be placed on a dos formatted diskette in the DOS directory \. For
+Sandalbow systems, the preload.bnd.40p and preload.dat.40p files must be
+written to the DOS \ directory as preload.bnd, and preload.dat respectively. 
+
+The preload file contains a script that bos install will read from the diskette
+and execute. This script currently reads in the preload.dat file and if
+correctly read copies it over the default bosinst.data file. It then reads the
+preload.ver preload verification script file to be executed at the end of 
+bos install. It optionally attempts to read a preload.bnd file that can 
+contain a list of lpps, or filesets contained on the installation media to 
+preload after bos has been preloaded. The preload, preload.dat and preload.ver
+files are required. The preload.bnd file is optional. If this bundle file is
+not present, the type of bundle specified in the preload.dat file will
+drive the auto installation of LPPs and filesets.
+
+The preload.bnd file is currently a copy of the Personal Productivity bundle
+file shipped with the system. The intent is to be able to tailor this file
+for PPS PowerDesktop preload content.
+
+The preload.bnd.40p file is currently a copy of the  Graphical Client
+bundle with the additions of desktop and SoftWindows.
+
+The preload.dat file is a bosinst.data (bosinstall data) file with the following
+conditions set:
+		No Console
+		No Prompt
+		Install on Largest hardfile
+		Personal AIX Install Type
+		Always install Graphical System
+		Overwrite existing system
+		preload.verify as verification file (copy of preload.ver)
+		Remove inst roots component (not a NIM server install)
+		Auto Install bundle - preload.bnd
+
+The preload.dat.40p file is the same as the peload.dat file with the 
+exception of INSTALL_TYPE is Client instead of Personal.
+Note that since the installation cdrom MUST be removed after install and 
+before they system reboots, bos install will perform a shutdown when 
+installing a rspc system (Sandalfoot) instead of a reboot as in the case of
+a RS6K system. This means that the only indication that manufacturing has
+that install has completed is to wait the appropriate period of time and then
+check the contents of the customization DOS diskette.
+
+The preload verification script (preload.ver) will use doswrite to write
+information concerning the install status to the DOS diskette in the \
+directory. This script will write a file called preload.log which contains a
+copy of the devinstall.log file found in /var/adm/ras/devinst.log which 
+contains the install log (-e output from installp) from the preload session.
+It also will write a preload.sum file which is the installp summary file
+found in /var/adm/sw/installp.summary. This file contains colon separated 
+records of which filesets were installed and what the status of each fileset
+was. In addition the preload verification script will scan the summary file
+and if all filesets were installed successfully (0 status code) will write
+a file called SUCCESS to the \ directory on the DOS diskette. If any
+error was detected, a file called FAILED will be written. Of course if the
+install did not get to the point of executing the verification script, no
+files will be written to the DOS diskette, again indicating failure. Once
+the preload script determines that everything has installed with no reported
+errors, it will scan the installp.summary file to determine if SoftWindows was
+installed. If it was installed, it will ensure that the system has at least
+48Meg of paging space defined. If it does not, it will increase the paging 
+space using chps to obtain 48Meg, which is the minimum required to operate
+SoftWindows in the desktop environment. Note that paging space will not be
+increased if SoftWindows was not installed. If the chps is issued and fails,
+the status written for preinstall with be FAILED.
+
+It is required that manufacturing ensure that the STATUS and FAILED files along
+with the PRELOAD.SUM and PRELOAD.LOG files are deleted from the diskette when
+starting a new install.
+
+The DOS diskette MUST be in the diskette drive when install is started. Reading
+of the DOS diskette is only available when installing from the CDROM media.
+It is NOT available when installing from the network or TAPE.
+
+This installation setup will install the personal AIX type of Operating System
+onto the system, including the Graphical Operating System components, without
+needing a console or keyboard installed. The graphics display adapter MUST
+be installed, however a monitor need not be attached..

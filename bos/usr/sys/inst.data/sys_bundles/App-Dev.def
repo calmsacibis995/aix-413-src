@@ -1,0 +1,66 @@
+# @(#) 53 1.6 src/bos/usr/sys/inst.data/sys_bundles/App-Dev.def, pkg, bos411, 9428A410j 7/4/94 14:47:51
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: App-Dev.def 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# AIX  Application Development  "Bundle" Definition File
+# These product options will be installed by the customer selecting the 
+# Application Development installation bundle from the Easy or Advanced
+# Installation Tasks.
+#
+# NOTE: ADDITIONAL ENTRIES ARE APPENDED TO THIS FILE DURING THE INSTALLATION
+#       OF AIXwindows
+#
+################################################################
+#
+# BOS Client Filesets
+#
+# Info hypertext support
+bos.info.rte
+bos.info.en_US.info_help
+# Base System Networking
+bos.net.nfs.client
+bos.net.uucp
+# ASCII System Management Tools
+bos.sysmgt.sysbr
+# Base Terminal Function Support
+bos.terminfo.print.data
+#Printer backend runtime
+printers.rte
+# 5 common Printer definitions
+printers.ibm4019
+printers.ibm4029
+printers.ibm4039
+printers.hplj-3
+printers.hplj-4
+# 
+# BOS Application Development Filesets
+#
+# BOS Application Development Tools
+bos.adt
+# BOS Localization Development Tools
+bos.loc.adt
+# BOS Network Application Development Tools
+bos.net.nfs.adt
+bos.net.tcp.adt
+# BOS Performance Diagnostic Tools
+bos.perf
+# BOS System Management Tools
+bos.sysmgt.trace
+#
+# xlC compiler and support 
+#
+xlC.C
+xlC.rte
+xlC.cpp
+xldb

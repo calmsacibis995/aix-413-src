@@ -1,0 +1,129 @@
+# @(#)26        1.6  src/rspc/objclass/cdrom.ide.cdrom1.add, rspccfg, rspc41J, 9516A_all 4/18/95 17:14:55
+#
+# COMPONENT_NAME: (idecdrom) IDE CDROM Device Driver ODM info
+#
+# FUNCTIONS: cdrom.ide.cdrom1
+#
+# ORIGINS: 27
+#
+# IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+# combined with the aggregated modules for this product)
+#                  SOURCE MATERIALS
+# (C) COPYRIGHT International Business Machines Corp. 1995
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+# Stanzas for populating the IDE CDROM Device Driver predefined values.
+# See src/bos/usr/lib/methods/common/ide.msg for NLS messages
+#
+
+PdDv:
+	type = "cdrom1"
+	class = "cdrom"
+	subclass = "ide"
+	prefix = "cd"
+	devid = ""
+	base = 0
+	has_vpd = 1
+	detectable = 1
+	chgstatus = 0
+	bus_ext = 0
+	fru = 0
+	led = 0x08A2
+	setno = 4
+	msgno = 1
+	catalog = "ide.cat"
+	DvDr = "idecdrom"
+	Define = "/usr/lib/methods/define_rspc"
+	Configure = "/usr/lib/methods/cfgidecdrom"
+	Change = "/usr/lib/methods/chggen"
+	Unconfigure = "/usr/lib/methods/ucfgdevice"
+	Undefine = "/usr/lib/methods/undefine"
+	Start = ""
+	Stop = ""
+	inventory_only = 0
+	uniquetype = "cdrom/ide/cdrom1"
+
+PdAt:
+	uniquetype = "cdrom/ide/cdrom1"
+	attribute = "model_name"
+	deflt = "FXN01DE"
+	values = ""
+	width = ""
+	type = "R"
+	generic = ""
+	rep = "s"
+	nls_index = 0
+
+PdAt:
+	uniquetype = "cdrom/ide/cdrom1"
+	attribute = "vpd_map"
+	deflt = "MF0808C,TM1010C,RL2004C,Z00008X"
+	values = ""
+	width = ""
+	type = "V"
+	generic = ""
+	rep = "s"
+	nls_index = 0
+
+PdAt:
+	uniquetype = "cdrom/ide/cdrom1"
+	attribute = "mode_data"
+	deflt = "0x000000000000000001060430000000000d06000a000000000e0e0400000000000180028000000000"
+	values = ""
+	width = ""
+	type = "R"
+	generic = ""
+	rep = "s"
+	nls_index = 0
+
+PdAt:
+	uniquetype = "cdrom/ide/cdrom1"
+	attribute = "prevent_eject"
+	deflt = "yes"
+	values = "no,yes"
+	width = ""
+	type = "R"
+	generic = "UD"
+	rep = "sl"
+	nls_index = 3
+
+
+PdAt:
+	uniquetype = "cdrom/ide/cdrom1"
+	attribute = "block_size"
+	deflt = "0x800"
+	values = ""
+	width = ""
+	type = "R"
+	generic = ""
+	rep = "n"
+	nls_index = 0
+
+PdAt:
+        uniquetype = "cdrom/ide/cdrom1"
+        attribute = pm_dev_itime
+        deflt = "28800"
+        values = "0-28800,1"
+        width = ""
+        type = R
+        generic = ""
+        rep = nr
+        nls_index = 0
+
+PdAt:
+        uniquetype = "cdrom/ide/cdrom1"
+        attribute = pm_dev_stime
+        deflt = "28800"
+        values = "0-28800,1"
+        width = ""
+        type = R
+        generic = ""
+        rep = nr
+        nls_index = 0
+
+

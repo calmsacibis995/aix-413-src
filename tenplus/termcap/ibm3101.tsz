@@ -1,0 +1,933 @@
+* File name: ibm3101.trm
+
+* @(#)42	1.9  src/tenplus/termcap/ibm3101.tsz, tenplus, tenplus411, GOLD410 3/23/93 12:12:39
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10, 27
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 1
+	Flags = 0x1
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/Name:
+	Value = "ibm3101"
+
+/*/Inseq:
+	Type = 1
+	Count = 0
+
+/*/Inseqs:
+	Type = 1
+	Count = 69
+
+/*/Inseqs/0:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/0/Name:
+	Value = "(1)"
+
+/*/Inseqs/0/Value:
+	Value = "^[1"
+
+/*/Inseqs/0/KeyName:
+	Value = "ESC 1"
+
+/*/Inseqs/1:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/1/Name:
+	Value = "(2)"
+
+/*/Inseqs/1/Value:
+	Value = "^[2"
+
+/*/Inseqs/1/KeyName:
+	Value = "ESC 2"
+
+/*/Inseqs/2:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/2/Name:
+	Value = "(3)"
+
+/*/Inseqs/2/Value:
+	Value = "^[3"
+
+/*/Inseqs/2/KeyName:
+	Value = "ESC 3"
+
+/*/Inseqs/3:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/3/Name:
+	Value = "(4)"
+
+/*/Inseqs/3/Value:
+	Value = "^[4"
+
+/*/Inseqs/3/KeyName:
+	Value = "ESC 4"
+
+/*/Inseqs/4:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/4/Name:
+	Value = "(5)"
+
+/*/Inseqs/4/Value:
+	Value = "^[5"
+
+/*/Inseqs/4/KeyName:
+	Value = "ESC 5"
+
+/*/Inseqs/5:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/5/Name:
+	Value = "(6)"
+
+/*/Inseqs/5/Value:
+	Value = "^[6"
+
+/*/Inseqs/5/KeyName:
+	Value = "ESC 6"
+
+/*/Inseqs/6:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/6/Name:
+	Value = "(7)"
+
+/*/Inseqs/6/Value:
+	Value = "^[7"
+
+/*/Inseqs/6/KeyName:
+	Value = "ESC 7"
+
+/*/Inseqs/7:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/7/Name:
+	Value = "(8)"
+
+/*/Inseqs/7/Value:
+	Value = "^[8"
+
+/*/Inseqs/7/KeyName:
+	Value = "ESC 8"
+
+/*/Inseqs/8:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/8/Name:
+	Value = "BACKSPACE"
+
+/*/Inseqs/8/Value:
+	Value = "^h"
+
+/*/Inseqs/8/KeyName:
+	Value = "Backspace"
+
+/*/Inseqs/9:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/9/Name:
+	Value = "BEGIN-LINE"
+
+/*/Inseqs/9/Value:
+	Value = "^a"
+
+/*/Inseqs/9/KeyName:
+	Value = "ALT-a"
+
+/*/Inseqs/10:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/10/Name:
+	Value = "BOX-MARK"
+
+/*/Inseqs/10/Value:
+	Value = "^b"
+
+/*/Inseqs/10/KeyName:
+	Value = "ALT-b"
+
+/*/Inseqs/11:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/11/Name:
+	Value = "CANCEL"
+
+/*/Inseqs/11/Value:
+	Value = "^[S"
+
+/*/Inseqs/11/KeyName:
+	Value = "CANCEL"
+
+/*/Inseqs/12:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/12/Name:
+	Value = "CANCEL"
+
+/*/Inseqs/12/Value:
+	Value = "^v"
+
+/*/Inseqs/12/KeyName:
+	Value = "ALT-v"
+
+/*/Inseqs/13:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/13/Name:
+	Value = "CENTER"
+
+/*/Inseqs/13/Value:
+	Value = "^c"
+
+/*/Inseqs/13/KeyName:
+	Value = "ALT-c"
+
+/*/Inseqs/14:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/14/Value:
+	Value = "^l"
+
+/*/Inseqs/14/Name:
+	Value = "DELETE"
+
+/*/Inseqs/14/KeyName:
+	Value = "ALT-l"
+
+/*/Inseqs/15:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/15/Name:
+	Value = "DELETE-CHARACTER"
+
+/*/Inseqs/15/Value:
+	Value = "\\0177"
+
+/*/Inseqs/15/KeyName:
+	Value = "DEL"
+
+/*/Inseqs/16:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/16/Name:
+	Value = "DO"
+
+/*/Inseqs/16/Value:
+	Value = "^x"
+
+/*/Inseqs/16/KeyName:
+	Value = "ALT-x"
+
+/*/Inseqs/17:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/17/Name:
+	Value = "DOWN-ARROW"
+
+/*/Inseqs/17/Value:
+	Value = "^[B"
+
+/*/Inseqs/17/KeyName:
+	Value = "down arrow"
+
+/*/Inseqs/18:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/18/Name:
+	Value = "END-LINE"
+
+/*/Inseqs/18/Value:
+	Value = "^z"
+
+/*/Inseqs/18/KeyName:
+	Value = "ALT-z"
+
+/*/Inseqs/19:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/19/Name:
+	Value = "EXECUTE"
+
+/*/Inseqs/19/Value:
+	Value = "^[V"
+
+/*/Inseqs/19/KeyName:
+	Value = "PRINT MSG"
+
+/*/Inseqs/20:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/20/Name:
+	Value = "EXECUTE"
+
+/*/Inseqs/20/Value:
+	Value = "^e"
+
+/*/Inseqs/20/KeyName:
+	Value = "ALT-e"
+
+/*/Inseqs/21:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/21/Name:
+	Value = "EXIT"
+
+/*/Inseqs/21/Value:
+	Value = "^d"
+
+/*/Inseqs/21/KeyName:
+	Value = "ALT-d"
+
+/*/Inseqs/22:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/22/Name:
+	Value = "FONT"
+
+/*/Inseqs/22/Value:
+	Value = "^[o"
+
+/*/Inseqs/22/KeyName:
+	Value = "ESC o"
+
+/*/Inseqs/23:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/23/Name:
+	Value = "FORMAT"
+
+/*/Inseqs/23/Value:
+	Value = "^f"
+
+/*/Inseqs/23/KeyName:
+	Value = "ALT-f"
+
+/*/Inseqs/24:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/24/Name:
+	Value = "GO-TO"
+
+/*/Inseqs/24/Value:
+	Value = "^g"
+
+/*/Inseqs/24/KeyName:
+	Value = "ALT-g"
+
+/*/Inseqs/25:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/25/Name:
+	Value = "HELP"
+
+/*/Inseqs/25/Value:
+	Value = "^[g^m"
+
+/*/Inseqs/25/KeyName:
+	Value = "PF7"
+
+/*/Inseqs/26:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/26/Name:
+	Value = "HOME"
+
+/*/Inseqs/26/Value:
+	Value = "^[H"
+
+/*/Inseqs/26/KeyName:
+	Value = "Home"
+
+/*/Inseqs/27:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/27/Name:
+	Value = "INSERT"
+
+/*/Inseqs/27/Value:
+	Value = "^o"
+
+/*/Inseqs/27/KeyName:
+	Value = "ALT-o"
+
+/*/Inseqs/28:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/28/Name:
+	Value = "INSERT-MODE"
+
+/*/Inseqs/28/Value:
+	Value = "^[i"
+
+/*/Inseqs/28/KeyName:
+	Value = "ESC i"
+
+/*/Inseqs/29:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/29/Name:
+	Value = "LAST-ARG"
+
+/*/Inseqs/29/Value:
+	Value = "^[y"
+
+/*/Inseqs/29/KeyName:
+	Value = "ESC y"
+
+/*/Inseqs/30:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/30/Name:
+	Value = "LEFT"
+
+/*/Inseqs/30/Value:
+	Value = "^[l"
+
+/*/Inseqs/30/KeyName:
+	Value = "ESC l"
+
+/*/Inseqs/31:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/31/Name:
+	Value = "LEFT-ARROW"
+
+/*/Inseqs/31/Value:
+	Value = "^[D"
+
+/*/Inseqs/31/KeyName:
+	Value = "left arrow"
+
+/*/Inseqs/32:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/32/Name:
+	Value = "LINE-FEED"
+
+/*/Inseqs/32/Value:
+	Value = "^[^m"
+
+/*/Inseqs/32/KeyName:
+	Value = "ESC Return"
+
+/*/Inseqs/33:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/33/Name:
+	Value = "LOCAL-MENU"
+
+/*/Inseqs/33/Value:
+	Value = "^]"
+
+/*/Inseqs/33/KeyName:
+	Value = "{"
+
+/*/Inseqs/34:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/34/Name:
+	Value = "MARGIN"
+
+/*/Inseqs/34/Value:
+	Value = "^[m"
+
+/*/Inseqs/34/KeyName:
+	Value = "ESC m"
+
+/*/Inseqs/35:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/35/Name:
+	Value = "MENU"
+
+/*/Inseqs/35/Value:
+	Value = "^_"
+
+/*/Inseqs/35/KeyName:
+	Value = "'"
+
+/*/Inseqs/36:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/36/Name:
+	Value = "-LINE"
+
+/*/Inseqs/36/Value:
+	Value = "^[e^m"
+
+/*/Inseqs/36/KeyName:
+	Value = "PF5"
+
+/*/Inseqs/37:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/37/Name:
+	Value = "-PAGE"
+
+/*/Inseqs/37/Value:
+	Value = "^[d^m"
+
+/*/Inseqs/37/KeyName:
+	Value = "PF4"
+
+/*/Inseqs/38:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/38/Name:
+	Value = "-SEARCH"
+
+/*/Inseqs/38/Value:
+	Value = "^[f^m"
+
+/*/Inseqs/38/KeyName:
+	Value = "PF6"
+
+/*/Inseqs/39:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/39/Name:
+	Value = "-TAB"
+
+/*/Inseqs/39/Value:
+	Value = "^t"
+
+/*/Inseqs/39/KeyName:
+	Value = "ALT-t"
+
+/*/Inseqs/40:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/40/Name:
+	Value = "NEXT"
+
+/*/Inseqs/40/Value:
+	Value = "^n"
+
+/*/Inseqs/40/KeyName:
+	Value = "ALT-n"
+
+/*/Inseqs/41:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/41/Name:
+	Value = "NEXT-WINDOW"
+
+/*/Inseqs/41/Value:
+	Value = "^[n"
+
+/*/Inseqs/41/KeyName:
+	Value = "ESC n"
+
+/*/Inseqs/42:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/42/Name:
+	Value = "PICK-COPY"
+
+/*/Inseqs/42/Value:
+	Value = "^[K"
+
+/*/Inseqs/42/KeyName:
+	Value = "ERASE INPUT"
+
+/*/Inseqs/43:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/43/Name:
+	Value = "PICK-UP"
+
+/*/Inseqs/43/Value:
+	Value = "^[I"
+
+/*/Inseqs/43/KeyName:
+	Value = "ERASE EOL/EOF"
+
+/*/Inseqs/44:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/44/Name:
+	Value = "+LINE"
+
+/*/Inseqs/44/Value:
+	Value = "^[b^m"
+
+/*/Inseqs/44/KeyName:
+	Value = "PF2"
+
+/*/Inseqs/45:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/45/Name:
+	Value = "+PAGE"
+
+/*/Inseqs/45/Value:
+	Value = "^[a^m"
+
+/*/Inseqs/45/KeyName:
+	Value = "PF1"
+
+/*/Inseqs/46:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/46/Name:
+	Value = "+SEARCH"
+
+/*/Inseqs/46/Value:
+	Value = "^[c^m"
+
+/*/Inseqs/46/KeyName:
+	Value = "PF3"
+
+/*/Inseqs/47:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/47/Name:
+	Value = "PREVIOUS"
+
+/*/Inseqs/47/Value:
+	Value = "^p"
+
+/*/Inseqs/47/KeyName:
+	Value = "ALT-p"
+
+/*/Inseqs/48:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/48/Name:
+	Value = "PRINT"
+
+/*/Inseqs/48/Value:
+	Value = "^[W"
+
+/*/Inseqs/48/KeyName:
+	Value = "PRINT"
+
+/*/Inseqs/49:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/49/Name:
+	Value = "PRINT"
+
+/*/Inseqs/49/Value:
+	Value = "^[p"
+
+/*/Inseqs/49/KeyName:
+	Value = "ESC p"
+
+/*/Inseqs/50:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/50/Name:
+	Value = "PUT-COPY"
+
+/*/Inseqs/50/Value:
+	Value = "^[L"
+
+/*/Inseqs/50/KeyName:
+	Value = "CLEAR"
+
+/*/Inseqs/51:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/51/Name:
+	Value = "PUT-DOWN"
+
+/*/Inseqs/51/Value:
+	Value = "^[J"
+
+/*/Inseqs/51/KeyName:
+	Value = "ERASE EOS"
+
+/*/Inseqs/52:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/52/Name:
+	Value = "QUOTE"
+
+/*/Inseqs/52/Value:
+	Value = "^[q"
+
+/*/Inseqs/52/KeyName:
+	Value = "ESC q"
+
+/*/Inseqs/53:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/53/Name:
+	Value = "REFRESH"
+
+/*/Inseqs/53/Value:
+	Value = "^y"
+
+/*/Inseqs/53/KeyName:
+	Value = "ALT-y"
+
+/*/Inseqs/54:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/54/Name:
+	Value = "REPLACE"
+
+/*/Inseqs/54/Value:
+	Value = "^[h^m"
+
+/*/Inseqs/54/KeyName:
+	Value = "PF8"
+
+/*/Inseqs/55:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/55/Name:
+	Value = "RESTORE"
+
+/*/Inseqs/55/Value:
+	Value = "^r"
+
+/*/Inseqs/55/KeyName:
+	Value = "ALT-r"
+
+/*/Inseqs/56:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/56/Name:
+	Value = "RETURN"
+
+/*/Inseqs/56/Value:
+	Value = "^m"
+
+/*/Inseqs/56/KeyName:
+	Value = "Return"
+
+/*/Inseqs/57:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/57/Name:
+	Value = "RIGHT"
+
+/*/Inseqs/57/Value:
+	Value = "^[r"
+
+/*/Inseqs/57/KeyName:
+	Value = "ESC r"
+
+/*/Inseqs/58:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/58/Name:
+	Value = "RIGHT-ARROW"
+
+/*/Inseqs/58/Value:
+	Value = "^[C"
+
+/*/Inseqs/58/KeyName:
+	Value = "right arrow"
+
+/*/Inseqs/59:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/59/Name:
+	Value = "SAVE"
+
+/*/Inseqs/59/Value:
+	Value = "^[s"
+
+/*/Inseqs/59/KeyName:
+	Value = "ESC s"
+
+/*/Inseqs/60:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/60/Name:
+	Value = "SET-TAB"
+
+/*/Inseqs/60/Value:
+	Value = "^[v"
+
+/*/Inseqs/60/KeyName:
+	Value = "ESC v"
+
+/*/Inseqs/61:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/61/Name:
+	Value = "TAB"
+
+/*/Inseqs/61/Value:
+	Value = "^i"
+
+/*/Inseqs/61/KeyName:
+	Value = "Tab"
+
+/*/Inseqs/62:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/62/Name:
+	Value = "TEXT-MARK"
+
+/*/Inseqs/62/Value:
+	Value = "^[t"
+
+/*/Inseqs/62/KeyName:
+	Value = "ESC t"
+
+/*/Inseqs/63:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/63/Name:
+	Value = "UP-ARROW"
+
+/*/Inseqs/63/Value:
+	Value = "^[A"
+
+/*/Inseqs/63/KeyName:
+	Value = "up arrow"
+
+/*/Inseqs/64:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/64/Name:
+	Value = "USE"
+
+/*/Inseqs/64/Value:
+	Value = "^u"
+
+/*/Inseqs/64/KeyName:
+	Value = "ALT-u"
+
+/*/Inseqs/65:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/65/Name:
+	Value = "WINDOW"
+
+/*/Inseqs/65/Value:
+	Value = "^w"
+
+/*/Inseqs/65/KeyName:
+	Value = "ALT-w"
+
+/*/Inseqs/66:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/66/Name:
+	Value = "ZOOM-IN"
+
+/*/Inseqs/66/Value:
+	Value = "^j"
+
+/*/Inseqs/66/KeyName:
+	Value = "ALT-j"
+
+/*/Inseqs/67:
+	Type = 1
+	Count = 3
+
+/*/Inseqs/67/Name:
+	Value = "ZOOM-OUT"
+
+/*/Inseqs/67/Value:
+	Value = "^k"
+
+/*/Inseqs/67/KeyName:
+	Value = "ALT-k"
+
+/*/Inseqs/68:
+	Type = 1
+	Count = 2
+
+/*/Inseqs/68/Name:
+
+/*/Inseqs/68/Value:
+

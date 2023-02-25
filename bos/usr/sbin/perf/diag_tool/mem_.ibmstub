@@ -1,0 +1,68 @@
+#!/bin/ksh
+# @(#)81	1.5	src/bos/usr/sbin/perf/diag_tool/mem_.sh, pdt, bos411, 9428A410j 4/13/94 16:30:00
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# mem_
+# Obtain memory size information, and record it in the
+# SM database
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+#
+# Awk script to extract memory size info, and to provide a
+# formatted output of the obtained information
+#
+# Creates one kind of SM record:
+#    SYS memsize - the size of system memory in MB
+#
+# Input: a file with the output of the 'lscfg' co mmand.
+# obtain memory size information, and format output
+lscfg | \
+   awk '
+        BEGIN {
+	   TOTMEM = 0
+        }
+        {
+           x=gsub(/-/," ",c)
+           x=gsub(/-/,",",t)
+           if ($0 ~ /mem/) TOTMEM+=$4
+        }
+        END {
+           print "SYS", "sys0", c, "memsize", TOTMEM, 1.0, "I(" t ",MB)"
+        }' c=$curr t="0-0-1" >> $pdt_SM
+#
+# Awk script to extract membuf use info, and to provide a
+# formatted output of the obtained information
+#
+# Creates one kind of SM record:
+#    SYS mbuf - the number of mbufs in use
+#
+# Input: a file with the output of the 'netstat -m'.
+
+# obtain membuf info
+netstat -m | \
+   awk '
+        BEGIN {
+        }
+        {
+           x=gsub(/-/," ",c)
+           x=gsub(/-/,",",t)
+           if (NR==1) print "SYS", "sys0", c, "mbuf", $1, 1.0, "I(" t ",MBUFS)"
+        }
+        END {
+        }' c=$curr t="0-0-1" >> $pdt_SM

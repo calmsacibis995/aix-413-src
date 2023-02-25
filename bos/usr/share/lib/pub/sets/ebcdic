@@ -1,0 +1,51 @@
+_H_e_x_a_d_e_c_i_m_a_l _M_a_p _o_f _t_h_e _E_B_C_D_I_C _C_h_a_r_a_c_t_e_r _S_e_t
+Columns correspond to high order hexadecimal digits; rows correspond to 
+low order hexadecimal digits.  Cells contain the equivalent hexadecimal
+ASCII values, and the symbols and mnemonics common to EBCDIC and ASCII.
+Exceptions are flagged by (1) through (8) and noted in the table below.
+
+	 0_      1_      2_      3_      4_      5_      6_      7_
+     _0 |00 nul |10 dle |80 ds  |90     |20 sp  |26 &   |2D -   |BA     |
+     _1 |01 soh |11 dc1 |81 sos |91     |A0     |A9     |2F /   |BB     |
+     _2 |02 stx |12 dc2 |82 fs  |16 syn |A1     |AA     |B2     |BC     |
+     _3 |03 etx |13 (1) |83     |93     |A2     |AB     |B3     |BD     |
+     _4 |9C pf  |9D res |84 byp |94 pn  |A3     |AC     |B4     |BE     |
+     _5 |09 ht  |85 nl  |0A lf  |95 rs  |A4     |AD     |B5     |BF     |
+     _6 |86 lc  |08 bs  |17 etb |96 uc  |A5     |AE     |B6     |C0     |
+     _7 |7F del |87 il  |1B esc |04 eot |A6     |AF     |B7     |C1     |
+     _8 |97     |18 can |88     |98     |A7     |B0     |B8     |C2     |
+     _9 |8D     |19 em  |89     |99     |A8     |B1     |B9     |60 `   |
+     _A |8E smm |92 cc  |8A sm  |9A     |D5     |21 !   |CB     |3A :   |
+     _B |0B vt  |8F cu1 |8B cu2 |9B cu3 |2E .   |24 $   |2C ,   |23 #   |
+     _C |0C ff  |1C (2) |8C     |14 dc4 |3C <   |2A *   |25 %   |40 @   |
+     _D |0D cr  |1D (3) |05 enq |15 nak |28 (   |29 )   |5F _   |27 '   |
+     _E |0E so  |1E (4) |06 ack |9E     |2B +   |3B ;   |3E >   |3D =   |
+     _F |0F si  |1F (5) |07 bel |1A sub |7C |(6)|7E ~(7)|3F ?   |22 "   |
+
+	 8_      9_      A_      B_      C_      D_      E_      F_
+     _0 |C3     |CA     |D1     |D8     |7B {   |7D }   |5C \   |30 0   |
+     _1 |61 a   |6A j   |E5     |D9     |41 A   |4A J   |9F     |31 1   |
+     _2 |62 b   |6B k   |73 s   |DA     |42 B   |4B K   |53 S   |32 2   |
+     _3 |63 c   |6C l   |74 t   |DB     |43 C   |4C L   |54 T   |33 3   |
+     _4 |64 d   |6D m   |75 u   |DC     |44 D   |4D M   |55 U   |34 4   |
+     _5 |65 e   |6E n   |76 v   |DD     |45 E   |4E N   |56 V   |35 5   |
+     _6 |66 f   |6F o   |77 w   |DE     |46 F   |4F O   |57 W   |36 6   |
+     _7 |67 g   |70 p   |78 x   |DF     |47 G   |50 P   |58 X   |37 7   |
+     _8 |68 h   |71 q   |79 y   |E0     |48 H   |51 Q   |59 Y   |38 8   |
+     _9 |69 i   |72 r   |7A z   |E1     |49 I   |52 R   |5A Z   |39 9   |
+     _A |C4     |5E ^(8)|D2     |E2     |E8     |EE     |F4     |FA     |
+     _B |C5     |CC     |D3     |E3     |E9     |EF     |F5     |FB     |
+     _C |C6     |CD     |D4     |E4     |EA     |F0     |F6     |FC     |
+     _D |C7     |CE     |5B [   |5D ]   |EB     |F1     |F7     |FD     |
+     _E |C8     |CF     |D6     |E6     |EC     |F2     |F8     |FE     |
+     _F |C9     |D0     |D7     |E7     |ED     |F3     |F9     |FF     |
+
+	 EBCDIC          ASCII
+    (1) |13 tm          |13 dc3
+    (2) |1C ifs         |1C fs
+    (3) |1D igs         |1D gs
+    (4) |1E irs         |1E rs
+    (5) |1F ius         |1F us
+    (6) |4F or bar      |5B |
+    (7) |5F not         |7E ~
+    (8) |9A             |5E ^

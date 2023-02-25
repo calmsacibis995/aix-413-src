@@ -1,0 +1,210 @@
+# @(#)44        1.3  src/rspc/objclass/sm_idedisk.add, idedisk, rspc41J, 9510A 2/21/95 14:18:47
+#
+# COMPONENT_NAME: (IDEDISK) IDE Disk Device Driver ODM info
+#
+# FUNCTIONS: sm_idedisk
+#
+# ORIGINS: 27
+#
+# IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+# combined with the aggregated modules for this product)
+#                  SOURCE MATERIALS
+# (C) COPYRIGHT International Business Machines Corp. 1995
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+# The dialogue headers follow.  There is one for each unique Predefined
+# disk subclass.  Also there is one for other IDE disks 
+# Their Id's are built as follows:
+#       "chgdsk_xxx_yyy
+# where yyy is subclass and xxx only exists for the oidisk type.  All
+# other cases will have the _yyy  omitted.
+
+sm_cmd_hdr:
+	id = "chgdsk_ide"
+	option_id = "disk_chg,disk_ide_chg"
+	has_name_select = "y"
+	name = "Change/Show Characteristics of a Disk"
+	name_msg_file = "smit.cat"
+	name_msg_set = 25
+	name_msg_id = 98
+	cmd_to_exec = "chdev "
+	ask = ""
+	exec_mode = "P"
+	ghost = "n"
+	cmd_to_discover = "lsattr "
+	cmd_to_discover_postfix = "-l logicname -E -O"
+	name_size = 0
+	value_size = 0
+	help_msg_id = "1800197"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+# Other IDE disk
+sm_cmd_hdr:
+	id = "chgdsk_oidisk_ide"
+	option_id = "disk_chg,disk_ide_chg,disk_oidisk_ide_chg"
+	has_name_select = "y"
+	name = "Change/Show Characteristics of a Disk"
+	name_msg_file = "smit.cat"
+	name_msg_set = 25
+	name_msg_id = 98
+	cmd_to_exec = "chdev "
+	ask = ""
+	exec_mode = "P"
+	ghost = "n"
+	cmd_to_discover = "lsattr "
+	cmd_to_discover_postfix = "-l logicname -E -O"
+	name_size = 0
+	value_size = 0
+	help_msg_id = "1800197"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "010"
+	id = "disk_ide_chg"
+	disc_field_name = "loc"
+	name = "Location"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 9
+	op_type = ""
+	entry_type = "n"
+	entry_size = 0
+	required = "n"
+	prefix = ""
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "5,1"
+	help_msg_loc = "ide.cat"
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "020"
+	id = "disk_ide_chg"
+	disc_field_name = "parent"
+	name = "Parent adapter"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 2
+	op_type = ""
+	entry_type = "n"
+	entry_size = 0
+	required = "n"
+	prefix = ""
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "0420406"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "030"
+	id = "disk_ide_chg"
+	disc_field_name = "port"
+	name = "Connection address"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 6
+	op_type = ""
+	entry_type = ""
+	entry_size = 0
+	required = "n"
+	prefix = ""
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "5,2"
+	help_msg_loc = "ide.cat"
+	help_msg_base = ""
+	help_msg_book = ""
+
+# Set read time out attribute for oidisk.
+sm_cmd_opt:
+	id = "disk_oidisk_ide_chg"
+	id_seq_num = "110"
+	disc_field_name = "rw_timeout"
+	name = "READ/WRITE time out value"
+	name_msg_file = "devices.cat"
+	name_msg_set = 51
+	name_msg_id = 34
+	op_type = "l"
+	entry_type = "t"
+	entry_size = 0
+	required = "n"
+	prefix = "-a rw_timeout="
+	cmd_to_list_mode = "r"
+	cmd_to_list = "lsattr -c disk -a rw_timeout -R"
+	cmd_to_list_postfix = "-s subclass -t type"
+	multi_select = "n"
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "5,7"
+	help_msg_loc = "ide.cat"
+	help_msg_base = ""
+	help_msg_book = ""
+
+
+# Set start unit time out attribute for oidisk.
+sm_cmd_opt:
+	id = "disk_oidisk_ide_chg"
+	id_seq_num = "120"
+	disc_field_name = "start_timeout"
+	name = "START unit time out value"
+	name_msg_file = "devices.cat"
+	name_msg_set = 51
+	name_msg_id = 35
+	op_type = "l"
+	entry_type = "t"
+	entry_size = 0
+	required = "n"
+	prefix = "-a start_timeout="
+	cmd_to_list_mode = "r"
+	cmd_to_list = "lsattr -c disk -a start_timeout -R"
+	cmd_to_list_postfix = "-s subclass -t type"
+	multi_select = "n"
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "5,8"
+	help_msg_loc = "ide.cat"
+	help_msg_base = ""
+	help_msg_book = ""

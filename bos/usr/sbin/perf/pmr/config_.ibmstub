@@ -1,0 +1,182 @@
+#!/bin/ksh
+# @(#)77	1.3	src/bos/usr/sbin/perf/pmr/config_.sh, perfpmr, bos411, 9428A410j 4/14/94 10:07:38
+#
+# COMPONENT_NAME: perfpmr
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# config_
+#
+# invoke configuration commands and create report
+#
+
+if [ $# -ne 0 ]
+then
+ echo "config_: usage: config_"
+ echo " NO PARAMETERS ARE REQUIRED"
+ exit -1
+fi
+
+# move to proper directory
+cd /var/perf/tmp
+
+echo "\n     CONFIG_: Generating reports...."
+
+echo "\n\n\n        C O N F I G U R A T I O N     S  U  M  M  A  R  Y     O  U  T  P  U  T\n\n\n" > config.sum
+echo "\n\nHostname:  "  `/bin/hostname -s` >> config.sum
+echo "\n\nTime config_ run:  " `/bin/date` >> config.sum
+
+echo "\n\nPROCESSOR TYPE" >> config.sum
+echo     "--------------\n" >> config.sum
+
+# get type code
+TYPE=`uname -m|cut -c9-10`
+NAME="Risc System/6000 Model "
+case $TYPE in
+  "10") MODEL="530/730/930"
+        ;;
+  "14") MODEL="540"
+        ;;
+  "18") MODEL="530H"
+        ;;
+  "1C") MODEL="550/950"
+        ;;
+  "2E") MODEL="950/550"
+        ;;
+  "5C") MODEL="560"
+        ;;
+  "20") MODEL="930/730/530"
+        ;;
+  "30") MODEL="520/320"
+        ;;
+  "31") MODEL="320/520"
+        ;;
+  "34") MODEL="520H/320H"
+        ;;
+  "35") MODEL="320H/520H"
+        ;;
+  "37") MODEL="340"
+        ;;
+  "38") MODEL="350"
+        ;;
+  "41") MODEL="220/M20"
+        ;;
+  "43") MODEL="M20/220"
+        ;;
+  "47") MODEL="230"
+        ;;
+  "63") MODEL="970"
+        ;;
+  "64") MODEL="980/580"
+        ;;
+  "66") MODEL="580/980"
+        ;;
+  "67") MODEL="570/360/365"
+        ;;
+  "75") MODEL="370"
+        ;;
+  "76") MODEL="360/365/570"
+        ;;
+  "77") MODEL="355/55L"
+        ;;
+  "78") MODEL="315/515"
+        ;;
+     *) MODEL="UNKNOWN_$TYPE"
+esac
+echo "$NAME $MODEL" >> config.sum
+
+echo "\n\nMEMORY" >> config.sum
+echo "------\n"  >> config.sum
+lscfg -l mem* >> config.sum
+
+echo "\n\nHARDWARE DETAILS" >> config.sum
+echo "----------------\n" >> config.sum
+lsdev -C | /bin/grep Available | /bin/awk 'BEGIN { FS = "-" }
+/-/ { LINE=substr($0,24,70) ; printf LINE "\n" }' | /bin/sort | /bin/awk 'BEGIN {
+}
+/^-00-0K-/ { DATA=substr($0,11,70) ; printf "                " DATA  "\n"}
+/^-00-S1 / { DATA=substr($0,11,70) ; printf "                " DATA  "\n"}
+/^-00-S1-/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+/^-00-S2 / { DATA=substr($0,11,70) ; printf "                " DATA  "\n"}
+/^-00-S2-/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+/^-00-0P / { DATA=substr($0,11,70) ; printf "                " DATA  "\n"}
+/^-00-0P-/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+/^-01 / { DATA=substr($0,11,70) ; printf "Slot 1 contains " DATA  "\n"}
+/^-01-0/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+/^-02 / { DATA=substr($0,11,70) ; printf "Slot 2 contains " DATA  "\n"}
+/^-02-0/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+/^-03 / { DATA=substr($0,11,70) ; printf "Slot 3 contains " DATA  "\n"}
+/^-03-0/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+/^-04 / { DATA=substr($0,11,70) ; printf "Slot 4 contains " DATA  "\n"}
+/^-04-0/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+/^-05 / { DATA=substr($0,11,70) ; printf "Slot 5 contains " DATA  "\n"}
+/^-05-0/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+/^-06 / { DATA=substr($0,11,70) ; printf "Slot 6 contains " DATA  "\n"}
+/^-06-0/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+/^-07 / { DATA=substr($0,11,70) ; printf "Slot 7 contains " DATA  "\n"}
+/^-07-0/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+/^-08 / { DATA=substr($0,11,70) ; printf "Slot 8 contains " DATA  "\n"}
+/^-08-0/ { DATA=substr($0,11,70) ; printf "                -- " DATA  "\n"}
+' >> config.sum
+
+
+# get detail device info
+echo "\f\n\nPHYSICAL / LOGICAL  DEVICE  DETAILS" >> config.sum
+echo     "-----------------------------------\n" >> config.sum
+lsdev -C >> config.sum
+
+# get current physical volume names
+echo "\f\n\nPHYSICAL  VOLUMES" >> config.sum
+echo       "-----------------\n" >> config.sum
+lspv  >> config.sum
+
+# get detail physical volume info
+echo "\n\nPHYSICAL  VOLUME  DETAILS" >> config.sum
+echo     "-------------------------\n" >> config.sum
+for i in `lspv | /bin/cut -c1-7`
+  do
+    lspv -l $i >> config.sum
+  done
+
+# get detail volume group info
+echo "\n\nVOLUME  GROUP  DETAILS" >> config.sum
+echo     "----------------------\n" >> config.sum
+lsvg -o | lsvg -il >> config.sum
+
+# get current mount info
+echo "\f\n\nMOUNTED  FILESYSTEMS" >> config.sum
+echo     "--------------------\n" >> config.sum
+mount  >> config.sum
+
+# get current paging space info
+echo "\n\nPAGING SPACES" >> config.sum
+echo     "-------------\n" >> config.sum
+lsps -a  >> config.sum
+
+# get static network configuration info
+echo "\f\n\nNETWORK  CONFIGURATION  INFORMATION\n" >> config.sum
+echo     "-----------------------------------\n" >> config.sum
+for i in  i a
+do
+  netstat -$i >> config.sum
+done
+
+# SYS0 Effective settings
+echo "\f\n\nSOFTWARE SETTINGS FROM SYS0" >> config.sum
+echo "---------------------------\n"  >> config.sum
+lsattr -E -l sys0 >> config.sum
+
+# get lpp history info
+echo "\f\n\nLICENSED  PROGRAM  PRODUCT  HISTORY" >> config.sum
+echo       "-----------------------------------\n" >> config.sum
+/usr/bin/lslpp -h >> config.sum
+
+echo "     CONFIG_: Report is in file config.sum"

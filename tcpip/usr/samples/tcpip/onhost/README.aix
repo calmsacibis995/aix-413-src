@@ -1,0 +1,151 @@
+ * @(#)58	1.2  src/tcpip/usr/samples/tcpip/onhost/README.aix, tcpip, tcpip411, GOLD410 9/10/93 15:36:02
+ *
+ * COMPONENT_NAME: TCPIP readme.aix
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1986, 1993
+ * All Rights Reserved
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ *
+ * Licensed Materials - Property of IBM
+ */
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ * RISC System/6000 is a trademark of International Business Machines
+   Corporation.
+*/
+         I N S T A L L A T I O N    I N S T R U C T I O N S
+ 
+               onhost version 1.1, AIX component
+               AIXwhat is @(#) readme.aix 1.5 PASC 1.5
+ 
+Onhost consists of three parts: the part which executes on AIX, the
+part which executes on VM/CMS, and the part which executes on MVS/TSO.
+These instructions cover installation of the AIX component.  The files 
+for all three components may be in an AIX directory or they may exist
+on a CMS or TSO system as individual text files.  
+ 
+ AIX INSTALLATION
+ 
+   1.  You may use onhost on AIX/370, AIX/386, AIX/RT, AIX/v3, and
+       ACIS 4.3/RT.
+ 
+       Login to the AIX system.  If you are on an AIX v3 system, then
+       change to the directory /usr/samples/tcpip/onhost and 
+       you will find onhost already installed for you.  You may use
+       tar to transfer onhost to any of the above mentioned systems.
+       
+       If you are using another AIX system, change to the directory 
+       containing the tar file and use the following command to extract 
+       the archived files:
+ 
+           tar -xf <tarfile> 
+ 
+       Onhost consists of these files: 
+ 
+    readme.aix       - installation instructions for AIX component
+    readme.cms       - installation instructions for CMS component
+    readme.tso       - installation instructions for TSO component
+ 
+    onhost.l         - man page for onhost
+    hostconnect.l    - man page for hostconnect
+ 
+    onhost.make      - execute this to make binary
+    onhost.mk        - used by onhost.make
+    onhost0.h        - onhost header
+    onhost0.c        - onhost program code 1/1
+    onhost.msg       - message catalog for AIX v3 message facility
+    hostcon0.h       - hostconnect header
+    hostcon0.c       - hostconnect program code 1/3
+    hostcon1.c       - hostconnect program code 2/3
+    hostcon2.c       - hostconnect program code 3/3
+    hostconn.msg     - message catalog for AIX v3 message facility
+ 
+    onhost.profil    - control file used by onhost
+ 
+    onhost.cms       - CMS REXX code for most onhost commands
+    onhoste.cms      -   generates the host end of command flag line
+    onhostcp.cms     -   implements cp command, uses FTP
+    onhostld.cms     -   initializes the host for use by AIX onhost
+ 
+    onhost.tso       - TSO REXX code for most onhost commands
+    onhoste.tso      -   generates the host end of command flag line
+    onhostcp.tso     -   implements cp command, uses FTP
+    onhostld.tso     -   initializes the host for use by AIX onhost
+    onhostmn.tso     -   implements man command for TSO
+ 
+   2.  You should make the hostconnect and onhost binary by entering
+ 
+          chmod u+x onhost.make
+          onhost.make
+ 
+       Then move the onhost and hostconnect binary to a directory in
+       the normal search path such as /usr/bin.  Copy onhost.profil
+       into the same directory.  Change the owner to bin for these
+       files, and change the mode to 755.  The AIX/370 binary for
+       hostconnect must have the suid bit on if you wish to use LDSF.
+ 
+   3.  Create an onhost.alias file in your home directory. Refer to 
+       hostconnect.l for details.  It may be simpler to have no 
+       onhost.alias file and take the defaults.
+ 
+   4.  Try your 3270 emulator program to see if you can establish a
+       connection to the host system, for example;
+ 
+          tn -e3270 hostname
+ 
+       If you are presented with your host logon screen, the connection
+       is made.  This is roughly equivalent to the onhost commands,
+ 
+          hostconnect hostname xxx
+          onhost
+ 
+       where xxx is 3 for CMS or 5 for TSO to suppress automatic login.
+       (See hostconnect.l for a discussion of style.)
+ 
+   5.  Complete the login to the host system and complete installation
+       of onhost on the host by following the readme.cms or readme.tso
+       files.  Logoff the host when you are finished.
+ 
+   6.  Now try hostconnect.
+ 
+          hostconnect hostname xxx
+ 
+       where xxx is 2 for CMS or 4 for TSO to request automatic login.  It
+       will prompt you for your userid and passwd during automatic login.
+       You will see a series of characters which track the login attempt.
+       A final character of S means that the connection is satisfactory;
+       a final character of F means that the connection failed.  If the
+       login process does not complete, enter control-c to terminate
+       the login.  If an S is not received, then check and correct your
+       host installation.  The -d option of hostconnect may be of some use.
+ 
+   7.  Now try a simple onhost command such as
+          onhost date
+       which should return something like
+          Tue Aug 30 15:15:35 PDT 1988
+ 
+       To try full-screen mode, simple enter
+          onhost
+       and use the host system as you normally would.  Do not log out
+       of the host when you wish to return to AIX.  Simply close the
+       terminal emulator.  The host connection will remain active.
+ 
+       To drop the host connection, enter
+          onhost logout
+ 
+   8.  This completes the installation of onhost.

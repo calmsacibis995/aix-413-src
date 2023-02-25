@@ -1,0 +1,44 @@
+* @(#)98	1.1  src/tcpip/usr/samples/snmpd/dpi/README, snmp, tcpip411, GOLD410 9/13/93 14:57:35
+*
+* COMPONENT_NAME: (SNMP) Simple Network Management Protocol Daemon
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1993
+* All Rights Reserved
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+* Licensed Material - Property of IBM
+*
+* FILE:	/usr/samples/snmpd/dpi/README
+*
+
+(1) The DPI proxy agent code is provided as examples.
+
+    INTERNATIONAL BUSINESS MACHINES CORP. PROVIDES THIS SOURCE CODE
+    EXAMPLE "AS IS," WITHOUT WARRANTY OF ANY KIND EITHER EXPRESSED OR
+    IMPLIED INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+    MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  The entire
+    risk as to the quality and performance of this example is with you.
+    Should any part of this source code example prove defective you (and
+    not IBM or an IBM authorized dealer) assume the entire cost of all
+    necessary servicing, repair, or correction.
+
+    If you should experience problems using the DPI user interface or
+    any of the DPI example files, there is an internet mail address to
+    which you can direct your concerns for these examples.  Please
+    send mail to smux@bach.austin.ibm.com stating your questions and/or
+    problems.  Please include your return internet mail address in your
+    note.  We cannot guarantee that we will provide you with an answer,
+    but we will attempt to answer all queries concerning the SMUX and
+    DPI interfaces.  In the event that the above internet address becomes
+    inaccessible, please follow the normal problem reporting procedures.
+
+(2) The DPI protocol documentation is provided in the following files:
+      /usr/samples/snmpd/dpi/rfc1228.txt
+      /usr/samples/snmpd/dpi/dpi11.txt
+
+(3) Source code has been provided which converts DPI protocol into SMUX
+    protocol.  See the files in the /usr/samples/snmpd/dpi/dpid directory
+    for this functionality.

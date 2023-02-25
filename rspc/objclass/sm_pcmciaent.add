@@ -1,0 +1,344 @@
+* @(#)97	1.2  src/rspc/objclass/sm_pcmciaent.add, pcmciaent, rspc411, 9437A411a 9/8/94 09:18:04
+#
+#  COMPONENT_NAME: (PCMCIAENT)
+#
+#  FUNCTIONS: Ethernet PCMCIA Device User Interface (SMIT)
+#
+#  ORIGINS: 27
+#
+#  IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+#  combined with the aggregated modules for this product)
+#                   SOURCE MATERIALS
+#  (C) COPYRIGHT International Business Machines Corp. 1994
+#  All Rights Reserved
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+#       SMIT Menu objects
+#
+
+#-----------------------------------------------------------------------------
+# Add a Ethernet PCMCIA Adapter
+#-----------------------------------------------------------------------------
+# This is a name select to map the PCMCIA name select created id to an
+# existing Ethernet Dialog Panel
+#
+sm_name_hdr:
+    id                        = "mkdevpcmcia_hdr_a4000200_pcmcia"
+    next_id                   = "mkenet_hdr_a4000200_pcmcia"
+    option_id                 = "mkdevenet_name_opt"
+    has_name_select           = "y"
+    name                      = "Add an Ethernet PCMCIA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 875
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = ""
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+# Name selector command option for mapping PCMCIA name select to Ethernet
+# dialog panels.
+sm_cmd_opt:
+    id                        = "mkdevenet_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Add an Ethernet PCMCIA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 875
+    op_type                   = "n"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+# The dialogue headers follow.  There is one for each unique Predefined
+# Ethernet adapter instance.  Their Id's are built as follows:
+#       "mkenet_hdr_xxx_yyy"
+# where xxx is the type and yyy is the subclass.
+sm_cmd_hdr:
+    id                        = "mkenet_hdr_a4000200_pcmcia"
+    option_id                 = "mkenet_pcmcia"
+    has_name_select           = "y"
+    name                      = "Add an Ethernet PCMCIA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 875
+    cmd_to_exec               = "x()
+{
+mkdev $* 
+cfgmgr
+}
+x"
+    ask                       = "n"
+    exec_mode                 = "P"
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+
+# Dialog header command options.
+
+sm_cmd_opt:
+    id                        = "mkenet_pcmcia"
+    id_seq_num                = "002"
+    disc_field_name           = "class"
+    name                      = "Device Class"
+    name_msg_file             = ""
+    name_msg_set              = ""
+    name_msg_id               = ""
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-c "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+#Display subclass of device
+sm_cmd_opt:
+    id                        = "mkenet_pcmcia"
+    id_seq_num                = "003"
+    disc_field_name           = "subclass"
+    name                      = "Device Subclass"
+    name_msg_file             = ""
+    name_msg_set              = ""
+    name_msg_id               = ""
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-s "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+#Display device type
+sm_cmd_opt:
+    id                        = "mkenet_pcmcia"
+    id_seq_num                = "004"
+    disc_field_name           = "type"
+    name                      = "Device Type"
+    name_msg_file             = ""
+    name_msg_set              = ""
+    name_msg_id               = ""
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-t "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+#Display slot number.
+sm_cmd_opt:
+    id                        = "mkenet_pcmcia"
+    id_seq_num                = "005"
+    disc_field_name           = "connection"
+    name                      = "Slot number"
+    name_msg_file             = ""
+    name_msg_set              = ""
+    name_msg_id               = ""
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-w "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+#Display logical name.
+sm_cmd_opt:
+    id                        = "mkenet_pcmcia"
+    id_seq_num                = "010"
+    disc_field_name           = "parent"
+    name                      = "Parent Device"
+    name_msg_file             = ""
+    name_msg_set              = ""
+    name_msg_id               = ""
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-p "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+#-----------------------------------------------------------------------------
+# Change / Show Characteristics of a Ethernet PCMCIA Adapter
+#-----------------------------------------------------------------------------
+# This is a name select to map the PCMCIA name select created id to an
+# existing Ethernet Dialog Panel
+#
+sm_name_hdr:
+    id                        = "chdevpcmcia_hdr_a4000200_pcmcia"
+    next_id                   = "chgenet_hdr_a4000200_pcmcia"
+    option_id                 = "chdevenet_name_opt"
+    has_name_select           = "y"
+    name                      = "Change/Show Characteristics of an Ethernet PCMCIA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 876
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = ""
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+# Name selector command option for mapping PCMCIA name select to Ethernet
+# dialog panels.
+sm_cmd_opt:
+    id                        = "chdevenet_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Change/Show Characteristics of an Ethernet PCMCIA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 876
+    op_type                   = "n"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+# The dialogue headers follow.  There is one for each unique Predefined
+# Ethernet adapter instance.  Their Id's are built as follows:
+#       "chgenet_hdr_xxx_yyy"
+# where xxx is the type and yyy is the subclass.
+sm_cmd_hdr:
+    id                        = "chgenet_hdr_a4000200_pcmcia"
+    option_id                 = "enet_chg,enet_chg_pcmcia"
+    has_name_select           = "y"
+    name                      = "Change/Show Characteristics of an Ethernet PCMCIA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 876
+    cmd_to_exec               = "chdev "
+    ask                       = ""
+    exec_mode                 = "P"
+    ghost                     = "n"
+    cmd_to_discover           = "lsattr "
+    cmd_to_discover_postfix   = "-l logicname -E -O"
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+# Dialog header command options.
+
+#Display media type selection.
+sm_cmd_opt:
+    id                        = "enet_chg_pcmcia"
+    id_seq_num                = "050"
+    disc_field_name           = "media_type"
+    name                      = "Media Type"
+    name_msg_file             = "devices_ent.cat"
+    name_msg_set              = 27
+    name_msg_id               = 32
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a media_type="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = "bnc,dix,tp"
+    values_msg_file           = "devices_ent.cat"
+    values_msg_set            = 27
+    values_msg_id             = 43
+    aix_values                = "bnc,dix,tp"
+    help_msg_id               = "27,44"
+    help_msg_loc              = "devices_ent.cat"

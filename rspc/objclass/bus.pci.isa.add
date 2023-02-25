@@ -1,0 +1,61 @@
+* @(#)56 1.10 src/rspc/objclass/bus.pci.isa.add, rspccfg, rspc41J, 9520B_all 5/18/95 13:47:53
+*
+* COMPONENT_NAME: rspccfg 
+*
+* FUNCTIONS: Predefine data for the isa bus
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*
+* led of 79a displays as 79C
+
+PdDv:
+	class = "bus"
+	subclass = "pci"
+	type = "isa"
+	uniquetype = "bus/pci/isa"
+	prefix = "bus"
+	devid =	"PNP0A00"
+	base = 1
+	has_vpd = 0
+	detectable = 1
+	chgstatus = 0
+	bus_ext = 1
+	fru = 2
+	led = 0x79a
+	setno = 3
+	msgno = 3
+	catalog = "devices.cat"
+	DvDr = ""
+	Define = "/usr/lib/methods/define_rspc"
+	Configure = "/usr/lib/methods/cfgbus_isa"
+	Change = ""
+	Unconfigure = "/usr/lib/methods/ucfgdevice"
+	Undefine = "/usr/lib/methods/undefine"
+	Start = ""
+	Stop = ""
+
+PdAt:
+        uniquetype = "bus/pci/isa"
+        attribute = "bus_id"
+        deflt = "0x100"
+        values ="0x100"
+        width = ""
+        type = "R"
+        generic = ""
+        rep = "n"
+        nls_index = 0
+
+
+PdCn:
+	uniquetype = "bus/pci/isa"
+	connkey = "isa"
+	connwhere = ""
+

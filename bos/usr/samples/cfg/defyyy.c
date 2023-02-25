@@ -1,0 +1,300 @@
+static char sccsid[] = "@(#)76	1.2  src/bos/usr/samples/cfg/defyyy.c, cfgsamp, bos411, 9428A410j 6/7/91 11:54:51";
+
+/*
+ * COMPONENT_NAME: (BOSSAMP) IBM BOS Sample Program
+ *
+ * FUNCTIONS: NONE
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1990
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ THE SOURCE CODE EXAMPLES PROVIDED BY IBM ARE ONLY INTENDED TO ASSIST IN THE
+ DEVELOPMENT OF A WORKING SOFTWARE PROGRAM.  THE SOURCE CODE EXAMPLES DO NOT
+ FUNCTION AS WRITTEN:  ADDITIONAL CODE IS REQUIRED.  IN ADDITION, THE SOURCE
+ CODE EXAMPLES MAY NOT COMPILE AND/OR BIND SUCCESSFULLY AS WRITTEN.
+ 
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ IBM does not warrant that the contents of the source code examples, whether
+ individually or as one or more groups, will meet your requirements or that
+ the source code examples are error-free.
+
+ IBM may make improvements and/or changes in the source code examples at
+ any time.
+
+ Changes may be made periodically to the information in the source code
+ examples; these changes may be reported, for the sample device drivers
+ included herein, in new editions of the examples.
+
+ References in the source code examples to IBM products, programs, or
+ services do not imply that IBM intends to make these available in all
+ countries in which IBM operates.  Any reference to an IBM licensed
+ program in the source code examples is not intended to state or imply
+ that only IBM's licensed program may be used.  Any functionally equivalent
+ program may be used.
+
+ * RISC System/6000 is a trademark of International Business Machines 
+   Corporation.
+*/
+/*
+ * FUNCTIONS: Define method for tape device yyy
+ *
+ *
+ * interface:
+ * defyyy -c <class> -s <subclass> -t <type> -p <parent>
+ *        -w <connection> -l <name>
+*/
+
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/cfgdb.h>
+#include <sys/cfgodm.h>
+#include <cf.h>
+
+
+/* external odm manipulation functions */
+extern  int genseq();
+
+/*****									*/
+/***** Main Function							*/
+/*****									*/
+
+main(argc,argv,envp)
+int	argc;
+char	*argv[];
+char	*envp[];
+
+{
+extern  int     optind;         /* for getopt function */
+extern  char    *optarg;        /* for getopt function */
+
+
+char	*class,*subclass,*type,		/* parameter pointers */
+	*parent,*connect,*lname;
+char	sstring[256];			/* search string */
+char    parent_loc[LOCSIZE];            /* parents location */
+
+struct  Class   *predev,        /* handle for predefined devices class    */
+		*cusdev;        /* handle for customized devices class    */
+
+struct  PdDv    PdDv;           /* Structure for retrieving PdDv object */
+struct  PdCn    PdCn;           /* Structure for retrieving PdCn object */
+struct  CuDv    CuDv;           /* Structure for retrieving CuDv object */
+
+int     seqno;
+int	rc;
+int     errflg,c;               /* used in parsing parameters */
+
+	/*****								*/
+	/***** Parse Parameters 					*/
+	/*****								*/
+	errflg = 0;
+	class = subclass = type = parent = connect = lname = NULL;
+
+	while ((c = getopt(argc,argv,"c:s:t:p:w:l:")) != EOF) {
+		switch (c) {
+		case 'c':                       /* Device class */
+			if (class != NULL)
+				errflg++;
+			class = optarg;
+			break;
+		case 's':                       /* Device subclass */
+			if (subclass != NULL)
+				errflg++;
+			subclass = optarg;
+			break;
+		case 't':                       /* Device type */
+			if (type != NULL)
+				errflg++;
+			type = optarg;
+			break;
+		case 'p':                       /* Parent device name */
+			if (parent != NULL)
+				errflg++;
+			parent = optarg;
+			break;
+		case 'w':                       /* Connection location on */
+			if (connect != NULL)    /* parent */
+				errflg++;
+			connect = optarg;
+			break;
+		case 'l':                       /* User specified device */
+			if (lname != NULL)      /* name */
+				errflg++;
+			lname = optarg;
+			break;
+		default:
+			errflg++;
+		}
+	}
+	if (errflg)
+		/* error parsing parameters */
+		exit(E_ARGS);
+
+	/*****								*/
+	/***** Validate Parameters					*/
+	/*****								*/
+	/* class, subclass, and type must be for tape yyy */
+	if (strcmp(class,"tape") || strcmp(subclass,"xxx") ||
+							strcmp(type,"yyy"))
+		/* called for wrong type of device */
+		exit(E_TYPE);
+
+	/* parent and connection must be specified */
+	if (parent == NULL || connect == NULL)
+		/* parent or connection not specified */
+		exit(E_PARENT);
+
+	/* start up odm */
+	if (odm_initialize() == -1)
+		/* initialization failed */
+		exit(E_ODMINIT);
+
+	/* lock the database */
+	if (odm_lock("/etc/objrepos/config_lock",0) == -1)
+		/* failed to lock odm data base */
+		err_exit(E_ODMLOCK);
+
+	/* get predefined object for this device */
+	sprintf(sstring,"class = '%s' AND subclass = '%s' AND type = '%s'",
+						class,subclass,type);
+	rc = (int)odm_get_first(PdDv_CLASS,sstring,&PdDv);
+	if (rc==0) {
+		/* failed to get the PdDv object */
+		err_exit(E_NOPdDv);
+	} else if (rc==-1) {
+		/* ODM error */
+		err_exit(E_ODMGET);
+	}
+
+	/* open customized device object class */
+	if ((int)(cusdev=odm_open_class(CuDv_CLASS)) == -1)
+		/* error opening class */
+		err_exit(E_ODMOPEN);
+
+	/* Check parent device */
+	/* get parent customized device object */
+	sprintf(sstring,"name = '%s'",parent);
+	rc =(int)odm_get_first(cusdev,sstring,&CuDv);
+	if (rc==0) {
+		/* failed to get the parent CuDv object */
+		err_exit(E_NOCuDvPARENT);
+	} else if (rc==-1) {
+		/* ODM error */
+		err_exit(E_ODMGET);
+	}
+	strcpy(parent_loc,CuDv.location);
+
+	sprintf(sstring,"uniquetype = '%s' and connkey = '%s' and connwhere = '%s'",
+			CuDv.PdDvLn_Lvalue,subclass,connect);
+	rc = (int)odm_get_first(PdCn_CLASS,sstring,&PdCn);
+	if (rc==0) {
+		/* invalid connection */
+		err_exit(E_INVCONNECT);
+	} else if (rc==-1) {
+		/* ODM error */
+		err_exit(E_ODMGET);
+	}
+
+	/* Verify user supplied device name else generate a name */
+	if (lname == NULL) {
+		/* generate logical name for device */
+		if ((seqno=genseq(PdDv.prefix))<0) {
+			/* error making logical name */
+			err_exit(E_MAKENAME);
+		}
+		/* Put device name into new CuDv object */
+		sprintf(CuDv.name,"%s%d",PdDv.prefix,seqno);
+	} else {
+		/* Verify that user supplied name is not already in use */
+		sprintf(sstring,"name = '%s'",lname);
+		rc =(int)odm_get_first(cusdev,sstring,&CuDv);
+		if (rc==-1) {
+			/* ODM error */
+			err_exit(E_ODMGET);
+		} else if (rc != 0) {
+			/* Device name already in use */
+			err_exit(E_LNAME);
+		}
+		/* Put device name into new CuDv object */
+		strcpy(CuDv.name,lname);
+	}
+
+	/* Fill in remainder of new customized device object */
+
+	/* Set state to defined */
+	CuDv.status      = DEFINED;
+
+	/* Copy information from PdDv object */
+	CuDv.chgstatus   = PdDv.chgstatus;
+	strcpy(CuDv.ddins,PdDv.DvDr);
+	strcpy(CuDv.PdDvLn_Lvalue,PdDv.uniquetype);
+
+	/* Parent name and connection are as input */
+	strcpy(CuDv.parent,parent);
+	strcpy(CuDv.connwhere,connect);
+
+	/* Location code for tape device consists of three pairs of       */
+	/* digits separated by hyphens.  The first two digits are always  */
+	/* 00 and the next two identify the card's slot number.  The last */
+	/* two digits identify the connector on the adapter card.         */
+	sprintf(CuDv.location,"%s-%s",parent_loc,connect);
+
+
+	/* add customized object to customized devices object class */
+	if (odm_add_obj(cusdev,&CuDv) == -1)
+		/* error: add failed */
+		err_exit(E_ODMADD);
+
+	if (odm_close_class(CuDv_CLASS) == -1)
+		/* ODM error */
+		err_exit(E_ODMCLOSE);
+
+	/* terminate the odm */
+	odm_terminate();
+
+	/* device defined successfully */
+	/* Write name to stdout with a space appended */
+	fprintf(stdout,"%s ",CuDv.name);
+	exit(E_OK);
+}
+
+
+/*
+ * NAME: err_exit
+ *
+ * FUNCTION: Closes any open object classes and terminates ODM.  Used to
+ *           back out on an error.
+ *
+ * RETURNS:
+ *               None
+ */
+
+err_exit(exitcode)
+char    exitcode;
+{
+	odm_close_class(CuDv_CLASS);
+	odm_close_class(PdDv_CLASS);
+	odm_terminate();
+	exit(exitcode);
+}

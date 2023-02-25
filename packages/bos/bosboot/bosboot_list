@@ -1,0 +1,32 @@
+# @(#)97  1.2  src/packages/bos/bosboot/bosboot_list, bosboot, bos41B, 9504A 1/17/95 14:51:27
+#
+# COMPONENT_NAME: bosboot
+#
+# FUNCTIONS: bosboot_list
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1991, 1995
+# All Rights Reserved
+# Licensed Material - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#  FUNCTION: The file contains a list of files that if changed,
+#            will require a bosboot in an update
+#
+#  RETURN VALUE DESCRIPTION:
+#            This file is not an executable and is not shipped
+#            It is used by the bld tools to determine if a bosboot
+#            is needed.
+#
+./bootrec
+./usr/lib/boot/aixmon
+./usr/lib/boot/mkmboot
+./usr/lib/boot/unix_mp
+./usr/lib/boot/unix_up
+./usr/sbin/bootexpand
+./usr/sbin/bosboot
+./usr/sbin/mkboot
+./usr/sbin/mkram

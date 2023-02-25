@@ -1,0 +1,65 @@
+static char sccsid[] = "@(#)02	1.3  src/tcpip/usr/lib/libisode/int2strb.c, isodelib7, tcpip411, GOLD410 4/5/93 13:50:35";
+/*
+ * COMPONENT_NAME: (ISODELIB7) ISODE Libraries, Release 7
+ *
+ * FUNCTIONS: int2strb
+ *
+ * ORIGINS: 60
+ *
+ * FILE:	src/tcpip/usr/lib/libisode/int2strb.c
+ */
+
+/* int2strb.c - integer to string of bits */
+
+#ifndef	lint
+static char *rcsid = "$Header: /vikings/u/snmp/projects/harriet/RCS/src/tcpip/usr/lib/libisode/int2strb.c,v 1.2 93/02/05 17:04:38 snmp Exp $";
+#endif
+
+/* 
+ * $Header: /vikings/u/snmp/projects/harriet/RCS/src/tcpip/usr/lib/libisode/int2strb.c,v 1.2 93/02/05 17:04:38 snmp Exp $
+ *
+ *
+ * $Log:	int2strb.c,v $
+ * Revision 1.2  93/02/05  17:04:38  snmp
+ * ANSI - D67743
+ * 
+ * Revision 7.1  91/02/22  09:35:41  mrose
+ * Interim 6.8
+ * 
+ * Revision 7.0  89/11/23  22:12:39  mrose
+ * Release 6.0
+ * 
+ */
+
+/*
+ *				  NOTICE
+ *
+ *    Acquisition, use, and distribution of this module and related
+ *    materials are subject to the restrictions of a license agreement.
+ *    Consult the Preface in the User's Manual for the full terms of
+ *    this agreement.
+ *
+ */
+
+
+/* LINTLIBRARY */
+
+#include <stdio.h>
+#include <isode/psap.h>
+
+/*  */
+
+char   *int2strb (n, len)
+register int    n;
+int     len;
+{
+    register int    i;
+    static char buffer[sizeof (int) + 1];
+
+    bzero (buffer, sizeof (buffer));
+    for (i = 0; i < len; i++)
+	if (n & (1 << i))
+	    buffer[i / 8] |= (1 << (7 - (i % 8)));
+
+    return buffer;
+}

@@ -1,0 +1,431 @@
+# @(#)53        1.3  src/rspc/objclass/sm_idecdrom.add, idecd, rspc41J, 9510A 2/21/95 08:50:20
+#
+# COMPONENT_NAME: (idecdrom) IDE CDROM Device Driver ODM info
+#
+# FUNCTIONS: sm_idecdrom
+#
+# ORIGINS: 27
+#
+# IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+# combined with the aggregated modules for this product)
+#                  SOURCE MATERIALS
+# (C) COPYRIGHT International Business Machines Corp. 1995
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+# IDE CDROM
+sm_cmd_hdr:
+	id = "chgcdr_ide"
+	option_id = "cdrom_ide_chg,cdrom_ide_common"
+	has_name_select = "y"
+	name = "Change/Show Characteristics of a CD ROM Drive"
+	name_msg_file = "smit.cat"
+	name_msg_set = 25
+	name_msg_id = 106
+	cmd_to_exec = "chdev "
+	ask = ""
+	exec_mode = "P"
+	ghost = "n"
+	cmd_to_discover = "lsattr "
+	cmd_to_discover_postfix = "-l logicname -E -O"
+	name_size = 0
+	value_size = 0
+	help_msg_id = "1800197"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+# Other IDE CDROM
+sm_cmd_hdr:
+	id = "chgcdr_oicdrom_ide"
+	option_id = "cdrom_ide_chg,cdrom_ide_common,cdrom_oicdrom_common"
+	has_name_select = "y"
+	name = "Change/Show Characteristics of a CD ROM Drive"
+	name_msg_file = "smit.cat"
+	name_msg_set = 25
+	name_msg_id = 106
+	cmd_to_exec = "chdev "
+	ask = ""
+	exec_mode = "P"
+	ghost = "n"
+	cmd_to_discover = "lsattr "
+	cmd_to_discover_postfix = "-l logicname -E -O"
+	name_size = 0
+	value_size = 0
+	help_msg_id = "1800197"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "001"
+	id = "cdrom_ide_chg"
+	disc_field_name = "logicname"
+	name = "CD ROM Drive"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 425
+	op_type = ""
+	entry_type = "n"
+	entry_size = 0
+	required = "y"
+	prefix = "-l "
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "0420500"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "002"
+	id = "cdrom_ide_chg"
+	disc_field_name = "type"
+	name = "CD ROM Drive type"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 427
+	op_type = ""
+	entry_type = "n"
+	entry_size = 0
+	required = "n"
+	prefix = "-t "
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "0420501"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "003"
+	id = "cdrom_ide_chg"
+	disc_field_name = "subclass"
+	name = "CD ROM Drive interface"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 428
+	op_type = ""
+	entry_type = "n"
+	entry_size = 0
+	required = "n"
+	prefix = "-s "
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "0420502"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "004"
+	id = "cdrom_ide_chg"
+	disc_field_name = "desc"
+	name = "Description"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 7
+	op_type = ""
+	entry_type = "n"
+	entry_size = 0
+	required = "n"
+	prefix = ""
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "0420504"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "005"
+	id = "cdrom_ide_chg"
+	disc_field_name = "state"
+	name = "Status"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 8
+	op_type = ""
+	entry_type = "n"
+	entry_size = 0
+	required = "n"
+	prefix = ""
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "0420505"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "006"
+	id = "cdrom_ide_chg"
+	disc_field_name = "loc"
+	name = "Location"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 9
+	op_type = ""
+	entry_type = "n"
+	entry_size = 0
+	required = "n"
+	prefix = ""
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "5,1"
+	help_msg_loc = "ide.cat"
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "007"
+	id = "cdrom_ide_chg"
+	disc_field_name = "parent"
+	name = "Parent adapter"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 2
+	op_type = ""
+	entry_type = "n"
+	entry_size = 0
+	required = "n"
+	prefix = ""
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "0420503"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+sm_cmd_opt:
+	id_seq_num = "008"
+	id = "cdrom_ide_chg"
+	disc_field_name = "port"
+	name = "Connection address"
+	name_msg_file = "smit.cat"
+	name_msg_set = 27
+	name_msg_id = 6
+	op_type = ""
+	entry_type = "n"
+	entry_size = 0
+	required = "n"
+	prefix = ""
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = ""
+	values_msg_file = ""
+	values_msg_set = 0
+	values_msg_id = 0
+	aix_values = ""
+	help_msg_id = "5,2"
+	help_msg_loc = "ide.cat"
+	help_msg_base = ""
+	help_msg_book = ""
+
+# Display the prevent eject attribute
+sm_cmd_opt:
+	id_seq_num = "020"
+	id = "cdrom_ide_common"
+	disc_field_name = "prevent_eject"
+	name = "PREVENT ejection of media when open"
+	name_msg_file = "devices.cat"
+	name_msg_set = 51
+	name_msg_id = 3
+	op_type = "r"
+	entry_type = "n"
+	entry_size = 0
+	required = ""
+	prefix = "-a prevent_eject="
+	cmd_to_list_mode = ""
+	cmd_to_list = ""
+	cmd_to_list_postfix = ""
+	multi_select = ""
+	value_index = 0
+	disp_values = "yes,no"
+	values_msg_file = "smit.cat"
+	values_msg_set = 27
+	values_msg_id = 12
+	aix_values = "yes,no"
+	help_msg_id = "0420513"
+	help_msg_loc = ""
+	help_msg_base = ""
+	help_msg_book = ""
+
+# Set read time out attribute for oicdrom.
+sm_cmd_opt:
+    id                        = "cdrom_oicdrom_common"
+    id_seq_num                = "030"
+    disc_field_name           = "rw_timeout"
+    name                      = "READ time out value"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 51
+    name_msg_id               = 38 
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a rw_timeout="
+    cmd_to_list_mode          = "r"
+    cmd_to_list               = "lsattr -c cdrom -a rw_timeout -R"
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id = "5,3"
+    help_msg_loc = "ide.cat"
+    help_msg_base = ""
+    help_msg_book = ""
+
+# Set start unit time out attribute for oicdrom.
+sm_cmd_opt:
+    id                        = "cdrom_oicdrom_common"
+    id_seq_num                = "040"
+    disc_field_name           = "start_timeout"
+    name                      = "START UNIT time out value"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 51
+    name_msg_id               = 35
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a start_timeout="
+    cmd_to_list_mode          = "r"
+    cmd_to_list               = "lsattr -c cdrom -a start_timeout -R"
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id = "5,4"
+    help_msg_loc = "ide.cat"
+    help_msg_base = ""
+    help_msg_book = ""
+
+# Set play audio attribute for oicdrom.
+sm_cmd_opt:
+    id                        = "cdrom_oicdrom_common"
+    id_seq_num                = "050"
+    disc_field_name           = "audio_supported"
+    name                      = "Play AUDIO supported"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 51
+    name_msg_id               = 40
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a audio_supported="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27 
+    values_msg_id             = 12 
+    aix_values                = "yes,no"
+    help_msg_id = "5,5"
+    help_msg_loc = "ide.cat"
+    help_msg_base = ""
+    help_msg_book = ""
+
+# Set CD-DA density code attribute for oicdrom.
+sm_cmd_opt:
+    id                        = "cdrom_oicdrom_common"
+    id_seq_num                = "080"
+    disc_field_name           = "cdda_supported"
+    name                      = "CD-DA supported"
+    name_msg_file             = "ide.cat"
+    name_msg_set              = 4
+    name_msg_id               = 9
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a cdda_supported="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = "yes,no"
+    help_msg_id = "5,6"
+    help_msg_loc = "ide.cat"
+    help_msg_base = ""
+    help_msg_book = ""
+

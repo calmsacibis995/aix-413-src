@@ -1,0 +1,39 @@
+#!/usr/lib/drivers/pci/vcadd_pin
+* @(#)85  1.8  src/rspc/kernext/pci/pcivca/vcadd_pin.exp, pcivca, rspc41J, 9521A_all 5/23/95 03:48:19
+* vcadd_pin.exp
+*
+*   COMPONENT_NAME: (PCIVCA) PCI Video Capture Adapter Device Driver
+*
+*   FUNCTIONS:
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+*   All Rights Reserved
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+vca_intr
+V7310_PUTC
+V7310_GETC
+vca_logerr
+MotionResetHW
+vram_copy
+vca_setup_vptr
+pm_setup_vca
+reset_overlay_call
+power_ctl_call
+pm_vca_ptr
+vwork
+Existing_VCA_Request_Entry
+Save_current_reg
+Restore_current_reg
+RegBt812Get
+RegBt812Set
+vca_enable
+CfgSpaceRW
+_Acq_Waiting

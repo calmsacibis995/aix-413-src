@@ -1,0 +1,62 @@
+#!/bin/ksh
+# @(#)36	1.6  src/bos/usr/sbin/netstart/rc.bsdnet, cmdnet, bos411, 9428A410j 4/19/94 09:16:37
+# 
+# COMPONENT_NAME: CMDNET	(/etc/rc.bsdnet)
+# 
+# ORIGINS: 27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1991
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+LOGFILE=/tmp/rc.net.out	    # LOGFILE is where all stdout goes.
+>$LOGFILE		    # truncate LOGFILE.
+
+
+/bin/hostname aoot.austin.ibm.com 		>>$LOGFILE 2>&1
+
+##################################################################
+# Valid network interfaces are:
+# lo=local loopback, en=standard ethernet, et=802.3 ethernet
+# sl=serial line IP, tr=802.5 token ring, xs=X.25
+##################################################################
+
+/usr/sbin/ifconfig lo0 inet 127.0.0.1 up 	>>$LOGFILE 2>&1
+/usr/sbin/ifconfig en0 inet `hostname` up 	>>$LOGFILE 2>&1
+
+#/usr/sbin/route add 0 gateway 			>>$LOGFILE 2>&1
+#/usr/sbin/route add 192.9.201.0 gateway 	>>$LOGFILE 2>&1
+
+/usr/sbin/hostid `hostname`			>>$LOGFILE 2>&1
+/bin/uname -S`hostname|sed 's/\..*$//'`		>>$LOGFILE 2>&1
+
+##################################################################
+#  Special SLIP handling
+##################################################################
+if [ -f /etc/rc.net.serial ] ; then
+	/etc/rc.net.serial
+fi
+
+##################################################################
+#  Special X25 handling
+##################################################################
+if [ -f /etc/rc.net.x25 ] ; then
+	/etc/rc.net.x25
+fi
+
+###################################################
+# The socket default buffer size (initial advertized TCP window) is being
+# set to a default value of 16k (16384). This improves the performance
+# for ethernet and token ring networks.  Networks with lower bandwidth
+# such as SLIP (Serial Line Internet Protocol) and X.25 or higher bandwidth
+# such as Serial Optical Link and FDDI would have a different optimum
+# buffer size.
+# ( OPTIMUM WINDOW = Bandwidth * Round Trip Time )
+###################################################
+if [ -f /usr/sbin/no ] ; then
+	/usr/sbin/no -o tcp_sendspace=16384
+	/usr/sbin/no -o tcp_recvspace=16384
+fi

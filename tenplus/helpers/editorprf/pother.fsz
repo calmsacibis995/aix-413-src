@@ -1,0 +1,139 @@
+* File name: pother.frm
+* @(#)24	1.4  src/tenplus/helpers/editorprf/pother.fsz, tenplus, tenplus411, GOLD410 3/23/93 11:58:02
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 2
+	Flags = 0x1
+
+/fields:
+	Type = 1
+	Count = 5
+
+/fields/0:
+	Type = 1
+	Count = 4
+
+/fields/0/number:
+	Value = "1"
+
+/fields/0/name:
+	Value = "title"
+
+/fields/0/cat-msgno:
+	Value = "%-F_POTHER_TITLE"
+
+/fields/0/cat-deftxt:
+	Value = "                              Other Editor Options                              "
+
+/fields/1:
+	Type = 1
+	Count = 4
+
+/fields/1/number:
+	Value = "2"
+
+/fields/1/name:
+	Value = "wtext_1"
+
+/fields/1/cat-msgno:
+	Value = "%-F_POTHER_WTEXT_1"
+
+/fields/1/cat-deftxt:
+	Value = "       Wrap punctuation on FORMAT               "
+
+/fields/2:
+	Type = 1
+	Count = 7
+
+/fields/2/number:
+	Value = "3"
+
+/fields/2/name:
+	Value = "data"
+
+/fields/2/data-path:
+	Value = "data"
+
+/fields/2/ganged-to:
+	Value = "desc, type, name"
+
+/fields/2/zoom-form:
+
+/fields/2/crscroll:
+	Value = "x"
+
+/fields/2/pick-name:
+	Value = "e2task"
+
+/fields/3:
+	Type = 1
+	Count = 4
+
+/fields/3/number:
+	Value = "4"
+
+/fields/3/name:
+	Value = "wtext_2"
+
+/fields/3/cat-msgno:
+	Value = "%-F_POTHER_WTEXT_2"
+
+/fields/3/cat-deftxt:
+	Value = "       (Any non-space character means true.)    "
+
+/fields/4:
+	Type = 1
+	Count = 3
+
+/fields/4/data-path:
+	Value = "form"
+
+/fields/4/name:
+	Value = "FORM"
+
+/fields/4/invisible:
+	Value = "x"
+
+/invtext:
+	Type = 1
+	Count = 7
+
+/invtext/0:
+	Value = "[title                                                                         ]"
+
+/invtext/1:
+	Type = 0
+
+/invtext/2:
+	Type = 0
+
+/invtext/3:
+	Value = "\011\011\011\011\011\011              \023\021\004"
+
+/invtext/4:
+	Value = "[wtext_1                                                     ]\001`\001"
+
+/invtext/5:
+	Value = "[wtext_2                                                     ]\006\021\007"
+
+/invtext/6:
+

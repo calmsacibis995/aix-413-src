@@ -1,0 +1,46 @@
+/* @(#)98        1.2  src/packages/stacklist/ums.master, pkg, pkg41J, 9516a 4/19/95 14:10:18                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for UMS LPP
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+UMS
+UMS.loc
+UMS.msg.de_DE
+UMS.msg.en_US
+UMS.msg.es_ES
+UMS.msg.fr_FR
+UMS.msg.it_IT
+UMS.msg.ja_JP
+UMS.msg.ko_KR
+UMS.msg.nl_BE
+UMS.msg.no_NO
+UMS.msg.sv_SE
+UMS.msg.zh_TW
+UMS.msg.De_DE
+UMS.msg.En_US
+UMS.msg.Es_ES
+UMS.msg.Fr_FR
+UMS.msg.It_IT
+UMS.msg.Ja_JP
+UMS.msg.Nl_BE
+UMS.msg.No_NO
+UMS.msg.Sv_SE
+devices.mca.dfe5
+devices.mca.8f96
+devices.isa_sio.IBM000E
+devices.isa_sio.IBM0017
+devices.isa_sio.baud
+UMS.info.en_US
+#if defined(PERSONAL)
+UMS.dictation
+#endif /* Personal (PowerDT) */

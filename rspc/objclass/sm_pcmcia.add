@@ -1,0 +1,906 @@
+* @(#)54	1.4  src/rspc/objclass/sm_pcmcia.add, rspccfg, rspc41J 11/14/94 11:53:21
+*
+*   COMPONENT_NAME: RSPCCFG
+*
+*   FUNCTIONS: PCMCIA SMIT menu objects
+*
+*   ORIGINS: 27
+*
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1994
+*   All Rights Reserved
+*   Licensed Materials - Property of IBM
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+sm_menu_opt:
+	id                  = "dev"
+	id_seq_num          = "185"
+	next_id             = "devpcmcia"
+	text                = "PCMCIA Cards"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 826
+	next_type           = "m"
+	alias               = ""
+	help_msg_id         = ""
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devpcmcia"
+	id_seq_num          = "010"
+	next_id             = "devinst_pcmcia"
+	text                = "Install PCMCIA Card Software"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 827
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "1800098"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devpcmcia"
+	id_seq_num          = "020"
+	next_id             = "mkdev_pcmcia"
+	text                = "Add a PCMCIA Card"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 828
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "180080"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devpcmcia"
+	id_seq_num          = "030"
+	next_id             = "chdev_pcmcia"
+	text                = "Change / Show Characteristics of a PCMCIA Card"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 829
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "1800197"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devpcmcia"
+	id_seq_num          = "040"
+	next_id             = "rmdev_pcmcia"
+	text                = "Remove a PCMCIA Card"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 830
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "1800198"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devpcmcia"
+	id_seq_num          = "050"
+	next_id             = "lsddev_pcmcia"
+	text                = "List all Defined PCMCIA Cards"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 831
+	next_type           = "d"
+	alias               = ""
+	help_msg_id         = "180030"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devpcmcia"
+	id_seq_num          = "060"
+	next_id             = "lssdev_pcmcia"
+	text                = "List all Supported PCMCIA Cards"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 832
+	next_type           = "d"
+	alias               = ""
+	help_msg_id         = "180029"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devpcmcia"
+	id_seq_num          = "070"
+	next_id             = "cfgmgr_pcmcia"
+	text                = "Configure all PCMCIA Cards Inserted after IPL"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 837
+	next_type           = "d"
+	alias               = ""
+	help_msg_id         = "180029"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devpcmcia"
+	id_seq_num          = "080"
+	next_id             = "recfg_pcmcia"
+	text                = "Configure a Defined PCMCIA Card"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 838
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "1800200"
+	help_msg_loc        = ""
+
+#-----------------------------------------------------------------------------
+# ---- fast paths ----
+#-----------------------------------------------------------------------------
+
+sm_menu_opt:
+	id                  = "chcard"
+	id_seq_num          = "021"
+	next_id             = "chdev_pcmcia"
+	text                = "Change / Show Characteristics of a PCMCIA Card"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 829
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "1800197"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "lscard"
+	id_seq_num          = "021"
+	next_id             = "lsddev_pcmcia"
+	text                = "List all PCMCIA Cards"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 833
+	next_type           = "d"
+	alias               = ""
+	help_msg_id         = "180030"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "pcmcia"
+	id_seq_num          = ""
+	next_id             = "devpcmcia"
+	text                = ""
+	text_msg_file       = ""
+	text_msg_set        = 0
+	text_msg_id         = 0
+	next_type           = "m"
+	alias               = "y"
+	help_msg_id         = ""
+	help_msg_loc        = ""
+
+
+#-----------------------------------------------------------------------------
+# Add a PCMCIA Card
+#-----------------------------------------------------------------------------
+# This uses a name select to list the possible predefined pcmcia devices.
+#       This name select generates a name in the form of
+#               "mkdevpcmcia_hdr_<type>_<subclass>"
+#       which should be the name of a ghost name select.
+# It then uses a name select to select parent device.
+# It then uses a ghost name select to map to existing dialogs.
+#
+sm_name_hdr:
+    id                        = "mkdev_pcmcia"
+    next_id                   = "mkdev_pcmcia_parent"
+    option_id                 = "mkdevpcmcia_name_opt"
+    has_name_select           = "n"
+    name                      = "Add a PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 828
+    type                      = "j"
+    ghost                     = "y"
+    cmd_to_classify           = "\
+xx () \n\
+{ \n\
+lsdev -P -s pcmcia -t $1 -F \"type:subclass:class:description\" \
+  | sed 's/^\\([^:]*\\):\\([^:]*\\):/\\1_\\2:&/' \n\
+} \n\
+xx "
+    cmd_to_classify_postfix   = " type "
+    raw_field_name            = "type"
+    cooked_field_name         = "_cookedname:type:subclass:class:desc"
+    next_type                 = "n"
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+# Name selector command option for listing PCMCIA adapters by logical
+# name.
+sm_cmd_opt:
+    id                        = "mkdevpcmcia_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Add a PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 828
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -P -c adapter -s pcmcia -F \"type subclass description\" "
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04201"
+    help_msg_loc              = ""
+
+sm_name_hdr:
+    id                        = "mkdev_pcmcia_parent"
+    next_id                   = "mkdev_pcmcia_conn"
+    option_id                 = "mkdevpcmcia_name1_opt"
+    has_name_select           = "n"
+    name                      = "Add a PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 828
+    type                      = "j"
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "parent"
+    cooked_field_name         = "_cookedname"
+    next_type                 = "n"
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+# Name selector command option for listing PCMCIA adapters by logical
+# name.
+sm_cmd_opt:
+    id                        = "mkdevpcmcia_name1_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Parent Device"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 834
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -C -t pcmcia"
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+
+sm_name_hdr:
+    id                        = "mkdev_pcmcia_conn"
+    next_id                   = "mkdevpcmcia_hdr_"
+    option_id                 = "mkdevpcmcia_name2_opt"
+    has_name_select           = "n"
+    name                      = "Add a PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 828
+    type                      = "c"
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "connection"
+    cooked_field_name         = "_cookedname"
+    next_type                 = "n"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+# Name selector command option for listing PCMCIA adapters by logical
+# name.
+sm_cmd_opt:
+    id                        = "mkdevpcmcia_name2_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Slot number"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 836
+    op_type                   = "l"
+    entry_type                = "#"
+    entry_size                = 1
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsconn "
+    cmd_to_list_postfix       = " -p parent "
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+#-----------------------------------------------------------------------------
+# Change / Show Characteristics a PCMCIA Card
+#-----------------------------------------------------------------------------
+# This uses a name select to list the possible defined pcmcia devices.
+#
+sm_name_hdr:
+    id                        = "chdev_pcmcia"
+    next_id                   = "chdevpcmcia_hdr_"
+    option_id                 = "chdevpcmcia_name_opt"
+    has_name_select           = "n"
+    name                      = "Change / Show Characteristics of a PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 829
+    type                      = "c"
+    ghost                     = "y"
+    cmd_to_classify           = "\
+xx () \n\
+{ \n\
+lsdev -C -l $1 -F \"type:subclass:location:status:description\" \
+  | sed 's/^\\([^:]*\\):\\([^:]*\\):/\\1_\\2:&/' \n\
+} \n\
+xx "
+    cmd_to_classify_postfix   = " logicname "
+    raw_field_name            = "logicname"
+    cooked_field_name         = "_cookedname:type:subclass:loc:state:desc"
+    next_type                 = "n"
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+# Name selector command option for listing PCMCIA adapters by logical
+# name.
+sm_cmd_opt:
+    id                        = "chdevpcmcia_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Change / Show Characteristics of a PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 829
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -C -c adapter -s pcmcia "
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+#-----------------------------------------------------------------------------
+# Remove a PCMCIA Card
+#-----------------------------------------------------------------------------
+# This uses a name select to list the possible defined pcmcia devices.
+#
+sm_name_hdr:
+    id                        = "rmdev_pcmcia"
+    next_id                   = "rmdev_pcmcia_hdr"
+    option_id                 = "rmdevpcmcia_name_opt"
+    has_name_select           = "n"
+    name                      = "Remove a PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 830
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "logicname"
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = "1800198"
+    help_msg_loc              = ""
+
+# Name selector command option for listing PCMCIA adapters by logical
+# name.
+sm_cmd_opt:
+    id                        = "rmdevpcmcia_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Remove a PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 830
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -C -c adapter -s pcmcia "
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+# Dialogue header
+sm_cmd_hdr:
+    id                        = "rmdev_pcmcia_hdr"
+    option_id                 = "rmdev_pcmcia_hdr_opt"
+    has_name_select           = "y"
+    name                      = "Remove a PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 830
+    cmd_to_exec               = "rmdev "
+    ask                       = "y"
+    exec_mode                 = ""
+    ghost                     = "n"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "1800198"
+    help_msg_loc              = ""
+
+# Command options
+sm_cmd_opt:
+    id                        = "rmdev_pcmcia_hdr_opt"
+    id_seq_num                = "010"
+    disc_field_name           = "logicname"
+    name                      = "PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 825
+    op_type                   = ""
+    entry_type                = ""
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-l "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04201708"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "rmdev_pcmcia_hdr_opt"
+    id_seq_num                = "020"
+    disc_field_name           = ""
+    name                      = "KEEP definition in database"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 10
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = " "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = ",-d "
+    help_msg_id               = "180096"
+    help_msg_loc              = ""
+
+
+#-----------------------------------------------------------------------------
+# List All Defined Devices
+#-----------------------------------------------------------------------------
+# This uses a ghost dialogue to list all the current devices in the
+# customized database.  The lsdev command is executed from this dialogue.
+#
+sm_cmd_hdr:
+    id                        = "lsddev_pcmcia"
+    option_id                 = ""
+    has_name_select           = "n"
+    name                      = "List All Defined PCMCIA Cards"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 831
+    cmd_to_exec               = "lsdev -C -c adapter -s pcmcia "
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "180030"
+    help_msg_loc              = ""
+
+#-----------------------------------------------------------------------------
+# List All Supported Devices
+#-----------------------------------------------------------------------------
+# This uses a ghost dialogue to list all the supported devices in the
+# predefined database.  The lsdev command is executed from this dialogue.
+#
+sm_cmd_hdr:
+    id                        = "lssdev_pcmcia"
+    option_id                 = ""
+    has_name_select           = "n"
+    name                      = "List All Supported PCMCIA Cards"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 832
+    cmd_to_exec               = "lsdev -P -c adapter -s pcmcia "
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "180029"
+    help_msg_loc              = ""
+
+
+#-----------------------------------------------------------------------------
+# Configure all PCMCIA Card Inserted after IPL
+#-----------------------------------------------------------------------------
+#
+sm_cmd_hdr:
+    id                        = "cfgmgr_pcmcia"
+    option_id                 = ""
+    has_name_select           = "n"
+    name                      = "Configure all PCMCIA Cards Inserted after IPL"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 837
+    cmd_to_exec               = "cfgmgr "
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+#-----------------------------------------------------------------------------
+# Configure a Defined PCMCIA Card
+#-----------------------------------------------------------------------------
+#
+sm_name_hdr:
+    id                        = "recfg_pcmcia"
+    next_id                   = "recfg_pcmcia_body"
+    option_id                 = "recfg_pcmcia_opt0"
+    has_name_select           = "n"
+    name                      = "Configure a Defined PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 838
+    type                      = "j"
+    ghost                     = "y"
+    cmd_to_classify           = "\
+xx () \n\
+{ \n\
+lsdev -C -l $1 -F \"type:subclass:location:status:description:connwhere:parent\" \
+  | sed 's/^\\([^:]*\\):\\([^:]*\\):/\\1_\\2:&/' \n\
+} \n\
+xx "
+    cmd_to_classify_postfix   = " logicname "
+    raw_field_name            = "logicname"
+    cooked_field_name         = "_cookedname:type:subclass:loc:state:desc:slot:parent"
+    next_type                 = "d"
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+# Name selector command option for listing PCMCIA adapters by logical
+# name.
+sm_cmd_opt:
+    id                        = "recfg_pcmcia_opt0"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Configure a Defined PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 838
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -C -c adapter -s pcmcia -S defined"
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+sm_cmd_hdr:
+    id                        = "recfg_pcmcia_body"
+    option_id                 = "recfg_pcmcia_opt1"
+    has_name_select           = "y"
+    name                      = "Configure a Defined PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 838
+    cmd_to_exec               = "\
+xx(){ \n\
+  if [ $# -eq 2 ] ; then \n\
+	chdev -l $1 -w $2 \n\
+  fi \n\
+  mkdev -l $1
+} \n\
+xx "
+    ask                       = "n"
+    exec_mode                 = ""
+    ghost                     = "n"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "recfg_pcmcia_opt1"
+    id_seq_num                = "010"
+    disc_field_name           = "logicname"
+    name                      = "PCMCIA Card"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 825
+    op_type                   = ""
+    entry_type                = ""
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04201708"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "recfg_pcmcia_opt1"
+    id_seq_num                = "020"
+    disc_field_name           = "slot"
+    name                      = "Slot number"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 836
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsconn -k pcmcia "
+    cmd_to_list_postfix       = " -p parent "
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = ""
+    values_msg_id             = ""
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+#-----------------------------------------------------------------------------
+# Install PCMCIA Card Software
+#     manual device installation
+#-----------------------------------------------------------------------------
+
+sm_name_hdr:
+	id                       ="devinst_pcmcia"
+	next_id                  ="devinst_pcmcia.hdr"
+	option_id                ="devinst_pcmcia.name_select"
+	name                     ="Install Additional Device Software"
+	name_msg_file            ="smit.cat"
+	name_msg_set             =25
+	name_msg_id              =835
+	type                     ="c"
+	ghost                    ="n"
+	cmd_to_classify          = ""
+	cmd_to_classify_postfix = ""
+	raw_field_name           ="_rawname"
+	cooked_field_name        =""
+	help_msg_id              ="1800098"
+	help_msg_loc             =""
+
+sm_cmd_opt:
+	id                       ="devinst_pcmcia.name_select"
+	id_seq_num               ="0"
+	disc_field_name          =""
+	name                     ="INPUT device / directory for software"
+	name_msg_file            ="smit.cat"
+	name_msg_set             =1
+	name_msg_id              =626
+	op_type                  ="l"
+	entry_type               ="t"
+	entry_size               =0
+	required                 ="+"
+	prefix                   ="-d"
+	cmd_to_list_mode         ="1"
+	cmd_to_list              = "/usr/lib/instl/sm_inst list_devices"
+	cmd_to_list_postfix      =""
+	multi_select             ="n"
+	value_index              =0
+	disp_values              =""
+	values_msg_file          =""
+	values_msg_set           =0
+	values_msg_id            =0
+	aix_values               =""
+	help_msg_id              ="0503001"
+	help_msg_loc             =""
+
+sm_cmd_hdr:
+	id                       ="devinst_pcmcia.hdr"
+	option_id                ="devinst_pcmciadev,devinst_pcmciaopt"
+	has_name_select          ="y"
+	name                     ="Install Additional Device Software"
+	name_msg_file            ="smit.cat"
+	name_msg_set             =25
+	name_msg_id              =835
+	cmd_to_exec              =" dev_install()\n\
+{\n\
+echo $* | grep -q '@@' \n\
+if [ $? = 1 ] \n\
+then \n\
+	ALLCHAR=`echo $* | tr \" \" \"\\012\" | sed \"1d\"`  \n\
+	if [[ $ALLCHAR = \'ALL\' || $ALLCHAR = \'all\'  ]] \n\
+	then\n\
+		echo \"devices.pcmcia.\" > /tmp/device.smit\n\
+	else\n\
+		echo $* | tr \" \" \"\\012\" | sed \"1d\" > /tmp/device.smit \n\
+	fi\n\
+else \n\
+	echo $* | tr \" \" \"\\012\" | sed \"1d\" | grep "^@@" | sed 's/@@//' > /tmp/device.smit \n\
+fi \n\
+ISCD=`/usr/lib/assist/check_cd $1` \n\
+if [ x$ISCD = x0 ] \n\
+then \n\
+	devinstall -v -f /tmp/device.smit $1 \n\
+	rm /tmp/device.smit \n\
+	exit $? \n\
+fi \n\
+INSTDIR=`/usr/lib/assist/mount_cd $1` \n\
+if [ $? = 0 ]\n\
+then \n\
+	devinstall -v -f /tmp/device.smit -d$INSTDIR \n\
+	/usr/lib/assist/unmount_cd $1\n\
+	rm /tmp/device.smit \n\
+	exit $? \n\
+fi\n\
+rm /tmp/device.smit \n\
+exit $?\n\
+}\n\
+dev_install"
+	ask                      ="y"
+	exec_mode                =""
+	ghost                    ="n"
+	cmd_to_discover          =""
+	cmd_to_discover_postfix  =""
+	name_size                =0
+	value_size               =0
+	help_msg_id              ="1800098"
+	help_msg_loc             =""
+
+
+sm_cmd_opt:
+	id                       ="devinst_pcmciadev"
+	id_seq_num               ="010"
+	disc_field_name          ="_rawname"
+	name                     ="INPUT device / directory for software"
+	name_msg_file            ="smit.cat"
+	name_msg_set             =1
+	name_msg_id              =626
+	op_type                  =""
+	entry_type               ="n"
+	entry_size               =0
+	required                 ="+"
+	prefix                   ="-d"
+	cmd_to_list_mode         =""
+	cmd_to_list              =""
+	cmd_to_list_postfix      =""
+	multi_select             ="n"
+	value_index              =0
+	disp_values              =""
+	values_msg_file          =""
+	values_msg_set           =0
+	values_msg_id            =0
+	aix_values               =""
+	help_msg_id              ="0503001"
+	help_msg_loc             =""
+
+sm_cmd_opt:
+	id                       ="devinst_pcmciaopt"
+	id_seq_num               ="020"
+	disc_field_name          =""
+	name                     ="SOFTWARE to install"
+	name_msg_file            ="smit.cat"
+	name_msg_set             =1
+	name_msg_id              =620
+	op_type                  ="l"
+	entry_type               ="t"
+	entry_size               =0
+	required                 ="+"
+	prefix                   ="--"
+	cmd_to_list_mode         ="a"
+	cmd_to_list              ="listprod()\n\
+{\n\
+ISCD=`/usr/lib/assist/check_cd $1` \n\
+if [ x$ISCD = x0 ] \n\
+then \n\
+  installp -JqLd $1 2>&1 | egrep \"devices.pcmcia.\" > /tmp/device.smit2 \n\
+  /usr/lib/instl/sm_inst installp_format -i -n -O -P /tmp/device.smit2 \n\
+  rm /tmp/device.smit2 \n\
+  exit $? \n\
+fi \n\
+INSTDIR=`/usr/lib/assist/mount_cd $1` \n\
+if [ $? = 0 ]\n\
+then \n\
+  installp -JqLd$INSTDIR  2>&1 | egrep \"devices.pcmcia.\" > /tmp/device.smit2 \n\
+  /usr/lib/instl/sm_inst installp_format -i -n -O -P /tmp/device.smit2 \n\
+  rm /tmp/device.smit2 \n\
+  /usr/lib/assist/unmount_cd $1\n\
+  exit $? \n\
+fi \n\
+exit $? \n\
+}
+listprod"
+	cmd_to_list_postfix      = "_rawname"
+	multi_select             ="y"
+	value_index              =0
+	disp_values              =""
+	values_msg_file          =""
+	values_msg_set           =0
+	values_msg_id            =0
+	aix_values               =""
+	help_msg_id              ="1800110"
+	help_msg_loc             =""
+
+

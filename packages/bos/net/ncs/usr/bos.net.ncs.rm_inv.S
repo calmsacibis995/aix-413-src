@@ -1,0 +1,113 @@
+# @(#)31	1.5  src/packages/bos/net/ncs/usr/bos.net.ncs.rm_inv.S, pkgncs, pkg411, 9439C411a 9/30/94 12:26:08
+#
+#   COMPONENT_NAME: pkgncs
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+/usr/lib/ncs/VERSION:
+/usr/lib/ncs/cpyright:
+/usr/lib/ncs/bin:
+  symlinks=/etc/ncs
+/usr/lib/ncs/bin/drm_admin:
+  symlinks=/etc/ncs/drm_admin
+/usr/lib/ncs/bin/glbd:
+  symlinks=/etc/ncs/glbd
+/usr/lib/ncs/bin/lb_admin:
+  symlinks=/etc/ncs/lb_admin
+/usr/lib/ncs/bin/lb_find:
+  symlinks=/etc/ncs/lb_find
+/usr/lib/ncs/bin/llbd:
+  symlinks=/etc/ncs/llbd
+/usr/lib/ncs/bin/nllbd:
+  symlinks=/etc/ncs/nllbd
+/usr/lib/ncs/bin/nrglbd:
+  symlinks=/etc/ncs/nrglbd
+/usr/lib/ncs/bin/stcode:
+  symlinks=/etc/ncs/stcode
+/usr/lib/ncs/bin/uuid_gen:
+  symlinks=/etc/ncs/uuid_gen
+/usr/lib/ncs/cat/files/glb_obj.txt:
+/usr/lib/ncs/cat/files/glb_site.txt:
+/usr/lib/ncs/cat/files/uuidname.txt:
+/usr/lib/ncs/cat/utils-a/drm_admin:
+/usr/lib/ncs/cat/utils-a/glbd:
+/usr/lib/ncs/cat/utils-a/lb_admin:
+/usr/lib/ncs/cat/utils-a/lb_find:
+/usr/lib/ncs/cat/utils-a/llbd:
+/usr/lib/ncs/cat/utils-a/nrglbd:
+/usr/lib/ncs/cat/utils-a/stcode:
+/usr/lib/ncs/cat/utils-a/uuid_gen:
+/usr/lib/ncs/lb_test/lb_test:
+/usr/lib/ncs/lib/uuidname.txt:
+  symlinks=/etc/ncs/uuidname.txt
+/usr/lib/ncs/perf/client:
+/usr/lib/ncs/perf/run_client:
+/usr/lib/ncs/perf/server:
+/usr/lib/ncs/lb_test:
+/usr/lib/ncs/perf:
+/usr/lib/ncs/cat/utils-a:
+/usr/lib/ncs/cat/files:
+/usr/lib/ncs/cat:
+/usr/lpp/ncs/examples/perf/server:
+/usr/lpp/ncs/examples/perf/run_client:
+/usr/lpp/ncs/examples/perf/client:
+/usr/lpp/ncs/examples/perf:
+/usr/lpp/ncs/examples/binop_c/server.c:
+/usr/lpp/ncs/examples/binop_c/client.c:
+/usr/lpp/ncs/examples/binop_c/binop.idl:
+/usr/lpp/ncs/examples/binop_c/binop.c:
+/usr/lpp/ncs/examples/binop_c/README:
+/usr/lpp/ncs/examples/binop_c/Makefile:
+/usr/lpp/ncs/examples/binop_c:
+/usr/lpp/ncs/examples/bank/uuidbind.c:
+/usr/lpp/ncs/examples/bank/util.h:
+/usr/lpp/ncs/examples/bank/util.c:
+/usr/lpp/ncs/examples/bank/shawmut:
+/usr/lpp/ncs/examples/bank/baybanks:
+/usr/lpp/ncs/examples/bank/bankd.c:
+/usr/lpp/ncs/examples/bank/bank.idl:
+/usr/lpp/ncs/examples/bank/bank.c:
+/usr/lpp/ncs/examples/bank/README:
+/usr/lpp/ncs/examples/bank/Makefile:
+/usr/lpp/ncs/examples/bank:
+/usr/lpp/ncs/examples:
+/usr/lpp/ncs/bin/uuid_gen:
+/usr/lpp/ncs/bin/nrglbd:
+/usr/lpp/ncs/bin/nidl:
+/usr/lpp/ncs/bin/llbd:
+/usr/lpp/ncs/bin/lb_admin:
+/usr/lpp/ncs/bin:
+/usr/lpp/ncs:
+/usr/include/idl/uuid.idl:
+/usr/include/idl/socket.idl:
+/usr/include/idl/rrpc.idl:
+/usr/include/idl/rpc.idl:
+/usr/include/idl/nbase.idl:
+/usr/include/idl/llb.idl:
+/usr/include/idl/lb.idl:
+/usr/include/idl/glb.idl:
+/usr/include/idl/conv.idl:
+/usr/include/idl/c/uuid.h:
+/usr/include/idl/c/socket.h:
+/usr/include/idl/c/rrpc.h:
+/usr/include/idl/c/rpc.h:
+/usr/include/idl/c/pfm.h:
+/usr/include/idl/c/nbase.h:
+/usr/include/idl/c/llb.h:
+/usr/include/idl/c/lb.h:
+/usr/include/idl/c/idl_base.h:
+/usr/include/idl/c/glb.h:
+/usr/include/idl/c/conv.h:
+/usr/include/idl/c/base.h:
+/usr/include/idl/c:
+/usr/include/idl/base.idl:
+/usr/include/idl:

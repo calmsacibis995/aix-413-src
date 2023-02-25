@@ -1,0 +1,216 @@
+* @(#)83	1.2  src/bos/usr/samples/cfg/xxx.add, cfgsamp, bos411, 9428A410j 6/7/91 12:00:10
+*
+* COMPONENT_NAME: (BOSSAMP) IBM BOS Sample Program
+*
+* FUNCTIONS: NONE
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1990
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*
+*	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+*
+* THE SOURCE CODE EXAMPLES PROVIDED BY IBM ARE ONLY INTENDED TO ASSIST IN THE
+* DEVELOPMENT OF A WORKING SOFTWARE PROGRAM.  THE SOURCE CODE EXAMPLES DO NOT
+* FUNCTION AS WRITTEN:  ADDITIONAL CODE IS REQUIRED.  IN ADDITION, THE SOURCE
+* CODE EXAMPLES MAY NOT COMPILE AND/OR BIND SUCCESSFULLY AS WRITTEN.
+* 
+* INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+* EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+* WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+* LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+* PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+* OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+* IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+* DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000 (1) 
+* WORKSTATION DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING,
+* REPAIR OR CORRECTION.
+*
+* IBM does not warrant that the contents of the source code examples, whether
+* individually or as one or more groups, will meet your requirements or that
+* the source code examples are error-free.
+*
+* IBM may make improvements and/or changes in the source code examples at
+* any time.
+*
+* Changes may be made periodically to the information in the source code
+* examples; these changes may be reported, for the sample device drivers
+* included herein, in new editions of the examples.
+*
+* References in the source code examples to IBM products, programs, or
+* services do not imply that IBM intends to make these available in all
+* countries in which IBM operates.  Any reference to an IBM licensed
+* program in the source code examples is not intended to state or imply
+* that only IBM's licensed program may be used.  Any functionally equivalent
+* program may be used.
+*
+* (1) RISC System/6000 is a trademark of International Business Machines 
+*     Corporation.
+*
+***********************************************************************
+*
+*  FUNCTIONS: Sample predefined data for adapter xxx
+*
+*
+***********************************************************************
+
+** Predefined Device object
+
+PdDv:
+* device is of class adapter
+	class = adapter
+* device is of subclass mca, indicating its connection type
+	subclass = mca
+* device is an xxx type of adapter card
+	type = xxx
+* prefix to be used when naming customized devices of this type
+	prefix = xxx
+* the card id obtained from pos(0) and pos(1)
+	devid = 0x1111
+* this devices is not a base device
+	base = 0
+* this devices has VPD
+	has_vpd = 1
+* this device is detectable
+	detectable = 1
+* change status is to be set to NEW when defining a device of this type
+	chgstatus = 0
+* this device is not a bus extension
+	bus_ext = 0
+* this device is a FRU (field replacable unit)
+	fru = 1
+* the LED value to be displayed when being configured at boot time
+	led = 0x711
+* the NLS message catalog containing text descriptions of adapter and
+* its attributes
+	catalog = "somename.cat"
+* the NLS message set number containing text descriptions of adapter and
+* its attributes
+	setno = 1
+* the NLS message number of the text description of the adapter
+	msgno = 1
+* there is no device driver to be loaded when the adapter is configured
+	DvDr = ""
+* the name of the define method
+	Define = /etc/methods/defxxx
+* the name of the configure method
+	Configure = /etc/methods/cfgxxx
+* the name of the change method
+	Change = /etc/methods/chgxxx
+* the name of the unconfigure method
+	Unconfigure = /etc/methods/ucfgxxx
+* the name of the undefine method
+	Undefine = /etc/methods/udefxxx
+* this device does not have a start method
+	Start = ""
+* this device does not have a stop method
+	Stop = ""
+* the adapters unique type consisting of class, subclass, and type
+	uniquetype = adapter/mca/xxx
+
+
+** Predefined Connection objects follow:
+** These identify four connection locations on the xxx adapter and that
+** devices of subclass xxx can be attached.
+
+PdCn:
+* the adapters unique type consisting of class, subclass, and type
+	uniquetype = adapter/mca/xxx
+* the subclass (connection type) of devices that can be attached
+	connkey = xxx
+* the connection location where a device can be attached
+	connwhere = 0
+	
+PdCn:
+	uniquetype = adapter/mca/xxx
+	connkey = xxx
+	connwhere = 1
+	
+PdCn:
+	uniquetype = adapter/mca/xxx
+	connkey = xxx
+	connwhere = 2
+	
+PdCn:
+	uniquetype = adapter/mca/xxx
+	connkey = xxx
+	connwhere = 3
+
+
+** Predefined Attribute objects follow:
+
+PdAt:
+* the adapters unique type consisting of class, subclass, and type
+	uniquetype = adapter/mca/xxx
+* attribute name
+	attribute = "bus_io_addr"
+* default value for attribute
+	deflt = 0x1000
+* possible values the attribute can be set to
+	values = "0x1000-0x1FFF,0x8"
+* range of addresses to be assigned (8 bytes)
+	width = 0x8
+* this is a bus I/O address attribute
+	type = O
+* this attribute is displayable but not user changeable
+	generic = D
+* this attribute is numeric and possible values are represented as a range
+	rep = nr
+* the NLS message number of the text description for this attribute
+	nls_index = 2
+
+PdAt:
+	uniquetype = adapter/mca/xxx
+	attribute = "dma_bus_mem"
+	deflt = 0x100000
+	values = "0x100000-0xfffff000,0x1000"
+	width = 0x40000
+* this is a bus memory address attribute
+	type = M
+	generic = D
+	rep = nr
+	nls_index = 3
+
+PdAt:
+	uniquetype = adapter/mca/xxx
+	attribute = "bus_intr_lvl"
+	deflt = 14
+	values = 9,10,14
+* width not used for this type of attribute
+	width = ""
+* this is a bus interrupt level attribute
+	type = I
+	generic = D
+* this attribute is numeric and possible values are represented as a list
+	rep = nl
+	nls_index = 4
+
+PdAt:
+	uniquetype = adapter/mca/xxx
+	attribute = "intr_priority"
+	deflt = 3
+	values = 3
+	width = ""
+* this is an interrupt priority class attribute
+	type = P
+	generic = D
+	rep = nl
+	nls_index = 5
+
+PdAt:
+	uniquetype = adapter/mca/xxx
+	attribute = "dma_lvl"
+	deflt = 5
+	values = "1-14,1"
+	width = ""
+* this is a dma level attribute
+	type = A
+	generic = D
+	rep = nr
+	nls_index = 6

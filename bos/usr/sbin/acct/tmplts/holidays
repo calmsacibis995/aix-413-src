@@ -1,0 +1,36 @@
+* @(#)02        1.5  src/bos/usr/sbin/acct/tmplts/holidays, cmdacct, bos411, 9428A410j 10/10/91 10:57:36
+*
+* COMPONENT_NAME:  (CMDACCT) Command Accounting
+*
+* FUNCTIONS: none
+*
+* ORIGINS: 26
+*
+* (C) COPYRIGHT International Business Machines Corp. 1989
+* All Rights Reserved
+* Licensed Material - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*
+* Prime/Nonprime Table for AIX Accounting System
+*
+* Curr	Prime	Non-Prime
+* Year	Start	Start
+*
+  1990  0800    1700
+*
+* Day of        Calendar        Company
+* Year          Date            Holiday
+*
+    1           Jan 1           New Year's Day
+   50           Feb 19          Washington's Birthday (Obsvd.)
+  148           May 28          Memorial Day (Obsvd.)
+  185           Jul 4           Independence Day
+  246           Sep 3           Labor Day
+  326           Nov 22          Thanksgiving Day
+  327           Nov 23          Day after Thanksgiving
+  359           Dec 25          Christmas Day
+  365           Dec 31          New Years Eve
+

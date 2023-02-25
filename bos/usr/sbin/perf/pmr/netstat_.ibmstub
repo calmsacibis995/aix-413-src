@@ -1,0 +1,90 @@
+#!/bin/ksh
+# @(#)87	1.4	src/bos/usr/sbin/perf/pmr/netstat_.sh, perfpmr, bos411, 9428A410j 4/14/94 10:09:16
+#
+# COMPONENT_NAME: perfpmr
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# netstat_
+#
+# invoke netstat before/during/after measurement period and generate report
+#
+
+if [ $# -ne 1 ]
+then
+ echo "netstat_: usage: netstat_ time"
+ echo "      time is total time in seconds to be measured."
+ exit -1
+fi
+
+# move to proper directory
+cd /var/perf/tmp
+
+# check total time specified for minimum amount of 60 seconds
+if [ $1 -lt 60 ]
+then
+ echo Minimum time interval required is 60 seconds
+ exit -1
+fi
+
+# determine interval
+if [ $1 -lt 601 ]
+then
+ INTERVAL=10
+else
+ INTERVAL=60
+fi
+
+# collect data before measurement interval
+echo "\n     NETSTAT_: Collecting NETSTAT statistics before the run...."
+echo "\n\n\n                   N  E  T  S  T  A  T    O  U  T  P  U  T\n" > netstat.int
+echo "\n\nHostname:  "  `hostname -s` >> netstat.int
+echo "\n\nTime before run:  " `date` >> netstat.int
+
+echo "\n\n\n       N  E  T  S  T  A  T    O  U  T  P  U  T    B  E  F  O  R  E    R  U  N\n" >> netstat.tmp
+for i in  v m rs s
+do
+ echo "\n\n\n                  N  E  T  S  T  A  T  -$i      O  U  T  P  U  T\n" >> netstat.tmp
+ netstat -$i >> netstat.tmp
+done
+
+# run netstat while command being executed
+echo "     NETSTAT_: Starting Network Statistics Monitor during run...."
+echo "\f\n\n\n       N  E  T  S  T  A  T    O  U  T  P  U  T    D  U  R  I  N  G    R  U  N\n" > netstat.tmp1
+trap 'kill -9 $!' 1 2 3 24
+netstat $INTERVAL >> netstat.tmp1 &
+NETSTAT=$!
+
+echo "\n\n\n     NETSTAT_: Waiting specified interval...."
+sleep $1 &
+wait $!
+kill -9 $NETSTAT
+
+# collect data after measurement interval
+echo "     NETSTAT_: Collecting NETSTAT statistics after the run...."
+echo "\n\nTime after run :  " `date` >> netstat.int
+
+# add before data to final file
+cat netstat.tmp >> netstat.int
+rm netstat.tmp
+
+# add during data to final file
+sed -e "8d" netstat.tmp1 >> netstat.int
+rm netstat.tmp1
+
+echo "\f\n\n\n       N  E  T  S  T  A  T    O  U  T  P  U  T    A  F  T  E  R    R  U  N\n" >> netstat.int
+for i in  v m rs s
+do
+ echo "\n\n\n                  N  E  T  S  T  A  T  -$i      O  U  T  P  U  T\n" >> netstat.int
+ netstat -$i >> netstat.int
+done
+
+echo "     NETSTAT_: Interval report is in file netstat.int"

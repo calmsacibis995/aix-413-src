@@ -1,0 +1,41 @@
+#!/bin/ksh
+# @(#)58	1.4	src/bos/usr/sbin/perf/diag_tool/cpu_.sh, pdt, bos411, 9428A410j 4/13/94 16:28:58
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# cpu_ 
+# Obtain cpu information, and record it in the
+# SM database
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+
+#
+#Awk script to record uptime info in the SM database
+#    SYS sys0 uptime
+#
+# Input: a file with the value of uptime in seconds
+# obtain uptime information and record it
+uptime_ | awk 'BEGIN {
+               }
+               {
+                 x=gsub(/-/," ",c)
+                 x=gsub(/-/,",",t)
+                 print "SYS", "sys0", c, "uptime", $1, 1.0, "I(" t ",S)"
+               }
+               END {
+               }' c=$curr t="0-0-1" >>$pdt_SM

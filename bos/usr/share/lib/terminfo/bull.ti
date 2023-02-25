@@ -1,0 +1,770 @@
+# @(#)47 1.3 src/bos/usr/share/lib/terminfo/bull.ti, terminfo, bos41J, 9513A_all 10/27/94 07:58:25
+#
+# COMPONENT_NAME: (TERMINFO) Terminfo
+#
+# FUNCTIONS: bull.ti
+#
+# ORIGINS: 83
+#
+# LEVEL 1, 5 Years Bull Confidential Information
+#
+
+#============================================#
+# BULL QUESTAR 210 `SDP' terminals emulation #
+#============================================#
+#
+# Description written by R.K.Saunders (Bull Transac)
+#
+# Modifications written by F. Girard (Bull MTS)
+#		19-05-87 V02.00.01
+#		17-12-87 V02.00.02
+#		15-09-89 V02.00.05
+
+dku7102-msgr|dku7102|tws2102|tws2105|tws2106|tws2107|tws2108|tws2109|tws2110|tws2111|tws2112|tws2102-e| @(#) V02.00.05 18/10/89,
+#	Typical technical selections F1 (modes SDP/ROLL):
+# -------------------------------------------------------
+# |   01   02   03   04   05   06   07   08   09   10   |
+# |  1010 0011 1010 0110 0110 0001 0100 0000 0000 0000  |
+# |                                                     |
+# |   11   12   13   14   15   16   17   18   19   20   |
+# |  0000 0110 100? 0000 0000 0000 0001 0000 0000 0001  |
+# |                                                     |
+# |   21   22   23   24   25   26   27   28   29   30   |
+# |  0011 0000 0001 1000 0000 0000 0000 0000 0000 0000  |
+# |                                                     |
+# |   31   32   33   34   35   36   37   38   39   40   |
+# |  1010 0011 0000 0000 0000 0000 0000 0000 0000 0000  |
+# -------------------------------------------------------
+#	Typical firmware identification F5 "etat 6":
+#  P287.02.04b	(AZERTY)
+#  P297.11.04	(24-pin: 2732)	or P798.11.04	(28-pin: 2764)
+#  P298.03.03	(monochrome)	or P374.03.02	(colour)
+#
+#	SM SDP mode (VIP command):	^[[?=h
+#	RIS (erases screen):		^[c
+#	DMI disable keyboard:		^[`
+#	SM double rendition mode:	^[[?>h
+#	RM solicited status mode:	^[[5l
+#	RM character mode:		^[[>l
+#	RM echoplex mode:		^[[12l
+#	RM column tab mode:		^[[18l
+#	RM forbid SS2 keyboard mode:	^[[?<l
+#	SM scroll mode:			^[[=h
+#	FCF enable XON/XOFF:		^[P1s^[\
+#	MTL select end msg character:	^[[^Wp
+#	EMI enable keyboard:		^[b
+#	RIS retour etat initial:	^[c
+#	enable FC keypad:		^[[?<h,
+#	MPW map status line window:	^[PY99:98^[\
+#	SCP select status line:		^[[0;98v
+#	ED erase entire partition:	^[[2J
+#	SCP select main partition:	^[[v
+#	SM character insertion mode:	^[[4h
+#	RM character replacement mode:	^[[4l
+#	COO cursor on:			^[[r
+#	COO cursor off:			^[[1r
+#	SGR dim (turquoise) rev attr:	^[[2;7m
+#	SGR Data normal attr:		^[[m
+#	SO Line-graphic mode ON:	^N
+#	SI Line-graphic mode OFF:	^O
+#	MC start routing to printer:	^[[5i
+#	MC stop routing to printer:	^M^[[4i
+
+# Type/Dimensioning:
+	cols#80, lines#24, wsl#80, it#8,
+# Initialisation:
+	is1=^[[?=h^[c^[`^[[?>h^[PY99:98^[\\,
+	is2=^[[5;>;12;18;?<l^[[=h^[P1s^[\\^[[^Wp,
+	is3=^[b\E[?<h,
+	rs2=^[[?=h^[c,
+# Flow control:
+	xon,
+# Alarm/Status:
+	bel=^G,
+	hs, eslok, tsl=^[PY99:98^[\\^[[0;98v^[[2;7m,
+	fsl=^[[v, dsl=^[PY99:98^[\\^[[0;98v^[[2J^[[v,
+# Erasing:
+	clear=^[[2J, ed=^[[J, el=^[[K,
+# Inserting/Deleting/Scrolling lines:
+	il1=^[[L, il=^[[%p1%dL,
+	dl1=^[[M, dl=^[[%p1%dM, ind=^J,
+# Inserting/Deleting characters:
+	smir=^[[4h, rmir=^[[4l, mir,
+	dch1=^[[P, dch=^[[%p1%dP,
+# Cursor attributes:
+	civis=^[[1r, cnorm=^[[r,
+# Cursor positioning:
+	smcup=\E[?>h\EPY99:98\E\\,
+	rmcup=\E[0;98v\E[2J\E[v,
+	cup=^[[%i%p1%d;%p2%df, home=^[[H, ll=^[[H^[[A,
+	cuu1=^[[A, cud1=^J, cuf1=^[[C, cub1=^H, am, xenl,
+	cuu=^[[%p1%dA, cud=^[[%p1%dB, cuf=^[[%p1%dC, cub=^[[%p1%dD,
+	tbc=^[[2g, hts=^[H, ht=^[[I, cbt=^[[Z, ktab=^[[I,
+	cr=^M,
+# Character set and attributes:
+	smso=^[[0;7m, rmso=^[[m, msgr, xhp@,
+	smul=^[[0;4m, rmul=^[[m,
+	rev=^[[0;7m, blink=^[[0;5m, dim=^[[0;2m, invis=^[[0;8m,
+	smacs=^N, rmacs=^O,
+	sgr0=^[[m^O,
+	sgr=^[[0%?%p1%p3%|%t;7%;%?%p2%t;4%;%?%p4%t;5%;%?%p5%t;2%;%?%p7%t;8%;m%?%p9%t^N%e^O%;,
+# Alternate Code Set
+	acsc=``aaffggj)k\,l&m#n/ooppq*rrsst'u-v+w.x%yyzz{{||}}~~,
+	box1=&*\,%)#.-+'/, batt1=f1,
+	font0=^O, font1=^N,
+# Auxiliary printer:
+	mc0=^[[0i, mc5=^[[5i, mc4=^M^[[4i,
+# Distinctive function keys:
+	ked=^[[J, kel=^[[K,
+	kil1=^[[L, kdl1=^[[M,
+	krmir=^[[4l,
+	kdch1=^[[P,
+	khome=^[[H,
+	kcuu1=^[[A, kcud1=^[[B, kcuf1=^[[C, kcub1=^[[D, kbs=^H,
+	kctab=^[[g, khts=^[H, kcbt=^[[Z, kbtab=^[[Z,
+# Undistinctive function keys:
+ 	kf1=^[[1u^W, kf2=^[[2u^W, kf3=^[[3u^W, kf4=^[[4u^W,
+ 	kf5=^[[5u^W, kf6=^[[6u^W, kf7=^[[7u^W, kf8=^[[8u^W,
+
+tws2102-sna|dku7102-sna|BULL Questar tws2102 for SNA,
+	dsl=\E[0;98v\E[2J\E[v,
+	fsl=\E[v,
+#	tsl=\E[0;98v\E[2J,
+	tsl=\E[0;98v,
+	is3=^[b,
+	use=tws2102,
+
+tws2103|tws2103-msgr|xdku| BULL Questar Q210 V02.00.05 18/10/89,
+	ht=^I, ktab=\t,
+	use=tws2102,
+
+tws2103-sna|dku7103-sna|BULL Questar tws2103 for SNA,
+	ht=^I, ktab=\t,
+	use=tws2102-sna,
+
+dku7102-old|BULL Questar 200 DKU7102 (microcode version < 6),
+	tsl=^[PY99:98^[\\^[[0;98v^[[H^[[2;7m,
+	dsl=^[PY99:98^[\\^[[0;98v^[[2J^[[H^[[v,
+	cup@, il1@, il@, dl1@, dl@,
+	clear=^[[2J^[[H, el=^[[K^[[m,
+	use=dku7102,
+
+dku7202|dku7202-msgr|BULL Questar 200 DKU7202 (colour/character attributes),
+# Initialisation:
+	is3=^[[?3h^[b,
+# Character set and attributes:
+	smso=^[[0;4;5;7m,
+	smul=^[[0;2m,
+	blink=^[[0;2;4m, dim=^[[0;5m,
+	ht=^I,
+# Looks like...
+	use=dku7102-msgr,
+
+
+#=========================================================#
+# BULL QUESTAR 303 & 310 `DEC VT 320' terminals emulation #
+#=========================================================#
+
+# Description written by J. Staerck (BULL SA)
+#       Copyright (c) 1989 BULL SA
+
+BQ303|BQ306|BQ310|Q303|Q306|Q310|Bull vt320 ISO Latin 1 80 columns terminal,
+#---------------------------------------------------------------------------
+
+#  This entry is used for terminals with vt320 emulation mode
+#  and following set-up : 
+#    8 bit ISO Latin Character Set (ISO 8859-1),
+#    7 bit Control Characters, 
+#    80 columns screen.    
+
+#  Hereafter are some DEC vt terminals' commands. (valid on vt200 and 300)
+#  They are used in string capabilities with vt220-320 emulation mode.
+#  In the following DEC definitions, two kinds of terminfo databases are
+#    provided :
+#    1. the first with Command Sequence Introducer starting with escape 
+#       sequence in 7 bits characters ex. ESC [ : 2 chars. in 7-bit mode.
+#    2. the second with Command Sequence Introducer starting with escape 
+#       sequence in 8 bits characters ex. ESC [ : 1 char. 'CSI' =x9B.
+
+#	Soft Terminal Reset		esc [ ! p
+#	RIS (erases screen):		esc c
+#	DECKPNM numeric keypad mode:	esc >
+#	DECKPAM applic. keypad mode:	esc =
+#	DECSTBM Scrolling region:	esc [ r
+#	SCS select G0 = US:		esc ( B
+#	SCS select G1 = line-graphic:	esc ) 0
+#	Select 7-bit C1 controls:	esc sp F
+#	Select 8-bit C1 controls:	esc sp G
+#	Select cursor home:		esc [  H
+#	Select erase screen:		esc [  J
+#	SM KAM lock keyboard:		esc [ 2 h
+#	RM KAM unlock keyboard:		esc [ 2 l
+#	SM SRM local echo off:		esc [ 1 2 h
+#	RM SRM local echo on:		esc [ 1 2 l
+#	SM LNM New line :		esc [ 2 0 h
+#	RM LNM return = CR only:	esc [ 2 0 l
+#	SM DECCKM cursor keys mode:	esc [ ? 1 h
+#	RM DECCKM appli. keys mode:	esc [ ? 1 l
+#	SM DECANM ANSI mode on:		esc [ ? 2 h
+#	RM DECANM ANSI mode off:	esc [ ? 2 l
+#	SM DECCOLM 132-column screen:	esc [ ? 3 h
+#	RM DECCOLM 80-column screen:	esc [ ? 3 l
+#	SM DECSCLM Smooth scroll:	esc [ ? 4 h
+#	RM DECSCLM Jump scroll:		esc [ ? 4 l
+#	SM DECSCNM screen light backgr.	esc [ ? 5 h
+#	RM DECSCNM screen dark backgr.	esc [ ? 5 l
+#	SM DECOM move within margins:	esc [ ? 6 h
+#	RM DECOM move outside margins:	esc [ ? 6 l
+#	SM DECAWM auto right margin:	esc [ ? 7 h
+#	RM DECAWM auto right margin:	esc [ ? 7 l
+#	SM DECARM auto repeat:		esc [ ? 8 h
+#	RM DECARM auto repeat:		esc [ ? 8 l
+#	DECSASD Select active main:	esc [ 0 $ } 
+#	DECSASD Select active status:	esc [ 1 $ } 
+#	DECSSDT Select status none:	esc [ 0 $ ~ 
+#	DECSSDT Select status indic.:	esc [ 1 $ ~ 
+#	DECSSDT Select status host-wr:	esc [ 2 $ ~ 
+#	SM DECTCEM Visible cursor:	esc [ ? 2 5 h
+#	RM DECTCEM Invisible cursor:	esc [ ? 2 5 l
+#	SM DECNCRM 7 bits NCR set:	esc [ ? 4 2 h
+#	RM DECNCRM Multi or ISO latin:	esc [ ? 4 2 l
+#	SM DECNKM numeric keypad mode:	esc [ ? 6 6 h
+#	RM DECNKM numeric keypad appl.:	esc [ ? 6 6 l
+#	SM DECKBUM clavier informatique	esc [ ? 6 8 h
+#	RM DECKBUM clavier bureautique:	esc [ ? 6 8 l
+#	DECSCL vt300 mode 8-bit ctrl:	esc [ 6 3 " p
+# or	DECSCL vt300 mode 8-bit ctrl:	esc [ 6 3 ; 0 " p
+# or	DECSCL vt300 mode 8-bit ctrl:	esc [ 6 3 ; 2 " p
+#	DECSCL vt300 mode 7-bit ctrl:	esc [ 6 3 ; 1 " p
+#	Char. and Line attributes:	esc [ Ps ... Ps m
+# with:  0 All off, 1 Bold, 4 Underline, 5 Blinking, 7 Reverse
+# and : 22 Bold off, 24 Underline off, 25 Blinking off, 27 Reverse off
+	xenl, am,
+	km, mc5i, mir, msgr,
+# Type/Dimensioning:
+	vt#3,
+	cols#80, lines#24, it#8,
+# Status Line:
+	hs, eslok, wsl#80,
+	dsl=\E[1$}\E[2$~\n\E[0$}, fsl=\E[0$}, tsl=\E[1$}\E[2$~,
+# Initialization and Reset strings
+	is1=\E[63;1"p\E[2h,
+	is2=\E[?2h\E[?3l\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	is3=\E[0$}\E[?25h\E[2l\E[H\E[J,
+	rs1=\E[!p,
+	rs2=\E[?3l,
+#	smkx=\E[?1h\E=,
+	rmkx=\E[?1l\E>,
+# Flow control:
+	xon,
+# Alarm/Status:
+	bel=^G,
+# Erasing:
+	clear=\E[H\E[J, home=\E[H,
+	enacs=\E(B\E)0, flash=\E[?5h$<50>\E[?5l,
+	cr=^M,
+# Cursor attributes:
+	civis=\E[?25l, cnorm=\E[?25h, cvvis=\E[?25h,
+# Cursor positioning:
+	cub=\E[%p1%dD, cud=\E[%p1%dB, cuf=\E[%p1%dC, cuu=\E[%p1%dA,
+	cup=\E[%i%p1%d;%p2%dH,
+# Cursor positioning (1 position):
+	cub1=\E[D, cud1=\E[B, cuf1=\E[C, cuu1=\E[A,
+# Save and Restore cursor:
+	sc=\E7, rc=\E8,
+# Selectively Erasing Text:
+	ed=\E[J, el=\E[K,
+# Inserting/Deleting characters:
+	dch=\E[%p1%dP, ech=\E[%p1%dX, ich=\E[%p1%d@,
+	dch1=\E[P,
+# Inserting/Deleting/Scrolling lines:
+	dl=\E[%p1%dM, il=\E[%p1%dL,
+	dl1=\E[M, el1=\E[1K, il1=\E[L,
+# Tabulations:
+	ht=^I, hts=\EH, tbc=\E[3g,
+	ind=\ED,
+# Undistinctive function keys:
+	kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	kf6=\E[17~, kf7=\E[18~, kf8=\E[19~,
+	kf9=\E[20~, kf10=\E[21~, kf11=\E[23~,
+	kf12=\E[24~, kf13=\E[25~, kf14=\E[26~,
+	kf15=\E[28~, kf16=\E[29~, kf17=\E[31~,
+	kf18=\E[32~, kf19=\E[33~, kf20=\E[34~,
+# keypad (upper left & right, lower left & right corners, center)
+	ka1=\EOw, ka3=\EOy,
+	kb2=\EOu,
+	kc1=\EOq, kc3=\EOs,
+# Insert actions
+	csr=\E[%i%p1%d;%p2%dr,
+# Distinctive function keys:
+	kcub1=\E[D, kcud1=\E[B, kcuf1=\E[C, kcuu1=\E[A,
+	khlp=\E[28~, krdo=\E[29~,
+	kfnd=\E[1~, kich1=\E[2~, kdch1=\E[3~,
+	kslt=\E[4~, ksel=\E[4~, kpp=\E[5~, knp=\E[6~,
+	kbs=^H,
+	kdo=\E[29~, knl=\r, ktab=^I, eo,
+	lf1=pf1, lf2=pf2, lf3=pf3, lf4=pf4,
+	ri=\EM, nel=\EE,
+# Character set and attributes:
+	sgr0=\E[0m\E(B, rev=\E[7m,
+	blink=\E[5m, bold=\E[1m,
+	smacs=^N, rmacs=^O,
+	smam=\E[?7h, rmam=\E[?7l,
+	smir=\E[4h, rmir=\E[4l,
+	smso=\E[7m, rmso=\E[27m,
+	smul=\E[4m, rmul=\E[24m,
+	smcup=\E[?7l\E[?1l\E(B, rmcup=\E[?7h,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m
+	    %?%p9%t\E(0%e\E(B%;,
+# Auxiliary printer: Printing Control Sequences
+	mc0=\E[i, mc4=\E[4i, mc5=\E[5i,
+# Semi-graphic set
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+# extensions
+	box1=\154\161\153\170\152\155\167\165\166\164\156, batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156, batt2=f1md,
+	font0=\E(B, font1=\E(0,
+
+BQ303-rv|BQ306-rv|BQ310-rv|Q303-rv|Q306-rv|Q310-rv|Bull vt320 reverse 80 columns,
+#--------------------------------------------------------------------------------
+	is2=\E[?2h\E[?3l\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	flash=\E[?5l$<50>\E[?5h,
+	use=BQ303,
+
+BQ303-w|BQ306-w|BQ310-w|Q303-w|Q306-w|Q310-w|Bull vt320 132 columns,
+#-------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	rs2=\E[?3h,
+	use=BQ303,
+
+BQ303-w-rv|BQ306-w-rv|BQ310-w-rv|Q303-w-rv|Q306-w-rv|Q310-w-rv|Bull vt320 reverse mode 132 columns,
+#--------------------------------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	flash=\E[?5l$<50>\E[?5h,
+	rs2=\E[?3h,
+	use=BQ303,
+
+
+BQ303-8|BQ306-8|BQ310-8|Q303-8|Q306-8|Q310-8|Bull vt320 full 8 bits 80 columns,
+#------------------------------------------------------------------------------
+
+#  This entry is used for terminals with vt320 emulation mode
+#  and following set-up : 
+#    8 bit ISO Latin Character Set (ISO 8859-1),
+#    8 bit Control Characters, (CSI coded as x9B for ESC [)
+#    80 columns screen.    
+
+#	Soft Terminal Reset		csi ! p
+#	RIS (erases screen):		esc c
+#	DECKPNM numeric keypad mode:	esc >
+#	DECKPAM applic. keypad mode:	esc =
+#	DECSTBM Scrolling region:	esc [ r
+#	SCS select G0 = US:		esc ( B
+#	SCS select G1 = line-graphic:	esc ) 0
+#	Select 7-bit C1 controls:	esc sp F
+#	Select 8-bit C1 controls:	esc sp G
+#	Select cursor home:		csi H
+#	Select erase screen:		csi J
+#	SM KAM lock keyboard:		csi 2 h
+#	RM KAM unlock keyboard:		csi 2 l
+#	SM SRM local echo off:		csi 1 2 h
+#	RM SRM local echo on:		csi 1 2 l
+#	SM LNM New line :		csi 2 0 h
+#	RM LNM return = CR only:	csi 2 0 l
+#	SM DECCKM cursor keys mode:	csi ? 1 h
+#	RM DECCKM appli. keys mode:	csi ? 1 l
+#	SM DECANM ANSI mode on:		csi ? 2 h
+#	RM DECANM ANSI mode off:	csi ? 2 l
+#	SM DECCOLM 132-column screen:	csi ? 3 h
+#	RM DECCOLM 80-column screen:	csi ? 3 l
+#	SM DECSCLM Smooth scroll:	csi ? 4 h
+#	RM DECSCLM Jump scroll:		csi ? 4 l
+#	SM DECSCNM screen light backgr.	csi ? 5 h
+#	RM DECSCNM screen dark backgr.	csi ? 5 l
+#	SM DECOM move within margins:	csi ? 6 h
+#	RM DECOM move outside margins:	csi ? 6 l
+#	SM DECAWM auto right margin:	csi ? 7 h
+#	RM DECAWM auto right margin:	csi ? 7 l
+#	SM DECARM auto repeat:		csi ? 8 h
+#	RM DECARM auto repeat:		csi ? 8 l
+#	DECSASD Select active main:	csi 0 $ } 
+#	DECSASD Select active status:	csi 1 $ } 
+#	DECSSDT Select status none:	csi 0 $ ~ 
+#	DECSSDT Select status indic.:	csi 1 $ ~ 
+#	DECSSDT Select status host-wr:	csi 2 $ ~ 
+#	SM DECTCEM Visible cursor:	csi ? 2 5 h
+#	RM DECTCEM Invisible cursor:	csi ? 2 5 l
+#	SM DECNCRM 7 bits NCR set:	csi ? 4 2 h
+#	RM DECNCRM Multi or ISO latin:	csi ? 4 2 l
+#	DECSCL vt300 mode 8-bit ctrl:	csi 6 3 " p
+# or	DECSCL vt300 mode 8-bit ctrl:	csi 6 3 ; 0 " p
+#	DECSCL vt300 mode 7-bit ctrl:	csi 6 3 ; 1 " p
+#	Char. and Line attributes:	csi Ps ... Ps m
+# with:  0 All off, 1 Bold, 4 Underline, 5 Blinking, 7 Reverse
+# and : 22 Bold off, 24 Underline off, 25 Blinking off, 27 Reverse off
+	xenl, am,
+	km, mc5i, mir, msgr,
+# Type/Dimensioning:
+	vt#3,
+	cols#80, lines#24, it#8,
+# Status Line:
+	hs, eslok, wsl#80,
+	dsl=\2331$}\2332$~\n\2330$}, fsl=\2330$}, tsl=\2331$}\2332$~,
+# Initialization and Reset strings
+	is1=\E[63;2"p\E[2h,
+	is2=\E[?2h\E[?3l\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	is3=\2330$}\233?25h\2332l\233H\233J,
+	rs1=\E[!p,
+	rs2=\E[?3l,
+#	smkx=\233?1h\E=,
+	rmkx=\233?1l\E>,
+# Flow control:
+	xon,
+# Alarm/Status:
+	bel=^G,
+# Erasing:
+	clear=\233H\233J, home=\233H,
+	enacs=\E(B\E)0, flash=\233?5h$<50>\233?5l,
+	cr=^M, csr=\233%i%p1%d;%p2%dr,
+# Cursor attributes:
+	civis=\233?25l, cnorm=\233?25h, cvvis=\233?25h,
+# Cursor positioning:
+	cub=\233%p1%dD, cud=\233%p1%dB, cuf=\233%p1%dC, cuu=\233%p1%dA,
+	cup=\233%i%p1%d;%p2%dH,
+# Cursor positioning (1 position):
+	cub1=\233D, cud1=\233B, cuf1=\233C, cuu1=\233A,
+# Save and Restore cursor:
+	sc=\E7, rc=\E8,
+# Selectively Erasing Text:
+	ed=\233J, el=\233K,
+# Inserting/Deleting characters:
+	dch=\233%p1%dP, ech=\233%p1%dX, ich=\233%p1%d@,
+	dch1=\233P,
+# Inserting/Deleting/Scrolling lines:
+	dl=\233%p1%dM, il=\233%p1%dL,
+	dl1=\233M, el1=\2331K, il1=\233L,
+# Tabulations:
+	ht=^I, hts=\EH, tbc=\2333g,
+	ind=\ED,
+# Undistinctive function keys:
+	kf1=\217P, kf2=\217Q, kf3=\217R, kf4=\217S,
+	kf6=\23317~, kf7=\23318~, kf8=\23319~,
+	kf9=\23320~, kf10=\23321~, kf11=\23323~,
+	kf12=\23324~, kf13=\23325~, kf14=\23326~,
+	kf15=\23328~, kf16=\23329~, kf17=\23331~,
+	kf18=\23332~, kf19=\23333~, kf20=\23334~,
+# keypad (upper left & right, lower left & right corners, center)
+	ka1=\217w, ka3=\217y,
+	kb2=\217u,
+	kc1=\217q, kc3=\217s,
+# Insert actions
+	csr=\233%i%p1%d;%p2%dr,
+# Distinctive function keys:
+	kcub1=\233D, kcud1=\233B, kcuf1=\233C, kcuu1=\233A,
+	khlp=\23328~, krdo=\23329~,
+	kfnd=\2331~, kich1=\2332~, kdch1=\2333~,
+	kslt=\2334~, ksel=\2334~, kpp=\2335~, knp=\2336~,
+	kbs=^H,
+	kdo=\23329~, knl=\r, ktab=^I, eo,
+	lf1=pf1, lf2=pf2, lf3=pf3, lf4=pf4,
+	ri=\EM, nel=\EE,
+# Character set and attributes:
+	sgr0=\2330m\E(B, rev=\2337m,
+	blink=\2335m, bold=\2331m,
+	smacs=^N, rmacs=^O,
+	smam=\233?7h, rmam=\233?7l,
+	smir=\2334h, rmir=\2334l,
+	smso=\2337m, rmso=\23327m,
+	smul=\2334m, rmul=\23324m,
+	smcup=\233?7l\233?1l\E(B,         rmcup=\233?7h,
+	sgr=\233%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m
+	    %?%p9%t\E(0%e\E(B%;,
+# Auxiliary printer: Printing Control Sequences
+	mc0=\233i, mc4=\2334i, mc5=\2335i,
+# Semi-graphic set
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+# extensions
+	box1=\154\161\153\170\152\155\167\165\166\164\156, batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156, batt2=f1md,
+	font0=\E(B, font1=\E(0,
+
+BQ303-8rv|BQ306-8rv|BQ310-8rv|Q303-8rv|Q306-8rv|Q310-8rv|Bull vt320 reverse mode 80 columns,
+#-------------------------------------------------------------------------------------------
+	is2=\E[?2h\E[?3l\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	flash=\233?5l$<50>\233?5h,
+	use=BQ303-8,
+
+BQ303-8w|BQ306-8w|BQ310-8w|Q303-8w|Q306-8w|Q310-8w|Bull vt320 full 8 bits 132 columns,
+#-------------------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	rs2=\233?3h,
+	use=BQ303-8,
+
+BQ303-8w-rv|BQ306-8w-rv|BQ310-8w-rv|Q303-8w-rv|Q306-8w-rv|Q310-8w-rv|Bull vt320 reverse 132 columns,
+#---------------------------------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	rs2=\233?3h,
+	flash=\233?5l$<50>\233?5h,
+	use=BQ303-8,
+
+
+Q303-pc|Q306-pc|Questar 303 with PC keyboard ISO Latin 1 80 columns,
+#-------------------------------------------------------------------
+
+#  This entry is used for terminals with vt320 emulation mode
+#  a 102 keys keyboard (PC scancode !) and following set-up : 
+#    8 bit ISO Latin Character Set (ISO 8859-1),
+#    7 bit Control Characters, 
+#    80 columns screen.    
+
+# Undistinctive function keys:
+	kf1=\E[17~, kf2=\E[18~, kf3=\E[19~,
+	kf4=\E[20~, kf5=\E[21~, kf6=\E[23~,
+	kf7=\E[24~, kf8=\E[25~, kf9=\E[26~,
+	kf10=\E[28~, kf11=\E[29~, kf12=\E[31~,
+	kf13@, kf14@, kf15@, kf16@, kf17@,
+	kf18@, kf19@, kf20@,
+# Distinctive function keys:
+	khlp@, krdo@, kfnd@, kslt@, ksel@,
+	kbs=^H, khome=\E[1~,
+	kich1=\E[2~, kdch1=\E[3~,
+	kend=\E[4~, kpp=\E[5~, knp=\E[6~,
+	lf1@, lf2@, lf3@, lf4@,
+	use=BQ303,
+
+Q303-pc-rv|Q306-pc-rv|Questar 303 with PC keyboard reverse mode 80 columns,
+#--------------------------------------------------------------------------
+	is2=\E[?2h\E[?3l\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	flash=\E[?5l$<50>\E[?5h,
+	use=Q303-pc,
+
+Q303-pc-w|Q306-pc-w|Questar 303 with PC keyboard 132 columns terminal,
+#---------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	rs2=\E[?3h,
+	use=Q303-pc,
+
+Q303-pc-w-rv|Q306-pc-w-rv|Questar 303 with PC keyboard reverse mode 132 columns,
+#-------------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	flash=\E[?5l$<50>\E[?5h,
+	rs2=\E[?3h,
+	use=Q303-pc,
+
+
+Q303-8-pc|Q306-8-pc|Questar 303 with PC keyboard in full 8 bits 80 columns,
+#--------------------------------------------------------------------------
+
+#    8 bit ISO Latin Character Set (ISO 8859-1),
+#    8 bit Control Characters, 
+#    80 columns screen.    
+
+# Undistinctive function keys:
+	kf1=\23317~, kf2=\23318~, kf3=\23319~,
+	kf4=\23320~, kf5=\23321~, kf6=\23323~,
+	kf7=\23324~, kf8=\23325~, kf9=\23326~,
+	kf10=\23328~, kf11=\23329~, kf12=\23331~,
+	kf13@, kf14@, kf15@, kf16@, kf17@,
+	kf18@, kf19@, kf20@,
+# Distinctive function keys:
+	khlp@, krdo@, kfnd@, kslt@, ksel@,
+	kbs=^H, khome=\2331~,
+	kich1=\2332~, kdch1=\2333~,
+	kend=\2334~, kpp=\2335~, knp=\2336~,
+	lf1@, lf2@, lf3@, lf4@,
+	use=BQ303-8,
+
+Q303-8-pc-rv|Q306-8-pc-rv|Questar 303 with PC keyboard full 8 bits reverse mode 80 columns,
+#------------------------------------------------------------------------------------------
+	is2=\E[?2h\E[?3l\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	flash=\E[?5l$<50>\E[?5h,
+	use=Q303-8-pc,
+
+Q303-8-pc-w|Q306-8-pc-w|Questar 303 with PC keyboard full 8 bits 132 columns,
+#----------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	rs2=\E[?3h,
+	use=Q303-8-pc,
+
+Q303-8-pc-w-rv|Q306-8-pc-w-rv|Questar 303 with PC keyboard full 8 bits reverse 132 columns,
+#------------------------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	flash=\E[?5l$<50>\E[?5h,
+	rs2=\E[?3h,
+	use=Q303-8-pc,
+
+
+#======================================================#
+# BULL QUESTAR 310 `VIP 7800/8800' terminals emulation #
+#======================================================#
+
+vip|vip7800|Q310-vip|Q310-vip-am|BQ3155-vip7800|Bull Questar 3155-7800,
+#----------------------------------------------------------------------
+# normal mode, 8 bits, 80 columns terminal.
+#	RES reset :			^[e
+#	RIS reset initial state:	^[c
+#	BLE bell enable			^[h
+#	BLD bell disable		^[g
+#	CAMS char. attr. mode set	^[[D
+#	CAMR char. attr. mode reset	^[[G
+#	CLR clear			^[`
+#	KBU keyboard unlock (set)	^[[W
+#	KBL keyboard lock (reset)	^[[X
+#	CM  character mode (async.) 	^[k
+#	NEP non echoplex mode (by host)	^[l
+#	EP  echoplex mode (by host) 	^[m
+#	IM  insert mode set		^[[I
+#	IM  insert mode reset 		^[[J
+#	RMS roll mode set 		^[r
+#	RMR roll mode reset 		^[q
+#	SM78 set mode vip7800	 	^[[1q
+#	SD  scroll up  	(72 lines) 	^[[0s
+#	SD  scroll down	(72 lines) 	^[[1s
+#	RBM block mode reset		^[[E
+#	SLS status line set 		^[w
+#	SLR status line reset 		^[v
+#	SLL status line lock 		^[O
+#	LGS Line-graphic mode set 	^[G
+#	LGR Line-graphic mode reset 	^[F
+#	TBC tab clear (at cursor pos.)	^[[g
+#	TBI tab initialize 		^[[N
+#	TBS tab set (at cursor pos.)	^[p
+#	PDS  print data space		^[[0p
+#	PHD  print host data 		^[[3p
+#	PDT  print data terminator	^[[<p
+#	PRES print adapter reset	^[[2p
+#	SSPR multi-part. reset		^[[<>u
+#	SSP0 partition 0 set		^[[00u
+#	SSP1 partition n format 1 	^[[PnPnSTRINGu
+#	SSP2 partition n format 2 	^[[PnPnSTRINGu
+#	SSP3 partition n format 3 	^[[PnPnu
+#	ATR attribute (visual)
+#	    blink :			^[sB
+#	    dim :			^[sL
+#	    hide (blank) :		^[sH
+#	    restore :			^[sR
+#	    inverse video :		^[sI
+#	    prot. :			^[sP
+#	    underline :			^[s_
+#	    reset :			^{
+
+ 	am, km, msgr, xenl, .xhp,
+# Type/Dimensioning :
+	cols#80, lines#24,
+	it#8, vt#3,
+# Initialization and Reset strings :
+	.is1=^[e^[[X^[[E^[[D^[k^[m,
+	is2=^[[00u^[[<>001001024080024080u^[[01u,
+	is3=^[r^[[W^[`,
+	rs1=^[c,
+	rs2=^[[G, .rs3=^[[},
+# Flow control :
+	xon,
+# Alarm:
+	bel=^G,
+	flash=^G$<80>^G$<80>^G,
+# Status Line :
+	hs, eslok,
+	wsl#80,
+	tsl=^[w, fsl=^[O, dsl=^[v,
+# Erasing :
+	clear=^[`, home=^[H, ll=^[H^[A,
+# Selectively Erasing Text :
+	ed=^[J, el=^[K,
+	.el1=^[[L,
+# Inserting/Deleting characters :
+	.smdc=^[[I, .rmdc=^[[J,
+	smir=^[[I, rmir=^[[J, .mir,
+	dch1=^[[P, ich1=^[[I,
+# Inserting/Deleting/Scrolling lines :
+	dl1=^[[M, .il1=^[[L,
+	ri=^[A^[J^[H^[[L$<10>,
+# Cursor Positioning :
+	cup=^[[%i%p1%03d%p2%03df,
+	cuu1=^[A, cud1=^J, cuf1=^[C, cub1=^H,
+	cr=^M, ind=^J,
+	nel=^M,
+# Character set and attributes :
+	sgr0=^[sR^[sU^[F,
+	smso=^[sI, rmso=^[sR,
+ 	smul=^[s_, rmul=^[sR,
+	rev=^[sI, blink=^[sB,
+	dim=^[sL, invis=^[sH,
+	prot=^[sP,
+	smacs=^[G, rmacs=^[F,
+	font0=^[F, font1=^[G,
+# Tabulations :
+	ht=^I, ktab=^I,  hts=^[p,
+	tbc=^[[N, cbt=^[[Z,
+# Distinctive function keys :
+	kclr=^[`, ked=^[J, kel=^[K, kll=^[H^[A,
+	kbs=^H, khome=^[H, kHOM=^[H,
+	kdl1=^[[M, kil1=^[[L,
+	kdch1=^[[P, kich1=^[[I,
+	krmir=^[[J,
+	kcuu1=^[A, kcud1=^[B, kcuf1=^[C, kcub1=^[D,
+	kind=^[[0s, kri=^[[1s,
+	kLFT=^[o, kRIT=^[u,
+	ktbc=^[[N, kctab=^[[g, khts=^[p, kcbt=^[[Z, kbtab=^[[Z,
+	lf1=pf1, lf2=pf2, lf3=pf3, lf4=pf4,
+# Undistinctive function keys :
+	kf1=^[0, kf2=^[2, kf3=^[6, kf4=^[8,
+	kf5=^[:, kf6=^[<, kf7=^[>, kf8=^[P,
+	kf9=^[R, kf10=^[T, kf11=^[\\, kf12=^[\^,
+# Shifted function keys : entries kf21 thru kf32 refer to the shifted keys
+	kf13@, kf14@, kf15@, kf16@,
+	kf17@, kf18@, kf19@, kf20@,
+	kf21=^[1, kf22=^[5, kf23=^[7, kf24=^[9,
+	kf25=^[;, kf26=^[=, kf27=^[?, kf28=^[Q,
+	kf29=^[S, kf30=^[V, kf31=^[], kf32=^[_,
+# Keypad (upper left & right, lower left & right corners, center)
+#	ka1= , ka3= ,
+#	kb2= ,
+#	kc1= , kc3= ,
+# Auxiliary Printer :
+	mc5i,
+	mc0=^[[0p, mc5=^[[3p, mc4=^[[<p,
+# Semi-graphic set :
+	acsc=jdkblamcnkqitgufvhwexj0p,
+	box1=aibjdcefhgk, batt1=f1,
+ 	knl=\r,
+
+vip-w|vip7800-w|Q310-vip-w|Q310-vip-w-am|Questar 3155-vip7800 wide,
+#------------------------------------------------------------------
+# normal screen, 8 bits, 132 columns terminal.
+	cols#132,
+	wsl#132,
+	is2=^[[00u^[[<>001001024132024132u^[[01u,
+	use=Q310-vip,
+
+vip-H|vip7800-H|Q310-vip-H|Q310-vip-H-am|Questar 3155-vip7800 72 lines,
+#----------------------------------------------------------------------
+# long screen, 8 bits, 80 columns terminal.
+	lines#72,
+	is2=^[[00u^[[<>001001024080072080u^[[01u,
+	use=Q310-vip,
+
+vip-Hw|vip7800-Hw|Q310-vip-Hw|Q310-vip-Hw-am|Questar 3155-vip7800 wide 72 lines,
+#-------------------------------------------------------------------------------
+# long screen, 8 bits, 132 columns terminal.
+	cols#132, lines#72,
+	wsl#132,
+	is2=^[[00u^[[<>001001024132072132u^[[01u,
+	use=Q310-vip,
+

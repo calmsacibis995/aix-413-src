@@ -1,0 +1,67 @@
+#!/etc/drivers/pmmd_6030pin
+* @(#)65        1.6  src/rspc/kernext/pm/pmmd/6030/pmmd_6030pin.exp, pwrsysx, rspc41J, 9517A_all 4/24/95 08:13:57
+*
+*
+*   COMPONENT_NAME: PWRSYSX
+*
+*   FUNCTIONS: Power Management Kernel Extension Code
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*   (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+*   All Rights Reserved
+*
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+read_pmc
+write_pmc
+modify_pmc
+read_pmc_nolock
+write_pmc_nolock
+modify_pmc_nolock
+read_isadev
+write_isadev
+modify_isadev
+pm_planar_control_lcd
+pm_planar_control_crt
+pm_planar_control_gcc
+pm_planar_control_camera
+pm_planar_control_audio
+pm_planar_control_audio_mute
+pm_planar_control_cpu
+pm_planar_control_psumain
+pm_planar_control_psusus
+pm_planar_control_cdrom
+cpu_idle
+turn_power_off
+write_xioc
+pm_event_control
+Send_slave_msg
+read_xioc
+read_xioc_status
+AlertUserWithBeep
+pm_xioc_data
+pm_RTC_data
+PMI_block
+pm_intr
+pm_event_block
+enable_RTC_SQW
+pm_event_kproc
+battery_control
+battery_block
+pm_pmc_data
+pm_isadev_data
+ppch
+planar_devid
+pm_md_data
+establish_pmmi_interface
+planardevice_control
+init_battery_func
+init_slave_interface
+SetHid0Dpm
+ResetHid0Dpm
+pm_HW_state_data

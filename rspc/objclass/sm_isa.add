@@ -1,0 +1,678 @@
+# @(#)06        1.4  src/rspc/objclass/sm_isa.add, cfgmethods, rspc41J, 9513A_all 3/28/95 15:49:26
+#
+#  COMPONENT_NAME: (CFGMETHODS)
+#
+#  FUNCTIONS: ISA Device User Interface (SMIT)
+#
+#  ORIGINS: 27
+#
+#  IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+#  combined with the aggregated modules for this product)
+#                   SOURCE MATERIALS
+#  (C) COPYRIGHT International Business Machines Corp. 1994
+#  All Rights Reserved
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+#       SMIT Menu objects
+#
+
+sm_menu_opt:
+	id                  = "dev"
+	id_seq_num          = "180"
+	next_id             = "devisa"
+	text                = "ISA Adapters"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 726
+	next_type           = "m"
+	alias               = ""
+	help_msg_id         = "04201730"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devisa"
+	id_seq_num          = "010"
+	next_id             = "devinst_isa"
+	text                = "Install ISA Adapter Software"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 727
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "1800098"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devisa"
+	id_seq_num          = "020"
+	next_id             = "mkdev_isa"
+	text                = "Add an ISA Adapter"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 728
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "180080"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devisa"
+	id_seq_num          = "030"
+	next_id             = "chdev_isa"
+	text                = "Change / Show Characteristics of an ISA Adapter"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 729
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "1800197"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devisa"
+	id_seq_num          = "040"
+	next_id             = "rmdev_isa"
+	text                = "Remove an ISA Adapter"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 730
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "1800198"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devisa"
+	id_seq_num          = "050"
+	next_id             = "lsddev_isa"
+	text                = "List all Defined ISA Adapters"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 731
+	next_type           = "d"
+	alias               = ""
+	help_msg_id         = "180030"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "devisa"
+	id_seq_num          = "060"
+	next_id             = "lssdev_isa"
+	text                = "List all Supported ISA Adapters"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 732
+	next_type           = "d"
+	alias               = ""
+	help_msg_id         = "180029"
+	help_msg_loc        = ""
+
+#-----------------------------------------------------------------------------
+# ---- fast paths ----
+#-----------------------------------------------------------------------------
+
+sm_menu_opt:
+	id                  = "chadp"
+	id_seq_num          = "021"
+	next_id             = "chdev_isa"
+	text                = "Change / Show Characteristics of an ISA Adapter"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 729
+	next_type           = "n"
+	alias               = ""
+	help_msg_id         = "1800197"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "lsadp"
+	id_seq_num          = "021"
+	next_id             = "lsddev_isa"
+	text                = "List all ISA Adapters"
+	text_msg_file       = "smit.cat"
+	text_msg_set        = 27
+	text_msg_id         = 733
+	next_type           = "d"
+	alias               = ""
+	help_msg_id         = "180030"
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id                  = "isa"
+	id_seq_num          = ""
+	next_id             = "devisa"
+	text                = ""
+	text_msg_file       = ""
+	text_msg_set        = 0
+	text_msg_id         = 0
+	next_type           = "m"
+	alias               = "y"
+	help_msg_id         = ""
+	help_msg_loc        = ""
+
+
+#-----------------------------------------------------------------------------
+# Add an ISA Adapter
+#-----------------------------------------------------------------------------
+# This uses a name select to list the possible predefined isa devices.
+#       This name select generates a name in the form of
+#               "mkdevisa_hdr_<type>_<subclass>"
+#       which should be the name of a ghost name select.
+# It then uses a name select to select parent device.
+# It then uses a ghost name select to map to existing dialogs.
+#
+sm_name_hdr:
+    id                        = "mkdev_isa"
+    next_id                   = "mkdev_isa_parent"
+    option_id                 = "mkdevisa_name_opt"
+    has_name_select           = "n"
+    name                      = "Add an ISA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 728
+    type                      = "j"
+    ghost                     = "y"
+    cmd_to_classify           = "\
+xx () \n\
+{ \n\
+lsdev -P -s isa -t $1 -F \"type:subclass:class:description\" \
+  | sed 's/^\\([^:]*\\):\\([^:]*\\):/\\1_\\2:&/' \n\
+} \n\
+xx "
+    cmd_to_classify_postfix   = " type "
+    raw_field_name            = "type"
+    cooked_field_name         = "_cookedname:type:subclass:class:desc"
+    next_type                 = "n"
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+# Name selector command option for listing Token Ring adapters by logical
+# name.
+sm_cmd_opt:
+    id                        = "mkdevisa_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Add an ISA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 728
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -P -c adapter -s isa -F \"type subclass description\" | grep -v -E 'sio'"
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04201"
+    help_msg_loc              = ""
+
+sm_name_hdr:
+    id                        = "mkdev_isa_parent"
+    next_id                   = "mkdevisa_hdr_"
+    option_id                 = "mkdevisa_name1_opt"
+    has_name_select           = "n"
+    name                      = "Add an ISA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 728
+    type                      = "c"
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "parent"
+    cooked_field_name         = "_cookedname"
+    next_type                 = "n"
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+# Name selector command option for listing Token Ring adapters by logical
+# name.
+sm_cmd_opt:
+    id                        = "mkdevisa_name1_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Parent Device"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 734
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsparent -C -k isa"
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+
+#-----------------------------------------------------------------------------
+# Change / Show Characteristics an ISA Adapter
+#-----------------------------------------------------------------------------
+# This uses a name select to list the possible defined isa devices.
+#
+sm_name_hdr:
+    id                        = "chdev_isa"
+    next_id                   = "chdevisa_hdr_"
+    option_id                 = "chdevisa_name_opt"
+    has_name_select           = "n"
+    name                      = "Change / Show Characteristics of an ISA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 729
+    type                      = "c"
+    ghost                     = "y"
+    cmd_to_classify           = "\
+xx () \n\
+{ \n\
+lsdev -C -l $1 -F \"type:subclass:location:status:description\" \
+  | sed 's/^\\([^:]*\\):\\([^:]*\\):/\\1_\\2:&/' \n\
+} \n\
+xx "
+    cmd_to_classify_postfix   = " logicname "
+    raw_field_name            = "logicname"
+    cooked_field_name         = "_cookedname:type:subclass:loc:state:desc"
+    next_type                 = "n"
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+# Name selector command option for listing Token Ring adapters by logical
+# name.
+sm_cmd_opt:
+    id                        = "chdevisa_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Change / Show Characteristics of an ISA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 729
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -C -c adapter -s isa | grep -v -E 'sio'"
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+#-----------------------------------------------------------------------------
+# Remove an ISA Adapter
+#-----------------------------------------------------------------------------
+# This uses a name select to list the possible defined isa devices.
+#
+sm_name_hdr:
+    id                        = "rmdev_isa"
+    next_id                   = "rmdev_isa_hdr"
+    option_id                 = "rmdevisa_name_opt"
+    has_name_select           = "n"
+    name                      = "Remove an ISA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 730
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "logicname"
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = "1800198"
+    help_msg_loc              = ""
+
+# Name selector command option for listing Token Ring adapters by logical
+# name.
+sm_cmd_opt:
+    id                        = "rmdevisa_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Remove an ISA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 730
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -C -c adapter -s isa | grep -v -E 'sio'"
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+# Dialogue header
+sm_cmd_hdr:
+    id                        = "rmdev_isa_hdr"
+    option_id                 = "rmdev_isa_hdr_opt"
+    has_name_select           = "y"
+    name                      = "Remove an ISA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 730
+    cmd_to_exec               = "rmdev "
+    ask                       = "y"
+    exec_mode                 = ""
+    ghost                     = "n"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "1800198"
+    help_msg_loc              = ""
+
+# Command options
+sm_cmd_opt:
+    id                        = "rmdev_isa_hdr_opt"
+    id_seq_num                = "010"
+    disc_field_name           = "logicname"
+    name                      = "ISA Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 725
+    op_type                   = ""
+    entry_type                = ""
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-l "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04201708"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "rmdev_isa_hdr_opt"
+    id_seq_num                = "020"
+    disc_field_name           = ""
+    name                      = "KEEP definition in database"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 10
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = " "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = ",-d "
+    help_msg_id               = "180096"
+    help_msg_loc              = ""
+
+
+#-----------------------------------------------------------------------------
+# List All Defined Devices
+#-----------------------------------------------------------------------------
+# This uses a ghost dialogue to list all the current devices in the
+# customized database.  The lsdev command is executed from this dialogue.
+#
+sm_cmd_hdr:
+    id                        = "lsddev_isa"
+    option_id                 = ""
+    has_name_select           = "n"
+    name                      = "List All Defined ISA Adapters"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 731
+    cmd_to_exec               = "lsdev -C -c adapter -s isa | grep -v -E 'sio'"
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "180030"
+    help_msg_loc              = ""
+
+#-----------------------------------------------------------------------------
+# List All Supported Devices
+#-----------------------------------------------------------------------------
+# This uses a ghost dialogue to list all the supported devices in the
+# predefined database.  The lsdev command is executed from this dialogue.
+#
+sm_cmd_hdr:
+    id                        = "lssdev_isa"
+    option_id                 = ""
+    has_name_select           = "n"
+    name                      = "List All Supported ISA Adapters"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 732
+    cmd_to_exec               = "lsdev -P -c adapter -s isa | grep -v -E 'sio'"
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "180029"
+    help_msg_loc              = ""
+
+
+#-----------------------------------------------------------------------------
+# Install ISA Adapter Software
+#     manual device installation
+#-----------------------------------------------------------------------------
+
+sm_name_hdr:
+	id                       ="devinst_isa"
+	next_id                  ="devinst_isa.hdr"
+	option_id                ="devinst_isa.name_select"
+	name                     ="Install Additional Device Software"
+	name_msg_file            ="smit.cat"
+	name_msg_set             =25
+	name_msg_id              =735
+	type                     ="c"
+	ghost                    ="n"
+	cmd_to_classify          = ""
+	cmd_to_classify_postfix = ""
+	raw_field_name           ="_rawname"
+	cooked_field_name        =""
+	help_msg_id              ="1800098"
+	help_msg_loc             =""
+
+sm_cmd_opt:
+	id                       ="devinst_isa.name_select"
+	id_seq_num               ="0"
+	disc_field_name          =""
+	name                     ="INPUT device / directory for software"
+	name_msg_file            ="smit.cat"
+	name_msg_set             =1
+	name_msg_id              =626
+	op_type                  ="l"
+	entry_type               ="t"
+	entry_size               =0
+	required                 ="+"
+	prefix                   ="-d"
+	cmd_to_list_mode         ="1"
+	cmd_to_list              = "/usr/lib/instl/sm_inst list_devices"
+	cmd_to_list_postfix      =""
+	multi_select             ="n"
+	value_index              =0
+	disp_values              =""
+	values_msg_file          =""
+	values_msg_set           =0
+	values_msg_id            =0
+	aix_values               =""
+	help_msg_id              ="0503001"
+	help_msg_loc             =""
+
+sm_cmd_hdr:
+	id                       ="devinst_isa.hdr"
+	option_id                ="devinst_isadev,devinst_isaopt"
+	has_name_select          ="y"
+	name                     ="Install Additional Device Software"
+	name_msg_file            ="smit.cat"
+	name_msg_set             =25
+	name_msg_id              =735
+	cmd_to_exec              =" dev_install()\n\
+{\n\
+echo $* | grep -q '@@' \n\
+if [ $? = 1 ] \n\
+then \n\
+	ALLCHAR=`echo $* | tr \" \" \"\\012\" | sed \"1d\"`  \n\
+	if [[ $ALLCHAR = \'ALL\' || $ALLCHAR = \'all\'  ]] \n\
+	then\n\
+		echo \"devices.isa.\" | egrep -v \"devices.isa.sio\"  > /tmp/device.smit\n\
+	else\n\
+		echo $* | tr \" \" \"\\012\" | sed \"1d\" > /tmp/device.smit \n\
+	fi\n\
+else \n\
+	echo $* | tr \" \" \"\\012\" | sed \"1d\" | grep "^@@" | sed 's/@@//' > /tmp/device.smit \n\
+fi \n\
+ISCD=`/usr/lib/assist/check_cd $1` \n\
+if [ x$ISCD = x0 ] \n\
+then \n\
+	devinstall -v -f /tmp/device.smit $1 \n\
+	rm /tmp/device.smit \n\
+	exit $? \n\
+fi \n\
+INSTDIR=`/usr/lib/assist/mount_cd $1` \n\
+if [ $? = 0 ]\n\
+then \n\
+	devinstall -v -f /tmp/device.smit -d$INSTDIR \n\
+	/usr/lib/assist/unmount_cd $1\n\
+	rm /tmp/device.smit \n\
+	exit $? \n\
+fi\n\
+rm /tmp/device.smit \n\
+exit $?\n\
+}\n\
+dev_install"
+	ask                      ="y"
+	exec_mode                =""
+	ghost                    ="n"
+	cmd_to_discover          =""
+	cmd_to_discover_postfix  =""
+	name_size                =0
+	value_size               =0
+	help_msg_id              ="1800098"
+	help_msg_loc             =""
+
+
+sm_cmd_opt:
+	id                       ="devinst_isadev"
+	id_seq_num               ="010"
+	disc_field_name          ="_rawname"
+	name                     ="INPUT device / directory for software"
+	name_msg_file            ="smit.cat"
+	name_msg_set             =1
+	name_msg_id              =626
+	op_type                  =""
+	entry_type               ="n"
+	entry_size               =0
+	required                 ="+"
+	prefix                   ="-d"
+	cmd_to_list_mode         =""
+	cmd_to_list              =""
+	cmd_to_list_postfix      =""
+	multi_select             ="n"
+	value_index              =0
+	disp_values              =""
+	values_msg_file          =""
+	values_msg_set           =0
+	values_msg_id            =0
+	aix_values               =""
+	help_msg_id              ="0503001"
+	help_msg_loc             =""
+
+sm_cmd_opt:
+	id                       ="devinst_isaopt"
+	id_seq_num               ="020"
+	disc_field_name          =""
+	name                     ="SOFTWARE to install"
+	name_msg_file            ="smit.cat"
+	name_msg_set             =1
+	name_msg_id              =620
+	op_type                  ="l"
+	entry_type               ="t"
+	entry_size               =0
+	required                 ="+"
+	prefix                   ="--"
+	cmd_to_list_mode         ="a"
+	cmd_to_list              ="listprod()\n\
+{\n\
+ISCD=`/usr/lib/assist/check_cd $1` \n\
+if [ x$ISCD = x0 ] \n\
+then \n\
+  installp -JqLd $1 2>&1 | egrep \"devices.isa.\" | egrep -v \"devices.isa.sio\"  > /tmp/device.smit2 \n\
+  /usr/lib/instl/sm_inst installp_format -i -n -O -P /tmp/device.smit2 \n\
+  rm /tmp/device.smit2 \n\
+  exit $? \n\
+fi \n\
+INSTDIR=`/usr/lib/assist/mount_cd $1` \n\
+if [ $? = 0 ]\n\
+then \n\
+  installp -JqLd$INSTDIR  2>&1 | egrep \"devices.isa.\" | egrep -v \"devices.isa.sio\"  > /tmp/device.smit2 \n\
+  /usr/lib/instl/sm_inst installp_format -i -n -O -P /tmp/device.smit2 \n\
+  rm /tmp/device.smit2 \n\
+  /usr/lib/assist/unmount_cd $1\n\
+  exit $? \n\
+fi \n\
+exit $? \n\
+}
+listprod"
+	cmd_to_list_postfix      = "_rawname"
+	multi_select             ="y"
+	value_index              =0
+	disp_values              =""
+	values_msg_file          =""
+	values_msg_set           =0
+	values_msg_id            =0
+	aix_values               =""
+	help_msg_id              ="1800110"
+	help_msg_loc             =""
+
+

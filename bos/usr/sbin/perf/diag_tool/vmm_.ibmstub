@@ -1,0 +1,105 @@
+#!/bin/ksh
+# @(#)16	1.6	src/bos/usr/sbin/perf/diag_tool/vmm_.sh, pdt, bos411, 9428A410j 4/13/94 16:31:34
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# vmm_
+# Obtain virtual memory activity information, and record it in the
+# SM database
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+#
+# Awk script to return the value of a specific variable
+# extracted from a file having the following format:
+# Input to this program is a file having 2 records:
+#   record 1:  var1name var2name var3name ...
+#   record 2:  var1val var2val var3val ...
+#
+# the input variable v indicates the variable desired.
+# if the variable isn't found, return "".
+#
+# obtain value for load control parameter, h
+hparm=`(getschedparms | awk '
+BEGIN {
+}
+{
+if (NR==1)
+   for (i=1; i<=NF; i++) 
+       NAMES[i]=$i
+if (NR==2)
+   for (i=1; i<=NF; i++)
+       VALUES[i]=$i
+}
+END {
+for (i in NAMES) 
+    if (NAMES[i]==v)
+       print VALUES[i]
+}' v=v_repage_hi)`
+
+#
+# Awk script to extract dynamic vmm activity, and to provide a
+# formatted output of the obtained information
+#
+# Creates SM records:
+#    SYS sys0 VMM_lctl_N
+#    SYS sys0 VMM_lctl_SUM
+#    SYS sys0 VMM_lctl_SUMSQ
+#    SYS sys0 VMM_lctl_EXCEPTIONS
+#
+# Input: a file with the output of the 'vmstat' command.
+# Matching algorithm:
+#   skip first 4 records
+#   skip all header records (begin with "procs", "-", "r").
+#   keep everything else.
+#
+# obtain memory activity for 5 minutes
+vmstat 1 301 | \
+   awk '
+       BEGIN {
+         if (hparm=="") hparm=6
+         SUM = 0
+         SUMSQ = 0
+         EXCEPTIONS = 0
+	 N = 0
+       }
+       {
+          x=gsub(/-/," ",c)
+          x = gsub(/-/,",",t)
+          if (NR<=4) getline
+          else {
+          if (($1 != "procs") && 
+                ($1 !~ /^-/)  &&
+             ($1 != "r")){
+              N++
+              if ($8 > 0) {
+                  SUM+= $7/$8
+                  SUMSQ+= ($7/$8)*($7/$8)
+                  if ($7 > 0)
+                     if (($8/$7) < hparm) EXCEPTIONS++; 
+              }
+          }
+          }
+       }
+       END {
+	  if (N > 0) {
+             #print "SYS", "sys0", c, "VMM_lctl_N", N, 1.0, "L"
+             print "SYS", "sys0", c, "VMM_lctl_SUM", SUM/N, 1.0, "I(" t ",ratio)"
+             print "SYS", "sys0", c, "VMM_lctl_SUMSQ", SUMSQ/N, 1.0, "I(" t ",ratio)"
+             print "SYS", "sys0", c, "VMM_lctl_EXCEPTIONS", EXCEPTIONS/N, 1.0, "I(" t ",N)"
+	  }
+      }' c=$curr h=$hparm t="1-1-300" >>$pdt_SM

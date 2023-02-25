@@ -1,0 +1,79 @@
+* @(#)90	1.6  src/tcpip/usr/samples/snmpd/smux/README, snmp, tcpip411, GOLD410 9/13/93 15:14:48
+*
+* COMPONENT_NAME: (SNMP) Simple Network Management Protocol Daemon
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1991, 1993
+* All Rights Reserved
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+* Licensed Material - Property of IBM
+*
+* FILE:	/usr/samples/snmpd/smux/README
+*
+
+(1) The SMUX proxy agent code is provided only as examples.
+
+    INTERNATIONAL BUSINESS MACHINES CORP. PROVIDES THIS SOURCE CODE
+    EXAMPLE "AS IS," WITHOUT WARRANTY OF ANY KIND EITHER EXPRESSED OR
+    IMPLIED INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+    MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  The entire
+    risk as to the quality and performance of this example is with you.
+    Should any part of this source code example prove defective you (and
+    not IBM or an IBM authorized dealer) assume the entire cost of all
+    necessary servicing, repair, or correction.
+
+    If you should experience problems using the SMUX user interface or
+    any of the SMUX example files, there is an internet mail address to
+    which you can direct your SMUX concerns for these examples.  Please
+    send mail to smux@bach.austin.ibm.com stating your questions and/or
+    problems.  Please include your return internet mail address in your
+    note.  We cannot guarantee that we will provide you with an answer,
+    but we will attempt to answer all queries concerning the SMUX interface.
+    In the event that the above internet address becomes inaccessible,
+    please follow the normal problem reporting procedures.
+
+(2) The following files, which may be of interest to you, are shipped with
+    snmpd:
+       /usr/lib/libisode.a
+       /usr/lib/libsnmp.a
+       associated include files under the /usr/include/isode directory
+       associated files under the /etc directory:
+          /etc/isoaliases
+          /etc/isobjects
+          /etc/isoentities
+          /etc/isomacros
+          /etc/isoservices
+
+(3) The SMUX protocol Request For Comments (RFC) is provided in the
+    following file:
+      /usr/samples/snmpd/smux/rfc1227.txt.
+
+(4) The libraries you will need to link with your SMUX proxy agents
+    are:
+       /usr/lib/libisode.a
+       /usr/lib/libsnmp.a
+    The /usr/samples/snmpd/smux/Makefile provides the rules for this linkage.
+
+(5) See infoExplorer for the manpages on the libisode.a and libsnmp.a
+    subroutines.  There is a logging file that is shipped as
+    /usr/samples/snmpd/smux/isodetailor that is referred to by the isodetailor
+    subroutine.
+
+(6) Remember to update the /etc/snmpd.conf and /etc/snmpd.peers files
+    to reflect your proxy agent.
+
+(7) The mosy command will generate c code for the definitions of your
+    private MIB variables which can be compiled into your SMUX proxy agent.  
+    The mosy command usage is:
+
+    mosy -c output_c_file [-x output_desc_file] [-o output_defs_file] [-s] inputfile...
+
+    where: output_c_file is the full path and filename of the output file
+	   into which mosy will place the generated c code; output_desc_file,
+	   output_defs_file, and inputfile are as described in the mosy 
+	   documentation.
+
+    See the documentation for further information about the mosy command.

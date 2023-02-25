@@ -1,0 +1,146 @@
+#! /bin/bsh
+# @(#)95        1.55  src/tcpip/etc/rc.tcpip, tcpip, tcpip411, GOLD410 6/24/94 11:19:36
+# 
+# COMPONENT_NAME: TCPIP rc.tcpip
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 26  27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+####################################################################
+# rc.tcpip - 
+#	assumes interfaces are brought up by /etc/rc.net
+#	starts TCP/IP daemons (sendmail, inetd, etc.)
+####################################################################
+# start -
+#	starts daemons using either src or command-line method
+# args:
+#	$1: pathname of daemon
+#	$2: non-null if we should use src to start the daemon
+#	$3: any arguments to pass it
+#
+start()
+{
+	# just return if the daemon doesn't exist
+	#
+	[ -x $1 ] || return 0
+
+	# start the daemon using either src or command-line method
+	#
+	cmd=`basename $1`
+	if [ -n "$2" ] ; then
+		startsrc -s $cmd -a "$3"
+	else
+		if [ $cmd = "portmap" ] ; then
+			$1 $3 &	 # portmap must start in background
+		else
+			$1 $3
+		fi
+		echo "\t$cmd"
+	fi
+}
+
+# check the bootup_option flag in the configuration database
+option=`lsattr -E -l inet0 -a bootup_option -F value`
+if [ "$option" = "no"  ]
+then
+####################################################################
+#
+# Check to see if srcmstr is running; if so, we try to use it;
+# otherwise, we start the daemons without src
+#
+i=3  # make sure init has time to start it
+while [ $i != 0 ] ; do
+	if [ -n "`ps -e | awk '$NF == "srcmstr" { print $1; exit }'`" ] ; then
+		src_running=1  # set flag
+		break
+	fi
+	i=`expr $i - 1`  # decrement count
+done
+
+# If srcmstr is running, ensure that it is active before issuing the
+# startsrc commands
+#
+if [ -n "$src_running" ] ; then
+	echo "Checking for srcmstr active...\c"
+	i=10  # try ten times to contact it
+	while [ $i != 0 ] ; do
+		lssrc -s inetd >/dev/null 2>&1 && break  # break out on success
+		sleep 1  # otherwise wait a second and try again
+		echo ".\c"
+		i=`expr $i - 1`  # decrement count
+	done
+	if [ $i = 0 ] ; then
+		echo "\n\nERROR: srcmstr is not accepting connections.\n"
+		exit 1
+	fi
+	echo "complete"
+fi
+
+else
+	src_running=""
+fi
+# Start up the daemons
+#
+echo "Starting tcpip daemons:"
+
+# Start up syslog daemon (for error and event logging)
+start /usr/sbin/syslogd "$src_running"
+
+# Start up print daemon 
+#start /usr/sbin/lpd "$src_running"
+
+# Start up routing daemon (only start ONE)
+#start /usr/sbin/routed "$src_running" -q
+#start /usr/sbin/gated "$src_running"
+
+# Start up the sendmail daemon.
+#
+# Sendmail will automatically build the configuration and alias
+# data bases the first time it is invoked.  You may wish to update
+# the alias source file /usr/lib/aliases with local information,
+# and then rebuild the alias data base by issuing the command
+# "/usr/lib/sendmail -bi" or "/usr/ucb/newaliases".
+#
+# When the configuration or alias data bases are changed, the
+# sendmail daemon can be made to rebuild and re-read them by
+# issuing the command "kill -1 `cat /etc/sendmail.pid`" or, if
+# SRC was used to start the daemon, "refresh -s sendmail".
+#
+# The "qpi", or queue processing interval, determines how
+# frequently the daemon processes the message queue.
+#
+qpi=30m  # 30 minute interval
+#
+start /usr/lib/sendmail "$src_running" "-bd -q${qpi}"
+
+# Start up Portmapper
+USR_NFS=`mount | awk '{if($3=="/usr") print $4}'`
+if [ "$USR_NFS" != "nfs" ]
+then
+REMOTE_USR="N"
+start /usr/sbin/portmap "$src_running"
+fi
+
+# Start up socket-based daemons
+start /usr/sbin/inetd "$src_running"
+
+# Start up Domain Name daemon
+#start /usr/sbin/named "$src_running"
+
+# Start up time daemon
+#start /usr/sbin/timed "$src_running"
+
+# Start up rwhod daemon (a time waster)
+#start /usr/sbin/rwhod "$src_running"
+
+# Start up the Simple Network Management Protocol (SNMP) daemon
+#start /usr/sbin/snmpd "$src_running"
+

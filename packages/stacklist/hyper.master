@@ -1,0 +1,45 @@
+/* @(#)86        1.2  src/packages/stacklist/hyper.master, pkg, pkg41J, 9518A_all 4/26/95 14:57:03                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for Hypertext Media
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+/**/
+#ifdef HYPERCD
+bos.info.en_US.hypertext
+X11.info.en_US.hypertext
+icraft.info.en_US.hypertext
+hcon.info.en_US.hypertext
+OpenGL.info.en_US.hypertext
+perfagent.info.en_US.hypertext
+sx25.info.en_US.hypertext
+PEX_PHIGS.info.en_US.hypertext
+UMS.info.en_US.hypertext
+Wabi.info.en_US.hypertext
+#endif /* HYPERCD */
+/**/
+#if defined(HYPERTAPE) || defined(DEV) 
+bos.info.en_US.hypertape
+#endif /* HYPERTAPE */
+/**/
+#ifdef HYPERTAPE
+X11.info.en_US
+icraft.info.en_US
+hcon.info.en_US
+OpenGL.info.en_US
+perfagent.info.en_US
+sx25.info.en_US
+PEX_PHIGS.info.en_US
+UMS.info.en_US
+Wabi.info.en_US
+#endif /* HYPERTAPE */
+/**/

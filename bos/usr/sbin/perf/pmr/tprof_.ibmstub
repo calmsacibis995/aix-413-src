@@ -1,0 +1,76 @@
+#!/bin/ksh
+# @(#)92	1.3	src/bos/usr/sbin/perf/pmr/tprof_.sh, perfpmr, bos411, 9428A410j 4/14/94 10:11:23
+#
+# COMPONENT_NAME: perfpmr
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# tprof_
+#
+# invoke tprof to collect data for specified interval and again to produce report
+#
+
+if [ $# -eq 0 ]
+then
+ echo "tprof_: usage: tprof_ [-p program] time"
+ echo "          time is total time to measure"
+ echo "          -p program is optional executable to be profiled,"
+ echo "          which, if specified, must reside in current directory"
+ exit -1
+fi
+
+# move to proper directory
+cd /var/perf/tmp
+
+# see if optional application program in current directory specified
+case $1 in
+  -p)  PGM=$2
+       shift
+       shift;;
+   *)  PGM=tprof;;
+esac
+
+# collect raw data 
+echo "\n     TPROF_: Starting tprof for $1 seconds...."
+tprof -x sleep $1 > /dev/null 2>&1
+echo "     TPROF_: Sample data collected...."
+
+# reduce data
+echo "     TPROF_: Generating reports...."
+renice 0 $$ > /dev/null 2>&1
+if [ $PGM = "tprof" ]
+then
+ tprof  -k -s  > /dev/null 2>&1
+else
+ tprof  -p $PGM -k -s > /dev/null 2>&1
+fi
+
+# save final output as $PGM.sum
+if [ $PGM = "tprof" ]
+then
+  if [ -f prof.all ]
+  then
+    mv prof.all $PGM.sum
+  else
+    mv __prof.all $PGM.sum
+  fi
+else
+  if [ -f $PGM.all ]
+  then
+    mv $PGM.all $PGM.sum
+  else
+    mv __$PGM.all $PGM.sum
+  fi
+fi
+
+# final cleanup
+rm stripnm.* lib.all tlib.all > /dev/null 2>&1
+echo "     TPROF_: Tprof report is in $PGM.sum"

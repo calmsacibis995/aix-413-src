@@ -1,0 +1,223 @@
+* File name: inseq.frm
+
+* @(#)27	1.5  src/tenplus/termcap/inseq.fsz, tenplus, tenplus411, GOLD410 3/23/93 12:14:32
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10, 27
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 2
+	Flags = 0x1
+
+/invtext:
+	Type = 1
+	Count = 23
+
+/invtext/0:
+	Value = "[title                                                                         ]"
+
+/invtext/1:
+	Value = "   [Name                                                                      ]"
+
+/invtext/2:
+
+/invtext/3:
+	Value = "[subtitle                                                                      ]"
+
+/invtext/4:
+	Value = "\011  \023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/5:
+	Value = "\011  \001[EdFunc         ]\001[Value            ]\001[KeyName        ]\001"
+
+/invtext/6:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/7:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/8:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/9:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/10:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/11:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/12:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/13:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/14:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/15:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/16:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/17:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/18:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/19:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/20:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/21:
+	Value = "\011  \001[               ]\001[                 ]\001[               ]\001"
+
+/invtext/22:
+	Value = "\011  \006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/fields:
+	Type = 1
+	Count = 6
+
+/fields/0:
+	Type = 1
+	Count = 4
+
+/fields/0/number:
+	Value = "1"
+
+/fields/0/name:
+	Value = "title"
+
+/fields/0/cat-msgno:
+	Value = "%-F_INSEQ_TITLE"
+
+/fields/0/cat-deftxt:
+	Value = "   Input Sequences for:                                                         "
+
+/fields/1:
+	Type = 1
+	Count = 3
+
+/fields/1/data-path:
+	Value = "Name"
+
+/fields/1/number:
+	Value = "2"
+
+/fields/1/name:
+	Value = "Name"
+
+/fields/2:
+	Type = 1
+	Count = 4
+
+/fields/2/number:
+	Value = "3"
+
+/fields/2/name:
+	Value = "subtitle"
+
+/fields/2/cat-msgno:
+	Value = "%-F_INSEQ_SUBTITLE"
+
+/fields/2/cat-deftxt:
+	Value = "            Editor Function        Value            Key Name                    "
+
+/fields/3:
+	Type = 1
+	Count = 7
+
+/fields/3/number:
+	Value = "4"
+
+/fields/3/name:
+	Value = "EdFunc"
+
+/fields/3/data-path:
+	Value = "Inseqs/*/Name"
+
+/fields/3/ganged-to:
+	Value = "Name, Value"
+
+/fields/3/crscroll:
+	Value = "x"
+
+/fields/3/no-zoom:
+	Value = "x"
+
+/fields/3/pick-name:
+	Value = "inseq"
+
+/fields/4:
+	Type = 1
+	Count = 7
+
+/fields/4/number:
+	Value = "5"
+
+/fields/4/name:
+	Value = "Value"
+
+/fields/4/data-path:
+	Value = "Inseqs/*/Value"
+
+/fields/4/ganged-to:
+	Value = "Name, Value"
+
+/fields/4/crscroll:
+	Value = "x"
+
+/fields/4/no-zoom:
+	Value = "x"
+
+/fields/4/pick-name:
+	Value = "inseq"
+
+/fields/5:
+	Type = 1
+	Count = 7
+
+/fields/5/number:
+	Value = "6"
+
+/fields/5/name:
+	Value = "KeyName"
+
+/fields/5/data-path:
+	Value = "Inseqs/*/KeyName"
+
+/fields/5/ganged-to:
+	Value = "Name, Value"
+
+/fields/5/crscroll:
+	Value = "x"
+
+/fields/5/no-zoom:
+	Value = "x"
+
+/fields/5/pick-name:
+	Value = "inseq"
+

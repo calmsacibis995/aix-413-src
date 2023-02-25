@@ -1,0 +1,565 @@
+# @(#)42        1.10  src/rspc/objclass/sm_isaent.add, isaent, rspc41J, 9524G_all 6/12/95 12:07:53
+#
+#  COMPONENT_NAME: (ISAENT)
+#
+#  FUNCTIONS: Ethernet ISA Device User Interface (SMIT)
+#
+#  ORIGINS: 27
+#
+#  IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+#  combined with the aggregated modules for this product)
+#                   SOURCE MATERIALS
+#  (C) COPYRIGHT International Business Machines Corp. 1994
+#  All Rights Reserved
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+#       SMIT Menu objects
+#
+
+#-----------------------------------------------------------------------------
+# Add a Ethernet ISA Adapter
+#-----------------------------------------------------------------------------
+# This is a name select to map the ISA name select created id to an
+# existing Ethernet Dialog Panel
+#
+sm_name_hdr:
+    id                        = "mkdevisa_hdr_ethernet_isa"
+    next_id                   = "mkenet_hdr_ethernet_isa"
+    option_id                 = "mkdevenet_name_opt"
+    has_name_select           = "y"
+    name                      = "Add a Ethernet ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 11
+    name_msg_id               = 1
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = ""
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+# Name selector command option for mapping ISA name select to Ethernet
+# dialog panels.
+sm_cmd_opt:
+    id                        = "mkdevenet_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Add a Ethernet ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 11
+    name_msg_id               = 1
+    op_type                   = "n"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+# The dialogue headers follow.  There is one for each unique Predefined
+# Ethernet adapter instance.  Their Id's are built as follows:
+#       "mkenet_hdr_xxx_yyy"
+# where xxx is the type and yyy is the subclass.
+sm_cmd_hdr:
+    id                        = "mkenet_hdr_ethernet_isa"
+    option_id                 = "mkenet_isa"
+    has_name_select           = "y"
+    name                      = "Add a Ethernet ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 11
+    name_msg_id               = 1
+    cmd_to_exec               = "x()
+{
+mkdev -c adapter -s isa -t ethernet $* 
+rc=$?
+if [ rc = 0 ]
+then
+     cfgmgr
+else
+     return $rc
+fi
+}
+x"
+    ask                       = "n"
+    exec_mode                 = "P"
+    ghost                     = "n"
+    cmd_to_discover           = "lsattr -c adapter "
+    cmd_to_discover_postfix   = "-s subclass -t type -D -O"
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+
+# Dialog header command options.
+
+# Displays device's description.
+sm_cmd_opt:
+    id                        = "mkenet_isa"
+    id_seq_num                = "004"
+    disc_field_name           = "desc"
+    name                      = "Description"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 7
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420801"
+    help_msg_loc              = ""
+
+# Displays transmit queue size attribute.
+sm_cmd_opt:
+    id                        = "mkenet_isa"
+    id_seq_num                = "020"
+    disc_field_name           = "xmt_que_size"
+    name                      = "TRANSMIT queue size"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 27
+    name_msg_id               = 10
+    op_type                   = "l"
+    entry_type                = "#"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a xmt_que_size="
+    cmd_to_list_mode          = "n"
+    cmd_to_list               = "lsattr -c adapter -a xmt_que_size -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420811"
+    help_msg_loc              = ""
+
+# Displays "enable alternate ethernet address" attribute.
+sm_cmd_opt:
+    id                        = "mkenet_isa"
+    id_seq_num                = "060"
+    disc_field_name           = "use_alt_addr"
+    name                      = "Enable ALTERNATE ETHERNET address"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 27
+    name_msg_id               = 13
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a use_alt_addr="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 1
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = "yes,no"
+    help_msg_id               = "0420815"
+    help_msg_loc              = ""
+
+# Displays alternate ethernet address.
+sm_cmd_opt:
+    id                        = "mkenet_isa"
+    id_seq_num                = "070"
+    disc_field_name           = "alt_addr"
+    name                      = "ALTERNATE ETHERNET address"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 27
+    name_msg_id               = 8
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a alt_addr="
+    cmd_to_list_mode          = "r"
+    cmd_to_list               = "echo \"Read help information.\" "
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420816"
+    help_msg_loc              = ""
+
+# Display database only question.
+sm_cmd_opt:
+    id                        = "mkenet_isa"
+    id_seq_num                = "100"
+    disc_field_name           = ""
+    name                      = "Apply change to DATABASE only"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 11
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = "-P ,"
+    help_msg_id               = "0420819"
+    help_msg_loc              = ""
+
+#Display logical name.
+sm_cmd_opt:
+    id                        = "mkenet_isa"
+    id_seq_num                = "010"
+    disc_field_name           = "parent"
+    name                      = "Parent Device"
+    name_msg_file             = ""
+    name_msg_set              = ""
+    name_msg_id               = ""
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-p "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "mkenet_isa"
+    id_seq_num                = "050"
+    disc_field_name           = "media_type"
+    name                      = "Media Type"
+    name_msg_file             = "devices_ent.cat"
+    name_msg_set              = 27
+    name_msg_id               = 42
+    op_type                   = "l"
+    entry_type                = ""
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a media_type="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a media_type -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0 
+    values_msg_id             = 0 
+    aix_values                = ""
+    help_msg_id               = "0420842"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "mkenet_isa"
+    id_seq_num                = "051"
+    disc_field_name           = "bus_io_addr"
+    name                      = "I/O Port Address"
+    name_msg_file             = "devices_ent.cat"
+    name_msg_set              = "27"
+    name_msg_id               = "3"
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bus_io_addr="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a bus_io_addr -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = ""
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = ""
+    values_msg_id             = ""
+    aix_values                = ""
+    help_msg_id               = "0420843"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "mkenet_isa"
+    id_seq_num                = "052"
+    disc_field_name           = "bus_intr_lvl"
+    name                      = "Interrupt Level"
+    name_msg_file             = "devices_ent.cat"
+    name_msg_set              = "27"
+    name_msg_id               = "4"
+    op_type                   = "l"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bus_intr_lvl="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a bus_intr_lvl -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = ""
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = ""
+    values_msg_id             = ""
+    aix_values                = ""
+    help_msg_id               = "0420844"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "mkenet_isa"
+    id_seq_num                = "053"
+    disc_field_name           = "bus_mem_addr"
+    name                      = "Bus Memory Address"
+    name_msg_file             = "devices_ent.cat"
+    name_msg_set              = "27"
+    name_msg_id               = "2"
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bus_mem_addr="
+    cmd_to_list_mode          = "r"
+    cmd_to_list               = "lsattr -c adapter -a bus_mem_addr -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = ""
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = ""
+    values_msg_id             = ""
+    aix_values                = ""
+    help_msg_id               = "0420845"
+    help_msg_loc              = ""
+
+#
+#-----------------------------------------------------------------------------
+# Change / Show Characteristics of a Ethernet ISA Adapter
+#-----------------------------------------------------------------------------
+# This is a name select to map the ISA name select created id to an
+# existing Ethernet Dialog Panel
+#
+sm_name_hdr:
+    id                        = "chdevisa_hdr_ethernet_isa"
+    next_id                   = "chgenet_hdr_ethernet_isa"
+    option_id                 = "chdevenet_name_opt"
+    has_name_select           = "y"
+    name                      = "Change/Show Characteristics of a Ethernet ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 11
+    name_msg_id               = 2
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = ""
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+# Name selector command option for mapping ISA name select to Ethernet
+# dialog panels.
+sm_cmd_opt:
+    id                        = "chdevenet_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Change/Show Characteristics of a Ethernet ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 11
+    name_msg_id               = 2
+    op_type                   = "n"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+# The dialogue headers follow.  There is one for each unique Predefined
+# Ethernet adapter instance.  Their Id's are built as follows:
+#       "chgenet_hdr_xxx_yyy"
+# where xxx is the type and yyy is the subclass.
+sm_cmd_hdr:
+    id                        = "chgenet_hdr_ethernet_isa"
+    option_id                 = "enet_chg,enet_chg_isa,enet_chg_xmt"
+    has_name_select           = "y"
+    name                      = "Change/Show Characteristics of a Ethernet ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 11
+    name_msg_id               = 2
+    cmd_to_exec               = "chdev "
+    ask                       = ""
+    exec_mode                 = "P"
+    ghost                     = "n"
+    cmd_to_discover           = "lsattr "
+    cmd_to_discover_postfix   = "-l logicname -E -O"
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+# Dialog header command options.
+
+#Display media type selection.
+sm_cmd_opt:
+    id                        = "enet_chg_isa"
+    id_seq_num                = "050"
+    disc_field_name           = "media_type"
+    name                      = "Media Type"
+    name_msg_file             = "devices_ent.cat"
+    name_msg_set              = 27
+    name_msg_id               = 32
+    op_type                   = "l"
+    entry_type                = ""
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a media_type="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a media_type -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = "" 
+    disp_values               = ""
+    values_msg_file           = "devices_ent.cat"
+    values_msg_set            = "27" 
+    values_msg_id             = "43" 
+    aix_values                = ""
+    help_msg_id               = "0420842"
+    help_msg_loc              = ""
+
+#Display I/O port address selection.
+sm_cmd_opt:
+    id                        = "enet_chg_isa"
+    id_seq_num                = "051"
+    disc_field_name           = "bus_io_addr"
+    name                      = "I/O Port Address"
+    name_msg_file             = ""
+    name_msg_set              = ""
+    name_msg_id               = ""
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bus_io_addr="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a bus_io_addr -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = ""
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = ""
+    values_msg_id             = ""
+    aix_values                = ""
+    help_msg_id               = "0420843"
+    help_msg_loc              = ""
+
+
+#Display bus interrupt level selection.
+sm_cmd_opt:
+    id                        = "enet_chg_isa"
+    id_seq_num                = "052"
+    disc_field_name           = "bus_intr_lvl"
+    name                      = "Interrupt Level"
+    name_msg_file             = ""
+    name_msg_set              = ""
+    name_msg_id               = ""
+    op_type                   = "l"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bus_intr_lvl="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a bus_intr_lvl -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = ""
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = ""
+    values_msg_id             = ""
+    aix_values                = ""
+    help_msg_id               = "0420844"
+    help_msg_loc              = ""
+
+#Display bus memory address selection.
+sm_cmd_opt:
+    id                        = "enet_chg_isa"
+    id_seq_num                = "053"
+    disc_field_name           = "bus_mem_addr"
+    name                      = "Bus Memory Address"
+    name_msg_file             = ""
+    name_msg_set              = ""
+    name_msg_id               = ""
+    op_type                   = "r"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bus_mem_addr="
+    cmd_to_list_mode          = "r"
+    cmd_to_list               = "lsattr -c adapter -a bus_mem_addr -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = ""
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = ""
+    values_msg_id             = ""
+    aix_values                = ""
+    help_msg_id               = "0420845"
+    help_msg_loc              = ""

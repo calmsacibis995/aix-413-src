@@ -1,0 +1,85 @@
+#!/unix
+* @(#)49      1.5  src/nfs/kernext/krpc/krpc.exp, sysxnfs, nfs41J, 9511A_all 3/3/95 09:48:59
+* 
+* COMPONENT_NAME: SYSXNFS
+* 
+* FUNCTIONS: 
+*
+*   ORIGINS: 27
+*
+* IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+* combined with the aggregated modules for this product)
+*                  SOURCE MATERIALS
+*   (C) COPYRIGHT International Business Machines Corp. 1993
+* All Rights Reserved
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*
+nfs_server_base_priority
+nfs_priority_array
+krpc_maxdupreqs
+krpc_udpcksum
+nfskrpc_kmid
+alloc_xid
+authdes_create
+authdes_getucred
+authkern_create
+clntkudp_callit_addr
+clntkudp_create
+clntkudp_init
+clntkudp_settimers
+clntkudp_intr
+clntxid
+clnt_sperrno
+getport_loop
+pmap_kgetport
+rcstat
+rsstat
+init_rcstat
+init_rsstat
+svc_register
+svc_run
+svc_sendreply
+svc_sendreply_othersock
+svc_unregister
+svcerr_decode
+svcerr_noproc
+svcerr_progvers
+svcerr_weakauth
+svckudp_create
+svckudp_dupdone
+svckudp_dupsave
+svckudp_dup_chgsize
+xdr_array
+xdr_bool
+xdr_bytes
+xdr_enum
+xdr_int
+xdr_long
+xdr_netobj
+xdr_opaque
+xdr_rmtcall_args
+xdr_rmtcallres
+xdr_string
+xdr_u_int
+xdr_u_long
+xdr_u_short
+xdr_union
+xdr_void
+xdrmbuf_getmbuf
+xdrmbuf_ops
+xdrmbuf_putbuf
+Sendok
+Sendtries
+*
+* debug entries
+*
+*drhashsz
+*ndupreqs
+*dupreqs
+*dupchecks
+*drhashtbl
+*drmru
+*dupreplysize

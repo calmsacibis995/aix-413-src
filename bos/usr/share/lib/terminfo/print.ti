@@ -1,0 +1,141 @@
+# @(#)21        1.12  src/bos/usr/share/lib/terminfo/print.ti, terminfo, bos411, 9428A410j 4/12/94 17:30:11
+#
+#   COMPONENT_NAME: Terminfo
+#
+#   FUNCTIONS: print.ti
+#
+#   ORIGINS: 27 4
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1992,1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+#ident	"@(#)terminfo:print.ti	1.9"
+#
+# print: PRINTERS
+#
+# Manufacturer:	GENERIC LINE PRINTERS
+# Class:	III
+# 
+# Info:
+#	Generic line printer. We assume it can backspace, since even 
+#	those line printers that can't have this hidden by UNIX lpr 
+#	driver.
+#
+lpr|lp|printer|print|printing|line printer,
+	cr=^M, cud1=^J, ind=^J, ff=^L, bel=^G, cub1=^H,
+	lines#66, cols#132, hc, os,
+# Info:
+#	The 'S' beginning mc4 and mc5 is checked for by lp, which 
+#	sleeps 5 seconds.
+#
+pbox|printerbox|box with print mode switch,
+	mc5=Set printer switch to "print"\r\n,
+	mc4=Set printer switch to "terminal"\r\n,
+# Info:
+#	OSF's definition used 
+#
+2621-pb|hp2621-pb|2621 with printer box,
+	use=printerbox, use=hp2621-print,
+# Info:
+#	Added 1992
+#
+blit-pb|blit with printer box,
+	use=printerbox, use=blit-print,
+
+h19-pb|heathkit h19 with printer box,
+	am, eslok, hs, mir, msgr,
+	cols#80, it#8, lines#24,
+	bel=^G, clear=\EE, cnorm=\Ey4, cr=\r, cub1=\b,
+	cud1=\n, cuf1=\EC, cup=\EY%p1%'\s'%+%c%p2%'\s'%+%c,
+	cuu1=\EA, cvvis=\Ex4, dch1=\EN, dl1=\EM$<1*>, ed=\EJ,
+	el=\EK, fsl=\Ek\Ey5, home=\EH, ht=\t, il1=\EL$<1*>,
+	ind=\n, kbs=\b, kcub1=\ED, kcud1=\EB, kcuf1=\EC,
+	kcuu1=\EA, kf1=\ES, kf2=\ET, kf3=\EU, kf4=\EV,
+	kf5=\EW, kf6=\EP, kf7=\EQ, kf8=\ER, khome=\EH,
+	lf6=blue, lf7=red, lf8=white,
+	mc4=Set\sprinter\sswitch\sto\s"terminal"\r\n,
+	mc5=Set\sprinter\sswitch\sto\s"print"\r\n, ri=\EI,
+	rmacs=\EG, rmir=\EO, rmso=\Eq, smacs=\EF, smir=\E@,
+	smso=\Ep, tsl=\Ej\Ex5\EY8%p1%'\s'%+%c\Eo\Eo,
+
+mime-pb|mime with printer box,
+	am,
+	cols#80, it#8, lines#24, vt#9,
+	bel=^G, clear=^]^C, cr=\r, cub1=\b, cud1=\n, cuf1=^X,
+	cup=^T%p1%{24}%+%c%p2%?%p2%{32}%>%t%{48}%+%;%{80}%+%c,
+	cuu1=^Z, dl1=^W$<80>, ed=^_, el=^^, home=^], ht=\t,
+	il1=^A$<80>, ind=\n, is2=\E^S^Q, kcub1=\b, kcud1=^K,
+	kcuf1=^X, kcuu1=^Z,
+	mc4=Set\sprinter\sswitch\sto\s"terminal"\r\n,
+	mc5=Set\sprinter\sswitch\sto\s"print"\r\n, ri=^R$<3>,
+	uc=^U,
+citoh|ci8510|8510|c.itoh 8510a,
+	cols#80, ri=\Er, bold=\E!, smul=\EX, rmul=\EY, sgr0=\E"\EY, it#8,
+	is2=\E(009\054017\054025\054033\054041\054049\054057\054065\054073.,
+	rep=\ER%p2%03d%p1%c, cub1@, use=lpr,
+citoh-pica|citoh in pica,
+	is1=\EN, use=citoh,
+citoh-elite|citoh in elite,
+	is2=\E(009\054017\054025\054033\054041\054049\054057\054065\054073\054081\054089.,
+	is1=\EE, cols#96, use=citoh,
+citoh-comp|citoh in compressed,
+	is2=\E(009\054017\054025\054033\054041\054049\054057\054065\054073\054081\054089\054097\054105\054113\054121\054129.,
+	is1=\EQ, cols#136, use=citoh,
+# Info:
+#	Infinite cols because we don't want lp ever inserting \n\t**.
+#
+citoh-prop|citoh-ps|ips|citoh in proportional spacing mode,
+	is1=\EP, cols#32767, use=citoh,
+citoh-6lpi|citoh in 6 lines per inch mode,
+	is3=\EA, use=citoh,
+citoh-8lpi|citoh in 8 lines per inch mode,
+	is3=\EB, lines#88, use=citoh,
+qms-diablo|diablo simulated by qms,
+	smul=\EE, rmul=\ER, smso=\EW, rmso=\E&, use=lpr,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       This entry is copied from teletype.ti file.
+
+blit-print|jerq-print|blit running teletype rom,
+        cr=^M, ind=^J, bel=^G, am, ht=^I, it#8, ul, eo,
+        cud1=^J, cuf1=\EC, cuu1=\EA, cub1=\ED,
+        cols#87, lines#72, clear=^L, el=\EK,
+        cup=\EY%p2%' '%+%c%p1%' '%+%c,
+        il1=\EF!, dl1=\EE!, ich1=\Ef!, dch1=\Ee!,
+        il=\EF%p1%' '%+%c, dl=\EE%p1%' '%+%c,
+        ich=\Ef%p1%' '%+%c, dch=\Ee%p1%' '%+%c,
+        kcuu1=\EA, kcud1=\EB, kcuf1=\EC, kcub1=\ED, kbs=^H,
+
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       2621 with function labels.  Most of the time they are off,
+#       but inside vi, the function key labels appear.  You have to
+#       hold down shift to get them to xmit.
+#	These entries are copied from hp.ti
+
+
+hp2621-print|hp 2621,
+        is2=\E&j@\r, cbt=\Ei, cup=\E&a%p2%dc%p1%dY,
+        dch1=\EP$<2>, ip=$<2>, pb#19200,
+        smso=\E&dD, rmso=\E&d@, smul=\E&dD, rmul=\E&d@, sgr0=\E&d@, xhp@,
+        khome=\Ep\r, kcuu1=\Et\r, kcub1=\Eu\r, kcuf1=\Ev\r, kcud1=\Ew\r,
+        kf1=\Ep\r, kf2=\Eq\r, kf3=\Er\r, kf4=\Es\r, kf5=\Et\r, kf6=\Eu\r,
+        kf7=\Ev\r, kf8=\Ew\r, smkx=\E&jB, rmkx=\E&j@, ht=^I$<2>, xon, use=hp-print,
+
+hp-print|hewlett packard,
+        tbc=\E3, hts=\E1, cr=^M, cud1=^J, ind=^J, bel=^G, il1=\EL, am, cub1=^H,
+        ed=\EJ, el=\EK, hpa=\E&a%p1%dC, clear=\EH\EJ,
+        cup=\E&a%p2%dc%p1%dY$<6>, cols#80, vpa=\E&a%p1%dY, lm#0, da, db,
+        dch1=\EP, dl1=\EM, rmir=\ER, smir=\EQ, kbs=^H, lines#24, mir,
+        cuf1=\EC, ht=^I, rmso=\E&d@, smso=\E&dJ,
+        smul=\E&dD, rmul=\E&d@, cuu1=\EA, xhp, vt#6,
+

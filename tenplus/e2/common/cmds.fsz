@@ -1,0 +1,219 @@
+* File name: cmds.frm
+* @(#)65	1.4  src/tenplus/e2/common/cmds.fsz, tenplus, tenplus411, GOLD410 3/24/93 09:30:50
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ 
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 2
+	Flags = 0x1
+
+/invtext:
+	Type = 1
+	Count = 23
+
+/invtext/0:
+	Value = "[title                                                                         ]"
+
+/invtext/1:
+	Value = "[prompt_1                                                                      ]"
+
+/invtext/2:
+	Value = "[prompt_2                                                                      ]"
+
+/invtext/3:
+	Value = "\011"
+
+/invtext/4:
+	Value = "[subtitle                                                                      ]"
+
+/invtext/5:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/6:
+	Value = "\001[name              ]\001[function                                               ]\001"
+
+/invtext/7:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/8:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/9:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/10:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/11:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/12:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/13:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/14:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/15:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/16:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/17:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/18:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/19:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/20:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/21:
+	Value = "\001[                  ]\001[                                                       ]\001"
+
+/invtext/22:
+	Value = "\006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/fields:
+	Type = 1
+	Count = 6
+
+/fields/0:
+	Type = 1
+	Count = 4
+
+/fields/0/number:
+	Value = "1"
+
+/fields/0/name:
+	Value = "title"
+
+/fields/0/cat-msgno:
+	Value = "%-F_CMDS_TITLE"
+
+/fields/0/cat-deftxt:
+	Value = "                      Alphabetical List of Editor Commands                      "
+
+/fields/1:
+	Type = 1
+	Count = 4
+
+/fields/1/number:
+	Value = "2"
+
+/fields/1/name:
+	Value = "prompt_1"
+
+/fields/1/cat-msgno:
+	Value = "%-F_CMDS_PROMPT_1"
+
+/fields/1/cat-deftxt:
+	Value = "                  Touch +LINE to see more, ZOOM-IN for detail.                  "
+
+/fields/2:
+	Type = 1
+	Count = 4
+
+/fields/2/number:
+	Value = "3"
+
+/fields/2/name:
+	Value = "prompt_2"
+
+/fields/2/cat-msgno:
+	Value = "%-F_CMDS_PROMPT_2"
+
+/fields/2/cat-deftxt:
+	Value = "                        Touch USE to continue editing.                          "
+
+/fields/3:
+	Type = 1
+	Count = 4
+
+/fields/3/number:
+	Value = "4"
+
+/fields/3/name:
+	Value = "subtitle"
+
+/fields/3/cat-msgno:
+	Value = "%-F_CMDS_SUBTITLE"
+
+/fields/3/cat-deftxt:
+	Value = "         Name                              Function                             "
+/fields/4:
+	Type = 1
+	Count = 8
+
+/fields/4/number:
+	Value = "5"
+
+/fields/4/name:
+	Value = "name"
+
+/fields/4/data-path:
+	Value = "*/name"
+
+/fields/4/ganged-to:
+	Value = "name, key, function"
+
+/fields/4/zoom-form:
+	Value = "cmd"
+
+/fields/4/crscroll:
+	Value = "x"
+
+/fields/4/pick-name:
+	Value = "cmd"
+
+/fields/4/dotted:
+	Value = "x"
+
+/fields/5:
+	Type = 1
+	Count = 7
+
+/fields/5/number:
+	Value = "6"
+
+/fields/5/name:
+	Value = "function"
+
+/fields/5/data-path:
+	Value = "*/function"
+
+/fields/5/ganged-to:
+	Value = "name, key, function"
+
+/fields/5/zoom-form:
+	Value = "cmd"
+
+/fields/5/crscroll:
+	Value = "x"
+
+/fields/5/pick-name:
+	Value = "cmd"
+

@@ -1,0 +1,68 @@
+#!/bin/ksh
+# @(#)63	1.8	src/bos/usr/sbin/perf/diag_tool/fn_.sh, pdt, bos411, 9428A410j 5/2/94 13:44:08
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# fn_ 
+# Obtain file size information, and record it in the
+# SM database
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+#
+# Awk script to obtain the size of each file/directory
+# specified in the input file, and write it to standard out.
+#
+# Input: a file with the name of one file/dir on each line
+# Output: a file with the result of du -sk performed on each
+#         entry.
+
+# obtain file size information, and format output
+awk '  
+     BEGIN {
+     }
+        {
+          if ( ($1 !~ /^#/) && ($0 != "") ) {
+	     # Ignore the permission errors from du.
+             if (system ("test -e "$0) != 0 )
+       		system("echo ""'$pdt_config'""/.files:"$0": No such file or directory >&2")
+             else
+                system("du -sk "$0" 2>/dev/null ")
+	  }
+        }
+     END {
+     }' $pdt_config/.files 2>>$pdt_tmp/.stderr |
+#
+# Awk script to extract file size info, and to provide a
+# formatted output of the obtained FN information
+#
+# Creates one kind of SM record:
+#    FN size - the size of the file in 1K byte blocks
+#              (If file is a directory, then total for
+#              directory is shown.)
+#
+# Input: a file with the output of the 'du -sk' command.
+awk '
+         BEGIN {
+         }
+             {
+                x=gsub(/-/," ",c)
+                x=gsub(/-/,",",t)
+                print "FN", $2, c, "size", $1, 1.0, "I(" t ",KB)"
+             }
+         END {
+         }' c=$curr t="0-0-1" >> $pdt_SM

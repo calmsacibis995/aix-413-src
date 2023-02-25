@@ -1,0 +1,101 @@
+#!/bin/ksh
+# @(#)88	1.5	src/bos/usr/sbin/perf/diag_tool/paging_.sh, pdt, bos411, 9428A410j 4/13/94 16:30:44
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# paging_
+# Obtain paging configuration information, and record it in the
+# SM database
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+#
+# Awk script to extract info from the lsps command, and to provide a
+# formatted output of the obtained PS and PV information
+#
+# Produces several types of SM records:
+#     PS  size    - size of a paging space
+#     PS amount  - amount of paging space used
+#     PS percent - percentage of paging space used
+#     PS nPVs    - number of physical volumes this page space is on
+#     PS active  - is the paging space active?
+#     PS locVG   - volume group for the paging space
+#     PV npaging - number of paging spaces on the physical volume
+#     PV spaging - size of paging spaces on the physical volume
+#
+# Input: file containing output of the 'lsps -a' command.
+
+# obtain paging space information, and format output
+lsps -a | \
+   awk '
+        BEGIN {                                                
+        }                                                     
+        {                                                    
+          if (NR==1) getline                                  
+          size = substr($4,1,length($4)-2)                   
+          x = gsub(/-/," ",c)             
+          x = gsub(/-/,",",t)            
+          #                             
+          # 1. the size of the paging area 
+          SIZE[$1] += size                
+          NPVS[$1] ++                    
+          #                             
+          # 2. the percent usage of the paging area 
+          PERCENT[$1] = $5                         
+          #                             
+          # 3. whether or not the area is active 
+          if ($6=="yes")                        
+             ACTIVE[$1] = "true" 
+          else 
+             ACTIVE[$1] = "false" 
+          # 
+          # 4. the physical volume the paging area is on 
+          VG[$1] = $3
+          #         
+          # accumulate information about physical volumes holding paging areas 
+          NPS[$2]++ 
+          SPS[$2] += size 
+        } 
+        END { 
+          for (ps in SIZE) {
+          # 1. the size of the paging area 
+              print "PS", ps, c, "size", SIZE[ps], 1.0, "I(" t ",MB)"  
+          # 
+          # 2. the amount and percent usage of the paging area
+              print "PS", ps, c, "amount", (PERCENT[ps]*SIZE[ps])/100.0,
+                    1.0, "I(" t ",MB)"
+              print "PS", ps, c, "percent", PERCENT[ps],
+                    1.0, "I(" t ",pct)"
+          #
+          # 3. the number of physical volumes this page space is defined on
+              print "PS", ps, c, "nPVs", NPVS[ps], 1.0, "I(" t ",N)"
+          #
+          # 3. whether or not the area is active
+              print "PS", ps, c, "active", ACTIVE[ps], 1.0, "B"
+          #
+          # 4. the physical volume the paging area is on
+              print "PS", ps, c, "locVG", VG[ps], 1.0, "T" 
+          }
+          for (pv in NPS) {
+          #
+          # 5. the number of paging areas on this physical volume 
+              print "PV", pv, c, "npaging", NPS[pv], 1.0, "I(" t ",N)" 
+          # 
+          # 6. the total size of paging areas on this physical volume 
+              print "PV", pv, c, "spaging", SPS[pv], 1.0, "I(" t ",MB)" 
+          }
+        }' c=$curr t="0-0-1" >> $pdt_SM

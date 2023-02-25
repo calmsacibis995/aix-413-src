@@ -1,0 +1,78 @@
+-- @(#)12	1.2  src/tcpip/usr/samples/snmpd/dpi/dpid/dpid.my, snmp, tcpip411, GOLD410 9/14/93 11:34:42
+--
+-- COMPONENT_NAME: (SNMP) Simple Network Management Protocol Daemon
+--
+-- ORIGINS: 27
+--
+-- (C) COPYRIGHT International Business Machines Corp. 1993
+-- All Rights Reserved
+-- US Government Users Restricted Rights - Use, duplication or
+-- disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+--
+-- Licensed Material - Property of IBM
+--
+-- FILE:	/usr/samples/snmpd/dpi/dpid/dpid.my
+--
+
+--
+-- INTERNATIONAL BUSINESS MACHINES CORP. PROVIDES THIS SOURCE CODE
+-- EXAMPLE, ASSOCIATED LIBRARIES AND FILES "AS IS," WITHOUT WARRANTY 
+-- OF ANY KIND EITHER EXPRESSED OR IMPLIED INCLUDING BUT NOT LIMITED 
+-- TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+-- PARTICULAR PURPOSE.  The entire risk as to the quality and performance 
+-- of this example is with you.  Should any part of this source code 
+-- example prove defective you (and not IBM or an IBM authorized 
+-- dealer) assume the entire cost of all necessary servicing, repair, 
+-- or correction.
+--
+
+
+RFC1228-DPID DEFINITIONS ::= BEGIN
+
+--IMPORTS
+--	enterprises
+--		FROM RFC1155-SMI;
+
+IMPORTS
+	enterprises, OBJECT-TYPE
+		FROM RFC1155-SMI;
+
+ibm		        OBJECT IDENTIFIER ::=   { enterprises 2 }
+
+
+-- the Agents group
+
+ibmAgents		OBJECT IDENTIFIER ::=	{ ibm 3 }
+aix		        OBJECT IDENTIFIER ::=	{ ibmAgents 1 }
+
+-- hardware
+
+aixRISC6000		OBJECT IDENTIFIER ::=	{ aix 2 }
+
+-- the risc6000 tree
+
+risc6000agents		OBJECT IDENTIFIER ::=	{ aixRISC6000 1 }
+risc6000private		OBJECT IDENTIFIER ::=	{ aixRISC6000 2 }
+risc6000public		OBJECT IDENTIFIER ::=	{ aixRISC6000 3 }
+
+risc6000samples		OBJECT IDENTIFIER ::=	{ risc6000private 1 }
+risc6000sampleAgents	OBJECT IDENTIFIER ::=	{ risc6000samples 1 }
+
+dpid 			OBJECT IDENTIFIER ::= 	{ risc6000sampleAgents 2 }
+
+-- the Yorktown group
+york			OBJECT IDENTIFIER ::=	{ ibm 2 }
+
+-- the SMUX<->DPI group
+dpismux			OBJECT IDENTIFIER ::=	{ york 1 }
+
+dpiSMUXport	OBJECT-TYPE
+      SYNTAX  INTEGER
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+              "The port the dpi sub-agent needs to use to register
+              the dpi sub-agent's tree."
+      ::= { dpismux 1 }
+
+END

@@ -1,0 +1,48 @@
+# @(#) 53 1.19 src/bos/usr/sys/inst.data/sys_bundles/BOS.autoi, pkg, bos41J, 9522A_all 5/26/95 10:30:27
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: BOS.autoi 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1995
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Base BOS Auto Install "Bundle" Definition File
+# These product options will be installed by bos install as part of base
+# operating system installation on all systems.
+#
+################################################################
+# System Management Interface Tool
+bos.sysmgt.smit
+bos.sysmgt.serv_aid
+# System Management Multi-Login Licensing
+bos.sysmgt.loginlic
+# Info hypertext support
+bos.info.en_US.smit_help
+# Client Support for NetLS
+bos.ifor_ls.client
+# TCP/IP Client Support
+bos.net.tcp.client
+bos.net.tcp.smit
+# Base Terminal Function Support
+bos.terminfo.rte
+# DEC Terminal Support
+bos.terminfo.dec.data
+# IBM Terminals Support
+bos.terminfo.ibm.data
+# Sun and PC Terminal Support
+bos.terminfo.pc.data
+# C++ Runtime Support
+xlC.rte
+# Device tty support
+devices.tty
+# Devices message support
+devices.msg.[msg]
+# Dynamically loaded Threaded library support
+bos.adt.lib

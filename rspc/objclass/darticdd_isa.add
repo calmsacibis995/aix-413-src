@@ -1,0 +1,69 @@
+* @(#)63        1.2  src/rspc/objclass/darticdd_isa.add, dd_artic, rspc41J, 9521A_all 5/19/95 18:00:59
+* COMPONENT_NAME: dd_artic
+*
+* FUNCTIONS: N/A
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1994
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+PdDv:
+        type = "articdgisa"
+        class = "driver"
+        subclass = "articmpx"
+        prefix = "diagric"
+        devid = ""
+        base = 0
+        has_vpd = 0
+        detectable = 0
+        chgstatus = 0
+        bus_ext = 0
+        fru = 1
+        led = 1641
+        setno = 43
+        msgno = 0
+        catalog = "devices.cat"
+        DvDr = "isa/isadartic"
+        Define = "/usr/lib/methods/define_rspc"
+        Configure = "/usr/lib/methods/cfgdgric_isa"
+        Change = "/usr/lib/methods/chggen_rspc"
+        Unconfigure = "/usr/lib/methods/ucfgdevice"
+        Undefine = "/usr/lib/methods/undefine"
+        Start = ""
+        Stop = ""
+        inventory_only = 0
+        uniquetype = "driver/articmpx/articdgisa"
+
+PdDv:
+        type = "articdgisa"
+        class = "driver"
+        subclass = "portmaster"
+        prefix = "diagric"
+        devid = ""
+        base = 0
+        has_vpd = 0
+        detectable = 0
+        chgstatus = 0
+        bus_ext = 0
+        fru = 1
+        led = 1640
+        setno = 29
+        msgno = 0
+        catalog = "devices.cat"
+        DvDr = "isa/isadartic"
+        Define = "/usr/lib/methods/define_rspc"
+        Configure = "/usr/lib/methods/cfgdgric"
+        Change = "/usr/lib/methods/chggen_rspc"
+        Unconfigure = "/usr/lib/methods/ucfgdevice"
+        Undefine = "/usr/lib/methods/undefine"
+        Start = ""
+        Stop = ""
+        inventory_only = 0
+        uniquetype = "driver/portmaster/articdgisa"
+

@@ -1,0 +1,224 @@
+# @(#) 05 1.1 src/packages/stacklist/mfg-preload/rs6k/README, pkg, pkg411, GOLD410 6/22/94 14:03:40
+#
+#   COMPONENT_NAME: PKG - Manufacturing Preload of RS6K Systems
+#
+#   FUNCTIONS: Manufacturing Preload Instructions / Information
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+The following information is to be used in assisting the implementation of
+preload for AIXv4 on RS6K systems.
+
+Austin preload of AIX can be customized in several ways depending on what the
+customer specified. 
+			- Preload AIXv4 Advanced Server
+				- Minimum Installation
+				- Client Bundle
+				- Server Bundle
+				- Personal Productivity Bundle
+				- Application Development Bundle
+				- Hardware Diagnostics Bundle
+				
+			- Preload AIXv4 Client
+				- Personal Productivity Bundle
+				- Application Development Bundle
+
+Note that Product Planning (Vicki Griffin) will determine what bundles and
+combinations of bundles may be selected by the customer for preload. 
+			
+While AIXv4 is available as two offerings: AIXv4 Advanced Server and
+					   AIXv4 Client
+both types of installations can be preinstalled from one CDROM type:
+		AIXv4 Advanced Server
+
+There are two ways to facilitate this. One method is to utilize a customized
+bosinst.data file with the INSTALL_TYPE entry specifying either full or client.
+This however requires a diskette be present in the drive containing the 
+customized bosinst.data file and the necessary signature file. A second method
+is to use the default installation of Advanced Server and utilize a post 
+install script to further customize the system. To revert the system from 
+Advanced minimum install to Client Minimum install, the following steps will
+need to be taken:
+			Deinstall bos.sysmgt.loginlic
+			Remove the following links in 
+				/usr/sys/inst.data/sys_bundles:
+					Client.bnd
+					Server.bnd
+					
+This assumes, that the system hardware is a configuration that is supported
+by Client. For example async cards 8 port, 16 port, 64 port etc, are not 
+provided on Client Systems. If a card exists on a system that is being
+preinstalled for Client using an Advanced Server CD, that device support will
+be installed. It would have to be deinstalled in the post install script. 
+
+The post installation script must also remove the following file
+		/var/adm/sw/__assistinfo
+This will ensure that the installation assistant menu tailoring is correct
+for preinstalled systems.
+
+The installation verification script can determine the success of installation
+by utilizing the installp summary file found in /var/adm/sw/installp.summary.
+In addition, additional information can be obtained from the device install
+log found in /var/adm/ras/devinst.log. For problem assistance, a boot log
+may be obtained by using the command alog -t boot -o . 
+
+
+It should also be noted that additional flexability has been added to the
+bosinst.data file for preload situations:
+
+	CONSOLE value can be set to "none" designating that NO Console is
+	to be used during bos install. Console output is NOT SAVED in this
+	case and PROMPT must be set to no. (This capability was requested by
+	RALEIGH manufacturing for Sandalfoots.) 
+
+	INSTALL_X_IF_ADPATER: can be set to "all" This will force bos install
+			      to always Graphical auto install bundle even if
+			      the console is NOT and LFT.       
+
+One of two methods may also be utilized for custom bundle installs such as 
+Client, Personal Productivity, Server, Application Development, Hardware
+Diagnostics. The first method again depends upon a customized bosinst.data
+file read from diskette. An entry call BUNDLES may be set to specify a 
+bundle file to be automatically installed by bos install following it's normal
+auto install of software. Only a single bundle file is allowed here, however
+it specify a bundle file shipped with the system (such as found in 
+/usr/sys/inst.data/sys_bundles, or it can be a customized bundle file that
+is on the diskette itself. For example this customized bundle file could be
+a combination of several bundles, if the customer requested more than one.
+
+The second method is to utilize the sm_inst command during a post install     
+customization/verification script to install the requested bundle or bundles.
+This would be executed after the system has been rebooted. 
+ 
+The following is a list of sizes and times for installing the various
+combinations of AIX and it's bundles. This will be updated periodically since
+this data is measured for every build, and continues to change. 
+This data is a copy of the information obtained by Rajiv Jahari in the      
+performance shop. 
+
+------------------------------------------------------
+Build: 9421A
+Machine: Sandalfoot
+Disk: 1 X 520 MB 
+Medium: CD
+Locale: "C"
+------------------------------------------------------
+
+Graphics Auto-Install:   30 minutes
+Graphics Client Bundle Install: 10 minutes
+Total:          40 minutes
+
+------------------------------------------------------
+Machine:  530H
+Memory:   128MB
+Disk:     1 X 857 MB
+Build:    9422A
+Medium:   8 mm tape
+Displays: LFT (disconnected for ascii install) and Wyse
+Locale:   "C"
+--------------------------------------------------------
+
+
+ASCII AutoInstall
+-----------------
+
+Time taken (from Power On --> Login):  45 minutes
+
+Total File System Size (from "df -k"):  69632 KB
+Paging Space:  32 MB
+Log and Boot Logical Volumes: 8 MB
+
+Filesystem    1024-blocks      Free %Used    Iused %Iused Mounted on
+/dev/hd4             4096      2688   34%      563    27% /
+/dev/hd2            49152      4088   91%     2425    19% /usr
+/dev/hd9var          4096      3668   10%       63     6% /var
+/dev/hd3             8192      7888    3%       20     0% /tmp
+/dev/hd1             4096      3920    4%       17     1% /home
+
+Total Space Actually Used In File Systems (from "du -k"):  44026 KB
+
+ASCII Client
+------------
+
+Time taken:  45 minutes (ascii autoinstall time) + 
+             20 minutes (client install time) =
+             -----------------
+             65 minutes
+
+Total File System Size: 94208 KB
+Paging Space:  32 MB
+Log and Boot Logical Volumes: 8 MB
+
+Filesystem    1024-blocks      Free %Used    Iused %Iused Mounted on
+/dev/hd4             4096      2412   41%      611    29% /
+/dev/hd2            73728      7776   89%     4095    22% /usr
+/dev/hd9var          4096      3628   11%       96     9% /var
+/dev/hd3             8192      7884    3%       21     1% /tmp
+/dev/hd1             4096      3920    4%       17     1% /home
+
+Total Space Actually Used in File Systems:  64254 KB
+
+Graphics AutoInstall
+--------------------
+
+Time taken (from Power On --> Login) = 55 minutes
+
+Total File System Size: 122800 KB
+Paging Spaces:  32 MB + 112 MB
+Log and Boot Logical Volumes: 8 MB
+
+Filesystem    1024-blocks      Free %Used    Iused %Iused Mounted on
+/dev/hd4             4096      2592   36%      582    28% /
+/dev/hd2           102400     12892   87%     4445    16% /usr
+/dev/hd9var          4096      3668   10%       63     6% /var
+/dev/hd3             8192      7880    3%       24     1% /tmp
+/dev/hd1             4096      3920    4%       17     1% /home
+
+Total Space Actually Used in File Systems:  86475 KB
+
+Graphics Client
+---------------
+
+Time taken:  55 minutes (graphics autoinstall time) + 
+             26 minutes (client install time) =
+             -----------------
+             81 minutes
+
+
+Total File System Size: 155648 KB
+Paging Spaces:  32 MB + 112 MB
+Log and Boot Logical Volumes: 8 MB
+
+Filesystem    1024-blocks      Free %Used    Iused %Iused Mounted on
+/dev/hd4             4096      2320   43%      630    30% /
+/dev/hd2           135168      8252   93%     7333    21% /usr
+/dev/hd9var          4096      3624   11%       96     9% /var
+/dev/hd3             8192      7880    3%       24     1% /tmp
+/dev/hd1             4096      3920    4%       17     1% /home
+
+Total Space Actually Used in File Systems:  122759 KB
+
+
+------------------------------------------------------------
+Rajiv Jauhari
+Performance Design Analysis Department
+IBM Corp., ZIP 9632, 11400 Burnet Rd, Austin TX 78758  
+Phone: 512-838-7838  (IBM Tie-Line 6-7838) Fax: 512-838-1801
+E-mail: (aix/internet) jauhari@austin.ibm.com
+	(vnet) RAJIV AT AUSTIN
+------------------------------------------------------------
+
+Install times and sizes for remaining bundles will be provided as the 
+information is published. 
+
+				
+		END OF README
+

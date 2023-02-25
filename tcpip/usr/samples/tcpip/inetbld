@@ -1,0 +1,82 @@
+#! /bin/sh
+# @(#)62	1.2  src/tcpip/usr/samples/tcpip/inetbld, tcpip, tcpip41J, 9512A_all 12/2/94 08:09:53
+#
+# COMPONENT_NAME: TCPIP inetbld
+#
+# FUNCTIONS:
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# This is an example on how daemons in the bos.net.tcp package get added
+# to the SRC system.  This shell script first removes all the entries added
+# during the install of the bos.net.tcp package and then it adds these entries
+# back.  For more information on the rmssys, rmserver, mkssys and mkserver
+# command please refer to the documentation.
+#
+# mksrcobj
+/bin/rmssys -s gated
+/bin/rmssys -s named
+/bin/rmssys -s routed
+/bin/rmssys -s rwhod
+/bin/rmssys -s iptrace
+/bin/rmssys -s syslogd
+/bin/rmssys -s timed
+/bin/rmssys -s sendmail
+/bin/rmserver -t ftp
+/bin/rmserver -t uucp
+/bin/rmserver -t telnet
+/bin/rmserver -t shell
+/bin/rmserver -t login
+/bin/rmserver -t exec
+/bin/rmserver -t finger
+/bin/rmserver -t tftp
+/bin/rmserver -t ntalk
+/bin/rmserver -t echo
+/bin/rmserver -t discard
+/bin/rmserver -t chargen
+/bin/rmserver -t daytime
+/bin/rmserver -t time
+/bin/rmserver -t comsat
+/bin/rmserver -t bootps
+/bin/rmserver -t systat
+/bin/rmserver -t netstat
+/bin/rmssys -s inetd
+
+echo "Deleting SRC ODM databases" >/dev/console
+
+/bin/mkssys -s inetd -p /usr/sbin/inetd -u 0 -G tcpip
+/bin/mkssys -s gated -p /usr/sbin/gated -u 0 -G tcpip
+/bin/mkssys -s named -p /usr/sbin/named -u 0 -G tcpip
+/bin/mkssys -s routed -p /usr/sbin/routed -u 0 -G tcpip
+/bin/mkssys -s rwhod -p /usr/sbin/rwhod -u 0 -G tcpip
+/bin/mkssys -s iptrace -p /usr/sbin/iptrace -u 0 -G tcpip
+/bin/mkssys -s syslogd -p /usr/sbin/syslogd -u 0 -G ras
+/bin/mkssys -s timed -p /usr/sbin/timed -u 0 -G tcpip -S -n 1 -f 2 -a "-S"
+/bin/mkssys -s sendmail -p /usr/lib/sendmail -u 0 -G mail
+/bin/mkserver -s inetd -t ftp -c 21
+/bin/mkserver -s inetd -t uucp -c 540
+/bin/mkserver -s inetd -t telnet -c 23
+/bin/mkserver -s inetd -t shell -c 514
+/bin/mkserver -s inetd -t login -c 513
+/bin/mkserver -s inetd -t exec -c 512
+/bin/mkserver -s inetd -t finger -c 79
+/bin/mkserver -s inetd -t tftp -c 69
+/bin/mkserver -s inetd -t ntalk -c 517
+/bin/mkserver -s inetd -t echo -c 7
+/bin/mkserver -s inetd -t discard -c 9
+/bin/mkserver -s inetd -t chargen -c 19
+/bin/mkserver -s inetd -t daytime -c 13
+/bin/mkserver -s inetd -t time -c 37
+/bin/mkserver -s inetd -t comsat -c 1512
+/bin/mkserver -s inetd -t bootps -c 67
+/bin/mkserver -s inetd -t systat -c 11
+/bin/mkserver -s inetd -t netstat -c 15
+
+echo "Creating SRC ODM databases" >/dev/console

@@ -1,0 +1,39 @@
+# @(#)22    1.7  src/bos/usr/share/lib/terminfo/special.ti, terminfo, bos411, 9435B411a 8/31/94 16:08:09
+#
+# COMPONENT_NAME: (TERMINFO) Terminfo
+#
+# FUNCTIONS:    special.ti
+#
+#   ORIGINS: 4
+#
+#                    SOURCE MATERIALS
+#
+# ident	"@(#)terminfo:special.ti	1.5"
+#
+# special: SPECIALS
+#
+# Manufacturer:	SPECIAL GENERIC TERMINALS
+# Class:	III
+# Info:
+#	Generic "terminals". These are used to label tty lines when 
+#	you don't # know what kind of terminal is on it. The 
+#	characteristics of an unknown terminal are the lowest common 
+#	denominator - they look about like a ti 700.
+#
+# NOTE: "unkown" used to have "use=dumb", but dumb was moved to ibm.ti, so
+#	the contents of "dumb" were copied into "unkown".
+#
+arpanet|network|net|,
+	use=unknown,
+bussiplexer,
+	use=unknown,
+dialup,
+	use=unknown,
+ethernet,
+	use=unknown,
+plugboard|patch|patchboard|,
+	use=unknown,
+unknown,
+	gn, am, bel=^G, cols#80, cr=^M, cud1=^J, ind=^J,
+switch|intelligent switch,
+	use=unknown,

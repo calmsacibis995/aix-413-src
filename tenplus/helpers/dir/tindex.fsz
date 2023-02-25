@@ -1,0 +1,270 @@
+* File name: tindex.frm
+* @(#)81	1.4  src/tenplus/helpers/dir/tindex.fsz, tenplus, tenplus411, GOLD410 3/23/93 11:56:34
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 2
+	Flags = 0x1
+
+/invtext:
+	Type = 1
+	Count = 23
+
+/invtext/0:
+	Value = "[title                                                                         ]"
+
+/invtext/1:
+	Value = "[prompt                                                                        ]"
+
+/invtext/2:
+
+/invtext/3:
+	Value = "[subtitle                                                                      ]"
+
+/invtext/4:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/5:
+	Value = "\001[Files       ]\001[Contents                                                     ]\001"
+
+/invtext/6:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/7:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/8:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/9:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/10:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/11:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/12:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/13:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/14:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/15:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/16:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/17:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/18:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/19:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/20:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/21:
+	Value = "\001[            ]\001[                                                             ]\001"
+
+/invtext/22:
+	Value = "\006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+
+/fields:
+	Type = 1
+	Count = 8
+
+/fields/0:
+	Type = 1
+	Count = 4
+
+/fields/0/number:
+	Value = "1"
+
+/fields/0/name:
+	Value = "title"
+
+/fields/0/cat-msgno:
+	Value = "%-F_TINDEX_TITLE"
+
+/fields/0/cat-deftxt:
+	Value = "                       INTERACTIVE TEN/PLUS File Manager                        "
+
+/fields/1:
+	Type = 1
+	Count = 4
+
+/fields/1/number:
+	Value = "2"
+
+/fields/1/name:
+	Value = "prompt"
+
+/fields/1/cat-msgno:
+	Value = "%-F_TINDEX_PROMPT"
+
+/fields/1/cat-deftxt:
+	Value = "            Move the cursor to an item below and ZOOM-IN to see it.             "
+
+/fields/2:
+	Type = 1
+	Count = 4
+
+/fields/2/number:
+	Value = "3"
+
+/fields/2/name:
+	Value = "subtitle"
+
+/fields/2/cat-msgno:
+	Value = "%-F_TINDEX_SUBTITLE"
+
+/fields/2/cat-deftxt:
+	Value = " File           Description                                                     "
+/fields/3:
+	Type = 1
+	Count = 10
+
+/fields/3/number:
+	Value = "4"
+
+/fields/3/name:
+	Value = "Files"
+
+/fields/3/data-path:
+	Value = "1/*/Files"
+
+/fields/3/ganged-to:
+	Value = "Files, Contents"
+
+/fields/3/crscroll:
+	Value = "x"
+
+/fields/3/zoom-form:
+	Value = "std"
+
+/fields/3/6:
+	Type = 0
+
+/fields/3/pick-name:
+	Value = "file"
+
+/fields/3/doumod:
+	Value = "x"
+
+/fields/3/userro:
+	Value = "x"
+
+/fields/4:
+	Type = 1
+	Count = 9
+
+/fields/4/number:
+	Value = "5"
+
+/fields/4/name:
+	Value = "Contents"
+
+/fields/4/data-path:
+	Value = "1/*/Contents"
+
+/fields/4/ganged-to:
+	Value = "Files, Contents"
+
+/fields/4/crscroll:
+	Value = "x"
+
+/fields/4/zoom-form:
+	Value = "std"
+
+/fields/4/6:
+	Type = 0
+
+/fields/4/pick-name:
+	Value = "file"
+
+/fields/4/userro:
+	Value = "x"
+
+/fields/5:
+	Type = 1
+	Count = 6
+
+/fields/5/zoom-form:
+
+/fields/5/data-path:
+	Value = "1/*/Saved_status"
+
+/fields/5/name:
+	Value = "Saved_status"
+
+/fields/5/number:
+	Value = "6"
+
+/fields/5/invisible:
+	Value = "x"
+
+/fields/5/no-zoom:
+	Value = "x"
+
+/fields/6:
+	Type = 1
+	Count = 6
+
+/fields/6/zoom-form:
+
+/fields/6/data-path:
+	Value = "1/*/Saved_name"
+
+/fields/6/name:
+	Value = "Saved_name"
+
+/fields/6/number:
+	Value = "7"
+
+/fields/6/no-zoom:
+	Value = "x"
+
+/fields/6/invisible:
+	Value = "x"
+
+/fields/7:
+	Type = 1
+	Count = 3
+
+/fields/7/name:
+	Value = "Mod_date"
+
+/fields/7/data-path:
+	Value = "0/Mod_date"
+
+/fields/7/invisible:
+	Value = "x"
+

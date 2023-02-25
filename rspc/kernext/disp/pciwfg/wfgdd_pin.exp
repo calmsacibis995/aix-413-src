@@ -1,0 +1,57 @@
+#!/usr/lib/drivers/pci/wfgdd_pin
+*
+* @(#)34  1.8  src/rspc/kernext/disp/pciwfg/wfgdd_pin.exp, pciwfg, rspc41J, 9521A_all 5/21/95 20:54:21
+* wfgdd_pin.exp
+*
+*   COMPONENT_NAME: (PCIWFG) Western Digital PCI Graphics Adapter 
+*
+*   FUNCTIONS:
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+*   All Rights Reserved
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+wfg_err
+wfg_open
+wfg_close
+vttact
+vttcfl
+vttclr
+vttcpl
+vttdact
+vttdefc
+vttterm
+vttinit
+vttmovc
+vttrds
+vttsetm
+vttstct
+vtttext
+vttscr
+vttdpm
+wfg_make_gp
+wfg_unmake_gp
+wfg_intr
+setup_powermgt
+wfg_pm_handler
+reconfig_wfg
+shutdown_wfg
+pm_save_register
+restore_data
+power_control
+i_get_VDD_info 
+i_v7310_reset_overlay
+i_v7310_power_ctl
+wfg_backlight_control
+wfg_planar_control
+lcd_timeout_proc
+wfg_timeoutcf
+wfgDDS
+wfgDDF

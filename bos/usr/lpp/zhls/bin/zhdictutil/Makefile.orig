@@ -1,0 +1,31 @@
+# @(#)07	1.3  src/bos/usr/lpp/zhls/bin/zhdictutil/Makefile, ils-zh_CN, bos41J, 9515B_all 4/11/95 23:02:30
+#
+#   COMPONENT_NAME: ils-zh_CN
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+#   combined with the aggregated modules for this product)
+#                    SOURCE MATERIALS
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994
+#   All Rights Reserved
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+PROGRAMS	= zhdictutil
+
+OFILES		= dictlex.o dictsort.o zhdictut.o zhdictutil.o
+
+HFILES		= dicterr.h dictionary.h dictutil.h
+
+LIBS		= -lXm -lPW -lIM -lXt -lX11 -liconv
+
+ILIST		= ${PROGRAMS} ZHdictutil
+
+IDIR		= /usr/lpp/zhls/bin/
+ZHdictutil_IDIR	= /usr/lpp/X11/lib/X11/ZH_CN/app-defaults/
+
+.include <${RULES_MK}>

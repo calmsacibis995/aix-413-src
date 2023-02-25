@@ -1,0 +1,1103 @@
+# @(#)61    1.13  src/rspc/objclass/sm_c1x.add, isax25, rspc41J, 9525E_all  6/13/95  09:37:54
+#
+#  COMPONENT_NAME: (CMDSMIT)
+#
+#  FUNCTIONS: X.25 CoProcessor/1 Adapter SMIT Interface
+#
+#  ORIGINS: 27
+#
+#  IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+#  combined with the aggregated modules for this product)
+#                   SOURCE MATERIALS
+#  (C) COPYRIGHT International Business Machines Corp. 1994
+#  All Rights Reserved
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+###############################################################################
+#                                                                             #
+#   N O T I C E   ----   ONLY the OWNER of CMDSMIT should modify this file!   #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+# Organization                                                                #
+#                                                                             #
+#       These conventions facilitate updating and checking by                 #
+#       automated tools.                                                      #
+#                                                                             #
+#               Items that go together on the screen are grouped              #
+#               together in the file, topologically sorted by depth           #
+#               from the __ROOT__ node.                                       #
+#               Floating menus (non-top_menu descendents of __ROOT__) follow  #
+#               the __ROOT__/top_menu hierarchy,                              #
+#               but preceed the orphan aliases.                               #
+#               All aliases should be placed at the end of this file.         #
+#                                                                             #
+#               NOTE: new fast_path system for menus requires that:a          #
+#                   1) next_ids be unique for stanzas with next_type = "m".   #
+#                   2) id_seq_nums be unique within a menu.                   #
+#                                                                             #
+###############################################################################
+
+sm_menu_opt:
+    id                        = "commodev"
+    id_seq_num                = "061"
+    next_id                   = "c1xmpx"
+    text                      = "X.25 CoProcessor/1 Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 27
+    text_msg_id               = 800
+    next_type                 = "m"
+    alias                     = ""
+    help_msg_id               = "1800148"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xmpx"
+    id_seq_num                = "010"
+    next_id                   = "c1xmpxa"
+    text                      = "Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 231
+    next_type                 = "m"
+    alias                     = ""
+    help_msg_id               = "00001"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xmpx"
+    id_seq_num                = "020"
+    next_id                   = "c1xserv"
+    text                      = "Services"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 232
+    next_type                 = "m"
+    alias                     = ""
+    help_msg_id               = "00001"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xmpx"
+    id_seq_num                = "030"
+    next_id                   = "c2xapps"
+    text                      = "User Applications"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 233
+    next_type                 = "m"
+    alias                     = ""
+    help_msg_id               = "00001"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xmpxa"
+    id_seq_num                = "010"
+    next_id                   = "lsc1xmpx"
+    text                      = "List All X.25 Adapters"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 27
+    text_msg_id               = 251
+    next_type                 = "d"
+    alias                     = ""
+    help_msg_id               = "1800193"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xmpxa"
+    id_seq_num                = "013"
+    next_id                   = "makc1x"
+    text                      = "Add an X.25 Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 0
+    text_msg_id               = 0
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xmpxa"
+    id_seq_num                = "017"
+    next_id                   = "chgc1x"
+    text                      = "Change/Show an X.25 Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 0
+    text_msg_id               = 0
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xmpxa"
+    id_seq_num                = "018"
+    next_id                   = "cfgc1x"
+    text                      = "Configure a Defined X25 Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 0
+    text_msg_id               = 0
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id_seq_num                = "020"
+    id                        = "c1xmpxa"
+    next_id                   = "articmpxdd"
+    text                      = "Manage Device Drivers for X.25 Adapters"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 27
+    text_msg_id               = 252
+    next_type                 = "m"
+    alias                     = ""
+    help_msg_id               = "120008"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xmpxa"
+    id_seq_num                = "030"
+    next_id                   = "errpt"
+    text                      = "Generate an Error Report"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 88
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = "1800203"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xmpxa"
+    id_seq_num                = "040"
+    next_id                   = "c1xst"
+    text                      = "Trace an X.25 CoProcessor/1 Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 27
+    text_msg_id               = 803
+    next_type                 = "m"
+    alias                     = ""
+    help_msg_id               = "1800204"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xmpxa"
+    id_seq_num                = "050"
+    next_id                   = "rmvc1x"
+    text                      = "Remove an X.25 Adapter"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 0
+    text_msg_id               = 0
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_hdr:
+    id                        = "lsc1xmpx"
+    option_id                 = ""
+    has_name_select           = "n"
+    name                      = "List All X.25 Adapters"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 251
+    cmd_to_exec               = "lsdev -C -c adapter -t articmpx"
+    ask                       = "n"
+    exec_mode                 = ""
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "1800193"
+    help_msg_loc              = ""
+
+
+sm_menu_opt:
+    id                        = "c1xserv"
+    id_seq_num                = "020"
+    next_id                   = "chif"
+    text                      = "Change / Show Characteristics of a Network Interface"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 298
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = "1800375"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xst"
+    id_seq_num                = "010"
+    next_id                   = "trcstart"
+    text                      = "Start Trace"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 175
+    next_type                 = "d"
+    alias                     = ""
+    help_msg_id               = "1800322"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xst"
+    id_seq_num                = "020"
+    next_id                   = "trcstop"
+    text                      = "Stop Trace"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 176
+    next_type                 = "d"
+    alias                     = ""
+    help_msg_id               = "1800323"
+    help_msg_loc              = ""
+
+sm_menu_opt:
+    id                        = "c1xst"
+    id_seq_num                = "030"
+    next_id                   = "trcrpt"
+    text                      = "Generate a Trace Report"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 25
+    text_msg_id               = 177
+    next_type                 = "n"
+    alias                     = ""
+    help_msg_id               = "1800324"
+    help_msg_loc              = ""
+
+
+###############################################################################
+#                                                                             #
+#    _ _  R O O T  _ _   M E N U S                                            #
+#                                                                             #
+#    These include composite menus, which are not part of the top_menu        #
+#    hierarchy, but are included here for testing/reporting programs.         #
+#                                                                             #
+#    NOTE: These entries generally share text_msg_ids and help_msg_ids with   #
+#          other entries above.  Change with care!                            #
+#                                                                             #
+###############################################################################
+
+sm_menu_opt:
+    id                        = "lsadp"
+    id_seq_num                = "061"
+    next_id                   = "lsc1xmpx"
+    text                      = "List All X.25 CoProcessor/1 Adapters"
+    text_msg_file             = "smit.cat"
+    text_msg_set              = 27
+    text_msg_id               = 801
+    next_type                 = "d"
+    alias                     = ""
+    help_msg_id               = "1800193"
+    help_msg_loc              = ""
+
+
+sm_name_hdr:
+    id                        = "makc1x"
+    next_id                   = "makc1x_hdr"
+    option_id                 = "makc1x_parent_opt"
+    has_name_select           = "n"
+    name                      = "Add an X.25 CoProcessor/1 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 804
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "parent"
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_name_hdr:
+    id                        = "chgc1x"
+    next_id                   = "chgc1x_hdr"
+    option_id                 = "c1x_ln_opt"
+    has_name_select           = "n"
+    name                      = "Change/Show an X.25 CoProcessor/1 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 805
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = "lsdev -C -F \"parent:connwhere:location:status\" -l"
+    cmd_to_classify_postfix   = " logicname "
+    raw_field_name            = "logicname"
+    cooked_field_name         = "parent:port:loc:state"
+    next_type                 = "d"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "c1x_predef_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "X25 Adapter Type"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 807
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "a"
+    cmd_to_list               = "lsdev -P -t articmpx -F \"type subclass description\""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "makc1x_parent_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Parent Bus "
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 808
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsparent -C -k isa"
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_hdr:
+    id                        = "makc1x_hdr"
+    option_id                 = "c1x_add,c1x_common"
+    has_name_select           = "y"
+    name                      = "Add an X.25 CoProcessor/1 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 804
+    cmd_to_exec               = "x()
+{
+mkdev -c adapter -s isa -t articmpx $*
+rc1=$?
+if [ $rc1 -ne 0 ]
+then
+  exit 1
+else
+  cfgmgr
+  exit 0
+fi
+}
+x"
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "n"
+    cmd_to_discover           = "lsattr -c adapter -s isa -t articmpx -D -O"
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_hdr:
+    id                        = "chgc1x_hdr"
+    option_id                 = "c1x_chg,c1x_common"
+    has_name_select           = "y"
+    name                      = "Change/Show an X.25 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 805
+    cmd_to_exec               = "chdev "
+    ask                       = ""
+    exec_mode                 = "P"
+    ghost                     = "n"
+    cmd_to_discover           = "lsattr "
+    cmd_to_discover_postfix   = "-l logicname -E -O"
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_add"
+    id_seq_num                = "003"
+    disc_field_name           = "desc"
+    name                      = "Description"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 7
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "c1x_add"
+    id_seq_num                = "004"
+    disc_field_name           = "parent"
+    name                      = "Parent adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 1
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-p "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "c1x_chg"
+    id_seq_num                = "001"
+    disc_field_name           = "logicname"
+    name                      = "X25 adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 800
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-l "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_chg"
+    id_seq_num                = "004"
+    disc_field_name           = "desc"
+    name                      = "Description"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 7
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_chg"
+    id_seq_num                = "005"
+    disc_field_name           = "state"
+    name                      = "Status"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 8
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_chg"
+    id_seq_num                = "006"
+    disc_field_name           = "loc"
+    name                      = "Location"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 9
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_chg"
+    id_seq_num                = "007"
+    disc_field_name           = "parent"
+    name                      = "Parent adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 2
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_chg"
+    id_seq_num                = "008"
+    disc_field_name           = "port"
+    name                      = "Connection address"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 6
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_common"
+    id_seq_num                = "010"
+    disc_field_name           = "bus_intr_lvl"
+    name                      = "ISA Interrupt Level"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 810
+    op_type                   = "l"
+    entry_type                = "#"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bus_intr_lvl="
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsattr -c adapter -s isa -t articmpx -a bus_intr_lvl -R"
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_common"
+    id_seq_num                = "020"
+    disc_field_name           = "intr_priority"
+    name                      = "Interrupt Priority"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 811
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_common"
+    id_seq_num                = "030"
+    disc_field_name           = "bus_io_addr"
+    name                      = "Bus IO Address"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 812
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bus_io_addr="
+    cmd_to_list_mode          = "r"
+    cmd_to_list               = "lsattr -c adapter -s isa -t articmpx -a bus_io_addr -R"
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_common"
+    id_seq_num                = "040"
+    disc_field_name           = "bus_mem_addr"
+    name                      = "Bus Memory Address"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 813
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bus_mem_addr="
+    cmd_to_list_mode          = "r"
+    cmd_to_list               = "lsattr -c adapter -s isa -t articmpx -a bus_mem_addr -R"
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_common"
+    id_seq_num                = "050"
+    disc_field_name           = "window_size"
+    name                      = "Window Size"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 814
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_name_hdr:
+    id                        = "rmvc1x"
+    next_id                   = "rmvc1x_hdr"
+    option_id                 = "c1x_ln_opt"
+    has_name_select           = "n"
+    name                      = "Remove an X25 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 806
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "logicname"
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_hdr:
+    id                        = "rmvc1x_hdr"
+    option_id                 = "rmvc1x_opt"
+    has_name_select           = "y"
+    name                      = "Remove an X25 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 806
+    cmd_to_exec               = "rmdev "
+    ask                       = "y"
+    exec_mode                 = ""
+    ghost                     = "n"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "rmvc1x_opt"
+    id_seq_num                = "010"
+    disc_field_name           = "logicname"
+    name                      = "X25 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 800
+    op_type                   = ""
+    entry_type                = ""
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-l "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "rmvc1x_opt"
+    id_seq_num                = "020"
+    disc_field_name           = ""
+    name                      = "KEEP definition in database"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 10
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = " "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = ",-d "
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_name_hdr:
+    id                        = "cfgc1x"
+    next_id                   = "cfgc1x_hdr"
+    option_id                 = "c1x_ln_opt"
+    has_name_select           = "n"
+    name                      = "Configure a Defined X25 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 815
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = "logicname"
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_hdr:
+    id                        = "cfgc1x_hdr"
+    option_id                 = "cfgc1x_opt"
+    has_name_select           = "y"
+    name                      = "Configure a Defined X25 adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 815
+    cmd_to_exec               = "x()
+{
+mkdev $*
+rc1=$?
+if [ $rc1 -ne 0 ]
+then
+  exit 1
+else
+  cfgmgr
+  exit 0
+fi
+}
+x"
+    ask                       = ""
+    exec_mode                 = ""
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "cfgc1x_opt"
+    id_seq_num                = "010"
+    disc_field_name           = "logicname"
+    name                      = "X25 adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 800
+    op_type                   = ""
+    entry_type                = ""
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-l "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+sm_cmd_opt:
+    id                        = "c1x_ln_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "X25 adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 800
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -C -t articmpx"
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+
+#
+#       SMIT Menu objects to tie into ISA Adapter Menus
+#
+
+#-----------------------------------------------------------------------------
+# Add a X.25 ISA Adapter
+#-----------------------------------------------------------------------------
+# This is a name select to map the ISA name select created id to an
+# existing X.25 Dialog Panel
+#
+sm_name_hdr:
+    id                        = "mkdevisa_hdr_articmpx_isa"
+    next_id                   = "makc1x_hdr"
+    option_id                 = "mkdevc1x_name_opt"
+    has_name_select           = "y"
+    name                      = "Add a X.25 CoProcessor/1 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 804
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = ""
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+# Name selector command option for mapping ISA name select to X.25
+# dialog panels.
+sm_cmd_opt:
+    id                        = "mkdevc1x_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Add a X.25 CoProcessor/1 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 804
+    op_type                   = "n"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+#-----------------------------------------------------------------------------
+# Change / Show Characteristics of a X.25 Adapter
+#-----------------------------------------------------------------------------
+# This is a name select to map the ISA name select created id to an
+# existing X.25 Dialog Panel
+#
+sm_name_hdr:
+    id                        = "chdevisa_hdr_articmpx_isa"
+    next_id                   = "chgc1x_hdr"
+    option_id                 = "chdevc1x_name_opt"
+    has_name_select           = "y"
+    name                      = "Change/Show Characteristics of a X.25 CoProcessor/1 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 805
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = ""
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+# Name selector command option for mapping ISA name select to Ethernet
+# dialog panels.
+sm_cmd_opt:
+    id                        = "chdevc1x_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Change/Show Characteristics of a X.25 CoProcessor/1 Adapter"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 805
+    op_type                   = "n"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+

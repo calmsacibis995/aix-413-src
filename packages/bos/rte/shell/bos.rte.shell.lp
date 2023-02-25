@@ -1,0 +1,16 @@
+# @(#)07        1.2  src/packages/bos/rte/shell/bos.rte.shell.lp, pkgbossub, pkg411, GOLD410 5/11/94 13:44:50
+#
+#   COMPONENT_NAME: pkgbossub
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+bos.rte.shell N B en_US Shells (bsh, ksh, csh)

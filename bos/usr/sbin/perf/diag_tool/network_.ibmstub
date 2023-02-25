@@ -1,0 +1,103 @@
+#!/bin/ksh
+# @(#)85	1.8	src/bos/usr/sbin/perf/diag_tool/network_.sh, pdt, bos411, 9428A410j 4/13/94 16:30:30
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# network_ 
+# Obtain network information.
+# Ping all nodes in .nodes to obtain connectivity/perf. information.
+#
+# record result in the SM database.
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+np=5
+#
+# obtain file system information, and format output
+if test -f $pdt_config/.nodes
+then 
+#
+# Awk script to ping each of the nodes identified in the
+# input file.
+# We ping npings times. (input parameter)
+#
+# pass to awk program to ping each of these guys 
+   awk '
+        BEGIN {
+        }
+        {
+           x=gsub(/-/," ",c)
+           if (($0 !~ /^#/) &&
+           ($0 !~ /^ /) &&
+           ($0 !~ /^\*/))   {
+           #  /* record this host;
+           #     we do this because the list of hosts is built from several
+           #     sources - the same one could show up several times.
+           #     We only want to ping that host once, not multiple times */
+           HOSTS[$1]++
+           }
+        }
+        END {
+          for (dest in HOSTS) {
+           system ("ping -c " npings " -q "dest" 2>> $pdt_tmp/.stderr")
+          }
+        }' $pdt_config/.nodes npings=$np \
+                > $pdt_tmp/.ping_results 2>>$pdt_tmp/.stderr
+#
+# Awk script to post process the output of multiple ping
+# commands.
+# Condenses results into a series of SM records of the type
+#
+#    HOST  "name/addr"   ping   <mean time for ping>
+#    HOST  "name/addr"   loss   <percentage lost pkts>
+#
+# Input: file containing output of the 'ping -c 5 -q' command.
+# generate SM records indicating delay and loss
+   tr '[A-Z]' '[a-z]' <$pdt_tmp/.ping_results | \
+      awk '
+           BEGIN {
+           }
+           {
+              x = gsub(/-/," ",c)
+              x=gsub(/-/,",",t)
+              gsub(/-/," ",$0)
+              if ($0 ~ /ping statistics/) {
+                  name = $1
+              }
+              else if ($0 ~ /packet loss/) {
+              # record loss percentage record to SM
+              loss = substr($(NF-2),1,length($(NF-2))-1)
+              LOSSES[name] = loss
+              }
+              else if ($0 ~ /round trip/) {
+              # record average delay
+              delay = $5    
+              split(delay,min_avg_max,"/")
+              AVGPINGS[name] = min_avg_max[2]
+              }
+           }
+           END {
+           # now print out results for each host.  Note we do this to avoid
+           # recording multiple records for the same actual host.
+           for (host in LOSSES)  
+             print "HOST", host, c, "loss", LOSSES[host], 1.0, "I(" t ",pct)"
+           for (host in AVGPINGS)
+             print "HOST", host, c, "avgping", AVGPINGS[host], 1.0, "I(" t ",MS)"  
+           }' c=$curr t="0-0-"$np >> $pdt_SM
+
+#
+fi

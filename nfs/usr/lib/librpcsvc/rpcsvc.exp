@@ -1,0 +1,81 @@
+* @(#)64	1.5  src/nfs/usr/lib/librpcsvc/rpcsvc.exp, cmdnfs, nfs41J, 9519B_all 2/27/95 09:36:35
+*
+*  COMPONENT_NAME: CMDNFS - librpcsvc.a library export file
+*
+*  FUNCTIONS: Makefile
+*
+*  ORIGIN: 27
+*
+*  IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*  combined with the aggregated modules for this product)
+*                   SOURCE MATERIALS
+*  (C) COPYRIGHT International Business Machines Corp. 1990
+*  All Rights Reserved
+*
+*  US Government Users Restricted Rights - Use, duplication or
+*  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+getpublickey	
+getrpcport	
+getsecretkey	
+havedisk
+passwd2des	
+rstat
+rwall	
+xdecrypt	
+xdr_exportbody	
+xdr_exports	
+xdr_fhandle	
+xdr_fhstatus	
+xdr_groups	
+xdr_klm_lockargs	
+xdr_klm_stat	
+xdr_klm_testargs	
+xdr_klm_testrply	
+xdr_klm_unlockargs	
+xdr_mon	
+xdr_mon_id	
+xdr_mountbody	
+xdr_mountlist	
+xdr_nlm_cancargs	
+xdr_nlm_lockargs	
+xdr_nlm_res	
+xdr_nlm_testargs	
+xdr_nlm_testres	
+xdr_nlm_unlockargs	
+xdr_path	
+xdr_rex_result	
+xdr_rex_start	
+xdr_rex_ttymode	
+xdr_rex_ttysize	
+xdr_sm_name	
+xdr_sm_stat	
+xdr_sm_stat_res	
+xdr_sprayarr	
+xdr_spraycumul	
+xdr_stats	
+xdr_statsswtch	
+xdr_statstime	
+xdr_utmpidle	
+xdr_utmpidlearr	
+xencrypt	
+yppasswd	
+xdr_status
+xdr_my_id
+nfsmounts
+nopt
+hasopt
+load_nfs
+nfs_mount
+unmount
+setexportent
+getexportent
+getexportopt
+remexportent
+addexportent
+endexportent
+issubdir
+xdr_utmparr
+xdr_yppasswd
+rnusers
+rusers

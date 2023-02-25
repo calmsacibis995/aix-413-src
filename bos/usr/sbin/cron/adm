@@ -1,0 +1,40 @@
+# @(#)20        1.9  src/bos/usr/sbin/cron/adm, cmdcntl, bos411, 9428A410j 9/9/91 06:03:17
+#
+# COMPONENT_NAME: (CMDCNTL) commands needed for basic system needs
+#
+# FUNCTIONS: 
+#
+# ORIGINS: 27,18
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989,1991
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+#
+#=================================================================
+#      SYSTEM ACTIVITY REPORTS
+#  8am-5pm activity reports every 20 mins during weekdays.
+#  activity reports every an hour on Saturday and Sunday.
+#  6pm-7am activity reports every an hour during weekdays.
+#  Daily summary prepared at 18:05.
+#=================================================================
+#0 8-17 * * 1-5 /usr/lib/sa/sa1 1200 3 &
+#0 * * * 0,6 /usr/lib/sa/sa1 &
+#0 18-7 * * 1-5 /usr/lib/sa/sa1 &
+#5 18 * * 1-5 /usr/lib/sa/sa2 -s 8:00 -e 18:01 -i 3600 -ubcwyaqvm &
+#=================================================================
+#      PROCESS ACCOUNTING:
+#  runacct at 11:10 every night
+#  dodisk at 11:00 every night
+#  ckpacct every hour on the hour
+#  monthly accounting 4:15 the first of every month
+#=================================================================
+#10 23 * * 0-6 /usr/lib/acct/runacct 2>/usr/adm/acct/nite/accterr > /dev/null
+#0 23 * * 0-6 /usr/lib/acct/dodisk > /dev/null 2>&1
+#0 * * * * /usr/lib/acct/ckpacct > /dev/null 2>&1
+#15 4 1 * * /usr/lib/acct/monacct > /dev/null 2>&1
+#=================================================================

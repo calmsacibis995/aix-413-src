@@ -1,0 +1,153 @@
+static char sccsid[] = "@(#)16  1.2  src/rspc/kernext/disp/pcigga/ksr/vtt_rds.c, pcigga, rspc41B, 9504A 1/9/95 13:37:53";
+/* vtt_rds.c */
+/*
+based on "@(#)57        1.2  src/bos/kernext/disp/wga/ksr/vtt_rds.c, bos, bos410 3/16/93 20:45:23";
+ *
+ *   COMPONENT_NAME: PCIGGA
+ *
+ *   FUNCTIONS: vttrds
+ *
+ *   ORIGINS: 27
+ *
+ *   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+ *   combined with the aggregated modules for this product)
+ *                    SOURCE MATERIALS
+ *
+ *   (C) COPYRIGHT International Business Machines Corp. 1994
+ *   All Rights Reserved
+ *   US Government Users Restricted Rights - Use, duplication or
+ *   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+
+#include "gga_INCLUDES.h"
+BUGXDEF (dbg_vttrds);
+GS_MODULE(gga_vttrds);
+
+/*********************************************************************/
+/*                                                                   */
+/*   IDENTIFICATION: VTTRDS                                          */
+/*                                                                   */
+/*   DESCRIPTIVE name: Read Screen Segment                           */
+/*                                                                   */
+/*   FUNCTION:  Read the entire or partial content of the            */
+/*                presentation space and convert each entry into a   */
+/*                two-byte display code and a two-byte attribute     */
+/*                code.                                              */
+/*                                                                   */
+/*   INPUTS:    Virtual terminal structure pointer containing cursor */
+/*                position.                                          */
+/*                Pointer and length of display symbol array         */
+/*                Pointer and length of display attributes array     */
+/*                Row and columns of requested area to read          */
+/*                                                                   */
+/*   OUTPUTS:   EIO                                                  */
+/*                INVALID_CURSOR_POSITION                            */
+/*                                                                   */
+/*   CALLED BY: Mode Processor                                       */
+/*                                                                   */
+/*   CALLS:     None.                                                */
+/*                                                                   */
+/*********************************************************************/
+
+
+long vttrds(vp,ds,ds_size,attr,attr_size,rc)
+struct vtmstruc *vp;
+ushort *ds;               /* array of display symbols     */
+                          /* returned by this procedure   */
+long   ds_size;           /* size of ds array             */
+ushort *attr;             /* array of attributes returned */
+                          /* by this procedure            */
+long   attr_size;         /* size of attr array           */
+struct vtt_rc_parms *rc;  /* string position and length   */
+
+{
+
+  ulong  *buf_addr,tmp_full;
+  long   i,
+         buf_offset;
+  ushort tmp_attr,tmp_char;
+  struct gga_data *ld;
+  struct gga_ddf *ddf;
+
+/*
+ * The following is a debug print block intended to display all input parameters
+ * This block is usually #if 0 out
+ */
+
+{
+BUGLPR(dbg_vttrds,BUGGID,("\n"));
+BUGLPR(dbg_vttrds,BUGGID,("Input parameters follow:\n"));
+BUGLPR(dbg_vttrds,BUGGID,("vp                = 0x%x\n",vp));
+BUGLPR(dbg_vttrds,BUGGID,("vp->vttld         = 0x%x\n",vp->vttld));
+}
+
+  ld = (struct gga_data *) vp->vttld;
+  ddf = (struct gga_ddf *) vp->display->free_area;
+
+  GGA_ENTER_TRC0(ddf,gga_vttrds,2,GGA_VTTRDS);
+
+  if /*-----------------------*/
+     /* not in character mode */
+     /*-----------------------*/
+      (ld->Vttenv.vtt_mode != KSR_MODE)
+  {
+     /*------------------------------------*/
+     /* Only valid in character (KSR) mode */
+     /*------------------------------------*/
+
+     GGA_EXIT_TRC1(ddf,gga_vttrds,2,GGA_VTTRDS,EIO);
+
+     return(EIO);
+  }
+
+  VDD_TRACE(RDS , ENTRY, vp);
+
+  /******************************
+   * read the presentation space *
+   ******************************/
+
+  buf_addr = ld->Vttenv.pse;
+
+  /*****************************************************************
+   * calculate the address of the first character that must be read *
+   *****************************************************************/
+  buf_offset = ((rc->start_row - 1) * ld->Vttenv.ps_size.wd +
+                    (rc->start_column - 1));
+
+  for /*********************************************************
+      * all characters that must be read from the frame buffer *
+      *********************************************************/
+
+      (i=0; i < (rc->string_length); i++)
+  {
+      /*************************************************************
+       * read a character from the buffer and convert the character *
+       * code into a two-byte display code and the attribute into a *
+       * two-byte attribute code                                      *
+       *************************************************************/
+
+     tmp_full = *(ulong *)(buf_addr +
+             ((buf_offset + ld->Scroll_offset) % ld->Vttenv.ps_words));
+     buf_offset++;
+
+     /******************************************************
+      * transform the pcm character code into a 2-byte code *
+      ******************************************************/
+
+     /***************************************
+      * the display code equals the pcm code *
+      ***************************************/
+     ds[i] = tmp_full >> 16;
+
+     /******************************
+      * set the attribute bytes (2) *
+      ******************************/
+     attr[i] = tmp_full & 0x0000ffff;
+  }                /* end of for loop */
+
+  VDD_TRACE(RDS , EXIT, vp);
+
+  GGA_ENTER_TRC0(ddf,gga_vttrds,2,GGA_VTTRDS);
+
+  return(0);
+} /* end of vttrds  */

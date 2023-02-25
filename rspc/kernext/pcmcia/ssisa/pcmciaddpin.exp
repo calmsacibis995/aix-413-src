@@ -1,0 +1,35 @@
+#!/etc/drivers/isa/pcmciasspin
+*
+* COMPONENT_NAME: PCMCIAKER
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+pcmcia_ioctl_intr
+pcmcia_AcknowledgeInterrupt
+pcmcia_GetAdapter
+pcmcia_SetAdapter
+pcmcia_GetSocket
+pcmcia_SetSocket
+pcmcia_GetStatus
+pcmcia_ResetSocket
+pcmcia_GetWindow
+pcmcia_SetWindow
+pcmcia_GetPage
+pcmcia_SetPage
+pcmcia_ioreg
+adapter_ptrs
+pcmcia_intr_prior
+pcmcia_copyin
+pcmcia_copyout
+pcmcia_debug
+pcmcia_itob
+pcmcia_init_registers

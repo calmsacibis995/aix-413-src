@@ -1,0 +1,35 @@
+#!/etc/drivers/ataidepin
+* @(#)04        1.8  src/rspc/kernext/isa/ide/ataidepin.exp, isaide, rspc41J, 9517A_all 4/25/95 19:38:17
+*
+* COMPONENT_NAME: (ISAIDE) IBM ATA/IDE Adap. Driver Bottom Half Export List
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1995
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+adp_str
+lide_cdt
+lide_cfg_cnt
+lide_open_cnt
+lide_count_devices
+lide_init_device
+lide_strategy
+lide_iodone
+lide_dump
+lide_cdt_func
+lide_intr
+lide_epow
+lide_pm_handler
+lide_turn_chip_on
+lide_command_watchdog
+lide_read_reg
+lide_write_reg
+lide_logerr
+lide_atapi_soft_reset

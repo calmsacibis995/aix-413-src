@@ -1,0 +1,78 @@
+# @(#)63	1.3  src/tcpip/usr/samples/tcpip/gateways, tcpip, tcpip411, GOLD410 8/14/90 15:49:58
+# 
+# COMPONENT_NAME: TCPIP gateways
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 26  27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+#	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+#
+# INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+# EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+# WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+# LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+# PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+# OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+# IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+# DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+# DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+# CORRECTION.
+#
+#  RISC System/6000 is a trademark of International Business Machines
+#   Corporation.
+#
+#
+#  /etc/gateways
+#
+# This file identifies gateways for the routing daemon (routed).
+# Ordinarily, routed queries the network and builds routing tables
+# from routing information transmitted by other hosts that are
+# directly connected to the network.  However, there may be gateways
+# that routed cannot identify through its queries, called distant
+# gateways.  Such gateways may be identified in this file which
+# routed reads when it starts.
+#
+# The format of this file is:
+#
+# <destination>  <name1>  gateway  <name2>  metric  <value>  <type>
+#
+#  where
+#	<destination>	A keyword that indicates whether the route is 
+#			to a network or to a specific host.  The two
+#			valid keywords are net and host.
+#
+#	<name1>		The name associated with destination.  <name1>
+#			can be either a symbolic name or an Internet
+#			address in dotted decimal format.
+#
+#	gateway		Indicates following string identifies the gateway
+#			host.
+#
+#	<name2>		Name or address of gateway host to which messages
+#			should be forwarded.
+#
+#	metric		Incidates following string is hop count to
+#			destination host or network.
+#
+#	<value>		Hop count.
+#
+#	<type>		A keyword that indicates how the gateway should
+#			be treated.  The two valid keywords are active
+#			and passive.  
+#
+# A '#' indicates the beginning of a comment; characters up to the end
+# of the line are not interpreted by routines which search this file.
+# Blank lines are allowed in this file.
+# 
+# An example entry follows.  Tailor this file to your system.
+
+net 192.0.2.0	gateway 192.9.200.38	metric 2 	passive

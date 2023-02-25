@@ -1,0 +1,196 @@
+#!/bin/ksh
+# @(#)88	1.5	src/bos/usr/sbin/perf/pmr/perfpmr.sh, perfpmr, bos411, 9428A410j 5/16/94 15:29:35
+#
+# COMPONENT_NAME: perfpmr
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# perfpmr
+#
+# collect standard performance data needed for AIX performance pmr
+#
+
+display_usage()
+{
+  echo "\nperfpmr: usage: perfpmr monitor_seconds [delay_seconds]"
+  echo "  monitor_seconds is for the monitor collection period"
+  echo "  delay_seconds is time to wait before starting collection period"
+  echo "  default is delay_seconds 0"
+  echo "\nUse 'perfpmr 3600' for standard collection period of one hour"
+  exit -1
+}
+
+# check for root id
+id | grep root  > /dev/null 2>&1
+if [ $? -eq 1 ]
+then
+  echo "\nperfpmr: Please obtain root authority and rerun this shell script\n"
+  exit -1
+fi
+
+# check parameters
+if [ $# -eq 0 -o $# -gt 2 ]
+then
+  display_usage
+fi
+
+# Check that the parameters are integers
+if [ "${1##*([0-9])}" != "" -o "${2##*([0-9])}" != "" ]
+then
+  display_usage
+fi
+
+# check total time specified for minimum amount of 60 seconds
+if [ $1 -lt 60 ]
+then
+ echo "    PERFPMR: Minimum time interval required is 60 seconds"
+ exit -1
+fi
+
+# move to proper directory
+cd /var/perf/tmp
+
+# save time for monitor period
+MONITOR=$1
+shift
+
+# see if delay specified
+if [ $# -gt 0 ]
+then
+  DELAY=$1
+else
+  DELAY=0
+fi
+
+
+echo " " 1>&2
+echo "(C) COPYRIGHT International Business Machines Corp., 1990, 1992, 1993" 1>&2
+echo " " 1>&2
+sleep 2
+
+# put up the notice
+
+echo " *********************************************" 1>&2
+echo " *****  CUSTOMER EXPECTATIONS NOTICE  ********" 1>&2
+echo " *********************************************" 1>&2
+echo "" 1>&2
+echo " The IBM AIX Performance Problem Management Report (PMR) process " 1>&2
+echo " provides tools and scripts to assist with performance problems" 1>&2
+echo " within AIX systems that may be determined to reside in IBM AIX software." 1>&2
+echo " Thus, data will be gathered, and IBM will perform initial analysis." 1>&2
+echo " However, if the analysis indicates that the performance problem is" 1>&2
+echo " related to:" 1>&2
+echo "" 1>&2
+echo "      - customer configuration errors" 1>&2
+echo "      - user-related environments" 1>&2
+echo "      - requirements for system tuning or application tuning" 1>&2
+echo "      - etc." 1>&2
+echo "" 1>&2
+echo " AIX Software Development will inform the customer of the current findings," 1>&2
+echo " and recommend that the Performance PMR be closed. If the customer wishes," 1>&2
+echo " IBM can refer the customer to other services currently available in the" 1>&2
+echo " local geography that can assist the customer with system tuning or" 1>&2
+echo " application tuning if the analysis indicates tuning as the problem area." 1>&2
+echo "" 1>&2
+echo " Please read the above notice before pressing the enter key to continue." 1>&2
+read input
+
+# change shell nice value
+renice -20 $$ > /dev/null 2>&1
+
+# wait specified delay_seconds if any
+if [ $DELAY -gt 0 ]
+then
+  echo "    PERFPMR: Waiting $DELAY seconds before data collection..." | tee -a perfpmr.int
+  sleep $DELAY
+fi
+
+# check if trace is already running.
+export traceexists=false
+if ps -ea | grep -q -w trace
+then
+   traceexists=true
+   echo "WARNING: A trace process is already running."
+   echo "         perfpmr will not gather information using trace."
+   echo "         Stop the trace process and rerun perfpmr to collect a"
+   echo "         complete set of standard system performance data."
+   echo ""
+fi
+
+rm perfpmr.int > /dev/null 2>&1
+echo "    PERFPMR: Data collection started..." | tee -a perfpmr.int
+
+# collect configuration info if not already there
+if [ ! -f config.sum ]
+then
+  config_ | tee -a perfpmr.int
+fi
+
+# save a little info from just before session begins
+echo "\n     Date and time before data collection is \c" >> perfpmr.int 
+date >> perfpmr.int 
+echo "     Uptime information before collection:" >> perfpmr.int
+echo "     \c" >> perfpmr.int
+uptime >> perfpmr.int
+
+# also save 'w' command output (uptime info + user info)
+echo "\n\t\tW Command output before monitoring session\n\n\n" > w.int
+w >> w.int
+
+# do regular monitoring session
+if [ $traceexists = false ]
+then
+   monitor $MONITOR | tee -a perfpmr.int
+else
+   # No pprof collection.
+   monitor $MONITOR -p | tee -a perfpmr.int
+fi
+
+# collect trace info
+if [ $traceexists = false ]
+then
+   trace_ 5 | tee -a perfpmr.int
+fi
+
+# collect tprof info if program in current path
+whence tprof > /dev/null
+if [ $? -eq 0 -a $traceexists = false ]
+then
+  tprof_ 60 | tee -a perfpmr.int
+fi
+
+# collect filemon info if program in current path
+whence filemon > /dev/null
+if [ $? -eq 0 -a $traceexists = false ]
+then
+  filemon_ 60 2> /dev/null | tee -a perfpmr.int
+fi
+
+# collect netpmon info if program in current path
+whence netpmon > /dev/null
+if [ $? -eq 0 -a $traceexists = false ]
+then
+  netpmon_ 60 | tee -a perfpmr.int
+fi
+
+# collect perfpmr ending status
+echo "\n     Date and time after data collection is \c" >> perfpmr.int
+date >> perfpmr.int
+echo "     Uptime information after collection:" >> perfpmr.int
+echo "     \c" >> perfpmr.int
+uptime >> perfpmr.int
+
+# also save 'w' command output (uptime info + user info)
+echo "\f\n\t\tW Command output after monitoring session\n\n\n" >> w.int
+w >> w.int
+
+# tell them we're done
+echo "\n    PERFPMR: Data collection complete.\n" | tee -a perfpmr.int

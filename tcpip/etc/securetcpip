@@ -1,0 +1,66 @@
+#!/bin/ksh
+# @(#)63      1.8  src/tcpip/etc/securetcpip, tcpip, tcpip411, GOLD410 12/7/92 15:10:10
+# 
+# COMPONENT_NAME: TCPIP securetcpip
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# AIX TCP/IP security enhancement.
+# Identification and authentication is required for all system access.
+
+
+# The following programs are not allowed to execute on a secure system.
+TFTP=/usr/bin/tftp
+UTFTP=/usr/bin/utftp
+TFTPD=/usr/sbin/tftpd
+RCP=/usr/bin/rcp
+RLOGIN=/usr/bin/rlogin
+RLOGIND=/usr/sbin/rlogind
+RSH=/usr/bin/rsh
+RSHD=/usr/sbin/rshd
+
+# Chmod these files so that they are not executable, remove the tcb bit,
+# and have sysck make the appropriate changes to /etc/security/sysck.cfg
+for i in $TFTPD $RCP $RLOGIN $RLOGIND $RSH $RSHD
+do
+	if [ -f $i ]
+	then
+		chmod 0000 $i
+		/bin/sysck -a $i class=tcpip owner group mode=0
+		/bin/sysck -y $i
+		echo $i disabled.
+	fi
+done
+
+# Special case(s) to handle files with links.
+if [ -f $TFTP ]
+then
+	chmod 0000 $TFTP
+	/bin/sysck -a $TFTP class=tcpip links=$UTFTP owner group mode=0
+	/bin/sysck -y $TFTP
+	echo $TFTP and $UTFTP disabled.
+fi
+
+# Add stanza to /etc/security/config to restrict .netrc
+# usage in ftp, and rexec.
+CONFIG_FILE=/etc/security/config
+/bin/grep "^tcpip:" $CONFIG_FILE > /dev/null 2>&1
+if [ "$?" != "0" ]
+then
+	echo "\ntcpip:" >> $CONFIG_FILE
+	echo "\tnetrc = ftp,rexec\n" >> $CONFIG_FILE
+fi
+
+exit 0
+# TCSEC Division C Class C2
+

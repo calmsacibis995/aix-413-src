@@ -1,0 +1,77 @@
+/* REXX      trick: comments are restricted to one line in clists
+      WRITE ERROR - REXX IS REQUIRED BY ONHOST BUT IS NOT AVAILABLE
+      WRITE THIS IS A SEVERE CONDITION - YOU SHOULD ENTER LOGOFF
+      WRITE AND CONTACT THE SYSTEM PROGRAMMER FOR THIS MVS/TSO SYSTEM
+      EXIT CODE(99)
+ */
+/*static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/onhostld.tso, tcpip, tcpip411, GOLD410 8/14/90 16:30:41";
+ *
+ * COMPONENT_NAME: TCPIP onhostld.tso 
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1986, 1988, 1989
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ * RISC System/6000 is a trademark of International Business Machines
+   Corporation.
+*/
+/*
+    AIXwhat is @(#) onhostld.tso 1.5 PASC 1.5
+ */ version='onhost - version 1.1 - MVS/TSO'
+/*
+ * onhostld prepares the host for interaction with hostconnect
+ *
+ * hostconnect executes onhostld on the host during an automatic login
+ */
+ 
+ftpida = "onhostcp.ftpinput"
+ftpoda = "onhostcp.ftptrace"
+ "PROFILE NOWTPMSG"
+     /* allocate files used by onhost cp, if necessary */
+if sysdsn(ftpida) <> "OK" then
+ "ALLOC DA("ftpida") NEW CATALOG SPACE(1,1)",
+          "DSORG(PS) RECFM(V,B) LRECL(255) BLKSIZE(6120)"
+if sysdsn(ftpoda) <> "OK" then
+ "ALLOC DA("ftpoda") NEW CATALOG SPACE(1,1)",
+          "DSORG(PS) RECFM(V,B) LRECL(255) BLKSIZE(6120)"
+     /* allocate scratch file usd to store onhost cwd level */
+ "ALLOC F(ONHOSTXX) UNIT(SYSDA) REUSE NEW BLKSIZE(500)
+  LRECL(50) RECFM(F,B) DSORG(PS) OUTPUT DELETE"
+ retcode = rc
+ if retcode ^= 0 then do
+   EXECIO '0' DISKW "ONHOSTXX (FINI"
+   "ALLOC F(ONHOSTXX) UNIT(SYSDA) REUSE NEW BLKSIZE(500)
+    LRECL(50) RECFM(F,B) DSORG(PS) OUTPUT DELETE"
+   retcode = rc
+   if retcode = 0 then do
+     push ""
+     EXECIO '1' DISKW "ONHOSTXX"
+     retcode = rc
+   end
+ end
+ else do
+   push ""
+   EXECIO '1' DISKW "ONHOSTXX"
+   retcode = rc
+ end
+ "PROFILE WTPMSG"
+ push 'onhoste' retcode

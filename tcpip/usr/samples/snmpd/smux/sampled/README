@@ -1,0 +1,124 @@
+* @(#)45	1.1  src/tcpip/usr/samples/snmpd/smux/sampled/README, snmp, tcpip411, GOLD410 9/13/93 15:32:53
+*
+* COMPONENT_NAME: (SNMP) Simple Network Management Protocol Daemon
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1993
+* All Rights Reserved
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+* Licensed Material - Property of IBM
+*
+* FILE:	/usr/samples/snmpd/smux/sampled/README
+*
+
+The sampled SMUX peer source code is provided as an example to:
+  * help you understand how to code your own SMUX peer, and
+  * how to run a SMUX peer as a daemon process.
+
+    INTERNATIONAL BUSINESS MACHINES CORP. PROVIDES THIS SOURCE CODE
+    EXAMPLE, ASSOCIATED LIBRARIES AND FILES "AS IS," WITHOUT WARRANTY 
+    OF ANY KIND EITHER EXPRESSED OR IMPLIED INCLUDING BUT NOT LIMITED 
+    TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+    PARTICULAR PURPOSE.  The entire risk as to the quality and performance 
+    of this example is with you.  Should any part of this source code 
+    example prove defective you (and not IBM or an IBM authorized 
+    dealer) assume the entire cost of all necessary servicing, repair, 
+    or correction.
+
+To help you write your own SMUX peer code, it is suggested that you print
+the SMUX subroutine manpages from the documentation.  The sampled code
+is commented, so read through the sampled code and look at the respective
+manpages for the SMUX calls.
+
+You should be the root user.
+
+The sampled executable must be compiled as only the source code is provided.
+A Makefile has been provided and is ready to use "as is".   This Makefile is
+shipped in the file, /usr/samples/snmpd/smux/sampled/Makefile.  To compile the
+sampled SMUX peer executable, at the shell prompt enter:
+  make clean
+  make sampled
+
+Add the following entry to the bottom of the /etc/snmpd.peers file:
+"sampled"	1.3.6.1.4.1.2.3.1.2.3.1.1	"sampled_password"
+
+Add the following entry to the bottom of the /etc/snmpd.conf file:
+smux	1.3.6.1.4.1.2.3.1.2.3.1.1	sampled_password	#sampled
+
+Refresh the snmpd daemon so that it will reread the /etc/snmpd.conf
+file:
+  refresh -s snmpd
+
+Make sure you have a trap entry for your SNMP manager in the
+/etc/snmpd.conf file, where snmp_mgr_ip_address is the hostname or
+the IP address of your SNMP manager station:
+trap	public	snmp_mgr_ip_address	1.2.3	fe
+Refresh the snmpd daemon so that it will reread the /etc/snmpd.conf
+file:
+  refresh -s snmpd
+
+If you are working on enterprise-specific traps, it is a good
+idea to set snmpd's logging to the highest level and look at
+the snmpd log file after you generate your traps.  You can see the
+structure of your enterprise-specific trap packet in both English and
+in hex.  If you do not change the log file name in the /etc/snmpd.conf 
+file, the snmpd log file is /usr/tmp/snmpd.log.  To turn on logging to 
+the highest level, set a logging entry in the /etc/snmpd.conf file to:
+logging      level=3
+Refresh the snmpd daemon so that it will reread the /etc/snmpd.conf
+file:
+  refresh -s snmpd
+
+Start up the sampled smux peer:
+  sampled
+
+Using snmpinfo, walk the smux MIB tree to see that sampled has registered
+successfully.  The dump should also show that the test and test-ping subtrees
+have been registered successfully.
+  /usr/sbin/snmpinfo -v -md smux
+
+Add the /usr/samples/snmpd/smux/sampled/sampled.defs (generated when
+you run "make sampled") to the bottom of the /etc/mib.defs file.
+
+Run snmpinfo to walk the sampled test and test-ping subtrees:
+  /usr/sbin/snmpinfo -v -md myMIBs
+
+NOTES:
+------
+(1) There is a sample MIB variable, sampleTrap, that generates
+    an enterprise-specific trap with two variable bindings (an integer
+    and a string) for the variable instance sampleTrap.0.  See the
+    send_trap() function in sampled.c for the code to generate this
+    trap.  If you run the following command, you will generate this
+    trap:
+      /usr/sbin/snmpinfo -v -md sampleTrap.0
+(2) There is a sample MIB variable, sampleTick, which demonstrates
+    how to handle the TimeTicks syntax.
+(3) There is a sample MIB variable, sampleObjectID, which demonstrates
+    how to handle the OBJECT IDENTIFIER syntax.
+(4) There is a sample MIB variable, sampleString, which demonstrates
+    how to handle the DisplayString syntax.
+(5) There is a sample MIB table, pingTable, which demonstrates how to
+    set up a table.
+(6) There is a sampled MIB variable, windowOpen, which has read-write
+    access.  There is code that demonstrates how to set this variable.
+(7) Read the sampled.my definitions to understand the MIB variables
+    supported by the sampled SMUX proxy agent.
+(8) The sampled object id as defined above is "1.3.6.1.4.1.2.3.1.2.3.1.1".
+    This object id has the following breakdown:
+      1  iso
+      3  org
+      6  dod
+      1  internet
+      4  private
+      1  enterprises
+      2  ibm
+      3  ibmAgents
+      1  aix
+      2  aixRISC6000
+      3  risc6000public
+      1  myAgents
+      1  sampled

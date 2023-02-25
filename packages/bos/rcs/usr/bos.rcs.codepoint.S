@@ -1,0 +1,42 @@
+$ @(#)19  1.1  src/packages/bos/rcs/usr/bos.rcs.codepoint.S, pkgrcs, pkg411, GOLD410 7/26/93 09:24:32
+$
+$   COMPONENT_NAME: RCS
+$
+$   FUNCTIONS: none
+$
+$   ORIGINS: 27
+$
+$   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+$   combined with the aggregated modules for this product)
+$                    SOURCE MATERIALS
+$
+$   (C) COPYRIGHT International Business Machines Corp. 1993
+$   All Rights Reserved
+$   US Government Users Restricted Rights - Use, duplication or
+$   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$
+
+SET E
+EC0A "ERROR CREATING SLIP CONTROLLER LOCKFILE"     
+EC0B "UNABLE TO CREATE SLIP CONTROLLER PIPE"
+EC0C "UNABLE TO WRITE TO THE CLIENT PIPE"
+EC0D "UNKNOWN SLIP CONTROLLER ERROR"     
+EC0E "ERROR RETRIEVING LINE DISCIPLINE (TTY)"
+EC0F "ERROR REMOVING A SLIP INTERFACE"     
+EC10 "ERROR ON IFCONFIG OF A SLIP INTERFACE"     
+EC23 "ERROR DELETING RTS ON TTY PORT"
+EC24 "FILE ERROR WRITE/READ/RENAME OR REMOVE"   
+EC25 "FORK() SYSTEM CALL FAILED"     
+
+SET P							
+E90C "INCORRECT FILE PERMISSIONS"
+E90D "FILE SYSTEM FULL"
+E90E "OUT OF INODES"
+E922 "SYSTEM LIMIT FOR PROCESSES EXCEEDED"
+
+SET U		                       
+EB21 "ALL ALLOCATED FILE SPACE IS FULL"
+EB22 "DEVICE OR FILE DOES NOT EXIST"
+
+SET R	                   
+EB67 "INCREASE THE SIZE OF THE ASSOCIATED FILE SYSTEM"

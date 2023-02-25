@@ -1,0 +1,31 @@
+# @(#)91	1.3  src/bos/usr/sbin/cron/queuedefs, cmdcntl, bos411, 9428A410j 4/25/91 17:17:19
+#
+# COMPONENT_NAME: (CMDCNTL) commands needed for basic system needs
+#
+# FUNCTIONS: 
+#
+# ORIGINS: 27, 18
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989,1991
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# cron values for each queue of batch jobs:
+#
+# 	queue.xxjxxnxxw
+#
+# queues:
+#  a - sh jobs		d - sync event
+#  b - batch jobs	e - ksh jobs
+#  c - cron event	f - csh jobs
+#
+#  xxj - maximum number of jobs in this queue (deafult 100)
+#  xxn - nice value at which these jobs will run at (default 2)
+#  xxw - wait time till next execution attempt (default 60 seconds)
+#
+# 
+# here is an example of a low prority (nice 20), 50 entry batch queue
+# b.50j20n60w

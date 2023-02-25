@@ -1,0 +1,228 @@
+#  @(#)80        1.1  src/packages/bos/terminfo/rte/bos.terminfo.rte.rm_inv.S, pkgterm, pkg411, GOLD410 2/1/94 %U
+#
+# COMPONENT_NAME: pkgterm
+#
+# FUNCTIONS:  rm_inv
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# -------------------------------------------------------------------------
+#
+# LPP_NAME: bos.terminfo.rte
+#
+
+/usr/share/lib/terminfo/9:
+/usr/share/lib/terminfo/t:
+/usr/share/lib/terminfo/9/912b:
+	links=/usr/share/lib/terminfo/9/912c
+	symlinks=/usr/share/lib/terminfo/t/tvi912b,/usr/share/lib/terminfo/t/tvi912c,/usr/share/lib/terminfo/t/tvi
+/usr/share/lib/terminfo/9/912cc:
+	symlinks=/usr/share/lib/terminfo/t/tvi912cc
+/usr/share/lib/terminfo/9/920b:
+	links=/usr/share/lib/terminfo/9/920c
+	symlinks=/usr/share/lib/terminfo/t/tvi920b,/usr/share/lib/terminfo/t/tvi920c
+/usr/share/lib/terminfo/README:
+/usr/share/lib/terminfo/a:
+/usr/share/lib/terminfo/a/aixterm:
+/usr/share/lib/terminfo/a/aixterm-m:
+/usr/share/lib/terminfo/a/aixterm-m-old:
+/usr/share/lib/terminfo/a/aixterm-old:
+/usr/share/lib/terminfo/adds.ti:
+/usr/share/lib/terminfo/annarbor.ti:
+/usr/share/lib/terminfo/beehive.ti:
+/usr/share/lib/terminfo/cdc.ti:
+/usr/share/lib/terminfo/concept.ti:
+/usr/share/lib/terminfo/d:
+/usr/share/lib/terminfo/d/dumb:
+/usr/share/lib/terminfo/datamedia.ti:
+/usr/share/lib/terminfo/dec.ti:
+/usr/share/lib/terminfo/diablo.ti:
+/usr/share/lib/terminfo/general.ti:
+/usr/share/lib/terminfo/h:
+/usr/share/lib/terminfo/h/h19:
+/usr/share/lib/terminfo/h/hft-c:
+/usr/share/lib/terminfo/h/hft-c-old:
+/usr/share/lib/terminfo/h/hft-m:
+/usr/share/lib/terminfo/h/hft-m-old:
+/usr/share/lib/terminfo/h/hft-nam:
+/usr/share/lib/terminfo/h/hft-nam-old:
+/usr/share/lib/terminfo/hardcopy.ti:
+/usr/share/lib/terminfo/hazeltine.ti:
+/usr/share/lib/terminfo/header:
+/usr/share/lib/terminfo/heath.ti:
+/usr/share/lib/terminfo/homebrew.ti:
+/usr/share/lib/terminfo/hp.ti:
+/usr/share/lib/terminfo/i:
+/usr/share/lib/terminfo/i/ibm3101:
+/usr/share/lib/terminfo/i/ibm3151:
+/usr/share/lib/terminfo/i/ibm3151-25:
+/usr/share/lib/terminfo/i/ibm3151-132:
+/usr/share/lib/terminfo/i/ibm3151-51:
+	links=/usr/share/lib/terminfo/i/ibm3151-61
+/usr/share/lib/terminfo/i/ibm3151-S:
+/usr/share/lib/terminfo/w:
+/usr/share/lib/terminfo/i/ibm3161:
+	links=/usr/share/lib/terminfo/i/ibm3163
+	symlinks=/usr/share/lib/terminfo/w/wy60-316X,/usr/share/lib/terminfo/w/wyse60-316X
+/usr/share/lib/terminfo/i/ibm3161-C:
+/usr/share/lib/terminfo/i/ibm3162:
+/usr/share/lib/terminfo/i/ibm3162-132:
+/usr/share/lib/terminfo/i/ibm3164:
+/usr/share/lib/terminfo/i/ibm5081:
+	symlinks=/usr/share/lib/terminfo/h/hft
+/usr/share/lib/terminfo/i/ibm5081-113:
+/usr/share/lib/terminfo/i/ibm5081-56:
+/usr/share/lib/terminfo/i/ibm5151:
+	symlinks=/usr/share/lib/terminfo/w/wy60-AT,/usr/share/lib/terminfo/w/wyse60-AT
+/usr/share/lib/terminfo/i/ibm5154:
+/usr/share/lib/terminfo/i/ibm6153:
+/usr/share/lib/terminfo/i/ibm6153-40:
+/usr/share/lib/terminfo/i/ibm6153-90:
+/usr/share/lib/terminfo/i/ibm6154:
+/usr/share/lib/terminfo/i/ibm6154-40:
+/usr/share/lib/terminfo/i/ibm6154-90:
+/usr/share/lib/terminfo/i/ibm6155:
+/usr/share/lib/terminfo/i/ibm6155-113:
+/usr/share/lib/terminfo/i/ibm6155-56:
+/usr/share/lib/terminfo/i/ibm8503:
+/usr/share/lib/terminfo/i/ibm8507:
+/usr/share/lib/terminfo/i/ibm8512:
+/usr/share/lib/terminfo/i/ibm8513:
+/usr/share/lib/terminfo/i/ibm8514:
+/usr/share/lib/terminfo/i/ibm8515:
+/usr/share/lib/terminfo/i/ibm8604:
+/usr/share/lib/terminfo/i/ibmpc:
+	symlinks=/usr/share/lib/terminfo/w/wy60-PC,/usr/share/lib/terminfo/w/wyse60-PC
+/usr/share/lib/terminfo/i/ibmpcc:
+/usr/share/lib/terminfo/i/ibmpdp:
+/usr/share/lib/terminfo/ibm.ti:
+/usr/share/lib/terminfo/j:
+/usr/share/lib/terminfo/j/jaixterm:
+/usr/share/lib/terminfo/j/jaixterm-m:
+/usr/share/lib/terminfo/lsi.ti:
+/usr/share/lib/terminfo/microterm.ti:
+/usr/share/lib/terminfo/misc.ti:
+/usr/share/lib/terminfo/pc.ti:
+/usr/share/lib/terminfo/perkinelm.ti:
+/usr/share/lib/terminfo/print.ti:
+/usr/share/lib/terminfo/s:
+/usr/share/lib/terminfo/s/sun:
+/usr/share/lib/terminfo/special.ti:
+/usr/share/lib/terminfo/sun.ti:
+/usr/share/lib/terminfo/t/tvi912:
+	links=/usr/share/lib/terminfo/t/tvi920
+	symlinks=/usr/share/lib/terminfo/9/912,/usr/share/lib/terminfo/9/920
+/usr/share/lib/terminfo/t/tvi912-2p:
+	links=/usr/share/lib/terminfo/t/tvi920-2p,/usr/share/lib/terminfo/t/tvi-2p
+	symlinks=/usr/share/lib/terminfo/9/912-2p,/usr/share/lib/terminfo/9/920-2p
+/usr/share/lib/terminfo/t/tvi925:
+	symlinks=/usr/share/lib/terminfo/9/925
+/usr/share/lib/terminfo/t/tvi950:
+	links=/usr/share/lib/terminfo/t/televideo950
+	symlinks=/usr/share/lib/terminfo/9/950
+/usr/share/lib/terminfo/t/tvi950-2p:
+	symlinks=/usr/share/lib/terminfo/9/950-2p
+/usr/share/lib/terminfo/t/tvi950-4p:
+	symlinks=/usr/share/lib/terminfo/9/950-4p
+/usr/share/lib/terminfo/t/tvi950-ap:
+/usr/share/lib/terminfo/t/tvi950-b:
+/usr/share/lib/terminfo/t/tvi950-ns:
+/usr/share/lib/terminfo/t/tvi950-rv:
+	symlinks=/usr/share/lib/terminfo/9/950-rv
+/usr/share/lib/terminfo/t/tvi950-rv-2p:
+	symlinks=/usr/share/lib/terminfo/9/950-rv-2p
+/usr/share/lib/terminfo/t/tvi950-rv-4p:
+	symlinks=/usr/share/lib/terminfo/9/950-rv-4p
+/usr/share/lib/terminfo/tektronix.ti:
+/usr/share/lib/terminfo/teleray.ti:
+/usr/share/lib/terminfo/teletype.ti:
+/usr/share/lib/terminfo/televideo.ti:
+/usr/share/lib/terminfo/ti.ti:
+/usr/share/lib/terminfo/trailer:
+/usr/share/lib/terminfo/u:
+/usr/share/lib/terminfo/u/unknown:
+/usr/share/lib/terminfo/v:
+/usr/share/lib/terminfo/v/vt100:
+	links=/usr/share/lib/terminfo/v/vt100-nam,/usr/share/lib/terminfo/v/vt100x
+	symlinks=/usr/share/lib/terminfo/i/ibm5550,/usr/share/lib/terminfo/i/ibm5570
+/usr/share/lib/terminfo/v/vt100-am:
+/usr/share/lib/terminfo/v/vt220:
+	links=/usr/share/lib/terminfo/v/vt320,/usr/share/lib/terminfo/v/vt330
+/usr/share/lib/terminfo/v/vt220-8:
+	links=/usr/share/lib/terminfo/v/vt320-8,/usr/share/lib/terminfo/v/vt330-8
+/usr/share/lib/terminfo/v/vt340:
+/usr/share/lib/terminfo/virtual.ti:
+/usr/share/lib/terminfo/visual.ti:
+/usr/share/lib/terminfo/w/wy100:
+	links=/usr/share/lib/terminfo/w/wyse100
+/usr/share/lib/terminfo/w/wy30:
+	links=/usr/share/lib/terminfo/w/wyse30
+/usr/share/lib/terminfo/w/wy350:
+	links=/usr/share/lib/terminfo/w/wyse350
+/usr/share/lib/terminfo/w/wy50:
+	links=/usr/share/lib/terminfo/w/wyse50,/usr/share/lib/terminfo/w/wy60,/usr/share/lib/terminfo/w/wyse60
+/usr/share/lib/terminfo/w/wy370-nk:
+	links=/usr/share/lib/terminfo/w/wyse370-nk
+/usr/share/lib/terminfo/w/wy370-nk-am:
+/usr/share/lib/terminfo/w/wy370-101k:
+	links=/usr/share/lib/terminfo/w/wyse370-101k
+/usr/share/lib/terminfo/w/wy370-105k:
+	links=/usr/share/lib/terminfo/w/wyse370-105k
+/usr/share/lib/terminfo/w/wy370-EPC:
+	links=/usr/share/lib/terminfo/w/wyse370-EPC
+/usr/share/lib/terminfo/w/wy370:
+	links=/usr/share/lib/terminfo/w/wyse370
+/usr/share/lib/terminfo/w/wy370-vb:
+	links=/usr/share/lib/terminfo/w/wyse370-vb
+/usr/share/lib/terminfo/w/wy370-w:
+	links=/usr/share/lib/terminfo/w/wyse370-w
+/usr/share/lib/terminfo/w/wy370-wvb:
+	links=/usr/share/lib/terminfo/w/wyse370-wvb
+/usr/share/lib/terminfo/w/wy370-rv:
+	links=/usr/share/lib/terminfo/w/wyse370-rv
+/usr/share/lib/terminfo/wyse.ti:
+/usr/share/lib/terminfo/x:
+/usr/share/lib/terminfo/x/xterm:
+	symlinks=/usr/share/lib/terminfo/v/vs100
+/usr/share/lib/terminfo/x/xterms:
+	symlinks=/usr/share/lib/terminfo/v/vs100s
+/usr/share/lib/terminfo/B/BQ303:
+	links=/usr/share/lib/terminfo/B/BQ310
+	symlinks=/usr/share/lib/terminfo/Q/Q303,/usr/share/lib/terminfo/Q/Q310
+/usr/share/lib/terminfo/B/BQ303-8:
+	links=/usr/share/lib/terminfo/B/BQ310-8
+	symlinks=/usr/share/lib/terminfo/Q/Q303-8,/usr/share/lib/terminfo/Q/Q310-8
+/usr/share/lib/terminfo/B/BQ303-8rv:
+	links=/usr/share/lib/terminfo/B/BQ310-8rv
+	symlinks=/usr/share/lib/terminfo/Q/Q303-8rv,/usr/share/lib/terminfo/Q/Q310-8rv
+/usr/share/lib/terminfo/B/BQ303-8w:
+	links=/usr/share/lib/terminfo/B/BQ310-8w
+	symlinks=/usr/share/lib/terminfo/Q/Q303-8w,/usr/share/lib/terminfo/Q/Q310-8w
+/usr/share/lib/terminfo/B/BQ303-8w-rv:
+	links=/usr/share/lib/terminfo/B/BQ310-8w-rv
+	symlinks=/usr/share/lib/terminfo/Q/Q303-8w-rv,/usr/share/lib/terminfo/Q/Q310-8w-rv
+/usr/share/lib/terminfo/B/BQ303-rv:
+	links=/usr/share/lib/terminfo/B/BQ310-rv
+	symlinks=/usr/share/lib/terminfo/Q/Q303-rv,/usr/share/lib/terminfo/Q/Q310-rv
+/usr/share/lib/terminfo/B/BQ303-w:
+	links=/usr/share/lib/terminfo/B/BQ310-w
+	symlinks=/usr/share/lib/terminfo/Q/Q303-w,/usr/share/lib/terminfo/Q/Q310-w
+/usr/share/lib/terminfo/B/BQ303-w-rv:
+	links=/usr/share/lib/terminfo/B/BQ310-w-rv
+	symlinks=/usr/share/lib/terminfo/Q/Q303-w-rv,/usr/share/lib/terminfo/Q/Q310-w-rv
+/usr/share/lib/terminfo/Q/Q303-8-pc:
+/usr/share/lib/terminfo/Q/Q303-8-pc-rv:
+/usr/share/lib/terminfo/Q/Q303-8-pc-w:
+/usr/share/lib/terminfo/Q/Q303-8-pc-w-rv:
+/usr/share/lib/terminfo/Q/Q303-pc:
+/usr/share/lib/terminfo/Q/Q303-pc-rv:
+/usr/share/lib/terminfo/Q/Q303-pc-w:
+/usr/share/lib/terminfo/Q/Q303-pc-w-rv:
+/usr/share/lib/terminfo/Q310.ti:

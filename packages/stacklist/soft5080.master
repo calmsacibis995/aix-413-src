@@ -1,0 +1,23 @@
+/* @(#)95        1.1  src/packages/stacklist/soft5080.master, pkg, pkg41J, 9515A_all 4/5/95 11:54:30                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for Soft5080 LPP
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+#if defined(SOFT5080) 
+Soft5080
+Soft5080.msg.Ja_JP
+Soft5080.msg.en_US
+#endif /* SOFT5080 */
+#if defined(SOFT5080JAPAN) 
+Soft5080.fnt
+#endif /* SOFT5080JAPAN */

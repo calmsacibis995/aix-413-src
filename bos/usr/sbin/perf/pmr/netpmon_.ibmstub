@@ -1,0 +1,53 @@
+#!/bin/ksh
+# @(#)82	1.4	src/bos/usr/sbin/perf/pmr/netpmon_.sh, perfpmr, bos411, 9428A410j 4/14/94 10:08:55
+#
+# COMPONENT_NAME: perfpmr
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# netpmon_
+#
+# invoke RISC System/6000 netpmon command and generate report
+#
+
+if [ $# -eq 0 ]
+then
+ echo "netpmon_: usage: netpmon_ time [option(s)]"
+ echo "           time is total time in seconds to monitor"
+ echo "           option(s) is one or more netpmon options as single string"
+ echo "           valid options are: cpu,dd,nfs,so,all (default all)"
+ exit -1
+fi
+
+# move to proper directory
+cd /var/perf/tmp
+
+SEC=$1
+
+if [ $# -gt 1 ]
+then
+  shift
+  OPT=$*
+else
+  OPT=all
+fi
+
+echo "\n     NETPMON_: Starting network trace for $SEC seconds...."
+echo "\n\n\n             N  E  T  P  M  O  N       O  U  T  P  U  T\n\n\n" > netpmon.sum
+netpmon -O $OPT >> netpmon.sum 2> /dev/null
+trap 'kill -9 $!' 1 2 3 24
+sleep $SEC &
+wait
+trcstop
+echo "     NETPMON_: Trace stopped...."
+echo "     NETPMON_: Generating report...."
+wait
+echo "     NETPMON_: Netpmon report is in file netpmon.sum"

@@ -1,0 +1,126 @@
+#!/unix
+* @(#)99	1.24.1.3  src/nfs/kernext/nfs/nfs.exp, sysxnfs, nfs411, 9434A411a 8/18/94 20:55:19
+*
+*   COMPONENT_NAME: SYSXNFS
+*
+*   FUNCTIONS: none
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1989,1993
+*   All Rights Reserved
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*
+* NFS adds the following system calls and symbols:
+*
+nfssvc		syscall
+exportfs	syscall
+getfh		syscall
+nfs_lockfh	syscall
+nfs_get_wakeup	syscall
+*
+* nfsserv_kmid is used to unload the kernel extension
+*
+nfsserv_kmid
+*
+* This variable controls the size of the NFSD's receive queues
+*
+nfs_socksize
+*
+nfsd_write_waittime
+*
+* Statistics about active rnodes
+*
+rfssize
+rfsdisptab
+*
+* These symbols are exported for debugging use only, not used by the
+* base or by normal users
+*
+rfsget
+rfsput
+rfs_getattr
+rfs_setattr
+rfs_lookup
+rfs_readlink
+rfs_read
+rfs_write
+rfs_create
+rfs_remove
+rfs_rename
+rfs_link
+rfs_symlink
+rfs_mkdir
+rfs_rmdir
+rfs_readdir
+rfs_statfs
+rfs_dispatch
+
+*
+* Misc. server side
+*
+findexport
+checkauth
+nullfree
+fhtovp
+hostinlist
+sattr_to_vattr
+vattr_to_nattr
+VOP_SETATTR
+VOP_RDWR
+console_printf
+*
+* Client side debug
+*
+nfs_open
+nfs_close
+nfs_rdwr
+nfs_getattr
+nfs_setattr
+nfs_access
+nfs_readlink
+nfs_fsync
+nfs_inactive
+nfs_lookup
+nfs_create
+nfs_remove
+nfs_link
+nfs_rename
+nfs_mkdir
+nfs_rmdir
+nfs_symlink
+nfs_readdir
+nfs_strategy
+nfs_lockctl
+nfs_cmp
+nfs_vnodeops
+nfs_swapvp
+nfs_gn_swap_strategy
+*
+* Good variables to find while debugging
+*
+*
+* I/O daemons queues and counts
+*
+async_bufwork
+async_bufwork_swap
+nfsd_count
+*
+* list of exported file systems
+*
+exported
+*
+* Entry point to kernel extension
+*
+nfs_config
+*
+* interfaces used for the intermediate authenticator support.
+*
+nfs_iauth_register
+nfs_iauth_unregister

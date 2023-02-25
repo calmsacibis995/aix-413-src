@@ -1,0 +1,60 @@
+#!/bin/ksh
+# @(#)89	1.6	src/bos/usr/sbin/perf/pmr/pprof_.sh, perfpmr, bos411, 9428A410j 5/16/94 15:29:33
+#
+# COMPONENT_NAME: perfpmr
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# pprof_
+#
+# invoke RISC System/6000 trace command via infp_trace collection tool
+#
+
+if [ $# -ne 1 ]
+then
+ echo "pprof_: usage: pprof_ time"
+ echo "               time is total time to measure"
+ exit -1
+fi
+
+# move to proper directory
+cd /var/perf/tmp
+
+# collect raw data
+echo "\n     PPROF_: Starting pprof for $1 seconds...."
+rm -f Pprof.flow > /dev/null 2>&1
+
+# save time just before starting
+date > Pprof.stt
+
+# start collection process
+infp_trace
+
+# wait specified time
+trap 'kill -9 $!' 1 2 3 24
+sleep $1 &
+wait
+
+# stop collection process
+trcoff
+trcstop
+date >> Pprof.stt
+
+# wait for output file to be there
+if [ ! -f Pprof.flow ]
+then
+  echo "Pprof.flow file is not found!"
+fi
+
+# clean up
+rm Debug > /dev/null 2>&1
+
+echo "     PPROF_: Sample data collected...."

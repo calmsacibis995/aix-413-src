@@ -1,0 +1,156 @@
+* @(#)36	1.4  src/tcpip/usr/samples/tcpip/README, tcpip, tcpip411, 9439A411a 9/26/94 16:00:04
+*
+* COMPONENT_NAME: TCPIP README
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1986, 1988, 1989
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+* File: /usr/lpp/tcpip/README
+*
+
+
+Telnet:     
+     1)	Telnet must allow transmission of eight bit characters when not in
+	binary mode in order to implement ISO 8859 Latin code page.  This is
+	necessary for internationalization of the TCP/IP commands.
+
+     2)	In order to support new character sets, the following was added to the
+	hft-m, ibm5081, hft, hft-nam, hft-c, aixterm-m and aixterm entries:
+
+        box1=\154\161\153\170\152\155\167\165\166\164\156,      batt1=f1,
+        box2=\154\161\153\170\152\155\167\165\166\164\156,      batt2=f1md,
+        font0=\E(B,     font1=\E(0,
+
+
+Adding -net, -host -netmask flags and -xns family using SMIT:
+	The SMIT tool lacks the ability to specify -net -host or -netmask
+	flags or family -xns when manipulating network routes.  If the usage
+	of these flags becomes necessary, the routes must be manipulated
+	using the route command. This is a temporary restriction.
+	The SMIT tool will add a host route if the DESTINATION Address
+	(dotted decimal) has all four numbers (e.g. 9.8.7.6).  It will add
+	a net route if the DESTINATION Address is less than four numbers
+	(e.g. 9.8.7 or 9).  This is not always the desired affect.
+	To add these routes on reboot simply add the needed routes to the
+	/etc/rc.net (or /etc/rc.bsdnet if you have chosen to do BSD style
+	configuration).
+
+Changing Network Interface Information with a remotely mounted /usr:
+	The chgif command, that is called by chdev (used by SMIT) now checks
+	to see if /usr is remotely mounted before changing the network
+	interface information.  If /usr is found to be remotely mounted then
+	any changes made to the network interfaces only take place in the
+	information database (ODM).
+	So to get the network interface changes to take affect the machine
+	needs to be rebooted or the ifconfig command can be used to change
+	the network interface information.  If the system is rebooted then
+	the new information will be read from the ODM database.  If a reboot
+	is not desired then the ifconfig command can be used to make the
+	network interface information take place right away.
+	The system administrator of a system that has a remotely mounted /usr
+	should be very careful not to modify the interface used to mount
+	the remote /usr.  Since the libraries, commands and kernel reside
+	in /usr.
+
+Security Concerns with Anonymous FTP:
+	When creating anonymous ftp users and directories please be sure that
+	the home directory for users ftp and anonymous (ie. /u/ftp) is owned by
+	root and does not allow write permissions (ie. dr-xr-xr-x).  The
+	script /usr/lpp/tcpip/samples/anon.ftp can be used to create these
+	accounts, files and directories.
+
+Network Migration
+
+       1.  TCP/IP
+
+       The configuration files are saved in /lpp/save.config/etc.
+       The file	from the previous release is named <filename>.old,
+       and the shipped file (the one that would	be there if you	did
+       a reinstall) is <filename>.new.	For example, when
+       /etc/rc.tcpip is	migrated,
+
+	  - /etc/rc.tcpip has been upgraded with your information
+	    kept.
+
+	  - /lpp/save.config/etc/rc.tcpip.old is your old rc.tcpip
+	    file.
+
+	  - /lpp/save.config/etc/rc.tcpip.new is the new version
+	    (without your changes) that	was shipped.
+
+       The following files are migrated:
+
+	  o /etc/rc.net
+
+	  o /etc/rc.bsdnet
+
+	  o /etc/services
+
+	    Here, all the services previously defined will be kept.
+	    The	4.1 /etc/services file contains	all the	defined
+	    services from the RFCs.  Where a conflict exists
+	    between a service you have previously defined and a
+	    globally defined service (from an RFC), your service
+	    will be kept and the official one commented	out.
+
+	  o /etc/inetd.conf
+
+	  o /etc/rc.tcpip
+
+	  o /etc/bootptab
+
+	  o /etc/3270.keys
+
+	  o /etc/3270keys.hft
+
+       In most cases your TCP/IP configuration will migrate
+       cleanly.	 If you	have made substantial changes to any of	the
+       above files you will want to make sure everything you had
+       done is still working.
+
+       2.  NFS_and_NIS
+
+       The /etc/rc.nfs and /var/yp/Makefile files are NOT migrated.
+       However,	your old files are saved in
+       /lpp/saveconfig/etc/rc.nfs and
+       /lpp/save.config/var/yp/Makefile.
+
+       This means that you will	have to	configure your NIS domain
+       name before a NIS client	will work.
+
+       For NIS servers,	the NIS	databases are unchanged, but
+       remember	that rc.nfs and	the Makefile are replaced.  You
+       will need to configure the NIS domain and restore any
+       changes you had made to rc.nfs and the Makefile.	 Don't
+       forget that your	old files were saved in	/lpp/save.config
+       with their corresponding	path names.  The passwd	and group
+       files are unchanged across a migration install, so the user
+       and group information will be retained.
+
+
+       3.  NetWare
+
+       NetWare is not shipping with AIX	4.1, but with the next
+       release.	All user configuration will be preserved.
+
+
+       4.  X-Stations
+
+       There should be no problems with	XStation bootup	if you do a
+       migration.  As previously mentioned, the	/etc/bootptab file
+       is migrated.
+
+Configuring a SLIP interface
+       The softcopy documentation on configuring a slip interface has
+       errors in it.  After using ate or cu to test the connection, the user
+       is instructed to change the tty to disable LOGIN.  Before doing
+       this, the user must first do a pdisable tty1 to disable getty
+       on the tty.  Then the user can do a smit chgtty and disable LOGIN
+       and change the baud rate.
+

@@ -1,0 +1,244 @@
+$ $Nprthelp
+$ $*@(#)37      1.2  src/tenplus/helpers/print/prthelp.psz, tenplus, tenplus411, GOLD410 7/26/93 15:52:01
+
+$ $*COMPONENT_NAME: (INED) INed Editor
+$ $*
+$ $*ORIGINS:  9, 10, 27
+$ $*
+$ $*This module contains IBM CONFIDENTIAL code. -- (IBM
+$ $*Confidential Restricted when combined with the aggregated
+$ $*modules for this product)                  SOURCE MATERIALS
+$ $*(C) COPYRIGHT International Business Machines Corp. 1985, 1990
+$ $*All Rights Reserved
+$ $*
+$ $*US Government Users Restricted Rights - Use, duplication or
+$ $*disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$quote "
+
+$set 1
+$ $%1
+$ $.0
+$ $:/menu
+
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+$ $"| qprt -T $FILE -"
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AA "%+DFPRINT\n\
+Print on the default printer."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AB "%+DFPRINTING\n\
+Printing on the default printer."
+$ $$
+
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+ZZ "%+QPRT_OPT\n\
+| qprt -T $FILE \_qprt options:\+ -"
+$ Translate only the word "options", leave everything else
+$ unchanged.
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AC "%+PRINT_OPT\n\
+Print (ask for options)."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AD "%+PRINTING\n\
+Printing."
+$ $$
+
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+$ $">"
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AE "%+PRINT_OVER\n\
+Print to the file. Write over existing data."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AF "%+PRTFILE1\n\
+Printing to file $PRTFILE."
+$ $$
+
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+$ $">>"
+$ $%3
+$ $.0
+$ $:/menu/*/dispcmd
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/*/dispdesc
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AG "%+PRINT_APP\n\
+Print to the file. Append to existing data."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AH "%+PRTFILE2\n\
+Printing to file $PRTFILE."
+$ Do not translate $PRTFILE
+$ $$
+
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/save
+$ $""
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+$ $"|"
+$ $%3
+$ $.0
+$ $:/menu/*/allout
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AI "%+RUN_PIPE\n\
+Run a pipe command."
+$ Do not translate pipe
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AJ "%+PRTCMD1\n\
+Running $PRTCMD."
+$ Do not translate $PRTCMD
+$ $$
+
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+ZY "%+MAIL_TO\n\
+| mail \_To:\+"
+$ Do not translate. This message MUST stay exactly as it is.
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AO "%+MAIL_MSG\n\
+Send the file in a mail message."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AP "%+PRTCMD2\n\
+Running $PRTCMD."
+$ Do not translate $PRTCMD
+$ $$
+
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/clear
+$ $""
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+$ $""
+$ $%3
+$ $.0
+$ $:/menu/*/allout
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AQ "%+RUN_COMM\n\
+Run a command."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AR "%+PRTCMD3\n\
+Running $PRTCMD."
+$ Do not translate $PRTCMD
+$ $$
+
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/clear
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+$ $"prtty -l50 $PRTFILE."
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AS "%+PRINT_PRVTE\n\
+Print on your private printer."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AT "%+PRNTNG_PRVTE\n\
+Printing on your private printer."
+$ $$
+
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/save
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/*/clear
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+$ $"PRTFILE=$PRTFILE; export PRTFILE; exec sh"
+$ $%3
+$ $.0
+$ $:/menu/*/allout
+$ $""
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AU "%+RUN_COMMS\n\
+Run commands from a shell."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AV "%+PRTCMD4\n\
+Running $PRTCMD."
+$ Do not translate $PRTCMD
+$ $$
+$ $$

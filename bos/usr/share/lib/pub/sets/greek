@@ -1,0 +1,23 @@
+# @(#)76	1.2  src/bos/usr/share/lib/pub/sets/greek, cmdsets, bos411, 9428A410j 8/16/91 12:32:24
+# COMPONENT_NAME: (CMDSETS)
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1991
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+alpha	A  A  |  beta	B  B  |  gamma	\  \
+GAMMA	G  G  |  delta	D  D  |  DELTA	W  W
+epsilon	S  S  |  zeta	Q  Q  |  eta	N  N
+theta	T  T  |  THETA	O  O  |  lambda	L  L
+LAMBDA	E  E  |  mu	M  M  |  nu	@  @
+xi	X  X  |  pi	J  J  |  PI	P  P
+rho	K  K  |  sigma	Y  Y  |  SIGMA	R  R
+tau	I  I  |  phi	U  U  |  PHI	F  F
+psi	V  V  |  PSI	H  H  |  omega	C  C
+OMEGA	Z  Z  |  nabla	[  [  |  not	_  _
+partial	]  ]  |  integral  ^  ^

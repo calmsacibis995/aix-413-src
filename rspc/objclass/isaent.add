@@ -1,0 +1,190 @@
+# @(#)58        1.13  src/rspc/objclass/isaent.add, isaent, rspc41J, 9522A_all 5/30/95 15:12:58
+*********************************************************************
+*
+*   COMPONENT_NAME: ISAENT
+*
+*   FUNCTIONS: isaent.add : device object file for IBM ISA Ethernet 
+*		Adapter
+*
+*   ORIGINS: 27
+*
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1994,1995
+*   All Rights Reserved
+*   Licensed Materials - Property of IBM
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*********************************************************************
+
+* LED registered as 75c, using 75a to get correct display.
+PdDv:
+	type = "ethernet"
+	class = "adapter"
+	subclass = "isa"
+	prefix = "ent"
+	devid = "IBM0010"
+	base = 1
+	has_vpd = 1
+	detectable = 1
+	chgstatus = 0
+	bus_ext = 0
+	fru = 1
+	led = 0x75a
+	setno = 27
+	msgno = 41
+	catalog = "devices_ent.cat"
+	DvDr = "isa/ientdd"
+	Define = "/usr/lib/methods/define_rspc"
+	Configure = "/usr/lib/methods/cfgisaent"
+	Change = "/usr/lib/methods/chgisaent"
+	Unconfigure = "/usr/lib/methods/ucfgcommo"
+	Undefine = "/usr/lib/methods/undefine"
+	Start = ""
+	Stop = ""
+	uniquetype = "adapter/isa/ethernet"
+
+PdCn:
+	uniquetype = "adapter/isa/ethernet"
+	connkey = "ent"
+	connwhere = ""
+
+* "bus_intr_lvl" - Hardware attribute
+* Value modifiable by user through SMIT or command line.
+* The interrupt level for this device is not shareable with other devices.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+	uniquetype = "adapter/isa/ethernet"
+	attribute = "bus_intr_lvl"
+	deflt = "11"
+	values = "5,7,9,11"
+	width = ""
+	type = "N"
+	generic = "DU"
+	rep = "nl"
+	nls_index = 4
+
+* "intr_priority" - Hardware attribute
+* Value set by system and not modifiable by user.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+	uniquetype = "adapter/isa/ethernet"
+	attribute = "intr_priority"
+	deflt = 3
+	values = 3
+	width = ""
+	type = "P"
+	generic = "D"
+	rep = "nl"
+	nls_index = 5
+
+* "xmt_que_size" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+	uniquetype = "adapter/isa/ethernet"
+	attribute = "xmt_que_size"
+	deflt = 64
+	values = "20-150,1"
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "nr"
+	nls_index = 10
+
+* "bus_mem_addr" - Hardware attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+	uniquetype = "adapter/isa/ethernet"
+	attribute = "bus_mem_addr"
+	deflt = "0xc0000"
+	values = "0x80000-0xec000,0x4000"
+	width = "0x4000"
+	type = "M"
+	generic = "DU"
+	rep = "nr"
+	nls_index = 2
+
+* "bus_io_addr" - Hardware attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+	uniquetype = "adapter/isa/ethernet"
+	attribute = "bus_io_addr"
+	deflt = "0x300"
+	values = "0x240,0x280,0x2C0,0x300,0x320,0x340,0x360"
+	width = "32"
+	type = "O10"
+	generic = "DU"
+	rep = "nl"
+	nls_index = 3
+
+* "media_type" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+* Value also stored and updated in NVRAM
+PdAt:
+        uniquetype      = "adapter/isa/ethernet"
+        attribute       = "media_type"
+        deflt           = "bnc"
+        values          = "bnc,dix,tp"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "sl"
+        nls_index       = 42
+
+* "use_alt_addr" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+	uniquetype = "adapter/isa/ethernet"
+	attribute = "use_alt_addr"
+	deflt = "no"
+	values = "yes,no"
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "sl"
+	nls_index = 13
+
+* "alt_addr" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+	uniquetype = "adapter/isa/ethernet"
+	attribute = "alt_addr"
+	deflt = "0x"
+	values = ""
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "s"
+	nls_index = 8
+
+* "addl_dvdr" - Configurable attribute
+* Value modifiable through command line only.
+* Not displayable with "lsattr" command.
+* No help text.
+* This attribute is the name of the method to be executed to configure or
+* unconfigure an additional driver in the kernel for this device.
+PdAt:
+	uniquetype = "adapter/isa/ethernet"
+	attribute = "addl_dvdr"
+	deflt = "/usr/lib/methods/cfgdmxeth"
+	values = ""
+	width = ""
+	type = "R"
+	generic = "U"
+	rep = "s"
+	nls_index = 0
+

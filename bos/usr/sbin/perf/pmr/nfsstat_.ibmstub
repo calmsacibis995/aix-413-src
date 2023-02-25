@@ -1,0 +1,62 @@
+#!/bin/ksh
+# @(#)83	1.4	src/bos/usr/sbin/perf/pmr/nfsstat_.sh, perfpmr, bos411, 9428A410j 4/14/94 10:09:39
+#
+# COMPONENT_NAME: perfpmr
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# nfsstat_
+#
+# invoke nfsstat before/after measurement period and create report
+#
+
+if [ $# -ne 1 ]
+then
+ echo "nfsstat_: usage: nfsstat_ time"
+ echo "      time is total time in seconds to be measured."
+ exit -1
+fi
+
+# move to proper directory
+cd /var/perf/tmp
+
+# check total time specified for minimum amount of 60 seconds
+if [ $1 -lt 60 ]
+then
+ echo Minimum time interval required is 60 seconds
+ exit -1
+fi
+
+echo "\n     NFSSTAT_: Collecting NFSSTAT statistics before the run...."
+echo "\n\n\n                   N  F  S  S  T  A  T    O  U  T  P  U  T\n" > nfsstat.int
+echo "\n\nHostname:  "  `hostname -s` >> nfsstat.int
+echo "\n\nTime before run:  " `date` >> nfsstat.int
+  
+echo "\f\n\n\n       N  F  S  S  T  A  T    O  U  T  P  U  T    B  E  F  O  R  E    R  U  N\n" > nfsstat.tmp
+echo "\n\n\n                  N  F  S  S  T  A  T  -csnr      O  U  T  P  U  T\n" >> nfsstat.tmp
+nfsstat -csnr >> nfsstat.tmp
+echo "     NFSSTAT_: Waiting specified time...."
+trap 'kill -9 $!' 1 2 3 24
+sleep $1 &
+wait
+
+echo "     NFSSTAT_: Collecting NFSSTAT statistics after the run...."
+echo "\n\nTime after run :  " `date` >> nfsstat.int
+
+# copy before data to out file now
+cat nfsstat.tmp >> nfsstat.int
+rm nfsstat.tmp
+
+echo "\f\n\n\n       N  F  S  S  T  A  T    O  U  T  P  U  T    A  F  T  E  R    R  U  N\n" >> nfsstat.int
+echo "\n\n\n                  N  F  S  S  T  A  T  -csnr      O  U  T  P  U  T\n" >> nfsstat.int
+/usr/etc/nfsstat -csnr >> nfsstat.int
+
+echo "     NFSSTAT_: Interval report is in file nfsstat.int"

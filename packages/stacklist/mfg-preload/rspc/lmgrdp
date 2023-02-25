@@ -1,0 +1,32 @@
+#!/bin/ksh
+# @(#) 47 1.1 src/packages/stacklist/mfg-preload/rspc/lmgrdp, pkg, pkg41B, 412_41B_sync 1/10/95 17:30:17
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: SoftWindows FLEXlm License Manager Startup Script
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# This file is installed into /usr/lpp/SoftWindows/FLEXlm by the manufacturing
+# preinstall process when SoftWindows is preinstalled. This file is executed
+# by init to start the SoftWindows license manager. This script handles the
+# case where the current hostname does not match the hostname at the time the
+# SoftWindows license key was generated. This script will update the license
+# file with the correct hostname, and then start the license daemon.
+#
+################################################################
+HOSTID=`/usr/bin/hostname`
+LICFILE=/usr/lpp/SoftWindows/FLEXlm/license.dat
+HOSTLIC=`/usr/bin/grep "SERVER" $LICFILE | /usr/bin/cut -d" " -f2`
+if [ "$HOSTLIC" != "$HOSTID" ] ; then
+	/usr/bin/sed /SERVER/s/$HOSTLIC/$HOSTID/ $LICFILE >$LICFILE.sav 2>/dev/null
+	/usr/bin/mv $LICFILE.sav $LICFILE
+fi
+exec /usr/lpp/SoftWindows/FLEXlm/lmgrd -c $LICFILE > /usr/lpp/SoftWindows/FLEXlm/lmgrd.log 2>&1

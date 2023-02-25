@@ -1,0 +1,929 @@
+# @(#)13        1.42.1.38  src/bos/usr/share/lib/terminfo/ibm.ti, terminfo, bos411, 9435B411a 8/31/94 09:47:17
+#
+#   COMPONENT_NAME: Terminfo
+#
+#   FUNCTIONS: ibm.ti
+#
+#   ORIGINS: 3, 26, 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1988, 1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+# NAME:         ibm
+#
+
+ibm3101|IBM 3101-10,
+	cr=^M, cud1=^J, ind=^J, bel=^G, tbc=\EH, hts=\E0, am, cub1=^H,
+	clear=\EK, lines#24, cols#80, cuf1=\EC, cuu1=\EA, ed=\EJ, el=\EI,
+	kcud1=\EB, kcub1=\ED, kcuf1=\EC, kcuu1=\EA,
+	home=\EH, cup=\EY%p1%' '%+%c%p2%' '%+%c,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       The following pairs of descriptions are for the displays
+#       which can be attached as the hft.   The default description for the
+#       name hft is for the Megapel color display.  If another display
+#       is attached, changing the link for /usr/lib/terminfo/h/hft
+#       to point to the appropriate description
+#       should be performed.  The results will be satisfactory if the 5151
+#       description is used but will better reflect the device if the
+#       linkage is correct for the real display.
+#
+#       For some displays, the bold attribute is emulated by selecting a
+#       different font.  This works only if the font table has been set
+#       up with 2nd alternate font equal to the bold font.
+
+ibm5151|wy60-AT|wyse60-AT|IBM 5151 Monochrome display,
+	is2=\Ec, rs2=\Ec,
+	cr=^M, cud1=^J, ind=\E[S, bel=^G, il1=\E[L, am, cub1=^H, ed=\E[J,
+	el=\E[K, clear=\E[H\E[J, cup=\E[%i%p1%d;%p2%dH, cols#80, lines#25,
+	dch1=\E[P,      dl1=\E[M,       home=\E[H,
+	smir=\E[4h,     rmir=\E[4l,     il=\E[%p1%dL,   dl=\E[%p1%dM,
+	bold=\E[1m, rev=\E[7m, blink=\E[5m, invis=\E[8m, sgr0=\E[0m,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;
+	       %?%p7%t;8%;m,
+	kcuu1=\E[A, kcud1=\E[B, kcub1=\E[D, kcuf1=\E[C, khome=\E[H, kbs=^H,
+	cuf1=\E[C, cuu1=\E[A, xon,
+	rmul=\E[m, smul=\E[4m, rmso=\E[m, smso=\E[7m,
+	kpp=\E[150q,    knp=\E[154q,
+	kf1=\E[001q,    kf2=\E[002q,    kf3=\E[003q,    kf4=\E[004q,
+	kf5=\E[005q,    kf6=\E[006q,    kf7=\E[007q,    kf8=\E[008q,
+	kf9=\E[009q,    kf10=\E[010q,   kf11=\E[011q,   kf12=\E[012q,
+	kf13=\E[013q,   kf14=\E[014q,   kf15=\E[015q,   kf16=\E[016q,
+	kf17=\E[017q,   kf18=\E[018q,   kf19=\E[019q,   kf20=\E[020q,
+	kf21=\E[021q,   kf22=\E[022q,   kf23=\E[023q,   kf24=\E[024q,
+	kf25=\E[025q,   kf26=\E[026q,   kf27=\E[027q,   kf28=\E[028q,
+	kf29=\E[029q,   kf30=\E[030q,   kf31=\E[031q,   kf32=\E[032q,
+	kf33=\E[033q,   kf34=\E[034q,   kf35=\E[035q,   kf36=\E[036q,
+	bw,     it#8,   msgr,
+	hpa=\E[%i%p1%dG,                ech=\E[%p1%dX,
+	kend=\E[146q,   ktab=^I,
+	kdch1=\E[P,     kind=\E[151q,   kich1=\E[139q,  krmir=\E[4l,
+	knl=\r,         kcbt=\E[Z,      kbtab=\E[Z,	kri=\E[155q,    kact=\E[114q,
+	cub=\E[%p1%dD,  cuf=\E[%p1%dC,  indn=\E[%p1%dS, rin=\E[%p1%dT,
+	ri=\e[T,        cuu=\E[%p1%dA,  cud=\E[%p1%dB,
+	box1=\332\304\277\263\331\300\302\264\301\303\305,
+	box2=\311\315\273\272\274\310\313\271\312\314\316,      batt2=md,
+	kil1=\E[140q,   kel=\E[142q,    kclr=\E[144q,   ked=\E[148q,
+
+hft-m|IBM Megapel Monochrome display,
+	box1=\154\161\153\170\152\155\167\165\166\164\156,      batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156,      batt2=f1md,
+	font0=\E(B,     font1=\E(0,    sgr0=\E[0m\E(B,
+	use=ibm5151,
+
+hft-m-old|IBM Megapel Monochrome display IBM-850,
+	use=ibm5151,
+
+ibm5154|IBM 5154 Color display,
+	bold@,
+	colf0=\E[30m,   colf1=\E[31m,   colf2=\E[32m,   colf3=\E[33m,
+	colf4=\E[34m,   colf5=\E[35m,   colf6=\E[36m,   colf7=\E[97m,
+	colb0=\E[40m,   colb1=\E[41m,   colb2=\E[42m,   colb3=\E[43m,
+	colb4=\E[44m,   colb5=\E[45m,   colb6=\E[46m,   colb7=\E[47m,
+
+	use=ibm5151, use=cdef,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       80 columns, bold defined
+
+ibm6153|IBM 6153 Black & White display,
+	font0=\E[10m,   font1=\E[11m,   font2=\E[12m,
+	bold=\E[12m,    sgr0=\E[0;10m,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;12%;m,
+	blink@,         use=ibm5151,
+
+aixterm-m|IBM Aixterm Monochrome Terminal Emulator,
+	bold=\E[1m, topl=\E[38m, btml=\E[49m, rvert=\E[48m, lvert=\E[39m,
+	hs, eslok, tsl=\E[?%p1%dT, fsl=\E[?F, dsl=\E[?E, ri@,
+        smacs=\E(0, rmacs=\E(B,
+	box1=\154\161\153\170\152\155\167\165\166\164\156,      batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156,      batt2=f1md,
+	font0=\E(B,     font1=\E(0,  sgr0=\E[0;10m\E(B, 
+        sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;
+               %?%p7%t;8%;m%?%p9%t\E(0%e\E(B%;,
+	use=ibm6153,
+
+aixterm-m-old|IBM Aixterm Monochrome Terminal Emulator,
+	bold=\E[1m,
+	hs, eslok, tsl=\E[?%p1%dT, fsl=\E[?F, dsl=\E[?E, ri@,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m,
+	use=ibm6153,
+
+jaixterm-m|IBM Kanji Aixterm Monochrome Terminal Emulator,
+	box1@,  box2@,
+	use=aixterm-m,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       90 columns
+
+ibm6153-90|IBM 6153 Black & White display,
+	cols#90,        lines#36,
+	bold@,          blink@,         use=ibm5151,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       40 columns
+
+ibm6153-40|IBM 6153 Black & White display,
+	cols#40,        lines#12,       use=ibm6153-90,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       80 columns, bold defined
+
+ibm6154|IBM 6154 Color displays,
+	font0=\E[10m,   font1=\E[11m,   font2=\E[12m,
+	bold=\E[12m,    sgr0=\E[0;10m,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;12%;m,
+	blink@,         use=ibm5154,
+
+aixterm|IBM Aixterm Terminal Emulator,
+	bold=\E[1m, topl=\E[38m, btml=\E[49m, rvert=\E[48m, lvert=\E[39m,
+	hs, eslok, tsl=\E[?%p1%dT, fsl=\E[?F, dsl=\E[?E, ri@,
+        smacs=\E(0, rmacs=\E(B,
+	box1=\154\161\153\170\152\155\167\165\166\164\156,
+	batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156,
+	batt2=f1md,
+	font0=\E(B,     font1=\E(0,  sgr0=\E[0;10m\E(B, 
+        sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;
+               %?%p7%t;8%;m%?%p9%t\E(0%e\E(B%;,
+	use=ibm6154,
+
+aixterm-old|IBM Old Aixterm Terminal Emulator,
+	bold=\E[1m,
+	hs, eslok, tsl=\E[?%p1%dT, fsl=\E[?F, dsl=\E[?E, ri@,
+        sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m,
+	use=ibm6154,
+
+jaixterm|IBM Kanji Aixterm Terminal Emulator,
+	box1@,  box2@,
+	use=aixterm,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       90 columns
+
+ibm6154-90|IBM 6153 Black & White display,
+	cols#90,        lines#36,       blink@,         use=ibm5154,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       40 columns
+
+ibm6154-40|IBM 6154 Color display,
+	cols#40,        lines#12,       use=ibm6154-90,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       80 columns
+
+ibm6155|IBM 6155 Black & White display,
+	bold@,          blink@,         use=ibm5151,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       113 columns, bold defined
+
+ibm6155-113|IBM 6155 Black & White display,
+	font0=\E[10m,   font1=\E[11m,   font2=\E[12m,
+	bold=\E[12m,    sgr0=\E[0;10m,
+	cols#113,       lines#38,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;12%;m,
+	blink@,         use=ibm5151,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       56 columns
+
+ibm6155-56|IBM 6155 Black & White display,
+	cols#56,        lines#19,       use=ibm6155,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       80 columns
+
+ibm5081|hft|IBM Megapel Color display,
+	box1=\154\161\153\170\152\155\167\165\166\164\156,      batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156,      batt2=f1md,
+	font0=\E(B,     font1=\E(0,     sgr0=\E[0m\E(B\E[?7h,
+	bold@,          blink@,         use=ibm5154,
+
+hft-nam|IBM Megapel display w/no auto wrap,
+	am@,
+	box1=\154\161\153\170\152\155\167\165\166\164\156,      batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156,      batt2=f1md,
+	font0=\E(B,     font1=\E(0,  sgr0=\E[0m\E(B,
+	use=ibm5081,
+
+hft-nam-old|IBM Megapel display w/no auto wrap IBM-850,
+	am@, 
+	box1=\332\304\277\263\331\300\302\264\301\303\305, batt1=f1,
+	box2=\311\315\273\272\274\310\313\271\312\314\316, batt2=f1md,
+	use=ibm5081,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       113 columns, bold defined
+
+ibm5081-113|IBM 5081 Large Color display,
+	font0=\E[10m,   font1=\E[11m,   font2=\E[12m,
+	bold=\E[12m,    sgr0=\E[0;10m,
+	cols#113,       lines#51,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;12%;m,
+	blink@,         use=ibm5154,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       56 columns
+
+ibm5081-56|IBM 5081 Large Color display,
+	cols#56,        lines#25,       use=ibm5081,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       IBM 3161/3163 description
+
+ibm3161|ibm3163|wy60-316X|wyse60-316X|IBM 3161/3163 display,
+	am,             mir,            cr=^M,          ind=^J,
+	cols#80,        it#8,           lines#24,       kich1=\EP\040\010,
+	ed=\EJ,         el=\EI,         cup=\EY%p1%' '%+%c%p2%' '%+%c,
+	clear=\EH\EJ,   dch1=\EQ,       dl1=\EO,        cud1=\EB,
+	cub1=\ED,       blink=\E4D,     bold=\E4H,      sgr0=\E4@\E<@,
+	invis=\E4P,     rev=\E4A,       cuf1=\EC,       rmso=\E4@,
+	smso=\E4A,      rmul=\E4@,      cuu1=\EA,       smul=\E4B,
+	sgr=\E4%'@'%?%p1%t%'A'%|%;
+		   %?%p2%t%'B'%|%;
+		   %?%p3%t%'A'%|%;
+		   %?%p4%t%'D'%|%;
+		   %?%p5%t%'@'%|%;
+		   %?%p6%t%'H'%|%;
+		   %?%p7%t%'P'%|%;%c
+		   %?%p9%t\E>A%e\E<@%;,
+	box1=\354\361\353\370\352\355\367\365\366\364\356,
+	box2=\354\361\353\370\352\355\367\365\366\364\356, batt2=md,
+	ktbc=\E\0401,   kil1=\EN,       kbs=^H,         kclr=\EL^M,
+	kcud1=\EB,      kdch1=\EQ,      kel=\EI,        khome=\EH,
+	kcub1=\ED,      kdl1=\EO,       ktab=^I,        kcbt=\E2,  kbtab=\E2,
+	kcuf1=\EC,      ked=\EJ,        kctab=\E1,      khts=\E0,
+	kcuu1=\EA,      knl=\r,         kact=\E8\r,
+	kf1=\Ea\r,      kf2=\Eb\r,      kf3=\Ec\r,      kf4=\Ed\r,
+	kf5=\Ee\r,      kf6=\Ef\r,      kf7=\Eg\r,      kf8=\Eh\r,
+	kf9=\Ei\r,      kf10=\Ej\r,     kf11=\Ek\r,     kf12=\El\r,
+	kf13=\E!a\r,    kf14=\E!b\r,    kf15=\E!c\r,    kf16=\E!d\r,
+	kf17=\E!e\r,    kf18=\E!f\r,    kf19=\E!g\r,    kf20=\E!h\r,
+	kf21=\E!i\r,    kf22=\E!j\r,    kf23=\E!k\r,    kf24=\E!l\r,
+	smcup=\E>A,     rmcup=\E>A,     msgr,
+	home=\EH,       bel=^G, mc5=^P^R, mc4=^P^T,
+
+#
+# EXECUTION ENVIRONMENT:
+# 
+#     IBM 3164 description
+# 
+ibm3164|3164 display,
+	colf0=\E4!'@,
+	colf1=\E4 $@,
+	colf2=\E4 "@,
+	colf3=\E4 &@,
+	colf4=\E4 !@,
+	colf5=\E4 %@,
+	colf6=\E4 #@,
+	colf7=\E4 '@,
+     	colb0=\E4\s\s@,
+     	colb1=\E4\s\sD,
+     	colb2=\E4\s\sB,
+     	colb3=\E4\s\sF,
+     	colb4=\E4\s\sA,
+     	colb5=\E4\s\sE,
+     	colb6=\E4\s\sC,
+     	colb7=\E4\s\sG,
+	smcup=\E!9/N\E>B, rmcup=\E!9(N\E>B,     msgr,
+	font0=\E>B,     font1=\E>A,     batt1=f1,       batt2=f1md,
+	
+#color definitions added according to HP method. But they are hard coded
+#pairs. If the user wants to change a pair, then he has to change the escape
+#sequences of one of the following pairs. If he wants to add an extra pair then
+#he has to change the "pairs" variable to the new value. The original pair is
+#the default green foreground with black background.
+# The color pairs below are as explained in the following notation
+# (n)fg/bg  where "n" is the pair number, fg =foreground color,
+# and bg = background color.
+# (0)blk/blk,(1)blk/blu,(2)blk/grn,(3)blk/tur,(4)blk/red,(5)blk/magneta,
+# (6)blk/yel, (7)blk/wht
+# (8)blu/blk,(9)blu/blu,(10)blu/grn,(11)blu/tur,(12)blu/red,(13)blu/magneta,
+# (14)blu/yel, (15)blu/wht
+# (16)grn/blk,(17)grn/blu,(18)grn/grn,(19)grn/tur,(20)grn/red,(21)grn/magneta,
+# (22)grn/yel, (23)grn/wht
+# (24)tur/blk,(25)tur/blu,(26)tur/grn,(27)tur/tur,(28)tur/red,(29)tur/magneta,
+# (30)tur/yel, (31)tur/wht
+# (32)red/blk,(33)red/blu,(34)red/grn,(35)red/tur,(36)red/red,(37)red/magneta,
+# (38)red/yel, (39)red/wht
+# (40)mag/blk,(41)mag/blu,(42)mag/grn,(43)mag/tur,(44)mag/red,(45)mag/magneta,
+# (46)mag/yel, (47)mag/wht
+# (48)yel/blk,(49)yel/blu,(50)yel/grn,(51)yel/tur,(52)yel/red,(53)yel/magneta,
+# (54)yel/yel, (55)yel/wht
+# (56)wht/blk,(57)wht/blu,(58)wht/grn,(59)wht/tur,(60)wht/red,(61)wht/magneta,
+# (62)wht/yel, (63)wht/wht
+
+	pairs#64, colors#8,
+	op=\E4 "@,
+	scp=\E4%?%p1%{0}%=%t!\s@
+        	%e%?%p1%{1}%=%t!!@
+          	%e%?%p1%{2}%=%t!"@
+          	%e%?%p1%{3}%=%t!#@
+          	%e%?%p1%{4}%=%t!$@
+          	%e%?%p1%{5}%=%t!%%@
+          	%e%?%p1%{6}%=%t!&@
+          	%e%?%p1%{7}%=%t!'@
+          	%e%?%p1%{8}%=%t\s!@
+          	%e%?%p1%{9}%=%t\s!A
+          	%e%?%p1%{10}%=%t\s!B
+          	%e%?%p1%{11}%=%t\s!C
+          	%e%?%p1%{12}%=%t\s!D
+          	%e%?%p1%{13}%=%t\s!E
+          	%e%?%p1%{14}%=%t\s!F
+          	%e%?%p1%{15}%=%t\s!G
+          	%e%?%p1%{16}%=%t\s"@
+          	%e%?%p1%{17}%=%t\s"A
+          	%e%?%p1%{18}%=%t\s"B
+          	%e%?%p1%{19}%=%t\s"C
+          	%e%?%p1%{20}%=%t\s"D
+          	%e%?%p1%{21}%=%t\s"E
+          	%e%?%p1%{22}%=%t\s"F
+          	%e%?%p1%{23}%=%t\s"G
+          	%e%?%p1%{24}%=%t\s#@
+          	%e%?%p1%{25}%=%t\s#A
+          	%e%?%p1%{26}%=%t\s#B
+          	%e%?%p1%{27}%=%t\s#C
+          	%e%?%p1%{28}%=%t\s#D
+          	%e%?%p1%{29}%=%t\s#E
+          	%e%?%p1%{30}%=%t\s#F
+          	%e%?%p1%{31}%=%t\s#G
+          	%e%?%p1%{32}%=%t\s$@
+          	%e%?%p1%{33}%=%t\s$A
+          	%e%?%p1%{34}%=%t\s$B
+          	%e%?%p1%{35}%=%t\s$C
+          	%e%?%p1%{36}%=%t\s$D
+          	%e%?%p1%{37}%=%t\s$E
+          	%e%?%p1%{38}%=%t\s$F
+          	%e%?%p1%{39}%=%t\s$G
+          	%e%?%p1%{40}%=%t\s%%@
+          	%e%?%p1%{41}%=%t\s%%A
+          	%e%?%p1%{42}%=%t\s%%B
+          	%e%?%p1%{43}%=%t\s%%C
+          	%e%?%p1%{44}%=%t\s%%D
+          	%e%?%p1%{45}%=%t\s%%E
+          	%e%?%p1%{46}%=%t\s%%F
+          	%e%?%p1%{47}%=%t\s%%G
+          	%e%?%p1%{48}%=%t\s&@
+          	%e%?%p1%{49}%=%t\s&A
+          	%e%?%p1%{50}%=%t\s&B
+          	%e%?%p1%{51}%=%t\s&C
+          	%e%?%p1%{52}%=%t\s&D
+          	%e%?%p1%{53}%=%t\s&E
+          	%e%?%p1%{54}%=%t\s&F
+          	%e%?%p1%{55}%=%t\s&G
+          	%e%?%p1%{56}%=%t\s'@
+          	%e%?%p1%{57}%=%t\s'A
+          	%e%?%p1%{58}%=%t\s'B
+          	%e%?%p1%{59}%=%t\s'C
+          	%e%?%p1%{60}%=%t\s'D
+          	%e%?%p1%{61}%=%t\s'E
+          	%e%?%p1%{62}%=%t\s'F
+          	%e%?%p1%{63}%=%t\s'G%;,
+
+
+	use=ibm3161,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       IBM 3161 NLS terminal, using cartridge
+
+ibm3161-C|IBM 3161-C Cartridge display,
+	font0=\E>B,     font1=\E>A,     batt1=f1,       batt2=f1md,
+	smcup=\E>B,     rmcup=\E>B,
+	use=ibm3161,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       IBM 3162 - 80 columns
+
+ibm3162|IBM 3162 display,
+	sgr0=\E4@,      il1=\EN,
+	blink=\E4$a,    bold=\E4(a,     invis=\E40a,    rev=\E4!a,
+	smso=\E4!a,     rmso=\E4>b,     smul=\E4"a,     rmul=\E4=b,
+	use=ibm3161-C,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       ibm3162 terminal, 132 x 28 screen
+
+ibm3162-132|IBM 3162 132 x 28 display,
+	cup=\Ey%p1%{32}%/%' '%+%c
+	       %p1%{32}%m%' '%+%c
+	       %p2%{32}%/%' '%+%c
+	       %p2%{32}%m%' '%+%' '%+%c,
+	lines#28,       cols#132,
+	use=ibm3162,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       IBM 3151 and IBM 3152 - 80 columns
+
+ibm3151|ibm3152|IBM 3151 and IBM 3152 display,
+	is2=\E\040S, rs2=\E\040S,
+	font0=\E>B,
+	smcup=\E>B,     rmcup=\E>B,     smacs=\E>A,     rmacs=\E>B,
+	sgr=\E4%'@'%?%p1%t%'A'%|%;
+		   %?%p2%t%'B'%|%;
+		   %?%p3%t%'A'%|%;
+		   %?%p4%t%'D'%|%;
+		   %?%p5%t%'@'%|%;
+		   %?%p6%t%'H'%|%;
+		   %?%p7%t%'P'%|%;%c
+		   %?%p9%t\E>A%e\E>B%;,
+	sgr0=\E4@\E>B,
+	use=ibm3162,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       IBM 3151 - model 310 no cartridge - 80 columns
+
+ibm3151-noc|IBM 3151 display without cartridge,
+	font0=\E<@,
+	smcup=\E<@,     rmcup=\E<@,     smacs=\E>A,     rmacs=\E<@,
+	sgr=\E4%'@'%?%p1%t%'A'%|%;
+		   %?%p2%t%'B'%|%;
+		   %?%p3%t%'A'%|%;
+		   %?%p4%t%'D'%|%;
+		   %?%p5%t%'@'%|%;
+		   %?%p6%t%'H'%|%;
+		   %?%p7%t%'P'%|%;%c
+		   %?%p9%t\E>A%e\E<@%;,
+	sgr0=\E4@\E<@,
+	use=ibm3162,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       IBM 3151 and IBM 3152 - 132 columns
+
+ibm3151-132|ibm3152-132|IBM 3151 and IBM 3152 132 x 24 display,
+	cup=\Ey%p1%{32}%/%' '%+%c
+	       %p1%{32}%m%' '%+%c
+	       %p2%{32}%/%' '%+%c
+	       %p2%{32}%m%' '%+%' '%+%c,
+	lines#24,       cols#132,
+	use=ibm3151,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       IBM 3151 and IBM 3152 - 25 lines   
+
+ibm3151-25|ibm3152-25|IBM 3151 and IBM 3152 80 x 25 display,
+	lines#25, 
+	use=ibm3151,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       IBM 3151 - 510/610 or IBM 3152 with a PS/2 type keyboard
+
+ibm3151-51|ibm3151-61|ibm3152-PS2|IBM 3151 510/610 display,
+	civis=\EFA,  cvvis=\EFD,  cnorm=\EFB,
+	kpp=\EL^M, knp=\EI, kend=\E2, kclr@, kel@, kcbt@, kbtab@,
+	use=ibm3151,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       terminfo file for ibmpc
+#       (see display(4) and keyboard(4) in PC/IX manual)
+
+ibmpc|wy60-PC|wyse60-PC|IBM PC/XT running PC/IX,
+	am,             bw,             eo,             hs,
+	ul,             km,             msgr,           bel=^G,
+	lines#24,       cols#80,        it#8,
+	sgr0=\E[m,      rmso=\E[m,      rmul=\E[m,
+	bold=\E[1m,     blink=\E[5m,    invis=\E[30;40m,
+	rev=\E[7m,      smso=\E[7m,     smul=\E[4m,
+	clear=\Ec,      cr=^M,          cup=\E[%i%p1%d;%p2%dH,
+	cub1=\E[D,      cud1=\E[B,      cuf1=\E[C,      cuu1=\E[A,
+	cub=\E[%p1%dD,  cud=\E[%p1%dB,  cuf=\E[%p1%dC,  cuu=\E[%p1%dA,
+	ech=\E[%p1%dX,  ed=\E[J,        el=\E[K,        nel=\r,
+	home=\E[H,      hpa=\E[%i%p1%dG,
+	ind=\E[S\E[B,   ll=\E[24;1H,    indn=\E[%p1%dS\E[%p1%dB,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m,
+	box1=\332\304\277\263\331\300\302\264\301\303\305,
+	box2=\311\315\273\272\274\310\313\271\312\314\316,
+	batt2=md,       ri=\E[T\E[A,    rin=\E[%p1%dT\E[%p1%dA,
+	khome=\E[H,     kbs=^H,         kcbt=^],        kbtab=^], ktab=^I,
+	kcub1=\E[D,     kcud1=\E[B,     kcuf1=\E[C,     kcuu1=\E[A,
+	kdch1=\177,     knl=\r,         kpp=\E[V,      kich1=\E[\b,
+	knp=\E[U,       kend=\E[Y,      kf1=\240,       kf2=\241,
+	kf3=\242,       kf4=\243,       kf5=\244,       kf6=\245,
+	kf7=\246,       kf8=\247,       kf9=\250,       kf10=\251,
+
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       terminfo file for ibmpc color terminal
+#       (see display(4) and keyboard(4) in PC/IX manual)
+
+ibmpcc|IBM PC Color display,
+	colf0=\E[30m,   colf1=\E[31m,   colf2=\E[32m,   colf3=\E[33m,
+	colf4=\E[34m,   colf5=\E[35m,   colf6=\E[36m,   colf7=\E[37m,
+	colb0=\E[40m,   colb1=\E[41m,   colb2=\E[42m,   colb3=\E[43m,
+	colb4=\E[44m,   colb5=\E[45m,   colb6=\E[46m,   colb7=\E[47m,
+	use=ibmpc,use=cdef,
+
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       Terminfo file for IBM 3151 running in Scancode mode.
+#       Machine Mode selected is "IBM 3151 PC" at the terminal setup menu.
+#
+#       Terminal's setup:
+#       -----------------
+#       Screen setup:
+#               screen 25 x 80
+#       General setup:
+#               Machine Mode: IBM 3151 PC
+#               Screen: NORMAL
+#               Scroll: SMOOTH F
+#               Auto LF: OFF
+#               Set Control: PERMANENT
+#               Forcing Insert: BOTH
+#               Tab: FIELD
+#               Line Wrap: ON  (Changes to OFF inside screen applications)
+#       Communication setup:  (Should match the ones set by "devices")
+#               Operation Mode: ECHO
+#               Line Speed (bps): 9600
+#               Word Length (bits): 8
+#               Parity: NO
+#               Stop Bit: 1
+#               Error Check: ON
+#               Interface: RS-232C
+#               Line Control: IPRTS
+#               Break Signal: 500ms
+#               Send Null Suppress: ON
+#               Turnaround Character: ETX
+#               Pacing: ON
+#
+#       The "/etc/ports" file should contain the following lines under the
+#       proper "tty" entry (without the "#" ofcourse):
+#               parity = none
+#               term = ibm3151-S
+#       Also verify that "xscan" exists in the "logmodes" and "runmodes" lines
+#       example:
+#               logmodes = cs8+parenb+ixon+xscan+echoe-cstopb+hupcl
+#               runmodes = parenb+cs8+hupcl+cread+clocal+brkint+istrip+icrnl+ixon+xscan+isig+icanon+echo+echoe+echok+opost+onlcr+tab3
+
+ibm3151-S|IBM 3151 Scancode,
+	mir,     msgr,
+	cr=^M,          ind=^J,
+	cols#80,        it#8,           lines#25,      dl1=\EO,
+	ed=\EJ,         el=\EI,         cup=\EY%p1%{32}%+%c%p2%{32}%+%c,
+	clear=\EL,
+	dch1=\EQ,
+	cuu1=\EA,       cud1=\EB,       cub1=\ED,       cuf1=\EC,
+	box1=\354\361\353\370\352\355\367\365\366\364\356,
+	box2=\354\361\353\370\352\355\367\365\366\364\356, batt2=md,
+	il1=\EN,
+	sgr0=\E4@,
+	blink=\E4D,     bold=\E4H,      invis=\E4P,     rev=\E4A,
+	smso=\E4J,     rmso=\E4@,     smul=\E4B,     rmul=\E@,
+	sgr=\E4%?%p1%t%;A%;%?%p2%t;B%;%?%p3%t;A%;%?%p4%t;D%;%?%p6%t;H%;,
+	rin=\E!M,
+	ri=\E!M,
+	bel=^G,
+# When entering cup application (including DOS), set to: Smooth scroll,
+#  Line Wrap OFF, Auto Wrap OFF, ASCII LF=LF:
+	smcup=\E"9P$<500>\E>A,
+# When exiting cup application (including DOS), set to: Smooth scroll,
+#  Line Wrap OFF, Auto Wrap ON, ASCII LF=LF:
+	rmcup=\E"9T$<500>\E>A,
+
+# The function keys supported by the Scancode terminal driver are only F1-F10
+	kf1=^A@, kf2=^AA, kf3=^AB, kf4=^AC, kf5=^AD, kf6=^AE,
+	kf7=^AF, kf8=^AG, kf9=^AH, kf10=^AI,
+# To generate "ALT" sequences, press the "Reset" buttom (also
+# marked as Cancel) on the left hand side of the spacebar.
+
+# The next 4 terminfo special DOS capnames are set to their defaults:
+# "kres" - Fork a New Shell -  ^sysreq ^F
+#          Press CTRL-SysRq and CTRL-U  (maybe Ctrl-Reset-Print Ctrl-U)
+# "krfr" - Redraw screen - ^sysreq ^R
+# "kext" - Kill DOS  - ^sysreq ^K
+# "kspd" - Suspend DOS - ^sysreq ^Z
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       HFT Display Device to support color (for PS/2)
+#
+
+hft-c|HFT with Color,
+	colf0=\E[30m,   colf1=\E[31m,   colf2=\E[32m,   colf3=\E[33m,
+	colf4=\E[34m,   colf5=\E[35m,   colf6=\E[36m,   colf7=\E[37m,
+	colb0=\E[40m,   colb1=\E[41m,   colb2=\E[42m,   colb3=\E[43m,
+	colb4=\E[44m,   colb5=\E[45m,   colb6=\E[46m,   colb7=\E[47m,
+	box1=\154\161\153\170\152\155\167\165\166\164\156,      batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156,      batt2=f1md,
+	font0=\E(B,     font1=\E(0,  sgr0=\E[0m\E(B,
+	use=ibm5151, use=cdef,
+
+
+hft-c-old|HFT with Color PC850,
+	colf0=\E[30m,   colf1=\E[31m,   colf2=\E[32m,   colf3=\E[33m,
+	colf4=\E[34m,   colf5=\E[35m,   colf6=\E[36m,   colf7=\E[37m,
+	colb0=\E[40m,   colb1=\E[41m,   colb2=\E[42m,   colb3=\E[43m,
+	colb4=\E[44m,   colb5=\E[45m,   colb6=\E[46m,   colb7=\E[47m,
+	use=ibm5151, use=cdef,
+
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       8503 Black & White VGA display description
+#
+
+ibm8503|IBM 8503 B & W VGA display,
+	use=hft-c,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       8507 Black & White VGA display description
+#
+
+ibm8507|IBM 8507 B & W VGA display,
+	use=ibm8503,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       8604 Black & White VGA display description
+#
+
+ibm8604|IBM 8604 B & W VGA display,
+	use=ibm8503,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       pdp Black & White VGA plasma display description
+#
+
+ibmpdp|IBM pdp B & W VGA plasma display,
+	use=ibm8503,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       8512 Color VGA display description
+#
+
+ibm8512|IBM 8512 color VGA display,
+	use=ibm8503,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       8513 Color VGA display description
+#
+
+ibm8513|IBM 8513 color VGA display,
+	use=ibm8503,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       8514 Color VGA display description
+#
+
+ibm8514|IBM 8514/a color VGA display,
+	use=ibm8503,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       8515 Low cost color VGA display description
+#
+
+ibm8515|IBM 8515/a low cost color VGA display,
+	use=ibm8503,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       Generic "terminals".   These terminals are included in special.ti
+#	NOTE: dumb was added back in here so that it gets installed with the
+#		base so that tput can conform to standards in the case where
+#		TERM="" and -T is not used, an unspecified terminal can be
+#		used.
+#
+
+dumb,
+	am, bel=^G, cols#80, cr=^M, cud1=^J, ind=^J,
+
+#
+#	old-hft - for 3.1 compatibilty 
+#
+
+hft-old|ibm5081-old|IBM old hft - 3.1 compatible,
+	bold@,          blink@,
+	colf0=\E[30m,   colf1=\E[31m,   colf2=\E[32m,   colf3=\E[33m,
+	colf4=\E[34m,   colf5=\E[35m,   colf6=\E[36m,   colf7=\E[97m,
+	colb0=\E[40m,   colb1=\E[41m,   colb2=\E[42m,   colb3=\E[43m,
+	colb4=\E[44m,   colb5=\E[45m,   colb6=\E[46m,   colb7=\E[47m,
+	is2=\Ec, rs2=\Ec,
+	cr=^M, cud1=^J, ind=\E[S, bel=^G, il1=\E[L, am, cub1=^H, ed=\E[J,
+	el=\E[K, clear=\E[H\E[J, cup=\E[%i%p1%d;%p2%dH, cols#80, lines#25,
+	dch1=\E[P,      dl1=\E[M,       home=\E[H,
+	smir=\E[4h,     rmir=\E[4l,     il=\E[%p1%dL,   dl=\E[%p1%dM,
+	bold=\E[1m, rev=\E[7m, blink=\E[5m, invis=\E[8m, sgr0=\E[0m,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m,
+	kcuu1=\E[A, kcud1=\E[B, kcub1=\E[D, kcuf1=\E[C, khome=\E[H, kbs=^H,
+	cuf1=\E[C, cuu1=\E[A, xon,
+	rmul=\E[m, smul=\E[4m, rmso=\E[m, smso=\E[7m,
+	kpp=\E[150q,    knp=\E[154q,
+	kf1=\E[001q,    kf2=\E[002q,    kf3=\E[003q,    kf4=\E[004q,
+	kf5=\E[005q,    kf6=\E[006q,    kf7=\E[007q,    kf8=\E[008q,
+	kf9=\E[009q,    kf10=\E[010q,   kf11=\E[011q,   kf12=\E[012q,
+	kf13=\E[013q,   kf14=\E[014q,   kf15=\E[015q,   kf16=\E[016q,
+	kf17=\E[017q,   kf18=\E[018q,   kf19=\E[019q,   kf20=\E[020q,
+	kf21=\E[021q,   kf22=\E[022q,   kf23=\E[023q,   kf24=\E[024q,
+	kf25=\E[025q,   kf26=\E[026q,   kf27=\E[027q,   kf28=\E[028q,
+	kf29=\E[029q,   kf30=\E[030q,   kf31=\E[031q,   kf32=\E[032q,
+	kf33=\E[033q,   kf34=\E[034q,   kf35=\E[035q,   kf36=\E[036q,
+	bw,     it#8,   msgr,
+	hpa=\E[%i%p1%dG,                ech=\E[%p1%dX,
+	kend=\E[146q,   ktab=^I,
+	kdch1=\E[P,     kind=\E[151q,   kich1=\E[139q,  krmir=\E[4l,
+	knl=\r,         kcbt=\E[Z,      kbtab=\E[Z,	kri=\E[155q,    kact=\E[114q,
+	cub=\E[%p1%dD,  cuf=\E[%p1%dC,  indn=\E[%p1%dS, rin=\E[%p1%dT,
+	ri=\e[T,        cuu=\E[%p1%dA,  cud=\E[%p1%dB,
+	box1=\332\304\277\263\331\300\302\264\301\303\305,
+	box2=\311\315\273\272\274\310\313\271\312\314\316,      batt2=md,
+	kil1=\E[140q,   kel=\E[142q,    kclr=\E[144q,   ked=\E[148q,
+	use=cdef,
+
+
+cdef|IBM HFT COLOR Definitions,
+
+#The below code is similar to AT386 in att.ti
+#DO NOT use this definition as a termtype. This is just for internal use of this file. 
+# Foreground and Background colors are set as follows
+# If(p1 = 0) then Black
+# If(p1 = 1) then Blue
+# If(p1 = 2) then Green
+# If(p1 = 3) then Cyan
+# If(p1 = 4) then Red
+# If(p1 = 5) then Magenta
+# If(p1 = 6) then Yellow
+# If(p1 = 7) then White
+
+        colors#8, ncv#3, pairs#64,
+        op=\E[32m\E[40m,
+
+       setf=\E[%?%p1%{0}%=%t30m
+                %e%p1%{1}%=%t34m
+                %e%p1%{2}%=%t32m
+                %e%p1%{3}%=%t36m
+                %e%p1%{4}%=%t31m
+                %e%p1%{5}%=%t35m
+                %e%p1%{6}%=%t33m
+                %e%p1%{7}%=%t97m%;,
+        setb=\E[%?%p1%{0}%=%t40m
+                %e%p1%{1}%=%t44m
+                %e%p1%{2}%=%t42m
+                %e%p1%{3}%=%t46m
+                %e%p1%{4}%=%t41m
+                %e%p1%{5}%=%t45m
+                %e%p1%{6}%=%t43m
+                %e%p1%{7}%=%t107m%;,
+
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       lft-pc850 : IBM Low Function Terminal Device
+#
+#    lft "supports" underline, bold, and blink in the sense that the lft code
+#    sets all the right bits.  HOWEVER, depending upon the adapter, these
+#    attributes may or may not be supported by the device driver.
+
+
+
+lft-pc850|LFT-PC850|IBM LFT PC850 Device,
+        is2=\Ec, rs2=\Ec, cr=^M, cud1=^J, ind=\ED, bel=^G, il1=\E[L,
+        am, cub1=^H, ed=\E[2J, el=\E[0K, clear=\E[H\E[J,
+        cup=\E[%i%p1%d;%p2%dH, cols#80, lines#25, dch1=\E[P, dl1=\E[M,
+        home=\E[H, smir=\E[4h, rmir=\E[4l, il=\E[%p1%dL, dl=\E[%p1%dM,
+        rev=\E[7m, invis=\E[8m, sgr0=\E[0m,
+        bold=\E[1m, smul=\E[4m, rmul=\E[0m, blink=\E[5m, 
+	smacs=\E(0, rmacs=\E(B,
+        sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;%?%p7%t;8%;m%?%p9%t\E(0%e\E(B%;,
+        kcuu1=\E[A, kcud1=\E[B, kcub1=\E[D, kcuf1=\E[C, khome=\E[H, kbs=^H,
+        cuf1=\E[C, cuu1=\E[A, xon,
+        rmso=\E[0m, smso=\E[7m,
+        kf1=\E[001q,    kf2=\E[002q,    kf3=\E[003q,    kf4=\E[004q,
+        kf5=\E[005q,    kf6=\E[006q,    kf7=\E[007q,    kf8=\E[008q,
+        kf9=\E[009q,    kf10=\E[010q,   kf11=\E[011q,   kf12=\E[012q,
+        kf13=\E[013q,   kf14=\E[014q,   kf15=\E[015q,   kf16=\E[016q,
+        kf17=\E[017q,   kf18=\E[018q,   kf19=\E[019q,   kf20=\E[020q,
+        kf21=\E[021q,   kf22=\E[022q,   kf23=\E[023q,   kf24=\E[024q,
+        kf25=\E[025q,   kf26=\E[026q,   kf27=\E[027q,   kf28=\E[028q,
+        kf29=\E[029q,   kf30=\E[030q,   kf31=\E[031q,   kf32=\E[032q,
+        kf33=\E[033q,   kf34=\E[034q,   kf35=\E[035q,   kf36=\E[036q,
+        kend=\E[146q,   kdch1=\E[P,     kind=\E[151q,   kich1=\E[139q,
+        krmir=\E[4l,    kcbt=\E[Z,  kbtab=\E[Z, kri=\E[155q, kil1=\E[140q, kel=\E[142q,
+        kclr=\E[144q,   ked=\E[148q, kpp=\E[150q,    knp=\E[154q,
+        bw, it#8, msgr, hpa=\E[%i%p1%dG, ech=\E[%p1%dX,
+        cub=\E[%p1%dD,  cuf=\E[%p1%dC,  indn=\E[%p1%dS, rin=\E[%p1%dT,
+        ri=\EL,        cuu=\E[%p1%dA,  cud=\E[%p1%dB,
+        tbc=\E[3g, cbt=\E[Z, dch=\E[%p1%dP, ich=\E[%p1%d@,
+        box1=\332\304\277\263\331\300\302\264\301\303\305,      
+        box2=\311\315\273\272\274\310\313\271\312\314\316,      batt2=md,
+        knl=\r,         kact=\E[114q, 	ktab=^I,
+
+
+
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       lft - IBM Low Function Terminal Device
+#
+#    lft "supports" underline, bold, and blink in the sense that the lft code
+#    sets all the right bits.  HOWEVER, depending upon the adapter, these
+#    attributes may or may not be supported by the device driver.
+
+ 
+ 
+lft|LFT|IBM LFT Device,
+         cr=^M, cud1=^J, ind=\E[S, bel=^G, il1=\E[L,
+         am, cub1=^H, ed=\E[J, el=\E[0K, clear=\E[H\E[J,
+         cup=\E[%i%p1%d;%p2%dH, cols#80, lines#25, dch1=\E[P, dl1=\E[M,
+         home=\E[H, smir=\E[4h, rmir=\E[4l, il=\E[%p1%dL, dl=\E[%p1%dM,
+         rev=\E[7m, invis=\E[8m, sgr0=\E[0m\E(B,
+         bold=\E[1m, smul=\E[4m, rmul=\E[0m, blink=\E[5m,
+         smacs=\E(0, rmacs=\E(B,
+         sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;%?%p7%t;8%;m%?%p9%t\E(0%e\E(B%;,
+         kcuu1=\E[A, kcud1=\E[B, kcub1=\E[D, kcuf1=\E[C, khome=\E[H, kbs=^H,
+	 smcup=\E[?7h, 
+         cuf1=\E[C, cuu1=\E[A, xon,
+         rmso=\E[0m, smso=\E[7m,
+         kf1=\E[001q,    kf2=\E[002q,    kf3=\E[003q,    kf4=\E[004q,
+         kf5=\E[005q,    kf6=\E[006q,    kf7=\E[007q,    kf8=\E[008q,
+         kf9=\E[009q,    kf10=\E[010q,   kf11=\E[011q,   kf12=\E[012q,
+         kf13=\E[013q,   kf14=\E[014q,   kf15=\E[015q,   kf16=\E[016q,
+         kf17=\E[017q,   kf18=\E[018q,   kf19=\E[019q,   kf20=\E[020q,
+         kf21=\E[021q,   kf22=\E[022q,   kf23=\E[023q,   kf24=\E[024q,
+         kf25=\E[025q,   kf26=\E[026q,   kf27=\E[027q,   kf28=\E[028q,
+         kf29=\E[029q,   kf30=\E[030q,   kf31=\E[031q,   kf32=\E[032q,
+         kf33=\E[033q,   kf34=\E[034q,   kf35=\E[035q,   kf36=\E[036q,
+         kend=\E[146q,   kdch1=\E[P,     kind=\E[151q,   kich1=\E[139q,
+         krmir=\E[4l, kcbt=\E[Z,  kbtab=\E[Z, kri=\E[155q, kil1=\E[140q, kel=\E[142q,
+         kclr=\E[144q,   ked=\E[148q, kpp=\E[150q,    knp=\E[154q,
+         bw, it#8, msgr, hpa=\E[%i%p1%dG, ech=\E[%p1%dX,
+         cub=\E[%p1%dD,  cuf=\E[%p1%dC,  indn=\E[%p1%dS, rin=\E[%p1%dT,
+         ri=\E[T,        cuu=\E[%p1%dA,  cud=\E[%p1%dB,
+         tbc=\E[3g, cbt=\E[Z, dch=\E[%p1%dP, ich=\E[%p1%d@,
+         box1=\154\161\153\170\152\155\167\165\166\164\156, batt1=f1,
+         box2=\154\161\153\170\152\155\167\165\166\164\156, batt2=f1md,
+	 font0=\E(B, font1=\E(0,
+         knl=\r,         kact=\E[114q,		ktab=^I,

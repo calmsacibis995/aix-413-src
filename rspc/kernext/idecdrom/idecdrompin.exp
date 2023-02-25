@@ -1,0 +1,38 @@
+#!/etc/drivers/idecdrompin
+* @(#)65        1.4  src/rspc/kernext/idecdrom/idecdrompin.exp, idecd, rspc41J, bai15a 4/10/95 11:59:08
+*
+* COMPONENT_NAME: (IDECD) IDE CD-ROM Device Driver Bottom Half Export List
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1995
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+idecdrom_info
+idedisk_list
+idedisk_open_list
+idecdrom_strategy
+idecdrom_iodone
+idecdrom_start_unit_disable
+idecdrom_test_unit_ready_disable
+idecdrom_start_disable
+idecdrom_watchdog
+idecdrom_pm_watchdog
+idecdrom_cdt_func
+idecdrom_format_mode_data
+idecdrom_q_cmd
+idecdrom_d_q_cmd_disable
+idecdrom_cmd_alloc_disable
+idecdrom_free_cmd_disable
+idecdrom_sleep
+idecdrom_threshold
+idecdrom_mode_data_offset
+idecdrom_prevent_allow_disable
+idecdrom_raw_iodone
+idecdrom_pm_handler

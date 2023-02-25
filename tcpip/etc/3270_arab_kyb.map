@@ -1,0 +1,104 @@
+# @(#)66	1.1  src/tcpip/etc/3270_arab_kyb.map, tcptelnet, tcpip411, GOLD410 11/4/93 08:53:37
+#
+#   COMPONENT_NAME: TCPIP
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1993
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#   ARABIC support 
+#
+#   3270_arab_kyb.map
+#   ----------------
+#
+#  This is the maping of keyboard while in Arabic mode.
+#  Only keys affected must be present in the file.
+#  The first value is the ASCII decimal code of the the "ENGLISH"
+#  mode, the second is the value of the ASCII decimal representation of
+#  corresponding Arabic character.
+#
+#
+# key          converted
+#                 to
+#
+39           215                #  tah
+44           232                #  waw
+46           210                #  zein
+47           216                #  thah
+48           176                #  arb_0
+49           177                #  arb_1
+50           178                #  arb_2
+51           179                #  arb_3
+52           180                #  arb_4
+53           181                #  arb_5
+54           182                #  arb_6
+55           183                #  arb_7
+56           184                #  arb_8
+57           185                #  arb_9
+59           227                #  kaf
+63           191                #  arb_?
+65           212                #  shein
+66           247                #  lam_alef madda
+67           196                #  waw hamza
+68           234                #  yeh
+69           169                #  theh
+70           167                #  beh
+71           248                #  lam_alef hamza
+72           195                #  alef hamza
+73           130                #  arb_divide by_sign
+74           168                #  teh
+75           172                #  fasla
+76           47                 #  slash
+77           201                #  teh_marbouta
+78           194                #  alef madda
+79           129                #  arb_multiply_sign
+80           187                #  fasla manquota
+82           243                #  quaf
+83           175                #  sein
+84           249                #  lam_alef with hamza beyond it
+85           192                #  aien
+86           209                #  reh
+87           187                #  sad
+88           193                #  hamza
+89           197                #  alef with hamza beyond it
+90           166                #  hamza above a nabra
+91           204                #  geem
+92           224                #  under score
+93           207                #  dal
+96           208                #  thal
+97           212                #  shein
+98           250                #  lam_alef
+99           196                #  waw hamza
+100          234                #  yeh
+101          203                #  theh
+102          200                #  beh
+103          228                #  lam
+104          199                #  alef
+105          231                #  heh
+106          202                #  teh
+107          230                #  noun
+108          229                #  meem
+109          201                #  teh marbouta
+110          233                #  yeh end of word
+111          206                #  khah
+112          205                #  hah
+113          214                #  dad
+114          226                #  quaf
+115          211                #  sein
+116          225                #  feh
+117          217                #  aien
+118          209                #  reh
+119          213                #  sad
+120          193                #  hamza
+121          218                #  ghein
+122          198                #  hamza above a nabra
+123          170                #  geem
+125          207                #  dal
+126          241                #  thal

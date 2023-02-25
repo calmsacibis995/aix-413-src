@@ -1,0 +1,49 @@
+#!/bin/ksh
+# @(#)60	1.4	src/bos/usr/sbin/perf/diag_tool/err_.sh, pdt, bos411, 9428A410j 4/13/94 16:29:14
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# err_
+# Obtain error log content information, and record it in the
+# SM database
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+#
+# Awk script to extract number of errors, and generate an SM
+# record:
+#     ERR count - number of errors of each kind (k= H or S)
+#
+# Input: a file containing the output of the errpt command
+#
+# obtain count of errors of all types
+#
+errpt 2>>$pdt_tmp/.stderr \
+    | awk '
+        BEGIN {
+        }
+           {
+              x=gsub(/-/," ",c)
+              x=gsub(/-/,",",t)
+              if (NR == 1) getline
+              classcount[$4]++
+           }
+        END {
+              for (class in classcount) {
+              print "ERR", class, c, "count", classcount[class], 1.0, "I(" t ",N)"
+              }
+        }' c=$curr k='H' t="0-0-1" >>$pdt_SM

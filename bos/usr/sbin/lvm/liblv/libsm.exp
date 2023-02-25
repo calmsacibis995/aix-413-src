@@ -1,0 +1,79 @@
+
+* @(#)94	1.5.1.1  src/bos/usr/sbin/lvm/liblv/libsm.exp, cmdlvm, bos411, 9428A410j 7/21/92 12:05:08
+*
+* COMPONENT_NAME: (cmdlvm) Logical Volume Commands
+*
+* FUNCTIONS: chpv.sh
+*
+* ORIGINS: 27
+* 
+* (C) COPYRIGHT International Business Machines Corp. 1989
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+* [End of PROLOG]
+*
+
+get_Q_vgdesc
+errmsg
+Prog
+scmc_catd
+get_lv_data
+distributions
+efficiency_total
+efficiency
+number_of_megabytes
+get_vgname
+get_pvdescript
+get_odm_data_chme
+get_vgid
+get_pvid
+get_lvid
+get_odm_data_emy
+prt_pvmap
+get_type_lvid
+get_attr
+get_lvnm_lvid
+get_mtpt_lvid
+get_vgnm_lvid
+chng_attr
+lock_vg
+unlock_vg
+build_lvcb
+write_lvcb
+read_lvcb
+lvm_msgstr
+lvm_msg
+odm_error
+get_nm_id
+getmem
+get_zeroed_mem
+get_uniq_id
+lvm_rc
+get_active_pps
+get_existing_copies
+get_copy_distribution
+compare_lvpps
+compare_results
+compare_lvlp
+compare_nums
+compare_weights
+getalloc
+power
+parsepair
+getregions
+get_prefix
+addcuat2
+checkname
+relseqnum
+rm_seq_attrs
+convt_pvid_32
+get_pvname
+get_config_pvs
+convt_pvid_16
+getkmid
+lock_a_vg
+unlock_a_vg

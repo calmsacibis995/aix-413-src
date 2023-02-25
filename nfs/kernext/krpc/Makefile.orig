@@ -1,0 +1,75 @@
+# @(#)48        1.4  src/nfs/kernext/krpc/Makefile, sysxnfs, nfs411, GOLD410 7/6/94 10:38:46
+# COMPONENT_NAME: SYSXNFS
+#
+# FUNCTIONS:
+#
+#   ORIGINS: 27
+#
+# IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+# combined with the aggregated modules for this product)
+#                  SOURCE MATERIALS
+#   (C) COPYRIGHT International Business Machines Corp. 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+.include <${MAKETOP}bos/kernext/Kernext.mk>
+
+
+VPATH           +=:${MAKETOP}/bos/kernext/inet:${MAKETOP}/des/libdes:${MAKETOP}/bos/usr/ccs/lib/libc:${MAKETOP}des/kernext
+
+
+INCFLAGS        = -I${MAKETOP}/des/libdes
+
+KERNEL_EXT	= nfs_krpc.ext
+
+IDIR            = /usr/lib/drivers/
+ILIST           = nfs_krpc.ext
+
+
+LIBS		= ${KERNEXT_LIBS}
+
+nfs_krpc.ext_ENTRYPOINT      = krpc_config
+nfs_krpc.ext_IMPORTS         = kdes.exp sockets.exp \
+			loadfs.exp netinet.exp statcmd.exp
+nfs_krpc.ext_EXPORTS         = -bE:krpc.exp
+
+CFLAGS             += -D_SUN
+
+DEP             = krpc.exp
+
+
+OFILES	=		\
+	krpc_config.o	\
+	auth_des.o	\
+	auth_kern.o	\
+	auth_unix.o	\
+	authdes_prot.o	\
+	authdes_subr.o	\
+	authunix_prot.o	\
+	clnt_kudp.o	\
+	clnt_perror.o	\
+	key_call.o	\
+	key_prot.o	\
+	kudp_fastsend.o	\
+	pmap_kgetport.o	\
+	pmap_prot.o	\
+	pmap_rmt.o	\
+	rpc_callmsg.o	\
+	rpc_prot.o	\
+	subr_kudp.o	\
+	svc.o		\
+	svc_auth.o	\
+	svc_auth_unix.o	\
+	svc_kudp.o	\
+	svcauth_des.o	\
+	xdr.o		\
+	xdr_array.o	\
+	xdr_float.o	\
+	xdr_mbuf.o	\
+	xdr_mem.o	\
+	xdr_reference.o 
+
+.include        <${RULES_MK}>

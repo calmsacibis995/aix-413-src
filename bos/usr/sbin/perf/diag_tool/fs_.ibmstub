@@ -1,0 +1,80 @@
+#!/bin/ksh
+# @(#)66	1.5	src/bos/usr/sbin/perf/diag_tool/fs_.sh, pdt, bos411, 9428A410j 4/13/94 16:28:01
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# fs_ 
+# Obtain file system information, and record it in the
+# SM database
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+#
+# Awk script to extract file system info, and to provide a
+# set of SM records:
+#    FS mount - mount point
+#    FS size  - size of file system
+#    FS type  - type of file system (we only consider jfs)       
+#    FS status - avail/unavail
+#
+# Input: a file with the output of the 'lsfs' command.
+
+# obtain file system information, and format output
+lsfs | awk '
+         BEGIN {
+         }
+         {
+            x=gsub(/-/," ",c)
+            x=gsub(/-/,",",t)
+            if (NR==1) getline
+            if ( ($2 ~ /^--/) && ($4 ~ /jfs/) && ($5 !~ /^--/)) {
+            # pick up jfs file system details only
+            name = $1
+            if ($1 ~ /^\/dev\//) {
+               name = substr($1, 6, length($1))
+               }
+            print "FS", name, c, "status", "avail", 1.0, "T"
+            print "FS", name, c, "mount", $3, 1.0, "T"
+            print "FS", name, c, "type", "jfs", 1.0, "T"
+            } 
+         }
+         END {
+         }' c=$curr t="0-0-1" >>$pdt_SM
+
+# Awk script to extract file system info, and to provide a
+# set of SM records:
+#    FS percent - percent full
+#
+# Input: a file with the output of the 'df' command.
+
+# get file system types      
+df 2>> $pdt_tmp/.stderr | 
+   awk '
+         BEGIN {
+         }
+         {
+            x=gsub(/-/," ",c)
+            x=gsub(/-/,",",t)
+            if (NR==1) getline
+            if ($1 ~ /^\/dev\//) {
+               name = substr($1, 6, length($1))
+               print "FS", name, c, "percent", 
+                     substr($4,1,length($4)-1), 1.0, "I(" t ",pct)"
+               }
+        }
+        END {
+        }' c=$curr t="0-0-1" >>$pdt_SM

@@ -1,0 +1,35 @@
+#!/etc/drivers/idediskpin
+* @(#)75        1.3  src/rspc/kernext/idedisk/idediskpintr.exp, idedisk, rspc41J, 9514A_all 4/3/95 13:53:36
+*
+* COMPONENT_NAME: (IDEDISK)  IDE Disk Device Driver
+*			      Bottom Half Export List
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1995
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+idedd_info
+idedisk_list
+idedisk_open_list
+idedisk_strategy
+idedisk_iodone
+idedisk_dump
+idedisk_start_disable
+idedisk_cdt_func
+idedisk_q_cmd
+idedisk_cmd_alloc_disable
+idedisk_free_cmd_disable
+idedisk_sleep
+idedisk_trc_disable
+idedisk_trace
+idedisk_debug
+idedisk_trctop
+idedisk_pm_watchdog
+idedisk_pm_handler

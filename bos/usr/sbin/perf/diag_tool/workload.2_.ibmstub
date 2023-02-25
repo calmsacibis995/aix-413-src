@@ -1,0 +1,40 @@
+#!/bin/ksh
+# @(#)23	1.4	src/bos/usr/sbin/perf/diag_tool/workload.2_.sh, pdt, bos411, 9428A410j 4/13/94 16:32:02
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# workload.2.sh 
+#   workload.2: process stats averaged over 10 2 second samples
+#
+ps aucg 
+sleep 2
+ps aucg
+sleep 2
+ps aucg
+sleep 2
+ps aucg
+sleep 2
+ps aucg
+sleep 2
+ps aucg
+sleep 2
+ps aucg
+sleep 2
+ps aucg
+sleep 2
+ps aucg
+sleep 2
+ps aucg

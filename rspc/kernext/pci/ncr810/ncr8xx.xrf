@@ -1,0 +1,1307 @@
+# @(#)55	1.2  src/rspc/kernext/pci/ncr810/ncr8xx.xrf, pciscsi, rspc41J, 9513A_all 3/28/95 15:05:43
+   1                             ; @(#)55	1.2  src/rspc/kernext/pci/ncr810/ncr8xx.xrf, pciscsi, rspc41J, 9513A_all 3/28/95 15:05:43
+   2                             ;
+   3                             ; COMPONENT_NAME: (PCISCSI) IBM SCSI Adapter Main SCRIPT(tm) File
+   4                             ;
+   5                             ; FUNCTIONS: NONE
+   6                             ;
+   7                             ; ORIGINS: 27
+   8                             ;
+   9                             ; (C) COPYRIGHT International Business Machines Corp. 1989, 1995
+  10                             ; All Rights Reserved
+  11                             ; Licensed Materials - Property of IBM
+  12                             ;
+  13                             ; US Government Users Restricted Rights - Use, duplication or
+  14                             ; disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+  15                             ;
+  16                             
+  17                             ; SCRIPT
+  18                             ; This SCRIPT contains the one main script used for most of all the
+  19                             ; SCSI commands that will be sent to the target.  It is written in a manner
+  20                             ; to handle possible, erroneous bus phases and messages received during the
+  21                             ; execution of the script
+  22                             
+  23                             ; References to objects that are are resolved (``patched'') by the device
+  24                             ; driver.  Note that some of these objects reside in system memory or I/O
+  25                             ; memory (chip registers) while others are within the SCRIPTS themselves (but
+  26                             ; must be relocated) and still others are used to link the target SCRIPTS with
+  27                             ; iowait SCRIPTS.
+  28                             
+  29                             ; System memory references
+  30                             EXTERNAL tim_addr, tim_cnt
+  31                             
+  32                             ; These chip registers are source/targets of memory moves
+  33                             EXTERNAL DSA_Addr
+  34                             EXTERNAL SCRATCHB_addr
+  35                             EXTERNAL SCRATCHA0_addr
+  36                             
+  37                             ; These are relocated
+  38                             EXTERNAL restore_patch_addr
+  39                             EXTERNAL cmd_msg_in_addr
+  40                             EXTERNAL cmd_addr
+  41                             EXTERNAL status_addr
+  42                             EXTERNAL identify_msg_addr
+  43                             EXTERNAL wdtr_msg_out_addr
+  44                             EXTERNAL neg_msg_addr
+  45                             EXTERNAL sdtr_msg_out_addr
+  46                             EXTERNAL extended_msg_addr
+  47                             ;EXTERNAL lun_msg_addr
+  48                             EXTERNAL reject_msg_addr
+  49                             EXTERNAL tag_msg_addr
+  50                             EXTERNAL abort_bdr_msg_out_addr
+  51                             EXTERNAL abort_bdr_msg_in_addr
+  52                             
+  53                             ; Target to iowait SCRIPTS linking:
+  54                             ;EXTERNAL scsi_0_lun, scsi_1_lun, scsi_2_lun, scsi_3_lun
+  55                             ;EXTERNAL scsi_4_lun, scsi_5_lun, scsi_6_lun, scsi_7_lun
+  56                             EXTERNAL wait_reselect
+  57                             
+  58                             
+  59                             ; These are the entry points at which we may start SCRIPTS
+  60                             ; processing
+  61                             ENTRY scripts_entry_point
+  62                             ;ENTRY iowait_entry_point
+  63                             ENTRY after_data_move_check
+  64                             ENTRY reject_target_sync
+  65                             ENTRY unknown_msg_hdlr
+  66                             ENTRY script_reconnect_point
+  67                             ENTRY begin_negotiation
+  68                             ;ENTRY start_sync_msg_out
+  69                             ENTRY start_negotiation_msg_out_loop
+  70                             ENTRY renegotiate_wdtr
+  71                             ENTRY renegotiate_sdtr
+  72                             ENTRY msg_done
+  73                             ENTRY save_pointers_wide
+  74                             ENTRY tables_same
+  75                             ENTRY goto_cleanup
+  76                             ENTRY complete_ext_msg
+  77                             ENTRY message_loop
+  78                             ENTRY reject_loop
+  79                             ENTRY renegotiate_sdtr_loop
+  80                             ENTRY renegotiate_wdtr_loop
+  81                             ENTRY cleanup_phase
+  82                             ENTRY regular_phase_hdlr
+  83                             ENTRY phase_error_entry
+  84                             ENTRY bdr_sequence
+  85                             ENTRY abort_sequence, abdr2_sequence
+  86                             ENTRY save_scntl2
+  87                             ENTRY failed_selection_hdlr, end_failed_sel_hdlr 
+  88                             ENTRY failed_negotiation_selection_hdlr, end_failed_neg_sel_hdlr 
+  89                             ENTRY failed_abort_bdr_selection_hdlr, end_failed_abdr_sel_hdlr 
+  90                             ENTRY wait_for_bus_free, end_wait_for_bus_free 
+  91                             
+  92                             ; Buffers
+  93                             ENTRY cmd_msg_in_buf, cmd_buf
+  94                             ENTRY status_buf
+  95                             ENTRY identify_msg_buf
+  96                             ENTRY extended_msg_buf
+  97                             ENTRY reject_msg_buf
+  98                             ENTRY neg_msg_buf
+  99                             ;ENTRY lun_msg_buf
+ 100                             ENTRY sdtr_msg_out_buf
+ 101                             ENTRY wdtr_msg_out_buf
+ 102                             ENTRY abort_bdr_msg_out_buf, abort_bdr_msg_in_buf
+ 103                             ENTRY tag_msg_buf
+ 104                             
+ 105                             ENTRY output_wide_data, output_data
+ 106                             ENTRY save_pointers
+ 107                             ENTRY in_not_zero
+ 108                             
+ 109                             ; Patch points
+ 110                             ENTRY cmd_complete_patch
+ 111                             ENTRY ext_msg_patch
+ 112                             ENTRY send_data
+ 113                             ENTRY save_ptrs_patch, save_ptrs_patch1
+ 114                             ENTRY negotiation_phase_patch
+ 115                             ENTRY start_sdtr
+ 116                             ENTRY start_sdtr_msg_in_phase
+ 117                             ENTRY start_wdtr_msg_in_phase
+ 118                             ENTRY scntl2_patch_out, scntl2_patch_in
+ 119                             
+ 120                             ABSOLUTE        dptr_tbl_addr1_ref      = 0x01010101
+ 121                             ABSOLUTE        dptr_tbl_addr1          = 0x11111111
+ 122                             ABSOLUTE        dptr_tbl_addr2_ref      = 0x04040404
+ 123                             ABSOLUTE        dptr_tbl_addr2          = 0x44444444
+ 124                             
+ 125                             ABSOLUTE        dptr_cnt_addr1_ref      = 0x02020202
+ 126                             ABSOLUTE        dptr_cnt_addr1          = 0x22222222
+ 127                             ABSOLUTE        dptr_cnt_addr2_ref      = 0x03030303
+ 128                             ABSOLUTE        dptr_cnt_addr2          = 0x33333333
+ 129                             ABSOLUTE        dptr_cnt_addr3_ref      = 0x05050505
+ 130                             ABSOLUTE        dptr_cnt_addr3          = 0x55555555
+ 131                             ABSOLUTE        dptr_cnt_addr4_ref      = 0x09090909
+ 132                             ABSOLUTE        dptr_cnt_addr4          = 0x99999999
+ 133                             ABSOLUTE        dptr_cnt_addr5_ref      = 0x06060606
+ 134                             ABSOLUTE        dptr_cnt_addr5          = 0x66666666
+ 135                             ;ABSOLUTE        dptr_cnt_addr6_ref      = 0x06060606
+ 136                             ;ABSOLUTE        dptr_cnt_addr6          = 0x66666666
+ 137                             
+ 138                             ;ABSOLUTE        patch6_ref      = 0x06060606
+ 139                             ;ABSOLUTE        patch6          = 0x66666666
+ 140                             
+ 141                             ABSOLUTE        cur_sav_tbl_addr1_ref      = 0x07070707
+ 142                             ABSOLUTE        cur_sav_tbl_addr1          = 0x77777777
+ 143                             ABSOLUTE        cur_sav_tbl_addr2_ref      = 0x0D0D0D0D
+ 144                             ABSOLUTE        cur_sav_tbl_addr2          = 0xDDDDDDDD
+ 145                             
+ 146                             ABSOLUTE        cur_loc_tbl_addr1_ref      = 0x08080808
+ 147                             ABSOLUTE        cur_loc_tbl_addr1          = 0x88888888
+ 148                             ABSOLUTE        cur_loc_tbl_addr2_ref      = 0x0C0C0C0C
+ 149                             ABSOLUTE        cur_loc_tbl_addr2          = 0xCCCCCCCC
+ 150                             
+ 151                             ABSOLUTE        dptr_diff_addr1_ref      = 0x0A0A0A0A
+ 152                             ABSOLUTE        dptr_diff_addr1          = 0xAAAAAAAA
+ 153                             ABSOLUTE        dptr_diff_addr2_ref      = 0x0B0B0B0B
+ 154                             ABSOLUTE        dptr_diff_addr2          = 0xBBBBBBBB
+ 155                             ABSOLUTE        dptr_diff_addr3_ref      = 0x0E0E0E0E
+ 156                             ABSOLUTE        dptr_diff_addr3          = 0xEEEEEEEE
+ 157                             
+ 158                             ABSOLUTE        dptr_restore_addr_ref      = 0x0F0F0F0F
+ 159                             ABSOLUTE        dptr_restore_addr          = 0xFFFFFFFF
+ 160                             
+ 161                             ABSOLUTE        NEXUS_data_base_adr3    = 0x88
+ 162                             ABSOLUTE        NEXUS_data_base_adr2    = 0x88
+ 163                             ABSOLUTE        NEXUS_data_base_adr1    = 0x88
+ 164                             ABSOLUTE        NEXUS_data_base_adr0    = 0x88
+ 165                             
+ 166                             ABSOLUTE        save_tbl_base_adr3    = 0x99
+ 167                             ABSOLUTE        save_tbl_base_adr2    = 0x99
+ 168                             ABSOLUTE        save_tbl_base_adr1    = 0x99
+ 169                             ABSOLUTE        save_tbl_base_adr0    = 0x99
+ 170                             
+ 171                             ABSOLUTE        restore_patch    = 0x00AAAA
+ 172                             
+ 173                             ; Interrupt values used to communicate the type of interrupt
+ 174                             ; back to the device driver
+ 175                             ; CAUTION: New interrupts added here likely will need a new entry in
+ 176                             ; the itbl (interrupt table) contained in ncr8xxu.c.
+ 177                             ABSOLUTE phase_error            = 0x00001
+ 178                             ABSOLUTE save_ptrs_wsr		= 0x00004
+ 179                             ABSOLUTE save_ptrs_wss		= 0x00005
+ 180                             ABSOLUTE io_done                = 0x00006
+ 181                             ABSOLUTE io_done_wsr       	= 0x00007
+ 182                             ABSOLUTE io_done_wss       	= 0x00008
+ 183                             ABSOLUTE unknown_msg            = 0x00009
+ 184                             ABSOLUTE ext_msg                = 0x0000A
+ 185                             ABSOLUTE check_next_io          = 0x0000B
+ 186                             ABSOLUTE cmd_select_atn_failed  = 0x00012
+ 187                             ABSOLUTE err_not_ext_msg        = 0x00013
+ 188                             ;ABSOLUTE sdtr_neg_done          = 0x00014
+ 189                             ;ABSOLUTE unexpected_status      = 0x00015
+ 190                             ABSOLUTE sync_msg_reject        = 0x00016
+ 191                             ;ABSOLUTE abort_msg_error        = 0x00017
+ 192                             ABSOLUTE neg_select_failed      = 0x00018
+ 193                             ABSOLUTE abort_select_failed    = 0x00019
+ 194                             ABSOLUTE abort_io_complete      = 0x0001A
+ 195                             ;ABSOLUTE bdr_select_failed	= 0x0001B
+ 196                             ;ABSOLUTE bdr_io_complete	= 0x0001C
+ 197                             ;ABSOLUTE unknown_reselect_id    = 0x0001D
+ 198                             ;ABSOLUTE uninitialized_reselect = 0X0001E
+ 199                             ;ABSOLUTE bdr_msg_error		 = 0x0001F
+ 200                             ;ABSOLUTE suspended              = 0X00020
+ 201                             ABSOLUTE wdtr_msg_ignored	= 0x00021
+ 202                             ABSOLUTE sdtr_msg_ignored	= 0x00022
+ 203                             ABSOLUTE wdtr_neg_done  	= 0x00023
+ 204                             ABSOLUTE sdtr_neg_done          = 0x00024
+ 205                             ABSOLUTE wdtr_msg_reject  	= 0x00025
+ 206                             ABSOLUTE sdtr_msg_reject  	= 0x00026
+ 207                             ABSOLUTE ignore_residue		= 0x00027
+ 208                             ;ABSOLUTE trace_point            = 0X00040
+ 209                             ;ABSOLUTE chkpoint               = 0X00041
+ 210                             
+ 211                             ; Chip register flags.  The SCRIPTS use these to set/reset the
+ 212                             ; flags
+ 213                             ABSOLUTE SIOM_Flag              = 0x20
+ 214                             ABSOLUTE Not_SIOM_Flag          = 0xDF
+ 215                             ABSOLUTE DIOM_Flag              = 0x10
+ 216                             ABSOLUTE Not_DIOM_Flag          = 0xEF
+ 217                             
+ 218                             
+ 219                             ; The device drivers patches all references to these with target
+ 220                             ; specific data
+ 221                             RELATIVE target_id              = 0x01
+ 222                             RELATIVE cmd_bytes_out_count    = 0x00
+ 223                             RELATIVE ext_msg_size           = 0x00
+ 224                             RELATIVE scntl3_patch           = 0x13
+ 225                             RELATIVE sxfer_patch            = 0x08
+ 226                             RELATIVE tag_patch              = 0x99
+ 227                             RELATIVE abdr_tag_patch         = 0xAA
+ 228                             
+ 229                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 230 00000000:                   init_index:
+ 231                                     ; store scsi id and lun in SCRATCHA3
+ 232                                     ; SFBR = [ xxxx xLun_id ]
+ 233 00000000: 6C370700 00000000         MOVE SFBR & 0x07 TO SCRATCHA3
+ 234                                     ; SCRATCHA3 = [ 00000 Lun_id ]
+ 235 00000008: 725C0000 00000000         MOVE SCRATCHB0 TO SFBR
+ 236                                     ; SFBR = [ 0000 Scsi_id ]
+ 237                                     ; computes nexus=[0 ScsiId LunId] :
+ 238 00000010: 808CF700 00000008         JUMP REL(bit3), IF 0x00 AND MASK 0xF7
+ 239 00000018: 7A374000 00000000         MOVE SCRATCHA3 | 0x40 TO SCRATCHA3
+ 240 00000020: 808CFB00 00000008 bit3:   JUMP REL(bit2), IF 0x00 AND MASK 0xFB
+ 241 00000028: 7A372000 00000000         MOVE SCRATCHA3 | 0x20 TO SCRATCHA3
+ 242 00000030: 808CFD00 00000008 bit2:   JUMP REL(bit1), IF 0x00 AND MASK 0xFD
+ 243 00000038: 7A371000 00000000         MOVE SCRATCHA3 | 0x10 TO SCRATCHA3
+ 244 00000040: 808CFE00 00000008 bit1:   JUMP REL(bitend), IF 0x00 AND MASK 0xFE
+ 245 00000048: 7A370800 00000000         MOVE SCRATCHA3 | 0x08 TO SCRATCHA3
+ 246 00000050:                   bitend: ; SCRATCHA3 = [ 0Scsi_id Lun_id ]
+ 247 00000050: 90080000 00000000         RETURN
+ 248                             
+ 249                             ;handle being in message after receiving the identify message after a
+ 250                             ;reselect
+ 251 00000058:                   reconnect_msg_in:
+ 252 00000058: 0F000001 00000000         move 1, cmd_msg_in_addr, when MSG_IN
+ 253 00000060: 800C0020 00000088         jump queue_tag, if 0x20
+ 254 00000068: 6A180000 00000000         MOVE SFBR to CTEST0
+ 255                                     ;save sfbr before calling restore_ptrs
+ 256 00000070: 88880000 000002DC         call rel(restore_ptrs)
+ 257 00000078: 72180000 00000000         MOVE CTEST0 to SFBR
+ 258                                     ;restore sfbr
+ 259 00000080: 80080000 000001B8         jump not_tag_msg
+ 260 00000088:                   queue_tag:
+ 261                                     ; SFBR = Queue tag operator (0x20)
+ 262                                     ; Save the nexus given there
+ 263 00000088: 60000040 00000000         CLEAR ACK
+ 264 00000090: 0F000001 00000000         MOVE 1, tag_msg_addr, when MSG_IN
+ 265 00000098: 6A370000 00000000         MOVE SFBR to SCRATCHA3
+ 266 000000A0: 88880000 000002AC         call rel(restore_ptrs)
+ 267 000000A8: 80080000 000001F0         jump msg_done
+ 268                             
+ 269 000000B0:                   script_reconnect_point:
+ 270 000000B0: 88880000 FFFFFF48         call rel(init_index)
+ 271 000000B8: 78031300 00000000         move scntl3_patch to SCNTL3
+ 272 000000C0: 78050800 00000000         move sxfer_patch to SXFER
+ 273 000000C8: 60000040 00000000         clear ACK
+ 274                             
+ 275                             ;Handle the possible actions following a reconnection.  We have already read
+ 276                             ;the initial MSG_IN in the IO_WAIT script (this is how we figured out which
+ 277                             ;target was trying to reselect us).  If we aren't in MSG_IN any longer,
+ 278                             ;set DSA.
+ 279 000000D0: 870B0000 00000058         jump reconnect_msg_in, when MSG_IN
+ 280 000000D8: 88880000 00000274         call rel(restore_ptrs)
+ 281 000000E0: 810B0000 000006FC         jump receive_data, when DATA_IN
+ 282 000000E8: 800A0000 000006EC         jump send_data, if DATA_OUT
+ 283 000000F0: 830A0000 00000680         jump status_complete, if STATUS
+ 284 000000F8: 98080000 00000001         int phase_error
+ 285                             
+ 286                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 287                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 288                             
+ 289                             ; Arbitrate and select the target with the SCSI id written into the current
+ 290                             ; zero position.  If during the selection, another target (including the target
+ 291                             ; we were trying to select) reselects the chip, then we jump to the script at
+ 292                             ; the address failed_selection_hdlr.  This script does a simple interrupt so
+ 293                             ; that the process interrupt handler will see that this script never got
+ 294                             ; started and needs to be restarted at a later time.  The interrupt handler
+ 295                             ; will then start the SIOP at the script address of iowait_entry_point (also
+ 296                             ; known as the IO_WAIT script) to start the handling of the reselection by the
+ 297                             ; target.
+ 298                             
+ 299 00000100:                   scripts_entry_point:
+ 300 00000100: 41010000 00000874         select ATN target_id, failed_selection_hdlr
+ 301                             
+ 302                             ; This handles the case in which we are trying to select a "dead" device.  Most
+ 303                             ; "dead" devices should return a bad status to indicate their "dead" status.
+ 304                             ; However, if the device is operating normally, the STATUS phase does not
+ 305                             ; occur, and we will not take the jump to status_complete.  Instead, we will
+ 306                             ; drop down to the MSG_OUT phase to start the SCSI phase sequence with the
+ 307                             ; target.  If we get neither a STATUS or MSG_OUT phase, then something is wrong
+ 308                             ; with the bus protocol and we interrupt to the interrupt handler.
+ 309                             
+ 310 00000108: 78379900 00000000         move tag_patch to SCRATCHA3
+ 311 00000110: 7A1A0000 00000000         move CTEST2 | 0x00 to CTEST2
+ 312 00000118: 9E030000 00000001         int phase_error, when not MSG_OUT
+ 313                             
+ 314 00000120:                   message_loop:
+ 315 00000120: 0E000001 00000000         move 1, identify_msg_addr, when MSG_OUT
+ 316 00000128:                   cleanup_phase:
+ 317 00000128: 88880000 00000224         call rel(restore_ptrs)
+ 318 00000130: 78031300 00000000         move scntl3_patch to SCNTL3
+ 319 00000138: 78050800 00000000         move sxfer_patch to SXFER
+ 320                             
+ 321                             ; Loop indefinitely in this message output loop until the device receives the
+ 322                             ; messages and then changes to the next phase.  The next phase is dictated by
+ 323                             ; the contents of the messages.  So, the following lines check for all possible
+ 324                             ; phases that could occur for all possible types of messages that were just
+ 325                             ; sent.
+ 326 00000140: 820B0000 00000178         jump send_command when CMD
+ 327                             
+ 328                             ; We check for three possible cases.  The default case we drop into is the CMD
+ 329                             ; phase.  So we output the CMD and then check for all the possible phases that
+ 330                             ; could occur as a result of that command.
+ 331                             
+ 332 00000148: 830A0000 00000680         jump status_complete if STATUS
+ 333 00000150: 870A0000 000001A8         jump msg_hdlr if MSG_IN
+ 334 00000158: 860A0000 00000168         jump message_loop_atn if MSG_OUT
+ 335 00000160: 98080000 00000001         int phase_error
+ 336                             
+ 337 00000168:                   message_loop_atn:
+ 338 00000168: 58000008 00000000 	set ATN
+ 339 00000170: 80080000 00000120 	jump message_loop
+ 340                             
+ 341 00000178:                   send_command:
+ 342 00000178: 0A000000 00000000         move cmd_bytes_out_count, cmd_addr, when CMD
+ 343 00000180:                   regular_phase_hdlr:
+ 344 00000180: 870B0000 000001A8         jump msg_hdlr when MSG_IN
+ 345 00000188: 830A0000 00000680         jump status_complete if STATUS
+ 346 00000190: 810A0000 000006FC         jump receive_data if DATA_IN
+ 347 00000198: 800A0000 000006EC         jump send_data if DATA_OUT
+ 348                             
+ 349                             ; After the DATA_OUT check, there can be no more possible phases that we could
+ 350                             ; expect from any command other than those we've just checked.  Thus, we must be
+ 351                             ; in trouble.
+ 352                             
+ 353 000001A0:                   phase_error_entry:
+ 354 000001A0: 98080000 00000001         int phase_error
+ 355                             
+ 356                             ; Handle a message-in phase.
+ 357                             
+ 358 000001A8:                   msg_hdlr:
+ 359 000001A8: 0F000001 00000000         move 1, cmd_msg_in_addr, when MSG_IN
+ 360 000001B0: 800C0020 00000088         jump queue_tag, if 0x20
+ 361 000001B8:                   not_tag_msg:
+ 362 000001B8: 800C0001 00000618         jump ext_msg_handler if 01              ; Extended messages
+ 363 000001C0: 800C0004 0000071C         jump disconnect_point if 04             ; Disconnect
+ 364 000001C8: 800C0007 000007BC         jump reject_cleanup if 07               ; Message reject
+ 365 000001D0: 800C0003 00000200         jump restore_msg if 03                  ; Restore pointers
+ 366 000001D8: 800C0023 00000218 	jump ignore_wide_residue if 0x23	; Ignore Wide Residue
+ 367 000001E0: 80040002 00000210         jump unknown_msg_hdlr if not 0x02      	; Save data pointer
+ 368 000001E8:                   save_ptrs_patch:
+ 369 000001E8: 88080000 00000248 	call save_pointers
+ 370 000001F0:                   msg_done:
+ 371 000001F0: 60000040 00000000         clear ACK
+ 372 000001F8: 80080000 00000180         jump regular_phase_hdlr
+ 373                             
+ 374 00000200:                   restore_msg:
+ 375 00000200: 88080000 00000354 	call restore_ptrs
+ 376 00000208: 80080000 000001F0 	jump msg_done
+ 377                             
+ 378 00000210:                   unknown_msg_hdlr:
+ 379 00000210: 98080000 00000009         int unknown_msg
+ 380                             
+ 381 00000218:                   ignore_wide_residue:
+ 382 00000218: 60000040 00000000 	clear ACK
+ 383 00000220: 0F000001 00000000         MOVE 1, cmd_msg_in_addr, when MSG_IN
+ 384 00000228: 98080000 00000027 	int ignore_residue
+ 385                             
+ 386 00000230:                   save_pointers_wide:
+ 387 00000230: 74360900 00000000 	move SCRATCHA2 & 0x09 to SFBR
+ 388 00000238: 980C0008 00000005 	int save_ptrs_wss, if 0x08
+ 389 00000240: 980C0001 00000004 	int save_ptrs_wsr, if 0x01
+ 390                             
+ 391 00000248:                   save_pointers:
+ 392                             ;save the contents of DSA and SCRATCHB.  If we have taken a phase
+ 393                             ;mismatch such that the loc and save tim tables differ, update the
+ 394                             ;save tim table and clear the flags.  If there is a discrepancy
+ 395                             ;between the # of bytes DMAed to/from memory and the # of bytes
+ 396                             ;moved from/to the SCSI bus, let the host handle the processing
+ 397                             ;instead.
+ 398                             
+ 399 00000248: 7A382000 00000000         move DMODE | SIOM_Flag to DMODE         ; src:  I/O
+ 400 00000250: 7C38EF00 00000000         move DMODE & Not_DIOM_Flag to DMODE     ; dest: memory
+ 401 00000258: C0000004 00000000 04040404         MOVE MEMORY 4, DSA_Addr, dptr_tbl_addr2_ref
+ 402 00000264: C0000004 00000000 05050505         MOVE MEMORY 4, SCRATCHB_addr, dptr_cnt_addr3_ref
+ 403                             
+ 404 00000270: 7C38DF00 00000000         move DMODE & Not_SIOM_Flag to DMODE	; src: memory
+ 405 00000278: 72340000 00000000 	move SCRATCHA0 to SFBR
+ 406 00000280: 800C0000 00000344 	jump tables_same if 0
+ 407                             
+ 408                             ;should we assume the copy is always needed, and avoid the test?
+ 409                             ;use scratcha to hold tables differ? would have to update scratcha
+ 410                             ;from update_data_ptrs...
+ 411                             
+ 412 00000288: 7A382000 00000000         move DMODE | SIOM_Flag to DMODE         ; src:  I/O
+ 413                                     ;move DMODE & Not_DIOM_Flag to DMODE     ; dest: memory
+ 414 00000290: 78340000 00000000 	MOVE 0 to SCRATCHA0
+ 415 00000298: C0000001 00000000 0A0A0A0A         MOVE MEMORY 1, SCRATCHA0_addr, dptr_diff_addr1_ref
+ 416                             
+ 417 000002A4: 72100000 00000000 	move DSA0 to SFBR
+ 418 000002AC: 6A5C0000 00000000 	move SFBR to SCRATCHB0
+ 419 000002B4: 74110F00 00000000         move DSA1 & 0x0F to SFBR
+ 420 000002BC: 6A5D0000 00000000 	move SFBR to SCRATCHB1
+ 421 000002C4: 785E0000 00000000 	move 0 to SCRATCHB2
+ 422 000002CC: 785F0000 00000000 	move 0 to SCRATCHB3
+ 423                             	;scratchb holds the offset
+ 424                             
+ 425 000002D4: 7E5C9900 00000000 	move SCRATCHB0 + save_tbl_base_adr0 to SCRATCHB0
+ 426 000002DC: 7F5D9900 00000000 	move SCRATCHB1 + save_tbl_base_adr1 to SCRATCHB1 WITH CARRY
+ 427 000002E4: 7F5E9900 00000000 	move SCRATCHB2 + save_tbl_base_adr2 to SCRATCHB2 WITH CARRY
+ 428 000002EC: 7F5F9900 00000000 	move SCRATCHB3 + save_tbl_base_adr3 to SCRATCHB3 WITH CARRY
+ 429                             	;scratchb now holds the destination address in the save tbl
+ 430 000002F4: C0000004 00000000 77777777 	MOVE MEMORY 4, SCRATCHB_addr, cur_sav_tbl_addr1
+ 431 00000300: C0000004 00000000 88888888 	MOVE MEMORY 4, DSA_Addr, cur_loc_tbl_addr1
+ 432                             
+ 433 0000030C: 7C38DF00 00000000         move DMODE & Not_SIOM_Flag to DMODE     ; src:  Memory
+ 434                             	;move 8 bytes from the loc table to the save table
+ 435 00000314: C0000008 08080808 07070707 	MOVE MEMORY 8, cur_loc_tbl_addr1_ref, cur_sav_tbl_addr1_ref
+ 436                             
+ 437 00000320: 7A381000 00000000         move DMODE | DIOM_Flag to DMODE         ; dest: I/O
+ 438 00000328: C0000004 09090909 00000000 	MOVE MEMORY 4, dptr_cnt_addr4_ref, SCRATCHB_addr
+ 439                             	;restore SCRATCHB (tim_cnt)
+ 440                             
+ 441 00000334: 7C38EF00 00000000         move DMODE & Not_DIOM_Flag to DMODE     ; dest: Memory
+ 442                             	;int chkpoint
+ 443 0000033C: 90080000 00000000 	return
+ 444                             
+ 445 00000344:                   tables_same:
+ 446 00000344: 7C38EF00 00000000         move DMODE & Not_DIOM_Flag to DMODE     ; dest: memory
+ 447                             	;int chkpoint
+ 448 0000034C: 90080000 00000000 	return
+ 449                             
+ 450 00000354:                   restore_ptrs:
+ 451                                     ; SCRATCHB is initialized to NEXUS_data tim_cnt
+ 452                                     ; DSA initialized to NEXUS_data tim_address
+ 453                             	; SCRATCHA0 initialized to tim_flag
+ 454                                     ;Nexus_data_size = 16 bytes, then nexus_addr = base_addr + (8*nexus)
+ 455                                     ;equivalent to nexus left 4 times + base_addr
+ 456                                     ;assume nexus (tag) is in SCRATCHA3
+ 457                                     ;we patch base_addr during script_init, to be the
+ 458                                     ;dma address of our table-indirect table
+ 459                                     ;Since we initialize SCRATCHB to zero first, we don't need to worry
+ 460                                     ;about carry being set on the shifts from SCRATCHB1
+ 461                                     ;put NEXUS_data_addr into SCRATCHB.  Move the tim_address at
+ 462                                     ;NEXUS_data_addr into DSA, and the tim_cnt at NEXUS_data_addr
+ 463                                     ;into ld_tim_cnt and then SCRATCHB.
+ 464 00000354: 785C0000 00000000         MOVE 0 TO SCRATCHB0
+ 465 0000035C: 785D0000 00000000         MOVE 0 TO SCRATCHB1
+ 466 00000364: 785E0000 00000000         MOVE 0 TO SCRATCHB2
+ 467 0000036C: 785F0000 00000000         MOVE 0 TO SCRATCHB3
+ 468 00000374: 72370000 00000000         MOVE SCRATCHA3 TO SFBR
+ 469 0000037C: 60000400 00000000         CLEAR CARRY
+ 470 00000384: 695C0000 00000000         MOVE SFBR SHL 0 TO SCRATCHB0
+ 471 0000038C: 795D0000 00000000         MOVE SCRATCHB1 SHL 0 TO SCRATCHB1    ;carry?
+ 472 00000394: 795C0000 00000000         MOVE SCRATCHB0 SHL 0 TO SCRATCHB0
+ 473 0000039C: 795D0000 00000000         MOVE SCRATCHB1 SHL 0 TO SCRATCHB1    ;carry?
+ 474 000003A4: 795C0000 00000000         MOVE SCRATCHB0 SHL 0 TO SCRATCHB0
+ 475 000003AC: 795D0000 00000000         MOVE SCRATCHB1 SHL 0 TO SCRATCHB1    ;carry?
+ 476 000003B4: 795C0000 00000000         MOVE SCRATCHB0 SHL 0 TO SCRATCHB0
+ 477 000003BC: 795D0000 00000000         MOVE SCRATCHB1 SHL 0 TO SCRATCHB1    ;carry?
+ 478 000003C4: 7E5C8800 00000000         MOVE SCRATCHB0 + NEXUS_data_base_adr0 TO SCRATCHB0
+ 479 000003CC: 7F5D8800 00000000         MOVE SCRATCHB1 + NEXUS_data_base_adr1 TO SCRATCHB1 WITH CARRY
+ 480 000003D4: 7F5E8800 00000000         MOVE SCRATCHB2 + NEXUS_data_base_adr2 TO SCRATCHB2 WITH CARRY
+ 481 000003DC: 7F5F8800 00000000         MOVE SCRATCHB3 + NEXUS_data_base_adr3 TO SCRATCHB3 WITH CARRY
+ 482                                     ; SCRATCHB = base address NEXUS_data
+ 483                             
+ 484 000003E4: 7A382000 00000000         move DMODE | SIOM_Flag to DMODE       ;src:  I/O
+ 485 000003EC: 7C38EF00 00000000         move DMODE & Not_DIOM_Flag to DMODE   ;dest: mem
+ 486 000003F4: C0000004 00000000 11111111         MOVE MEMORY 4, SCRATCHB_addr, dptr_tbl_addr1
+ 487 00000400: C0000004 00000000 44444444         MOVE MEMORY 4, SCRATCHB_addr, dptr_tbl_addr2
+ 488                             
+ 489 0000040C: 7E5C0400 00000000         MOVE SCRATCHB0 + 4 TO SCRATCHB0
+ 490                                     ;MOVE SCRATCHB1 + 0 TO SCRATCHB1 WITH CARRY
+ 491                                     ;MOVE SCRATCHB2 + 0 TO SCRATCHB2 WITH CARRY
+ 492                                     ;MOVE SCRATCHB3 + 0 TO SCRATCHB3 WITH CARRY
+ 493                                     ; SCRATCHB now has address of tim_cnt
+ 494                             
+ 495 00000414: C0000004 00000000 22222222         MOVE MEMORY 4, SCRATCHB_addr, dptr_cnt_addr1
+ 496 00000420: C0000004 00000000 33333333         MOVE MEMORY 4, SCRATCHB_addr, dptr_cnt_addr2
+ 497 0000042C: C0000004 00000000 55555555         MOVE MEMORY 4, SCRATCHB_addr, dptr_cnt_addr3
+ 498 00000438: C0000004 00000000 99999999         MOVE MEMORY 4, SCRATCHB_addr, dptr_cnt_addr4
+ 499 00000444: C0000004 00000000 66666666         MOVE MEMORY 4, SCRATCHB_addr, dptr_cnt_addr5
+ 500                                     ;MOVE MEMORY 4, SCRATCHB_addr, dptr_cnt_addr6
+ 501                             
+ 502 00000450: 7E5C0400 00000000         MOVE SCRATCHB0 + 4 TO SCRATCHB0
+ 503                                     ;MOVE SCRATCHB1 + 0 TO SCRATCHB1 WITH CARRY
+ 504                                     ;MOVE SCRATCHB2 + 0 TO SCRATCHB2 WITH CARRY
+ 505                                     ;MOVE SCRATCHB3 + 0 TO SCRATCHB3 WITH CARRY
+ 506                                     ; SCRATCHB now has address of tables_differ
+ 507                             
+ 508 00000458: C0000004 00000000 AAAAAAAA         MOVE MEMORY 4, SCRATCHB_addr, dptr_diff_addr1
+ 509 00000464: C0000004 00000000 BBBBBBBB         MOVE MEMORY 4, SCRATCHB_addr, dptr_diff_addr2
+ 510 00000470: C0000004 00000000 EEEEEEEE         MOVE MEMORY 4, SCRATCHB_addr, dptr_diff_addr3
+ 511                             
+ 512 0000047C: 7E5C0400 00000000         MOVE SCRATCHB0 + 4 TO SCRATCHB0
+ 513                                     ;MOVE SCRATCHB1 + 0 TO SCRATCHB1 WITH CARRY
+ 514                             	; SCRATCHB now has the address of tim_restore
+ 515 00000484: C0000004 00000000 FFFFFFFF         MOVE MEMORY 4, SCRATCHB_addr, dptr_restore_addr
+ 516                             
+ 517 00000490: 7C38DF00 00000000         move DMODE & Not_SIOM_Flag to DMODE  ; src:  mem
+ 518 00000498: 7A381000 00000000         move DMODE | DIOM_Flag to DMODE      ; dest: I/O
+ 519                             
+ 520 000004A0: C0000004 01010101 00000000         MOVE MEMORY 4, dptr_tbl_addr1_ref, DSA_Addr
+ 521                                     ; DSA initialized
+ 522                             
+ 523 000004AC: C0000004 02020202 00000000         MOVE MEMORY 4, dptr_cnt_addr1_ref, SCRATCHB_addr
+ 524                                     ; SCRATCHB now holds tim_cnt
+ 525                             
+ 526 000004B8: 7A020900 00000000 	MOVE SCNTL2 | 0x09 to SCNTL2
+ 527 000004C0: 78360000 00000000 	MOVE 0 to SCRATCHA2
+ 528                             	; clear bits 0 and 3 (WSR and WSS on NCR825)
+ 529                             
+ 530 000004C8: C0000001 0B0B0B0B 00000000         MOVE MEMORY 1, dptr_diff_addr2_ref, SCRATCHA0_addr
+ 531                             	; SCRATCHA0 now holds the tables_differ flag
+ 532 000004D4: 72340000 00000000 	move SCRATCHA0 to SFBR
+ 533 000004DC: 800C0000 00000344 	jump tables_same if 0
+ 534                             
+ 535 000004E4: 7A382000 00000000         move DMODE | SIOM_Flag to DMODE         ; src: I/O
+ 536 000004EC: 7C38EF00 00000000         move DMODE & Not_DIOM_Flag to DMODE     ; dest:  memory
+ 537                             
+ 538 000004F4: 78340000 00000000 	move 0 to SCRATCHA0
+ 539 000004FC: C0000001 00000000 0E0E0E0E 	MOVE MEMORY 1, SCRATCHA0_addr, dptr_diff_addr3_ref
+ 540                             	; clear tables_differ flag
+ 541                             
+ 542 00000508: C0000004 00000000 CCCCCCCC 	MOVE MEMORY 4, DSA_Addr, cur_loc_tbl_addr2
+ 543                             	; patch the destination address for the move below
+ 544                             
+ 545 00000514: 72100000 00000000 	move DSA0 to SFBR
+ 546 0000051C: 6A5C0000 00000000 	move SFBR to SCRATCHB0
+ 547 00000524: 74110F00 00000000         move DSA1 & 0x0F to SFBR
+ 548 0000052C: 6A5D0000 00000000 	move SFBR to SCRATCHB1
+ 549 00000534: 785E0000 00000000 	move 0 to SCRATCHB2
+ 550 0000053C: 785F0000 00000000 	move 0 to SCRATCHB3
+ 551                             	;scratchb holds the offset
+ 552                             
+ 553 00000544: 7E5C9900 00000000 	move SCRATCHB0 + save_tbl_base_adr0 to SCRATCHB0
+ 554 0000054C: 7F5D9900 00000000 	move SCRATCHB1 + save_tbl_base_adr1 to SCRATCHB1 WITH CARRY
+ 555 00000554: 7F5E9900 00000000 	move SCRATCHB2 + save_tbl_base_adr2 to SCRATCHB2 WITH CARRY
+ 556 0000055C: 7F5F9900 00000000 	move SCRATCHB3 + save_tbl_base_adr3 to SCRATCHB3 WITH CARRY
+ 557                             	;scratchb now holds the source address in the save tbl
+ 558 00000564: C0000004 00000000 DDDDDDDD 	MOVE MEMORY 4, SCRATCHB_addr, cur_sav_tbl_addr2
+ 559                             
+ 560 00000570: 7C38DF00 00000000         move DMODE & Not_SIOM_Flag to DMODE     ; src:  memory
+ 561 00000578: 7A381000 00000000         move DMODE | DIOM_Flag to DMODE         ; dest: I/O
+ 562                             
+ 563 00000580: C0000004 0F0F0F0F 00000000 	MOVE MEMORY 4, dptr_restore_addr_ref, SCRATCHB_addr
+ 564                             	;scratchb now holds tim_restore
+ 565                                     ;multiply by 8 (size of an iovec)
+ 566 0000058C: 60000400 00000000 	clear CARRY
+ 567 00000594: 795C0000 00000000 	move SCRATCHB0 SHL 0 to SCRATCHB0
+ 568 0000059C: 795D0000 00000000 	move SCRATCHB1 SHL 0 to SCRATCHB1
+ 569 000005A4: 795C0000 00000000 	move SCRATCHB0 SHL 0 to SCRATCHB0
+ 570 000005AC: 795D0000 00000000 	move SCRATCHB1 SHL 0 to SCRATCHB1
+ 571 000005B4: 795C0000 00000000 	move SCRATCHB0 SHL 0 to SCRATCHB0
+ 572 000005BC: 795D0000 00000000 	move SCRATCHB1 SHL 0 to SCRATCHB1
+ 573                             	;scratchb now holds the number of bytes to move
+ 574                             
+ 575 000005C4: 7A382000 00000000         move DMODE | SIOM_Flag to DMODE         ; src: I/O
+ 576 000005CC: 7C38EF00 00000000         move DMODE & Not_DIOM_Flag to DMODE     ; dest:  memory
+ 577                             
+ 578 000005D4: C0000002 00000000 00000000 	MOVE MEMORY 2, SCRATCHB_addr, restore_patch_addr
+ 579                             	;int chkpoint
+ 580                             
+ 581 000005E0: 7C38DF00 00000000         move DMODE & Not_SIOM_Flag to DMODE     ; src:  memory
+ 582 000005E8: C000AAAA 0D0D0D0D 0C0C0C0C 	MOVE MEMORY restore_patch, cur_sav_tbl_addr2_ref, cur_loc_tbl_addr2_ref
+ 583                             
+ 584 000005F4: 7A381000 00000000         move DMODE | DIOM_Flag to DMODE         ; dest: I/O
+ 585 000005FC: C0000004 06060606 00000000 	MOVE MEMORY 4, dptr_cnt_addr5_ref, SCRATCHB_addr
+ 586                             	;restore SCRATCHB to hold tim count
+ 587                             
+ 588 00000608: 7C38EF00 00000000         move DMODE & Not_DIOM_Flag to DMODE     ; dest:  memory
+ 589 00000610: 90080000 00000000 	return
+ 590                             
+ 591                             ; The extended message is shown by the msg being a 0x01.  The first byte is the
+ 592                             ; message length, and the second byte is the opcode that the processor will
+ 593                             ; look at to see what the device was trying to say.
+ 594                             ;
+ 595                             ; Note: We currently do not support the MODIFY DATA POINTER message from
+ 596                             ;       the target.  Consequently, we must reject that message.  This must
+ 597                             ;       be done by raising ATN for the message reject *prior* to clearing ACK
+ 598                             ;       for the message.  This needs to be implemented here!!!  FIXME
+ 599                             
+ 600 00000618:                   ext_msg_handler:
+ 601 00000618: 60000040 00000000         clear ACK
+ 602 00000620: 0F000002 00000000         move 2, extended_msg_addr, when MSG_IN
+ 603 00000628: 98080000 0000000A         int ext_msg
+ 604                             
+ 605 00000630:                   complete_ext_msg:
+ 606 00000630: 60000040 00000000         clear ACK
+ 607 00000638: 0F000000 00000000         move ext_msg_size, extended_msg_addr, when MSG_IN
+ 608                             
+ 609                             ; This nop may be patched to one of several possible interrupts by
+ 610                             ; the device driver as follows:
+ 611                             ;   target_wdtr_sent - if the target is negotiating data xfer width
+ 612                             ;   target_sdtr_sent - if the target is negotiating data xfer speed
+ 613                             ;   modify_data_ptr  - if the target has sent us a modify data pointer
+ 614                             ;   unknown_ext_msg  - if the target has sent an extended message opcode
+ 615                             ;			that we don't understand
+ 616                             ; Otherwise it is a nop to complete the extended message and fall into
+ 617                             ; the phase_vector jumps (SCSI-1 Extended Identify is handled this way).
+ 618                             
+ 619 00000640:                   ext_msg_patch:
+ 620 00000640: 80000000 00000640         nop ext_msg_patch
+ 621 00000648: 60000040 00000000         clear ACK
+ 622                             
+ 623                             ; We check for five possible cases.  The default case we drop into is the CMD
+ 624                             ; phase.  So we output the CMD and then check for all the possible phases that
+ 625                             ; could occur as a result of that command.
+ 626                             
+ 627 00000650:                   phase_vector:
+ 628 00000650: 870B0000 000001A8         jump msg_hdlr when MSG_IN
+ 629 00000658: 830A0000 00000680         jump status_complete if STATUS
+ 630 00000660: 810A0000 000006FC         jump receive_data if DATA_IN
+ 631 00000668: 800A0000 000006EC         jump send_data if DATA_OUT
+ 632 00000670: 820A0000 00000178         jump send_command if CMD
+ 633 00000678: 98080000 00000001 	int phase_error
+ 634                             
+ 635                             
+ 636                             ; Here we get the status byte in, we don't need to see what type of SCSI status
+ 637                             ; we've got because that is up to the device driver to decide what to do with
+ 638                             ; the status.  We are concerned with just correctly getting the status from the
+ 639                             ; device.  We now go through the phases possible after receiving the status.
+ 640                             ; This is the cleanup required before we disconnect from the target.
+ 641                             
+ 642 00000680:                   status_complete:
+ 643 00000680: 0B000001 00000000         move 1, status_addr, when STATUS
+ 644 00000688: 9F030000 00000001         int phase_error, when not MSG_IN
+ 645 00000690: 0F000001 00000000         move 1, cmd_msg_in_addr, when MSG_IN
+ 646                                     ;clear the SDU bit
+ 647 00000698: 7C027F00 00000000         move SCNTL2 & 0x7F to SCNTL2
+ 648 000006A0: 60000040 00000000 	clear ACK
+ 649 000006A8: 48000000 00000000 	wait disconnect
+ 650                             
+ 651                             	;update the nexus regarding the number of tims remaining
+ 652 000006B0: 7A382000 00000000         move DMODE | SIOM_Flag to DMODE         ; src:  I/O
+ 653 000006B8: C0000004 00000000 03030303         MOVE MEMORY 4, SCRATCHB_addr, dptr_cnt_addr2_ref
+ 654 000006C4: 7C38DF00 00000000         move DMODE & Not_SIOM_Flag to DMODE
+ 655                             
+ 656                             	;for wide devices, this "int io_done" instruction 
+ 657                             	;is patched to the scratcha2 register move instruction, so
+ 658                             	;that we can check for and handle bytes that weren't 
+ 659                             	;transferred.
+ 660 000006CC:                   cmd_complete_patch:
+ 661 000006CC: 98080000 00000006 	int io_done
+ 662                             	;move SCRATCHA2 & 0x09 to SFBR
+ 663                             
+ 664                             	;if WSS or WSR are set, let the host process it.
+ 665 000006D4: 980C0001 00000007         int io_done_wsr, if 0x01
+ 666 000006DC: 980C0008 00000008 	int io_done_wss, if 0x08
+ 667 000006E4: 98080000 00000006         int io_done
+ 668                             
+ 669                             ; Send (write) data to the target.  After WDTR negotiation, patch
+ 670                             ; the call instruction so that it calls either the output_data or
+ 671                             ; the output_wide_data subroutines
+ 672 000006EC:                   send_data:
+ 673 000006EC: 880B0000 00000BAC         call output_data when DATA_OUT
+ 674 000006F4: 80080000 00000704         jump after_data_move_check
+ 675                             
+ 676                             ; Receive (read) data from the target
+ 677 000006FC:                   receive_data:
+ 678 000006FC: 890B0000 00000C84         call input_data when DATA_IN
+ 679                             
+ 680                             
+ 681                             ; After a data in or data out phase, two cases can occur.  First, we have
+ 682                             ; transferred all the bytes that the device expects and wants from us.  In this
+ 683                             ; case, we might get back an immediate STATUS back from the device.  However,
+ 684                             ; the device may want to send in the STATUS byte later on.  In that case, the
+ 685                             ; target would be sending a MSG_IN to us to start the sequence leading up to
+ 686                             ; disconnection.  This also covers the second case in which we have not
+ 687                             ; transferred all the data necessary, but we give up the bus because the target
+ 688                             ; device likes to disconnect between major transfers of data.  Thus, we would
+ 689                             ; also need the MSG_IN phase to start the disconnect sequence mentioned above.
+ 690                             
+ 691 00000704:                   after_data_move_check:
+ 692 00000704: 830B0000 00000680         jump status_complete when STATUS
+ 693 0000070C: 870A0000 000001A8         jump msg_hdlr if MSG_IN
+ 694 00000714: 98080000 00000001         int phase_error
+ 695                             
+ 696 0000071C:                   disconnect_point:
+ 697                                     ;clear the SDU bit
+ 698 0000071C: 7C027F00 00000000         move SCNTL2 & 0x7F to SCNTL2
+ 699 00000724: 60000040 00000000         clear ACK
+ 700 0000072C: 48000000 00000000         wait disconnect
+ 701 00000734: 725C0000 00000000         move SCRATCHB0 to SFBR
+ 702 0000073C: 80040000 00000764 	jump not_last_data_xfer if NOT 0
+ 703 00000744: 725D0000 00000000 	move SCRATCHB1 to SFBR
+ 704 0000074C: 80040000 00000764 	jump not_last_data_xfer if NOT 0
+ 705                             	;save the pointers, this is the last data transfer
+ 706                             	;clear SCRATCHA0 since we don't care if the tables differ,
+ 707                             	;since we aren't going to have any more DATA phases
+ 708 00000754: 78340000 00000000 	move 0x00 to SCRATCHA0
+ 709 0000075C:                   save_ptrs_patch1:
+ 710 0000075C: 88080000 00000248 	call save_pointers
+ 711 00000764:                   not_last_data_xfer:
+ 712 00000764: 80000000 0000000B         nop check_next_io       ; will be patched to int if other devices
+ 713                                                             ; are waiting to be started
+ 714 0000076C: 80080000 00000000         jump wait_reselect      ; else, go wait for reselection
+ 715                             
+ 716                             
+ 717 00000774:                   reject_target_sync:
+ 718 00000774: 58000008 00000000         set ATN
+ 719 0000077C: 78031300 00000000         move scntl3_patch to SCNTL3
+ 720 00000784: 78050800 00000000         move sxfer_patch to SXFER
+ 721 0000078C: 60000040 00000000         clear ACK
+ 722 00000794:                   reject_loop:
+ 723 00000794: 0E000001 00000000         move 1, reject_msg_addr, when MSG_OUT
+ 724 0000079C: 860B0000 000007AC 	jump reject_loop_atn when MSG_OUT
+ 725 000007A4: 80080000 00000650         jump phase_vector
+ 726                             
+ 727 000007AC:                   reject_loop_atn:
+ 728 000007AC: 58000008 00000000 	set ATN
+ 729 000007B4: 80080000 00000794 	jump reject_loop
+ 730                             
+ 731 000007BC:                   reject_cleanup:
+ 732 000007BC: 60000008 00000000         clear ATN
+ 733 000007C4: 98080000 00000016         int sync_msg_reject
+ 734 000007CC:                   goto_cleanup:
+ 735 000007CC: 60000040 00000000         clear ACK
+ 736 000007D4: 80080000 00000128         jump cleanup_phase
+ 737                             
+ 738 000007DC:                   renegotiate_wdtr:
+ 739 000007DC: 58000008 00000000 	set ATN
+ 740 000007E4: 78031300 00000000         move scntl3_patch to SCNTL3
+ 741 000007EC: 78050800 00000000         move sxfer_patch to SXFER
+ 742 000007F4: 60000040 00000000 	clear ACK
+ 743 000007FC:                   renegotiate_wdtr_loop:
+ 744 000007FC: 0E000009 00000000         move 9, wdtr_msg_out_addr, when MSG_OUT
+ 745 00000804: 860B0000 00000814 	jump renegotiate_wdtr_loop_atn when MSG_OUT
+ 746 0000080C: 80080000 000008CC 	jump negotiation_phase_patch
+ 747                             
+ 748 00000814:                   renegotiate_wdtr_loop_atn:
+ 749 00000814: 58000008 00000000 	set ATN
+ 750 0000081C: 80080000 000007FC 	jump renegotiate_wdtr_loop
+ 751                             
+ 752 00000824:                   renegotiate_sdtr:
+ 753 00000824: 58000008 00000000         set ATN
+ 754 0000082C: 78031300 00000000         move scntl3_patch to SCNTL3
+ 755 00000834: 78050800 00000000         move sxfer_patch to SXFER
+ 756 0000083C: 60000040 00000000         clear ACK
+ 757 00000844: 9E030000 00000001         int phase_error, when not MSG_OUT
+ 758 0000084C:                   renegotiate_sdtr_loop:
+ 759 0000084C: 0E000005 00000000         move 5, sdtr_msg_out_addr, when MSG_OUT
+ 760 00000854: 860B0000 00000864 	jump renegotiate_sdtr_loop_atn when MSG_OUT
+ 761 0000085C: 80080000 00000650         jump phase_vector
+ 762                             
+ 763 00000864:                   renegotiate_sdtr_loop_atn:
+ 764 00000864: 58000008 00000000 	set ATN
+ 765 0000086C: 80080000 0000084C 	jump renegotiate_sdtr_loop
+ 766                             
+ 767 00000874:                   failed_selection_hdlr:
+ 768                                     ;manually clear Start bit to compensate for chip problem
+ 769 00000874: 7C00DF00 00000000         move SCNTL0 & 0xDF to SCNTL0
+ 770 0000087C: 78379900 00000000         move tag_patch to SCRATCHA3
+ 771 00000884: 7A1A0000 00000000         move CTEST2 | 0x00 to CTEST2
+ 772 0000088C: 98080000 00000012         int cmd_select_atn_failed
+ 773 00000894:                   end_failed_sel_hdlr:
+ 774                             
+ 775                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 776                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 777                             ; SYNC.SS
+ 778                             ;       This SCRIPT contains the negotiation sequence for synchronous data
+ 779                             ;       data transfer.  If it receives a message reject at the appropriate portion
+ 780                             ;       of the code, then we send a message to the host that the target device
+ 781                             ;       is a asynchronous device
+ 782                             ;
+ 783                             ; The following portions of code is for the SYNC negotiations
+ 784                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 785                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 786                             
+ 787                             ; Arbitrate and select the target with the SCSI id written into the current
+ 788                             ; zero position.  If during the selection, another target (including the target
+ 789                             ; we were trying to select) reselects the chip, then we jump to the script at
+ 790                             ; the address failed_sync_selection_hdlr.  This script does a simple interrupt
+ 791                             ; so that the process interrupt handler will see that this script never got
+ 792                             ; started and needs to be restarted at a later time.  The interrupt handler
+ 793                             ; will then start the SIOP at the script address of job_wait_reselection (also
+ 794                             ; known as the IO_WAIT script) to start the handling of the reselection by the
+ 795                             ; target.
+ 796                             
+ 797 00000894:                   begin_negotiation:
+ 798 00000894: 41010000 000009E4         select  ATN target_id, failed_negotiation_selection_hdlr
+ 799 0000089C: 78379900 00000000         move tag_patch to SCRATCHA3
+ 800 000008A4: 7A1A0000 00000000         move CTEST2 | 0x00 to CTEST2
+ 801 000008AC: 860B0000 000008C4         jump start_negotiation_msg_out_loop when MSG_OUT
+ 802 000008B4: 60000008 00000000         clear ATN
+ 803 000008BC: 98080000 00000001         int phase_error
+ 804                             
+ 805 000008C4:                   start_negotiation_msg_out_loop:
+ 806 000008C4: 0E000005 00000000         move 5, neg_msg_addr, when MSG_OUT
+ 807                             ; Move the identify message, any tag info, and first negotiation message
+ 808                             
+ 809 000008CC:                   negotiation_phase_patch:
+ 810 000008CC: 80080000 0000094C         jump start_sdtr ;patched to nop for wide negotiation
+ 811 000008D4: 870B0000 00000904         jump start_wdtr_msg_in_phase, when MSG_IN
+ 812 000008DC: 860A0000 000008F4         jump start_negotiation_msg_out_atn, if MSG_OUT
+ 813 000008E4: 98080000 00000021 	int wdtr_msg_ignored
+ 814 000008EC: 80080000 00000128 	jump cleanup_phase
+ 815                             
+ 816 000008F4:                   start_negotiation_msg_out_atn:
+ 817 000008F4: 58000008 00000000 	set ATN
+ 818 000008FC: 80080000 000008C4 	jump start_negotiation_msg_out_loop
+ 819                             
+ 820 00000904:                   start_wdtr_msg_in_phase:
+ 821 00000904: 0F000001 00000000         move 1, extended_msg_addr, when MSG_IN
+ 822 0000090C: 800C0007 000009AC         jump wdtr_msg_in_rejected if 0x07
+ 823                             
+ 824                             ; 0x07 is a message reject.  Jump to an intermediate point to 
+ 825                             ; ACK the byte, then continue.
+ 826                             ; A 0x01 indicates that we will be getting an extended message.  We expect to
+ 827                             ; get one back in response to our extended message asking for wide data
+ 828                             ; transfer.  Interrupt the host to process, it will then restart the script
+ 829                             ; and set ATN before ACKing the byte.  If it is an extended message, ACK the
+ 830                             ; byte and move in the rest of the message.
+ 831 00000914: 98040001 00000013         int err_not_ext_msg, if not 01
+ 832 0000091C: 60000040 00000000         clear ACK
+ 833 00000924: 0F000003 00000000         move 3, extended_msg_addr, when MSG_IN
+ 834 0000092C: 98080000 00000023         int wdtr_neg_done 
+ 835 00000934: 58000008 00000000         set ATN
+ 836 0000093C: 60000040 00000000         clear ACK
+ 837 00000944: 80080000 000008C4         jump start_negotiation_msg_out_loop
+ 838                             
+ 839 0000094C:                   start_sdtr:
+ 840 0000094C: 870B0000 0000096C         jump start_sdtr_msg_in_phase, when MSG_IN
+ 841 00000954: 860A0000 000008F4         jump start_negotiation_msg_out_atn, if MSG_OUT
+ 842 0000095C: 98080000 00000022 	int sdtr_msg_ignored
+ 843 00000964: 80080000 00000128 	jump cleanup_phase
+ 844                             
+ 845 0000096C:                   start_sdtr_msg_in_phase:
+ 846 0000096C: 0F000001 00000000         move 1, extended_msg_addr, when MSG_IN
+ 847 00000974: 800C0007 000009CC         jump sdtr_msg_in_rejected if 0x07
+ 848 0000097C: 98040001 00000013         int err_not_ext_msg, if not 01
+ 849 00000984: 60000040 00000000         clear ACK
+ 850 0000098C: 0F000004 00000000         move 4, extended_msg_addr, when MSG_IN
+ 851 00000994: 98080000 00000024         int sdtr_neg_done 
+ 852 0000099C: 60000040 00000000         clear ACK
+ 853 000009A4: 80080000 00000128         jump cleanup_phase
+ 854                             
+ 855 000009AC:                   wdtr_msg_in_rejected:
+ 856 000009AC: 98080000 00000025 	int wdtr_msg_reject
+ 857 000009B4: 58000008 00000000         set ATN
+ 858 000009BC: 60000040 00000000         clear ACK
+ 859 000009C4: 80080000 000008C4         jump start_negotiation_msg_out_loop
+ 860                                     
+ 861 000009CC:                   sdtr_msg_in_rejected:
+ 862 000009CC: 98080000 00000026 	int sdtr_msg_reject
+ 863 000009D4: 60000040 00000000         clear ACK
+ 864 000009DC: 80080000 00000128         jump cleanup_phase
+ 865                                     
+ 866 000009E4:                   failed_negotiation_selection_hdlr:
+ 867                                     ;manually clear Start bit to compensate for chip problem
+ 868 000009E4: 7C00DF00 00000000         move SCNTL0 & 0xDF to SCNTL0
+ 869                                     ;patch the tag so the host knows what command lost negotiation
+ 870 000009EC: 78379900 00000000         move tag_patch to SCRATCHA3
+ 871                                     ; clear sigp if it was set, we are going to interrupt the host anyway
+ 872 000009F4: 7A1A0000 00000000         move CTEST2 | 0X00 to CTEST2
+ 873 000009FC: 98080000 00000018         int neg_select_failed
+ 874 00000A04:                   end_failed_neg_sel_hdlr:
+ 875                             
+ 876                             
+ 877                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 878                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 879                             ; ABORT SCRIPT
+ 880                             ; This sends out the abort message to the target device.
+ 881                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 882                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 883                             
+ 884                             ;The get_to_msg_out routine allows the target to
+ 885                             ;complete the current phase before switching to
+ 886                             ;MSG_OUT.  Any bytes moved are garbage bytes.
+ 887 00000A04:                   get_to_msg_out:
+ 888 00000A04: 878A0000 00000030 	jump rel(abdr2_msg_in), if MSG_IN
+ 889 00000A0C: 838A0000 00000048 	jump rel(abdr2_status), if STATUS
+ 890 00000A14: 818A0000 00000058 	jump rel(abdr2_data_in), if DATA_IN
+ 891 00000A1C: 808A0000 00000070 	jump rel(abdr2_data_out), if DATA_OUT
+ 892                             
+ 893 00000A24:                   abdr2_cmd:
+ 894 00000A24: 0A000001 00000000 	move 1, abort_bdr_msg_in_addr, when COMMAND
+ 895 00000A2C: 828B0000 FFFFFFF0         jump rel(abdr2_cmd), when COMMAND
+ 896 00000A34: 90080000 00000000 	return
+ 897 00000A3C:                   abdr2_msg_in:
+ 898 00000A3C: 0F000001 00000000         move 1, abort_bdr_msg_in_addr, when MSG_IN
+ 899 00000A44: 60000040 00000000         clear ACK
+ 900 00000A4C: 878B0000 FFFFFFE8 	jump rel(abdr2_msg_in), when MSG_IN
+ 901 00000A54: 90080000 00000000 	return
+ 902 00000A5C:                   abdr2_status:
+ 903 00000A5C: 0B000001 00000000         move 1, abort_bdr_msg_in_addr, when STATUS
+ 904 00000A64: 60000040 00000000         clear ACK
+ 905 00000A6C: 90080000 00000000 	return
+ 906 00000A74:                   abdr2_data_in:
+ 907 00000A74: 09000001 00000000         move 1, abort_bdr_msg_in_addr, when DATA_IN
+ 908 00000A7C: 60000040 00000000         clear ACK
+ 909 00000A84: 818B0000 FFFFFFE8 	jump rel(abdr2_data_in), when DATA_IN
+ 910 00000A8C: 90080000 00000000 	return
+ 911 00000A94:                   abdr2_data_out:
+ 912 00000A94: 08000001 00000000         move 1, abort_bdr_msg_in_addr, when DATA_OUT
+ 913 00000A9C: 808B0000 FFFFFFF0 	jump rel(abdr2_data_out), when DATA_OUT
+ 914 00000AA4: 90080000 00000000 	return
+ 915                             
+ 916                             ; Arbitrate and select the target with the SCSI id written into the current
+ 917                             ; zero position.  If during the selection, another target (including the target
+ 918                             ; we were trying to select) reselects the chip, then we jump to the script at
+ 919                             ; the address failed_abort_bdr_selection_hdlr.  This script does a simple
+ 920                             ; interrupt so that the process interrupt handler will see that this script
+ 921                             ; never got started and needs to be restarted at a later time.  The interrupt
+ 922                             ; handler will then start the SIOP at the script address of iowait_entry_point
+ 923                             ; (also known as the IO_WAIT script) to start the handling of the reselection
+ 924                             ; by the target.
+ 925                             
+ 926 00000AAC:                   bdr_sequence:
+ 927 00000AAC: 41010000 00000B8C         select ATN target_id, failed_abort_bdr_selection_hdlr
+ 928                                     ; put the qtag we will be using into SCRATCHA3
+ 929 00000AB4: 7837AA00 00000000         move abdr_tag_patch to SCRATCHA3
+ 930                             
+ 931                                     ; clear sigp if it was set, we are going to interrupt the host anyway
+ 932 00000ABC: 7A1A0000 00000000         move CTEST2 | 0X00 to CTEST2
+ 933                             
+ 934 00000AC4: 860B0000 00000B7C         jump start_bdr_msg_out_phase when MSG_OUT
+ 935 00000ACC: 60000008 00000000         clear ATN
+ 936 00000AD4: 98080000 00000001         int phase_error
+ 937                             
+ 938 00000ADC:                   abort_sequence:
+ 939 00000ADC: 41010000 00000B8C         select ATN target_id, failed_abort_bdr_selection_hdlr
+ 940                                     ; put the qtag we will be using into SCRATCHA3
+ 941 00000AE4: 7837AA00 00000000         move abdr_tag_patch to SCRATCHA3
+ 942                             
+ 943                                     ; clear sigp if it was set, we are going to interrupt the host anyway
+ 944 00000AEC: 7A1A0000 00000000         move CTEST2 | 0X00 to CTEST2
+ 945 00000AF4: 860B0000 00000B0C         jump start_abort_msg_out_phase when MSG_OUT
+ 946 00000AFC: 60000008 00000000         clear ATN
+ 947 00000B04: 98080000 00000001         int phase_error
+ 948                             
+ 949 00000B0C:                   start_abort_msg_out_phase:
+ 950 00000B0C: 0E000002 00000000         move 2, abort_bdr_msg_out_addr, when MSG_OUT
+ 951 00000B14: 80080000 00000B5C 	jump wait_for_bus_free
+ 952                             
+ 953 00000B1C:                   abdr2_sequence:
+ 954 00000B1C: 58000008 00000000         set ATN
+ 955 00000B24: 60000040 00000000         clear ACK
+ 956 00000B2C: 860B0000 00000B54         jump start_abdr2_msg_out_phase when MSG_OUT
+ 957 00000B34: 88880000 FFFFFEC8 	call rel(get_to_msg_out)
+ 958 00000B3C: 860B0000 00000B54         jump start_abdr2_msg_out_phase when MSG_OUT
+ 959 00000B44: 60000008 00000000         clear ATN
+ 960 00000B4C: 98080000 00000001         int phase_error
+ 961                             
+ 962 00000B54:                   start_abdr2_msg_out_phase:
+ 963 00000B54: 0E000001 00000000         move 1, abort_bdr_msg_out_addr, when MSG_OUT
+ 964 00000B5C:                   wait_for_bus_free:
+ 965 00000B5C: 60000008 00000000 	clear ATN
+ 966                             	;clear the SDU bit
+ 967 00000B64: 7C027F00 00000000 	move SCNTL2 & 0x7F to SCNTL2
+ 968 00000B6C: 48000000 00000000 	wait disconnect
+ 969 00000B74: 98080000 0000001A 	int abort_io_complete
+ 970 00000B7C:                   end_wait_for_bus_free:
+ 971                             
+ 972 00000B7C:                   start_bdr_msg_out_phase:
+ 973 00000B7C: 0E000001 00000000         move 1, abort_bdr_msg_out_addr, when MSG_OUT
+ 974 00000B84: 80080000 00000B5C         jump wait_for_bus_free
+ 975                             
+ 976 00000B8C:                   failed_abort_bdr_selection_hdlr:
+ 977                                     ;manually clear Start bit to compensate for chip problem
+ 978 00000B8C: 7C00DF00 00000000         move SCNTL0 & 0xDF to SCNTL0
+ 979 00000B94: 7837AA00 00000000         move abdr_tag_patch to SCRATCHA3
+ 980 00000B9C: 7A1A0000 00000000         move CTEST2 | 0x00 to CTEST2
+ 981 00000BA4: 98080000 00000019         int abort_select_failed
+ 982 00000BAC:                   end_failed_abdr_sel_hdlr:
+ 983                             
+ 984                             ; The following two subroutines are used to move data to and from the SCSI
+ 985                             ; bus.  These routines use the Table Indirect Move feature of the 53C8XX.  The
+ 986                             ; address of this table is in tim_addr and the size of the table (in # of
+ 987                             ; entries) is in tim_cnt.  These two The tim_addr is moved to the DSA register
+ 988                             ; (where it is used by the chip and the tim_cnt is moved to the CTEST0 register
+ 989                             ; and is used as a loop counter.  The current loop counter value is copied back
+ 990                             ; into the tim_cnt field each time through the loop.
+ 991                             ;
+ 992                             ; After the registers are set up the data transfer is started.  Note that the
+ 993                             ; routines will loop till either all of the entries in the table have been
+ 994                             ; processed or the target signals a change of phase.
+ 995                             
+ 996 00000BAC:                   output_data:
+ 997 00000BAC: 7C38EF00 00000000         move DMODE & Not_DIOM_Flag to DMODE
+ 998                             
+ 999 00000BB4:                   output_data0:
+1000                                     ;SCRATCHB0 and SCRATCHB1 hold the counter
+1001 00000BB4: 725C0000 00000000         move SCRATCHB0 to SFBR
+1002 00000BBC: 80840000 00000010         jump rel(not_zero), if NOT 0
+1003 00000BC4: 725D0000 00000000         move SCRATCHB1 to SFBR
+1004 00000BCC: 900C0000 00000000         return, if 0
+1005 00000BD4:                   not_zero:
+1006 00000BD4: 18000000 00000000         move from 0, when DATA_OUT     ;move the data
+1007 00000BDC: 7E100800 00000000         move DSA0 +8 to DSA0                    ; Pt to next TI entry
+1008 00000BE4: 7F110000 00000000         move DSA1 +0 to DSA1 WITH CARRY
+1009                             
+1010 00000BEC: 7E5CFF00 00000000         move SCRATCHB0 -1 to SCRATCHB0          ; Update the counter
+1011 00000BF4: 7F5DFF00 00000000         move SCRATCHB1 -1 to SCRATCHB1 WITH CARRY
+1012                             
+1013 00000BFC: 90030000 00000000         return when not DATA_OUT                  ; change of phase
+1014 00000C04: 80080000 00000BB4         jump output_data0              ; if more TIM entries
+1015                             
+1016                             ;the very last transfer should not be a chained move, we
+1017                             ;want all bytes moved to the scsi bus
+1018 00000C0C:                   output_wide_data:
+1019                                     ; Initialize chip registers from system memory
+1020 00000C0C: 7C38EF00 00000000         move DMODE & Not_DIOM_Flag to DMODE
+1021                             
+1022 00000C14:                   output_wide_data0:
+1023                                     ;SCRATCHB0 and SCRATCHB1 hold the counter
+1024 00000C14: 725D0000 00000000         move SCRATCHB1 to SFBR
+1025 00000C1C: 80840000 00000018 	jump rel(chain_send), if NOT 0
+1026 00000C24: 725C0000 00000000 	move SCRATCHB0 to SFBR
+1027 00000C2C: 900C0000 00000000 	return, if 0
+1028 00000C34: 800C0001 00000C74         jump block_send, if 1
+1029 00000C3C:                   chain_send:
+1030 00000C3C: 10000000 00000000         chmov from 0, when DATA_OUT     ;chained move of the data
+1031 00000C44:                   next_wide_TIM:
+1032 00000C44: 7E100800 00000000         move DSA0 +8 to DSA0            ; Pt to next TI entry
+1033 00000C4C: 7F110000 00000000         move DSA1 +0 to DSA1 WITH CARRY
+1034                             
+1035 00000C54: 7E5CFF00 00000000         move SCRATCHB0 -1 to SCRATCHB0  ; Update the counter
+1036 00000C5C: 7F5DFF00 00000000         move SCRATCHB1 -1 to SCRATCHB1 WITH CARRY
+1037                             
+1038 00000C64:                   scntl2_patch_out:
+1039 00000C64: 80030000 00000CE4 	jump save_scntl2, when NOT DATA_OUT
+1040                                     ;return when not DATA_OUT        ; change of phase
+1041 00000C6C: 80080000 00000C14         jump output_wide_data0          ; if more TIM entries
+1042                             
+1043 00000C74:                   block_send:
+1044 00000C74: 18000000 00000000         move from 0, when DATA_OUT      ;block move of the data
+1045 00000C7C: 80080000 00000C44 	jump next_wide_TIM
+1046                             
+1047 00000C84:                   input_data:
+1048                                     ; Initialize chip registers from system memory
+1049 00000C84: 7C38EF00 00000000         move DMODE & Not_DIOM_Flag to DMODE
+1050 00000C8C:                   input_data0:
+1051                                     ;SCRATCHB0 and SCRATCHB1 hold the counter
+1052 00000C8C: 725C0000 00000000         move SCRATCHB0 to SFBR
+1053 00000C94: 80840000 00000010         jump rel(in_not_zero), if NOT 0
+1054 00000C9C: 725D0000 00000000         move SCRATCHB1 to SFBR
+1055 00000CA4: 900C0000 00000000         return, if 0
+1056 00000CAC:                   in_not_zero:
+1057                             	;after WDTR negotiation, patch this to be a chained move
+1058                             	;instruction if we are using 16 bit data transfers
+1059 00000CAC: 19000000 00000000         move from 0, when DATA_IN
+1060 00000CB4: 7E100800 00000000         move DSA0 +8 to DSA0                    ; Pt to next TI entry
+1061 00000CBC: 7F110000 00000000         move DSA1 +0 to DSA1 WITH CARRY
+1062                             
+1063 00000CC4: 7E5CFF00 00000000         move SCRATCHB0 -1 to SCRATCHB0          ; Update the counter
+1064 00000CCC: 7F5DFF00 00000000         move SCRATCHB1 -1 to SCRATCHB1 WITH CARRY
+1065                             
+1066 00000CD4:                   scntl2_patch_in:
+1067 00000CD4: 81030000 00000CE4 	jump save_scntl2, when NOT DATA_IN
+1068                                     ;return when not DATA_IN                   
+1069 00000CDC: 80080000 00000C8C         jump input_data0                        ; if more TIM entries
+1070                             
+1071 00000CE4:                   save_scntl2:
+1072 00000CE4: 74020900 00000000 	move SCNTL2 & 0x09 to SFBR
+1073 00000CEC: 6A360000 00000000 	move SFBR to SCRATCHA2
+1074 00000CF4: 72450000 00000000 	move SWIDE to SFBR		;save SWIDE
+1075 00000CFC: 6A350000 00000000 	move SFBR to SCRATCHA1
+1076 00000D04: 90080000 00000000 	return
+1077                             
+1078                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+1079                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+1080                             
+1081 00000D0C:                   cmd_msg_in_buf:
+1082 00000D0C: 80000000 00000D0C         nop cmd_msg_in_buf
+1083 00000D14:                   cmd_buf:
+1084 00000D14: 80000000 00000D14         nop cmd_buf
+1085 00000D1C: 80000000 00000D14         nop cmd_buf
+1086 00000D24:                   status_buf:
+1087 00000D24: 80000000 00000D24         nop status_buf
+1088 00000D2C:                   identify_msg_buf:
+1089 00000D2C: 80000000 00000D2C         nop identify_msg_buf
+1090 00000D34:                   neg_msg_buf:
+1091 00000D34: 80000000 00000D34         nop neg_msg_buf
+1092 00000D3C:                   wdtr_msg_out_buf:
+1093 00000D3C: 80000000 00000D3C         nop wdtr_msg_out_buf
+1094 00000D44:                   sdtr_msg_out_buf:
+1095 00000D44: 80000000 00000D44         nop sdtr_msg_out_buf
+1096 00000D4C:                   extended_msg_buf:
+1097 00000D4C: 80000000 00000D4C         nop extended_msg_buf
+1098 00000D54:                   abort_bdr_msg_out_buf:
+1099 00000D54: 80000000 00000D54         nop abort_bdr_msg_out_buf
+1100 00000D5C:                   abort_bdr_msg_in_buf:
+1101 00000D5C: 80000000 00000D5C         nop abort_bdr_msg_in_buf
+1102                             ;lun_msg_buf:
+1103                             ;        nop lun_msg_buf
+1104 00000D64:                   reject_msg_buf:
+1105 00000D64: 80000000 00000D64         nop reject_msg_buf
+1106 00000D6C:                   tag_msg_buf:
+1107 00000D6C: 80000000 00000D6C 	nop tag_msg_buf
+1108                             
+
+--SYMBOL---------------------------VALUE------TYPE-------
+abort_io_complete                 0000001A  ABSOLUTE              
+abort_select_failed               00000019  ABSOLUTE              
+check_next_io                     0000000B  ABSOLUTE              
+cmd_select_atn_failed             00000012  ABSOLUTE              
+cur_loc_tbl_addr1                 88888888  ABSOLUTE              
+cur_loc_tbl_addr1_ref             08080808  ABSOLUTE              
+cur_loc_tbl_addr2                 CCCCCCCC  ABSOLUTE              
+cur_loc_tbl_addr2_ref             0C0C0C0C  ABSOLUTE              
+cur_sav_tbl_addr1                 77777777  ABSOLUTE              
+cur_sav_tbl_addr1_ref             07070707  ABSOLUTE              
+cur_sav_tbl_addr2                 DDDDDDDD  ABSOLUTE              
+cur_sav_tbl_addr2_ref             0D0D0D0D  ABSOLUTE              
+DIOM_Flag                         00000010  ABSOLUTE              
+dptr_cnt_addr1                    22222222  ABSOLUTE              
+dptr_cnt_addr1_ref                02020202  ABSOLUTE              
+dptr_cnt_addr2                    33333333  ABSOLUTE              
+dptr_cnt_addr2_ref                03030303  ABSOLUTE              
+dptr_cnt_addr3                    55555555  ABSOLUTE              
+dptr_cnt_addr3_ref                05050505  ABSOLUTE              
+dptr_cnt_addr4                    99999999  ABSOLUTE              
+dptr_cnt_addr4_ref                09090909  ABSOLUTE              
+dptr_cnt_addr5                    66666666  ABSOLUTE              
+dptr_cnt_addr5_ref                06060606  ABSOLUTE              
+dptr_diff_addr1                   AAAAAAAA  ABSOLUTE              
+dptr_diff_addr1_ref               0A0A0A0A  ABSOLUTE              
+dptr_diff_addr2                   BBBBBBBB  ABSOLUTE              
+dptr_diff_addr2_ref               0B0B0B0B  ABSOLUTE              
+dptr_diff_addr3                   EEEEEEEE  ABSOLUTE              
+dptr_diff_addr3_ref               0E0E0E0E  ABSOLUTE              
+dptr_restore_addr                 FFFFFFFF  ABSOLUTE              
+dptr_restore_addr_ref             0F0F0F0F  ABSOLUTE              
+dptr_tbl_addr1                    11111111  ABSOLUTE              
+dptr_tbl_addr1_ref                01010101  ABSOLUTE              
+dptr_tbl_addr2                    44444444  ABSOLUTE              
+dptr_tbl_addr2_ref                04040404  ABSOLUTE              
+err_not_ext_msg                   00000013  ABSOLUTE              
+ext_msg                           0000000A  ABSOLUTE              
+ignore_residue                    00000027  ABSOLUTE              
+io_done                           00000006  ABSOLUTE              
+io_done_wsr                       00000007  ABSOLUTE              
+io_done_wss                       00000008  ABSOLUTE              
+NEXUS_data_base_adr0              00000088  ABSOLUTE              
+NEXUS_data_base_adr1              00000088  ABSOLUTE              
+NEXUS_data_base_adr2              00000088  ABSOLUTE              
+NEXUS_data_base_adr3              00000088  ABSOLUTE              
+Not_DIOM_Flag                     000000EF  ABSOLUTE              
+Not_SIOM_Flag                     000000DF  ABSOLUTE              
+neg_select_failed                 00000018  ABSOLUTE              
+phase_error                       00000001  ABSOLUTE              
+restore_patch                     0000AAAA  ABSOLUTE              
+SIOM_Flag                         00000020  ABSOLUTE              
+save_ptrs_wsr                     00000004  ABSOLUTE              
+save_ptrs_wss                     00000005  ABSOLUTE              
+save_tbl_base_adr0                00000099  ABSOLUTE              
+save_tbl_base_adr1                00000099  ABSOLUTE              
+save_tbl_base_adr2                00000099  ABSOLUTE              
+save_tbl_base_adr3                00000099  ABSOLUTE              
+sdtr_msg_ignored                  00000022  ABSOLUTE              
+sdtr_msg_reject                   00000026  ABSOLUTE              
+sdtr_neg_done                     00000024  ABSOLUTE              
+sync_msg_reject                   00000016  ABSOLUTE              
+unknown_msg                       00000009  ABSOLUTE              
+wdtr_msg_ignored                  00000021  ABSOLUTE              
+wdtr_msg_reject                   00000025  ABSOLUTE              
+wdtr_neg_done                     00000023  ABSOLUTE              
+SCRIPT                            00000000  CODE SEGMENT          
+abdr2_sequence                    00000B1C  ENTRY                 
+abort_bdr_msg_in_buf              00000D5C  ENTRY                 
+abort_bdr_msg_out_buf             00000D54  ENTRY                 
+abort_sequence                    00000ADC  ENTRY                 
+after_data_move_check             00000704  ENTRY                 
+bdr_sequence                      00000AAC  ENTRY                 
+begin_negotiation                 00000894  ENTRY                 
+cleanup_phase                     00000128  ENTRY                 
+cmd_buf                           00000D14  ENTRY                 
+cmd_complete_patch                000006CC  ENTRY                 
+cmd_msg_in_buf                    00000D0C  ENTRY                 
+complete_ext_msg                  00000630  ENTRY                 
+end_failed_abdr_sel_hdlr          00000BAC  ENTRY                 
+end_failed_neg_sel_hdlr           00000A04  ENTRY                 
+end_failed_sel_hdlr               00000894  ENTRY                 
+end_wait_for_bus_free             00000B7C  ENTRY                 
+ext_msg_patch                     00000640  ENTRY                 
+extended_msg_buf                  00000D4C  ENTRY                 
+failed_abort_bdr_selection_hdlr   00000B8C  ENTRY                 
+failed_negotiation_selection_hdlr  000009E4  ENTRY                 
+failed_selection_hdlr             00000874  ENTRY                 
+goto_cleanup                      000007CC  ENTRY                 
+identify_msg_buf                  00000D2C  ENTRY                 
+in_not_zero                       00000CAC  ENTRY                 
+message_loop                      00000120  ENTRY                 
+msg_done                          000001F0  ENTRY                 
+neg_msg_buf                       00000D34  ENTRY                 
+negotiation_phase_patch           000008CC  ENTRY                 
+output_data                       00000BAC  ENTRY                 
+output_wide_data                  00000C0C  ENTRY                 
+phase_error_entry                 000001A0  ENTRY                 
+regular_phase_hdlr                00000180  ENTRY                 
+reject_loop                       00000794  ENTRY                 
+reject_msg_buf                    00000D64  ENTRY                 
+reject_target_sync                00000774  ENTRY                 
+renegotiate_sdtr                  00000824  ENTRY                 
+renegotiate_sdtr_loop             0000084C  ENTRY                 
+renegotiate_wdtr                  000007DC  ENTRY                 
+renegotiate_wdtr_loop             000007FC  ENTRY                 
+save_pointers                     00000248  ENTRY                 
+save_pointers_wide                00000230  ENTRY                 
+save_ptrs_patch                   000001E8  ENTRY                 
+save_ptrs_patch1                  0000075C  ENTRY                 
+save_scntl2                       00000CE4  ENTRY                 
+scntl2_patch_in                   00000CD4  ENTRY                 
+scntl2_patch_out                  00000C64  ENTRY                 
+script_reconnect_point            000000B0  ENTRY                 
+scripts_entry_point               00000100  ENTRY                 
+sdtr_msg_out_buf                  00000D44  ENTRY                 
+send_data                         000006EC  ENTRY                 
+start_negotiation_msg_out_loop    000008C4  ENTRY                 
+start_sdtr                        0000094C  ENTRY                 
+start_sdtr_msg_in_phase           0000096C  ENTRY                 
+start_wdtr_msg_in_phase           00000904  ENTRY                 
+status_buf                        00000D24  ENTRY                 
+tables_same                       00000344  ENTRY                 
+tag_msg_buf                       00000D6C  ENTRY                 
+unknown_msg_hdlr                  00000210  ENTRY                 
+wait_for_bus_free                 00000B5C  ENTRY                 
+wdtr_msg_out_buf                  00000D3C  ENTRY                 
+abort_bdr_msg_in_addr             00000000  EXTERNAL              
+abort_bdr_msg_out_addr            00000000  EXTERNAL              
+cmd_addr                          00000000  EXTERNAL              
+cmd_msg_in_addr                   00000000  EXTERNAL              
+DSA_Addr                          00000000  EXTERNAL              
+extended_msg_addr                 00000000  EXTERNAL              
+identify_msg_addr                 00000000  EXTERNAL              
+neg_msg_addr                      00000000  EXTERNAL              
+reject_msg_addr                   00000000  EXTERNAL              
+restore_patch_addr                00000000  EXTERNAL              
+SCRATCHA0_addr                    00000000  EXTERNAL              
+SCRATCHB_addr                     00000000  EXTERNAL              
+sdtr_msg_out_addr                 00000000  EXTERNAL              
+status_addr                       00000000  EXTERNAL              
+tag_msg_addr                      00000000  EXTERNAL              
+tim_cnt                           00000000  EXTERNAL              
+tim_addr                          00000000  EXTERNAL              
+wait_reselect                     00000000  EXTERNAL              
+wdtr_msg_out_addr                 00000000  EXTERNAL              
+abdr2_cmd                         00000A24  LABEL                 
+abdr2_data_out                    00000A94  LABEL                 
+abdr2_data_in                     00000A74  LABEL                 
+abdr2_status                      00000A5C  LABEL                 
+abdr2_msg_in                      00000A3C  LABEL                 
+bit1                              00000040  LABEL                 
+bit2                              00000030  LABEL                 
+bit3                              00000020  LABEL                 
+bitend                            00000050  LABEL                 
+block_send                        00000C74  LABEL                 
+chain_send                        00000C3C  LABEL                 
+disconnect_point                  0000071C  LABEL                 
+ext_msg_handler                   00000618  LABEL                 
+get_to_msg_out                    00000A04  LABEL                 
+ignore_wide_residue               00000218  LABEL                 
+init_index                        00000000  LABEL                 
+input_data                        00000C84  LABEL                 
+input_data0                       00000C8C  LABEL                 
+message_loop_atn                  00000168  LABEL                 
+msg_hdlr                          000001A8  LABEL                 
+next_wide_TIM                     00000C44  LABEL                 
+not_last_data_xfer                00000764  LABEL                 
+not_tag_msg                       000001B8  LABEL                 
+not_zero                          00000BD4  LABEL                 
+output_data0                      00000BB4  LABEL                 
+output_wide_data0                 00000C14  LABEL                 
+phase_vector                      00000650  LABEL                 
+queue_tag                         00000088  LABEL                 
+receive_data                      000006FC  LABEL                 
+reconnect_msg_in                  00000058  LABEL                 
+reject_cleanup                    000007BC  LABEL                 
+reject_loop_atn                   000007AC  LABEL                 
+renegotiate_sdtr_loop_atn         00000864  LABEL                 
+renegotiate_wdtr_loop_atn         00000814  LABEL                 
+restore_msg                       00000200  LABEL                 
+restore_ptrs                      00000354  LABEL                 
+sdtr_msg_in_rejected              000009CC  LABEL                 
+send_command                      00000178  LABEL                 
+start_abdr2_msg_out_phase         00000B54  LABEL                 
+start_abort_msg_out_phase         00000B0C  LABEL                 
+start_bdr_msg_out_phase           00000B7C  LABEL                 
+start_negotiation_msg_out_atn     000008F4  LABEL                 
+status_complete                   00000680  LABEL                 
+wdtr_msg_in_rejected              000009AC  LABEL                 
+abdr_tag_patch                    000000AA  RELATIVE              
+cmd_bytes_out_count               00000000  RELATIVE              
+ext_msg_size                      00000000  RELATIVE              
+scntl3_patch                      00000013  RELATIVE              
+sxfer_patch                       00000008  RELATIVE              
+tag_patch                         00000099  RELATIVE              
+target_id                         00000001  RELATIVE              

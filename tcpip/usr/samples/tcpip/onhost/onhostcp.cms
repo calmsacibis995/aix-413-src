@@ -1,0 +1,286 @@
+/*static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/onhostcp.cms, tcpip, tcpip411, GOLD410 8/14/90 16:31:35";
+ *
+ * COMPONENT_NAME: TCPIP onhostcp.cms
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1986, 1988, 1989
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ * RISC System/6000 is a trademark of International Business Machines
+   Corporation.
+*/
+/*
+    AIXwhat is @(#) onhostcp.cms 1.9 PASC 1.9
+ */ version='onhost - version 1.1 - VM/CMS'
+/*
+ * onhostcp - perform file transfer using FTP at the host
+ * onhostcp ? for information
+ */
+ 
+noterm='noterm'  /* ='noterm' for normal use else ='term' for debug */
+ftptrace = 'ONHOSTCP FTPTRACE A'  /* leave FTP trace on a-disk */
+trace off
+ 
+prompt = true
+parse arg lcargs
+if index(lcargs, '(') ^= 0 then do
+  parse value lcargs with . '(' ftpargs ')' lcargs
+  ftpargs = strip(ftpargs)
+  if ftpargs = "" then prompt = false  /* no prompt if () specified */
+  end
+else ftpargs = ""
+parse var lcargs file1 file2 extra
+opt = "";
+if substr(file1,1,1) = "-" then do   /* if binary option supplied */
+  opt = file1; file1 = file2; file2 = extra
+end
+optb = 0                          /* default no binary transfer */
+do while opt ^= ""
+  x = substr(opt,1,1)
+  opt = substr(opt,2)
+  select
+    when x = "-" then nop
+    when x = "b" then optb = 1
+    when x = "?" then signal tell
+    otherwise exit 99             /* must be valid option */
+  end
+end
+ 
+if file1 = "" | file2 = "" then do
+  say "filename missing"; exit 16
+end
+if index(file1, ':') ^= 0 then
+  parse value file1 with env1 ':' file1
+else env1 = ""
+upper env1
+if env1 ^= "" & env1 ^= "CMS" then do
+  say "invalid host:" env1; exit 16
+end
+if index(file2, ':') ^= 0 then
+  parse value file2 with env2 ':' file2
+else env2 = ""
+upper env2
+if env2 ^= "" & env2 ^= "CMS" then do
+  say "invalid host:" env2; exit 16
+end
+if env1 ^= env2 then do
+ if  ftpargs = "" then do
+  if queued() = 0 & prompt = true then do
+    say "The IBM host needs information about its file transfer partner,"
+    say "  system userid directory"
+    end
+  end
+ else push ftpargs
+ parse pull ftparg1 ftparg2 ftparg3 ftparg4
+ if ftparg1 = "" then exit 1
+ /* allow line to be system [user [[password] directory] */
+ if ftparg4 = "" then do
+   ftparg4 = ftparg3
+   ftparg3 = ""
+   end
+ if ftparg2 = "?" | ftparg2 = "" then do
+   say "  enter userid on" ftparg1
+   parse pull ftparg2
+   end
+ if ftparg2 = "" then exit 1
+ if ftparg4 = "" then ftparg4 = "?"
+ if ftparg3 = "" | ftparg3 = "?" then do
+   say "  enter password for" ftparg2 "at" ftparg1
+   'TCPUTL RDI'  /* TCP/IP module (from TCPMAINT 592) to hide passwd */
+   if rc = -3 then
+     say " OnHost warning: password will show"  /* ask onhost for no display */
+   if rc <> 0 then parse pull ftparg3
+   else exit 1
+   end
+ ftpargs = ftparg1 ftparg2 ftparg3 ftparg4
+ end
+if env1 = "" & env2 = "" then
+  signal nothost
+if env1 = "" then filename1 = file1
+else filename1 = env1":"file1
+if env2 = "" then filename2 = file2
+else filename2 = env2":"file2
+lcargs = '('ftpargs')' filename1 filename2
+ 
+parse value lcargs with e1 '(' work user pass wd e2 ')' fid1 fid2 e3
+if ( (e1<>'') | (e2<>'') | (e3<>'') ) then signal tell
+if (fid1='') | (fid2='') then signal tell
+ 
+/* decode the filenames and setup for FTP */
+h1 = left(fid1,4); h2 = left(fid2,4); upper h1 h2
+if 'CMS:'=h1 then
+  if 'CMS:'=h2 then cmd='copy'
+  else cmd='put'
+else
+  if 'CMS:'=h2 then cmd='get'
+  else cmd='copy'
+ 
+if cmd<>'get' then
+  parse value fid1 with . ':' fid1
+if cmd<>'put' then
+  parse value fid2 with . ':' fid2
+ 
+/* if host to host then do it now */
+if cmd='copy'
+then do
+  parse value fid1 with fn1 '.' ft1 '.' fm1 '.'
+  parse value fid2 with fn2 '.' ft2 '.' fm2 '.'
+  if fm1 = '' then fm1 = '*'
+  if ft2 = '' then ft2 = '='
+  if fm2 = '' then fm2 = 'A'
+  if (( fn1 <> '' ) & ( ft1 <> '' ) & ( fn2 <> '' ))
+  then
+    cmd fn1 ft1 fm1 fn2 ft2 fm2 '(replace'
+  else do
+    say "incorrect file specification"
+    exit 1
+    end
+  if ( rc <> 0 ) then say "copy failed"
+  exit rc
+  end
+ 
+if (wd = '') then signal tell
+/* one of the files may need prepended working directory */
+if (cmd='get')
+then fid1 = fullfid(fid1,fid2)
+else fid2 = fullfid(fid2,fid1)
+ 
+/* setup odds and ends */
+if (pass='') then signal tell
+ 
+/* save any stacked lines */
+'makebuf'
+bufno=rc
+stacked = queued()
+ 
+/* close & start the trace - console status is not normally saved */
+/* 'vmpush con' */
+'cp cp cl cons'
+'cp sp cons * start' noterm
+ 
+/* setup for file transfer here */
+if cmd='get'
+then do
+  rep = '(replace'
+  ftt = fid1  /* set file to transfer name */
+  end
+else do
+  rep = ''
+  ftt = fid2
+  end
+ 
+/* do file transfer */
+push 'quit'
+push cmd fid1 fid2 rep
+if optb = 1 then push 'binary'
+push user pass
+push work  /* break ftp work line to accomodate some xa systems */
+'FTP ('
+ 
+/* close and receive the file transfer trace (to leave a record) */
+'execio * cp (string CL CONS'
+if rc<>0
+then signal notrace
+else pull . . spid .
+'erase' ftptrace
+'receive' spid ftptrace '(replace'
+if rc<>0 then signal notrace
+ 
+/* check the file transfer trace */
+'execio * DISKR' ftptrace '1'
+if rc<>0 then signal notrace
+ 
+frc=1
+do while queued() > stacked
+  parse pull b1 . . . . b6 .
+  if b1='150' then fid=ftt
+  if (b1='226') & (fid=ftt) then frc=0
+end
+if frc<>0 then signal notransfer
+ 
+/* file transfer appears to be successful */
+call cleanup
+exit frc
+ 
+cleanup: procedure expose bufno
+'cp sp cons stop'
+'execio * cp (string CL CONS PURGE'
+/*                           console status is not normally restored */
+/* 'vmpop con' */
+'dropbuf' bufno
+return
+ 
+notrace:
+call cleanup
+say ftt '- transfer may have failed'
+exit 2
+ 
+notransfer:
+call cleanup
+say ftt '- transfer failed'
+exit frc
+ 
+nothost:
+say 'neither file is a host file - use an ordinary copy command'
+exit 1
+ 
+fullfid: procedure expose wd  /* create full file name for ftp */
+fid = arg(1); fn = arg(2)
+ofid = fid; iwd = wd
+select
+  when ('.' = fid) then return wd"/"fn
+  when ('/' = left(fid,1)) then return fid
+  when ('./' = left(fid,2)) then return wd"/"right(fid,(length(fid)-2))
+  when ('../' = left(fid,3)) then do
+    do forever until ('../' <> left(fid,3))
+      fid=right(fid,(length(fid)-3))
+      eos=lastpos('/',iwd)-1
+      if (0 > eos) then do
+        say 'could not make name for' ofid
+        say 'using working directory' wd
+        exit 1
+        end
+      iwd = left(iwd,eos)
+      end
+    return iwd"/"fid
+    end
+  otherwise
+    return wd"/"fid
+  end
+ 
+tell:
+say version
+say 'onhostcp [(system userid [[password] directory])] [-b] ufn  xfn'
+say '                                                       xfn  ufn'
+say '                                                       xfn1 xfn2'
+say '  copies a file between a system and the IBM host using FTP at host'
+say '  or copies file xfn1 to xfn2 at the IBM host'
+say 'where: system is the Internet name or address of the system'
+say '       userid and password authorize your use of the system'
+say '         (the password is solicited if it is not specified)'
+say '       directory is the file directory (optional) of the system'
+say '       ufn is the path (optional) and name of the system file'
+say '         (directory is used to complete the path, if necessary)'
+say '       xfn is of the form cms:fn.ft.fm for an IBM VM/CMS file'
+say 'option: use -b for the transfer of a binary file'
+say 'note: if file transfer fails, see cms:onhostcp.ftptrace.a for help'
+exit 9

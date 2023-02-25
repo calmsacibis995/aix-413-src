@@ -1,0 +1,180 @@
+ 
+$ static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/hostconnect.man, tcpip, tcpip411, GOLD410 8/14/90 16:25:37";
+$
+$ COMPONENT_NAME:  TCPIP hostconnect.l
+$
+$ ORIGINS: 27
+$
+$ (C) COPYRIGHT International Business Machines Corp. 1989
+$ All Rights Reserved
+$ Licensed Materials - Property of IBM
+$
+$ US Government Users Restricted Rights - Use, duplication or
+$ disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$
+$	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+$
+$ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+$ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+$ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+$ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+$ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+$ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+$ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+$ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+$ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+$ CORRECTION.
+$
+$  RISC System/6000 is a trademark of International Business Machines
+$   Corporation.
+$
+$
+$ man pages for hostconnect
+$
+hostconnect, version 1.1
+ 
+ 
+PURPOSE
+ 
+Create a connection between an AIX system and an IBM VM or MVS host
+ 
+ 
+SYNTAX
+ 
+   hostconnect [-?d] -a alias
+   hostconnect [-?d] hostname [style]
+ 
+ 
+DESCRIPTION
+ 
+hostconnect is an AIX command which creates a connection to hostname for
+use by the onhost command.  Automatic login may be possible by using the
+alias option.  The style of host is discussed below - see onhost.alias.
+hostconnect requires a binary telnet session with the host and identifies
+itself as an IBM-3278-2 terminal.  After a successful login, hostconnect
+goes into the background to listen for onhost commands or full-screen
+emulation.  This means that you can now use all the usual AIX commands
+and, in addition, you can use the onhost command.
+ 
+When you logoff the host system, hostconnect terminates.  If you cannot
+logoff the host, then you can kill hostconnect but do not use "kill -9"
+because hostconnect will not get a chance to close the host connection.
+Your host userid may remain active and, under some circumstances, you may
+not be able to login again.
+ 
+You can follow the progress of hostconnect by the characters which it writes
+to standard output.  The letters C, L, P, and E indicate connection, login,
+password, and execution of onhostld.  R and I show reset and initialization.
+Q, F, and H indicate failure.  Also present are equal signs to show minor
+state changes.  The string will end in S if hostconnect is successful.
+ 
+ 
+OPTIONS
+
+-?        This option displays information about the hostconnect command.
+ 
+-a alias  This option selects an entry from the file named "onhost.alias",
+          see below, which specifies the hostname and, additionally, the
+          style, userid, and password necessary to complete a host login. 
+          The alias is used by the onhost command to select a connection.
+          Using the alias "noalias" is equivalent to not using the option.
+ 
+ -d       This option turns on debugging to study the code or track down
+          a problem.  -d sends debug output to the terminal.  -d1 sends
+          debug output (-d2 sends more) to the file "hostconn.debug".
+ 
+
+ONHOST.ALIAS
+ 
+The "onhost.alias" file resides in the current or home directory.  The
+file permissions are set to 600 because the file may contain passwords.
+The first line of the alias file is reserved for onhost file transfer and
+full-screen emulator information.  The line contains zero or more words,
+
+   [[AIXuserid [AIXpasswd ]]em3278]
+ 
+where em3278 is the name of the IBM 3278-2 full-screen emulator to be used
+by onhost for full-screen mode.  The default is tn for AIX, or tn3270 for
+BSD systems.  AIXuserid and AIXpasswd are the userid and password to be used
+by the "onhost cp" command to authenticate file transfer between the MVS or
+VM TCP/IP FTP client and the AIX system executing "onhost cp".  If AIXuserid
+is not present, it is set to LOGNAME or USER, if either exists in the onhost
+environment.  AIXuserid and AIXpasswd are requested if needed and not set.
+ 
+Successive lines, one per alias, are formed as follows,
+
+   alias hostname [style [userid [passwd ]]] [(iplstr)]
+ 
+alias     This field labels the entry.  It is also used to create a file
+          in the home directory which contains the information needed by
+          onhost to use this host connection.  The file name is formed by
+          adding a prefix of "hostcon.", e.g., an alias of "foo" would
+          create the file "hostcon.foo".  (The file "hostcon.noalias"
+          is created if hostconnect is used without the alias option.)
+ 
+hostname  This is the host system name specified as an Internet domain
+          name or address.  For AIX/370 hostconnect only, a hostname of
+          "LDSF" requests a VM Logical Device Support Facility connection
+          to a virtual machine peer of AIX/370.
+ 
+style     This numeric field specifies the style of host connection.  Use
+          0 or 2 for CMS, 4 for TSO, or 6 for an unknown host; add one to
+          bypass automatic login.  The default is zero.  Automatic login is
+          not attempted if the style is 6.  For example, a style of 3 will
+          direct hostconnect to connect to hostname, to suppress automatic
+          login, and to expect VM/CMS interaction.
+
+          If automatic login is bypassed, a knowledgeable person can use
+          onhost to complete the login and then execute "onhostld" on the
+          host to prepare it for onhost command execution.  This feature
+          allows hostconnect and onhost to work with unusual systems.
+          An AIX shell script can be used to automate this procedure.
+ 
+userid    This is the VM/CMS or MVS/TSO userid on the host named hostname.
+          It is used for automatic login and requested if not present.
+
+passwd    This is the password used to complete automatic login to userid.
+          It is requested if not present.
+
+(iplstr)  The string iplstr is used to ipl the VM/CMS system, if necessary.
+          The default is (ipl cms).
+ 
+Here is a sample onhost.alias file.
+ 
+  webster tn
+  cms pasc 
+  vmxa 129.33.192.128 2 merriam (ipl cmsxa)
+  pvm LDSF 1
+  test mvstest.paloalto.ibm.com 4 tsouser a1b2c3
+ 
+
+NOTES
+ 
+Before using hostconnect for the first time, make sure that you have a
+valid userid and password for the host system you want to use.  In addition,
+some programs used by hostconnect and onhost should be present on the host.
+ 
+On VM, hostconnect expects to see a VM READ in the standard status area of
+the CMS screen whenever a command ends or a program needs input.  If you
+change the setting of autoread or change the VM READ status area then onhost
+or hostconnect may not work correctly.  Specifying the wrong style of host
+can cause similar problems.
+
+Both CMS and TSO signal onhost command end with a distinctive line which
+also contains the host return code.  If this line is not recognized by the
+AIX onhost command, it will be displayed and onhost will not terminate.
+(You can interrupt onhost or logoff the host.)  On VM, this can be caused
+if you have set term hilight on, for example.
+ 
+Modifications to the onhost.alias and onhost.profil files may not affect
+the current hostconnect sessions.
+
+When hostconnect receives a kill signal, it sends "logoff" to the host as
+part of its shutdown sequence.
+
+
+SEE ALSO
+ 
+onhost
+
+AIXwhat is @(#) hostconnect.l 1.4 PASC 1.4

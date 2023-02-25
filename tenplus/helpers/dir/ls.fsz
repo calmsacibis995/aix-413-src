@@ -1,0 +1,524 @@
+* File name: ls.frm
+* @(#)79	1.4  src/tenplus/helpers/dir/ls.fsz, tenplus, tenplus411, GOLD410 3/23/93 11:56:13
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 2
+	Flags = 0x1
+
+/invtext:
+	Type = 1
+	Count = 23
+
+/invtext/0:
+	Value = "[title                                                                         ]"
+
+/invtext/1:
+	Value = "[prompt                                                                        ]"
+
+/invtext/2:
+
+/invtext/3:
+	Value = "[subtitle                                                                      ]"
+
+/invtext/4:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\024\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/5:
+	Value = "\001 [Files       ] \001 \\ \001 [Owner ] \001 [Bytes] \001 [Last_modify_time  ] \001 [Y] [G] [O] \001"
+
+/invtext/6:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/7:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/8:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/9:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/10:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/11:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/12:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/13:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/14:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/15:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/16:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/17:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/18:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/19:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/20:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/21:
+	Value = "\001 [            ] \001 \\ \001 [      ] \001 [     ] \001 [                  ] \001 [ ] [ ] [ ] \001"
+
+/invtext/22:
+	Value = "\006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\022\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/fields:
+	Type = 1
+	Count = 14
+
+/fields/0:
+	Type = 1
+	Count = 4
+
+/fields/0/number:
+	Value = "1"
+
+/fields/0/name:
+	Value = "title"
+
+/fields/0/cat-msgno:
+	Value = "%-F_LS_TITLE"
+
+/fields/0/cat-deftxt:
+	Value = "                       INTERACTIVE TEN/PLUS File Manager                        "
+
+/fields/1:
+	Type = 1
+	Count = 4
+
+/fields/1/number:
+	Value = "2"
+
+/fields/1/name:
+	Value = "prompt"
+
+/fields/1/cat-msgno:
+	Value = "%-F_LS_PROMPT"
+
+/fields/1/cat-deftxt:
+	Value = "      To see detailed file status information, select an item and ZOOM-IN.      "
+
+/fields/2:
+	Type = 1
+	Count = 4
+
+/fields/2/number:
+	Value = "3"
+
+/fields/2/name:
+	Value = "subtitle"
+
+/fields/2/cat-msgno:
+	Value = "%-F_LS_SUBTITLE"
+
+/fields/2/cat-deftxt:
+	Value = "    File Name      T    Owner      Size      Modification Date     Permissions  "
+
+/fields/3:
+	Type = 1
+	Count = 13
+
+/fields/3/number:
+	Value = " 4"
+
+/fields/3/name:
+	Value = "Files"
+
+/fields/3/data-path:
+	Value = "1/*/Files"
+
+/fields/3/ganged-to:
+	Value = "Contents, File, Type"
+
+/fields/3/4:
+	Type = 0
+
+/fields/3/crscroll:
+	Value = "x"
+
+/fields/3/6:
+	Type = 0
+
+/fields/3/7:
+	Type = 0
+
+/fields/3/pick-name:
+	Value = "file"
+
+/fields/3/9:
+	Type = 0
+
+/fields/3/10:
+	Type = 0
+
+/fields/3/zoom-form:
+	Value = "stat"
+
+/fields/3/doumod:
+	Value = "x"
+
+/fields/4:
+	Type = 1
+	Count = 11
+
+/fields/4/number:
+	Value = " 5"
+
+/fields/4/name:
+	Value = "T"
+
+/fields/4/data-path:
+	Value = "1/*/T"
+
+/fields/4/3:
+	Type = 0
+
+/fields/4/4:
+	Type = 0
+
+/fields/4/5:
+	Type = 0
+
+/fields/4/6:
+	Type = 0
+
+/fields/4/userro:
+	Value = "x"
+
+/fields/4/crscroll:
+	Value = "x"
+
+/fields/4/pick-name:
+	Value = "file"
+
+/fields/4/zoom-form:
+	Value = "stat"
+
+/fields/5:
+	Type = 1
+	Count = 12
+
+/fields/5/number:
+	Value = " 6"
+
+/fields/5/name:
+	Value = "Owner"
+
+/fields/5/data-path:
+	Value = "1/*/Owner"
+
+/fields/5/3:
+	Type = 0
+
+/fields/5/4:
+	Type = 0
+
+/fields/5/5:
+	Type = 0
+
+/fields/5/6:
+	Type = 0
+
+/fields/5/7:
+	Type = 0
+
+/fields/5/crscroll:
+	Value = "x"
+
+/fields/5/pick-name:
+	Value = "file"
+
+/fields/5/zoom-form:
+	Value = "stat"
+
+/fields/5/doumod:
+	Value = "x"
+
+/fields/6:
+	Type = 1
+	Count = 9
+
+/fields/6/number:
+	Value = " 7"
+
+/fields/6/name:
+	Value = "Bytes"
+
+/fields/6/data-path:
+	Value = "1/*/Bytes"
+
+/fields/6/3:
+	Type = 0
+
+/fields/6/4:
+	Type = 0
+
+/fields/6/userro:
+	Value = "x"
+
+/fields/6/crscroll:
+	Value = "x"
+
+/fields/6/pick-name:
+	Value = "file"
+
+/fields/6/zoom-form:
+	Value = "stat"
+
+/fields/7:
+	Type = 1
+	Count = 12
+
+/fields/7/number:
+	Value = " 8"
+
+/fields/7/name:
+	Value = "Last_modify_time"
+
+/fields/7/data-path:
+	Value = "1/*/Last_modify_time"
+
+/fields/7/3:
+	Type = 0
+
+/fields/7/4:
+	Type = 0
+
+/fields/7/5:
+	Type = 0
+
+/fields/7/6:
+	Type = 0
+
+/fields/7/7:
+	Type = 0
+
+/fields/7/crscroll:
+	Value = "x"
+
+/fields/7/pick-name:
+	Value = "file"
+
+/fields/7/zoom-form:
+	Value = "stat"
+
+/fields/7/doumod:
+	Value = "x"
+
+/fields/8:
+	Type = 1
+	Count = 12
+
+/fields/8/number:
+	Value = " 9"
+
+/fields/8/name:
+	Value = "Y"
+
+/fields/8/data-path:
+	Value = "1/*/Y"
+
+/fields/8/3:
+	Type = 0
+
+/fields/8/4:
+	Type = 0
+
+/fields/8/5:
+	Type = 0
+
+/fields/8/6:
+	Type = 0
+
+/fields/8/7:
+	Type = 0
+
+/fields/8/crscroll:
+	Value = "x"
+
+/fields/8/pick-name:
+	Value = "file"
+
+/fields/8/zoom-form:
+	Value = "stat"
+
+/fields/8/doumod:
+	Value = "x"
+
+/fields/9:
+	Type = 1
+	Count = 12
+
+/fields/9/number:
+	Value = "10"
+
+/fields/9/name:
+	Value = "G"
+
+/fields/9/data-path:
+	Value = "1/*/G"
+
+/fields/9/3:
+	Type = 0
+
+/fields/9/4:
+	Type = 0
+
+/fields/9/5:
+	Type = 0
+
+/fields/9/6:
+	Type = 0
+
+/fields/9/7:
+	Type = 0
+
+/fields/9/crscroll:
+	Value = "x"
+
+/fields/9/pick-name:
+	Value = "file"
+
+/fields/9/zoom-form:
+	Value = "stat"
+
+/fields/9/doumod:
+	Value = "x"
+
+/fields/10:
+	Type = 1
+	Count = 12
+
+/fields/10/number:
+	Value = "11"
+
+/fields/10/name:
+	Value = "O"
+
+/fields/10/data-path:
+	Value = "1/*/O"
+
+/fields/10/3:
+	Type = 0
+
+/fields/10/4:
+	Type = 0
+
+/fields/10/5:
+	Type = 0
+
+/fields/10/6:
+	Type = 0
+
+/fields/10/7:
+	Type = 0
+
+/fields/10/crscroll:
+	Value = "x"
+
+/fields/10/pick-name:
+	Value = "file"
+
+/fields/10/zoom-form:
+	Value = "stat"
+
+/fields/10/doumod:
+	Value = "x"
+
+/fields/11:
+	Type = 1
+	Count = 5
+
+/fields/11/number:
+	Value = "12"
+
+/fields/11/name:
+	Value = "Saved_status"
+
+/fields/11/data-path:
+	Value = "1/*/Saved_status"
+
+/fields/11/no-zoom:
+	Value = "x"
+
+/fields/11/invisible:
+	Value = "x"
+
+/fields/12:
+	Type = 1
+	Count = 6
+
+/fields/12/number:
+	Value = "13"
+
+/fields/12/name:
+	Value = "Saved_name"
+
+/fields/12/data-path:
+	Value = "1/*/Saved_name"
+
+/fields/12/3:
+	Type = 0
+
+/fields/12/no-zoom:
+	Value = "x"
+
+/fields/12/invisible:
+	Value = "x"
+
+/fields/13:
+	Type = 1
+	Count = 6
+
+/fields/13/number:
+	Value = "14"
+
+/fields/13/name:
+	Value = "Set_gid"
+
+/fields/13/data-path:
+	Value = "1/*/Set_gid"
+
+/fields/13/no-zoom:
+	Value = "x"
+
+/fields/13/invisible:
+	Value = "x"
+
+/fields/13/userro:
+	Value = "x"
+

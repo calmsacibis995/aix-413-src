@@ -1,0 +1,55 @@
+* @(#)61 1.1 src/rspc/objclass/memory.sys.L2cache_rspc.add, rspccfg, rspc41J, 9511A_all 3/6/95 16:01:51
+* 
+*  COMPONENT_NAME: (rspccfg) memory.sys.L2cache_rspc.add
+* 
+*  FUNCTIONS:
+* 
+*  ORIGINS: 27
+* 
+*  (C) COPYRIGHT International Business Machines Corp. 1995
+*  All Rights Reserved
+*  Licensed Materials - Property of IBM
+* 
+*  US Government Users Restricted Rights - Use, duplication or
+*  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+PdDv:
+	type = L2cache_rspc
+	class = memory
+	subclass = sys
+	prefix = L2cache
+	devid = ""
+	base = 0
+	has_vpd = 0
+	detectable = 1
+	chgstatus = 0
+	bus_ext = 0
+	led = 0x708
+	setno = 1
+	msgno = 53
+	fru = 1
+	catalog = devices.cat
+	DvDr = ""
+	Define = "/usr/lib/methods/define_rspc"
+	Configure = ""
+	Change = ""
+	Unconfigure = ""
+	Undefine = "/usr/lib/methods/undefine"
+	Start = ""
+	Stop = ""
+	uniquetype = memory/sys/L2cache_rspc
+
+
+
+PdAt:
+	uniquetype = memory/sys/L2cache_rspc
+	attribute = "size"
+	deflt = "0"
+	values = "0x0-0xffffffff,0x1"
+	width = ""
+	type = "R"
+	generic = "D"
+	rep = "nr"
+	nls_index = 50
+

@@ -1,0 +1,45 @@
+$ $Npaths
+$ $*@(#)46	1.1  src/tenplus/helpers/editorprf/paths.psz, tenplus, tenplus411, GOLD410 3/17/93 14:02:30
+
+$ $*COMPONENT_NAME: (INED) INed Editor
+$ $*
+$ $*ORIGINS:  9, 10, 27
+$ $*
+$ $*This module contains IBM CONFIDENTIAL code. -- (IBM
+$ $*Confidential Restricted when combined with the aggregated
+$ $*modules for this product)                  SOURCE MATERIALS
+$ $*(C) COPYRIGHT International Business Machines Corp. 1985, 1991
+$ $*All Rights Reserved
+$ $*
+$ $*US Government Users Restricted Rights - Use, duplication or
+$ $*disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$quote "
+
+$set 1
+$ $%1
+$ $.0
+$ $:/paths
+$ $%3
+$ $.0
+$ $:/paths/form
+$ $"ppaths"
+$ $%3
+$ $.0
+$ $:/paths/desc
+AA "%+P_SRCH_PATHS\n\
+Editor Search Paths."
+$ This refers to the set of (one or more) file path names that the editor
+$ will search when trying to find certain files.
+$ $%1
+$ $.0
+$ $:/paths/data
+$ $%1
+$ $.0
+$ $:/paths/data/forms
+$ $"$SYS/forms"
+$ $%3
+$ $.0
+$ $:/paths/data/helpers
+$ $"$SYS/helpers"
+$ $$
+$ $$

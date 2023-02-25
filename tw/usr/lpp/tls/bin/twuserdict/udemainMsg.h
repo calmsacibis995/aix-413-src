@@ -1,0 +1,128 @@
+/* @(#)72	1.1  src/tw/usr/lpp/tls/bin/twuserdict/udemainMsg.h, tw, tw411, GOLD410 7/10/92 14:01:29 */
+/*
+ * COMPONENT_NAME :     (CMDTW) -  Traditional Chinese Dictionary Utility
+ *
+ * FUNCTIONS :          udemainMsg.h
+ *
+ * ORIGINS :            27
+ *
+ * (C) COPYRIGHT International Business Machines Corp.  1991, 1992
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+
+#ifdef ENGLISH
+
+#define    A_PHR_STR            "Add Phrase"
+#define    U_PHN_STR            "Update Phonetic"
+#define    U_PHR_STR            "Update Phrase"
+#define    D_PHN_STR            "Delete Phonetic"
+#define    D_PHR_STR            "Delete Phrase"
+#define    COMMIT_STR           "Commit"
+#define    OPEN_STR             "Open"
+#define    MERGE_STR            "Merge"
+#define    FILE_STR             "File"
+#define    CUT_STR              "Cut"
+#define    COPY_STR             "Copy"
+#define    PASTE_STR            "Paste"
+#define    CLEAR_STR            "Clear"
+#define    UNDO_STR             "Undo"
+#define    EDIT_STR             "Edit"
+#define    SEARCH_STR           "Search"
+#define    EXIT_STR             "Exit"
+#define    QUIT_STR             "Quit"
+#define    RESUME_STR           "Resume"
+#define    HELP_STR             "Help"
+#define    PHONETIC_ENTRY_STR   "Phonetic Entry"
+#define    PHRASE_ENTRY_STR     "Phrase Entry"
+#define    FIND_STR             "Phonetic View"
+#define    FIND_END_STR         "Phrase Select"
+#define    OPEN_MSG             "Enter name of open file."
+#define    MERGE_MSG            "Enter name of merge file."
+#define    U_PHN_D_MSG          "Want to Update Phonetic ??"
+#define    U_PHR_D_MSG          "Want to Update Phrase ??"
+#define    D_PHN_D_MSG          "Want to Delete Phonetic ??"
+#define    D_PHR_D_MSG          "Want to Delete Phrase ??"
+#define    OK_FILE_MSG          "User Dictionary File Changed OK !!"
+#define    OK_MERGE_MSG         "User Dictionary File Merged OK !!"
+#define    OK_U_PHN_MSG         "Update Phonetic OK !!"
+#define    OK_U_PHR_MSG         "Update Phrase OK !!"
+#define    OK_D_PHN_MSG         "Delete Phonetic OK !!"
+#define    OK_D_PHR_MSG         "Delete Phrase OK !!"
+#define    OK_A_PHR_MSG         "Add Phrase OK !!"
+#define    EXIT_MSG             "Want to Exit This Utility ??"
+#define    OK_BUTTON_STR        "OK"
+#define    CANCEL_BUTTON_STR    "CANCEL_B"
+#define    HELP_BUTTON_STR      "HELP_B"
+#define    FILTER_BUTTON_STR    "FILTER_B"
+#define    FILTER_LABEL_STR     "FILE FILTER"
+#define    FILE_TITLE           "User Dictionary File :"
+#define    noHelpInformation    "No help information."
+#define    ALL_HELP_TITLE       "Browse Help"
+#define    help_button_string   "help button list"
+#define    help_list_str        "help information"
+#define    help_ok_msg  "Select any help list button to see help on that item !"
+#define    HELP_QUIT_STR        "Quit"
+#define    HELP_EXIT_STR        "Exit"
+#define    HELP_HELP_STR        "Help for Help"
+
+#else
+
+#define    A_PHR_STR            "ä»ìÁ(A)"
+#define    U_PHN_STR            "ÎÃÓöÎûÊÕä»(B)"
+#define    U_PHR_STR            "â¤ãğÎûÊÕä»(C)"
+#define    D_PHN_STR            "ÎÃÓöÎûÉ´Øæ(D)"
+#define    D_PHR_STR            "â¤ãğÎûÉ´Øæ(E)"
+#define    COMMIT_STR           "ä»ìÁ.ÊÕä»(S)"
+#define    OPEN_STR             "ÑÀÌùâ¤ãğóò(O)"
+#define    MERGE_STR            "ÇÙË÷â¤ãğóò(M)"
+#define    FILE_STR             "óòÕù(F)"
+#define    CUT_STR              "öÊÌ½(T)"
+#define    COPY_STR             "îïêû(C)"
+#define    PASTE_STR            "Ùªâ²(P)"
+#define    CLEAR_STR            "ÛÒØæ(R)"
+#define    UNDO_STR             "òÓÄ«úñÈíÎûÑ°ß¦(U)"
+#define    EDIT_STR             "î¾òÒ(E)"
+#define    SEARCH_STR           "ÎÃÓöÎûóô×Ä(S)"
+#define    EXIT_STR             "á¸ÊÖ(X)"
+#define    QUIT_STR             "â¤ãğóòî¾òÒá£È¢Îûá¸ÊÖ(X)"
+#define    RESUME_STR           "â¤ãğóòî¾òÒá£È¢ÎûÓìä»âäÌî(R)"
+#define    HELP_STR             "æØë©(H)"
+#define    PHONETIC_ENTRY_STR   "ÎÃÓöòÓÄ«"
+#define    PHRASE_ENTRY_STR     "â¤ãğòÓÄ«"
+#define    FIND_STR             "ÎÃÓöòÙğå"
+#define    FIND_END_STR         "â¤ãğòÙğå"
+#define    OPEN_MSG             " îùòÓÄ«ÛÃğçÉ¢ÄæÎÃÓöù°ãğóòÎûóòÕùÇØê¢:"
+#define    MERGE_MSG            " îùòÓÄ«ÛÃÇÙË÷ÄæÎÃÓöù°ãğóòÎûóòÕùÇØê¢:"
+#define    U_PHN_D_MSG          "íıÌùÓÑÊÕä»ÍÔÈ´è×óÜÑÀÌùÎûÎÃÓöù°ãğãÃ ?"
+#define    U_PHR_D_MSG          "íıÌùÓÑÊÕä»ÑÀÌùÎûù°ãğãÃ ?"
+#define    D_PHN_D_MSG          "íıÌùÓÑÉ´ØæÍÔÈ´è×óÜÑÀÌùÎûÎÃÓöù°ãğãÃ ?"
+#define    D_PHR_D_MSG          "íıÌùÓÑÉ´ØæÑÀÌùÎûù°ãğãÃ ?"
+#define    OK_FILE_MSG          "ÄØüÈÊÕÎÃÓöù°ãğóòÎûÑÀÌù."
+#define    OK_MERGE_MSG         "ÄØÉùÈ©ÎÃÓöù°ãğóòÎûÇÙË÷."
+#define    OK_U_PHN_MSG         "ÄØÊÕä»ÍÔÈ´è×óÜÑÀÌùÎûÎÃÓöù°ãğÈİÎÃÓöù°ãğóòÄã."
+#define    OK_U_PHR_MSG         "ÄØÊÕä»ÑÀÌùÎûù°ãğÈİÎÃÓöù°ãğóòÄã."
+#define    OK_D_PHN_MSG         "ÄØÉ´ØæÍÔÈ´è×óÜÑÀÌùÎûÎÃÓöù°ãğ."
+#define    OK_D_PHR_MSG         "ÑÀÌùÎûù°ãğÄØÚ·ÎÃÓöù°ãğóòÄãÉ´Øæ."
+#define    OK_A_PHR_MSG         "ÄØä»ìÁù°ãğÈİÎÃÓöù°ãğóòÄã."
+#define    EXIT_MSG             "ÎÃÓöóòÕùî¾òÒÜÜÄ§ ?"
+#define    OK_BUTTON_STR        "OK"
+#define    CANCEL_BUTTON_STR    "Ì½Ö¼"
+#define    HELP_BUTTON_STR      "æØë©"
+#define    FILTER_BUTTON_STR    "ç´öÛóòÕù"
+#define    FILTER_LABEL_STR     "óòÕùç´öÛ"
+#define    FILE_TITLE           "User Dictionary File :"
+#define    noHelpInformation    "ÊôÈ´Ç¶ÈôÎûæØë©æñÕè !"
+#define    ALL_HELP_TITLE       "öß¢ğ¾æØë©ÑºâÚ"
+#define    help_button_string   "æØë©ÑºâÚ"
+#define    help_list_str        "æØë©Ø¹ÕÉ"
+#define    help_ok_msg          "òÙğåæØë©ÑºâÚ,ı¨ÒàÒŞùÃÎûæØë©Ø¹ÕÉ !"
+#define    HELP_QUIT_STR        "á¸ÊÖ"
+#define    HELP_EXIT_STR        "÷ââäæØë©"
+#define    HELP_HELP_STR        "æØë©ÎûæØë©"
+
+#endif
+/* DON'T ADD ANYTHING AFTER THIS #endif */

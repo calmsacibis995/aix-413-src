@@ -1,0 +1,30 @@
+* @(#)30     1.3 4/25/91 19:27:52
+*
+* COMPONENT_NAME: CMDSCCS       source code control system
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1989, 1991
+* All Rights Reserved
+* Licansed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+*
+*	Messages for help command.
+*
+-1
+The specified parameter is not valid.
+Specify a valid command or error code.
+No information associated with your request is available.
+You must specify an existing command or error code for the help command.
+
+-2
+Command parameter cannot exceed 49 characters.
+No command parameter can be more than 49 characters long on the sccshelp
+command line.
+

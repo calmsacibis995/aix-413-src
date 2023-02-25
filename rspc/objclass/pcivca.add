@@ -1,0 +1,140 @@
+# @(#)87  1.7  src/rspc/objclass/pcivca.add, pcivca, rspc41J, 9519A_all 5/8/95 23:29:07
+# pcivca.add
+#
+# COMPONENT_NAME: (PCIVCA) PCI Video Capture Adapter Device Driver
+#
+# FUNCTIONS: None
+#
+# ORIGINS: 27
+#
+# IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+# combined with the aggregated modules for this product)
+#                  SOURCE MATERIALS
+# (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+# Stanzas for the ThinkPad Power 850 Video Capture Adapter predefined values
+#
+
+PdDv:
+        type           = "vca"
+        class          = "adapter"
+        subclass       = "pci"
+        prefix         = "vca"
+        devid          = "0xed101073"
+        base           = 1
+        has_vpd        = 0
+        detectable     = 1
+        chgstatus      = 0
+        bus_ext        = 0
+        fru            = 1
+        led            = 0x82c
+        setno          = 149
+        msgno          = 1
+        catalog        = "devices.cat"
+        DvDr           = "pci/vcadd"
+        Define         = "/usr/lib/methods/define_rspc"
+        Configure      = "/usr/lib/methods/cfgpcivca"
+        Change         = ""
+        Unconfigure    = "/usr/lib/methods/ucfgdevice"
+        Undefine       = "/usr/lib/methods/undefine"
+        Start          = ""
+        Stop           = ""
+        inventory_only = 0
+        uniquetype     = "adapter/pci/vca"
+
+PdAt:
+        uniquetype = "adapter/pci/vca"
+        attribute  = "bus_io_addr"
+        deflt      = "0x0"
+        values     = "0x0-0xffffff00,0x100"
+        width      = "0x100"
+        type       = "O"
+        generic    = "D"
+        rep        = "nr"
+        nls_index  = 0
+
+PdAt:
+        uniquetype = "adapter/pci/vca"
+        attribute  = "intr_priority"
+        deflt      = "3"
+        values     = "3"
+        width      = ""
+        type       = "P"
+        generic    = "D"
+        rep        = "nl"
+        nls_index  = 0
+
+PdAt:
+        uniquetype = "adapter/pci/vca"
+        attribute  = "intr_level"
+        deflt      = ""
+        values     = ""
+        width      = ""
+        type       = "I"
+        generic    = "D"
+        rep        = "n"
+        nls_index  = 0
+
+PdAt:
+        uniquetype = "adapter/pci/vca"
+        attribute  = "pm_dev_itime"
+        deflt      = "0"
+        values     = "0-7200,1"
+        width      = ""
+        type       = "R"
+        generic    = ""
+        rep        = "nr"
+        nls_index  = 0
+
+PdAt:
+        uniquetype = "adapter/pci/vca"
+        attribute  = "pm_dev_stime"
+        deflt      = "0"
+        values     = "0-7200,1"
+        width      = ""
+        type       = "R"
+        generic    = ""
+        rep        = "nr"
+        nls_index  = 0
+
+#
+# Stanzas for the ThinkPad Power 850 Internal CCD Camera predefined values
+#
+
+PdDv:
+        type           = "ccd"
+        class          = "adapter"
+        subclass       = "vca"
+        prefix         = "ccd"
+        devid          = ""
+        base           = 1
+        has_vpd        = 0
+        detectable     = 1
+        chgstatus      = 0
+        bus_ext        = 0
+        fru            = 1
+        led            = 0x82c
+        setno          = 149
+        msgno          = 2
+        catalog        = "devices.cat"
+        DvDr           = ""
+        Define         = "/usr/lib/methods/define -o"
+        Configure      = "/usr/lib/methods/cfgpcivca"
+        Change         = ""
+        Unconfigure    = "/usr/lib/methods/ucfgdevice"
+        Undefine       = "/usr/lib/methods/undefine"
+        Start          = ""
+        Stop           = ""
+        inventory_only = 0
+        uniquetype     = "adapter/vca/ccd"
+
+PdCn:
+        uniquetype = "adapter/pci/vca"
+        connkey    = "vca" 
+        connwhere  = "1"

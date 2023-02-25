@@ -1,0 +1,63 @@
+-- @(#)69	1.6  src/tcpip/usr/samples/snmpd/ibm.my, snmp, tcpip411, GOLD410 1/21/94 17:46:55
+--
+-- COMPONENT_NAME: (SNMP) Simple Network Management Protocol Daemon
+--
+-- ORIGINS: 27
+--
+-- (C) COPYRIGHT International Business Machines Corp. 1993, 1994
+-- All Rights Reserved
+-- US Government Users Restricted Rights - Use, duplication or
+-- disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+--
+-- FILE: /usr/samples/snmpd/ibm.my
+--
+
+IBM-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	enterprises
+		FROM RFC1155-SMI;
+
+ibm		        OBJECT IDENTIFIER ::= { enterprises 2 }
+
+-- the Agents group
+
+ibmAgents		OBJECT IDENTIFIER ::=	{ ibm 3 }
+aix		        OBJECT IDENTIFIER ::=	{ ibmAgents 1 }
+mvs		        OBJECT IDENTIFIER ::=	{ ibmAgents 2 }
+vm		        OBJECT IDENTIFIER ::=	{ ibmAgents 3 }
+os2		        OBJECT IDENTIFIER ::=	{ ibmAgents 4 }
+os400		        OBJECT IDENTIFIER ::=	{ ibmAgents 5 }
+
+
+-- hardware
+
+aixRT		        OBJECT IDENTIFIER ::=	{ aix 1 }
+aixRISC6000		OBJECT IDENTIFIER ::=	{ aix 2 }
+aix370		        OBJECT IDENTIFIER ::=	{ aix 3 }
+aixPS2		        OBJECT IDENTIFIER ::=	{ aix 4 }
+
+mvs370		        OBJECT IDENTIFIER ::=	{ mvs 1 }
+vm370		        OBJECT IDENTIFIER ::=	{ vm 1 }
+ps2PS2		        OBJECT IDENTIFIER ::=	{ os2 1 }
+os400as400		OBJECT IDENTIFIER ::=	{ os400 1 }
+
+
+-- the risc6000 tree
+
+risc6000agents		OBJECT IDENTIFIER ::=	{ aixRISC6000 1 }
+risc6000private		OBJECT IDENTIFIER ::=	{ aixRISC6000 2 }
+risc6000public		OBJECT IDENTIFIER ::=	{ aixRISC6000 3 }
+
+risc6000snmpd		OBJECT IDENTIFIER ::=	{ risc6000agents 1 }
+risc6000gated		OBJECT IDENTIFIER ::=	{ risc6000agents 2 }
+risc6000xmservd		OBJECT IDENTIFIER ::=	{ risc6000agents 3 }
+risc6000ibm7318		OBJECT IDENTIFIER ::=	{ risc6000agents 4 }
+risc6000clsmuxpd	OBJECT IDENTIFIER ::=	{ risc6000agents 5 }
+
+risc6000samples		OBJECT IDENTIFIER ::=	{ risc6000private 1 }
+risc6000sampleAgents	OBJECT IDENTIFIER ::=	{ risc6000samples 1 }
+
+risc6000perf		OBJECT IDENTIFIER ::=	{ risc6000private 2 }
+
+END

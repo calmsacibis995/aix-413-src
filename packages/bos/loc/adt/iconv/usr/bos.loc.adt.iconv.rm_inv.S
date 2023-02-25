@@ -1,0 +1,18 @@
+# @(#)95	1.1  src/packages/bos/loc/adt/iconv/usr/bos.loc.adt.iconv.rm_inv.S, pkglocadt, pkg411, GOLD410 3/15/94 15:22:33
+#
+#   COMPONENT_NAME: pkglocadt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+#   combined with the aggregated modules for this product)
+#                    SOURCE MATERIALS
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994
+#   All Rights Reserved
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+/usr/ucb/genxlt:

@@ -1,0 +1,102 @@
+/*static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/README.cms, tcpip, tcpip411, GOLD410 6/14/91 15:57:48";
+ *
+ * COMPONENT_NAME: TCPIP readme.cms 
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1986, 1988, 1989
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ * RISC System/6000 is a trademark of International Business Machines
+   Corporation.
+*/
+         I N S T A L L A T I O N    I N S T R U C T I O N S
+ 
+               onhost version 1.1, VM/CMS component
+               AIXwhat is @(#) readme.cms 1.5 PASC 1.5
+ 
+Onhost consists of three parts: the part which executes on AIX, the
+part which executes on VM/CMS, and the part which executes on MVS/TSO.
+These instructions cover installation of the VM/CMS component.  All
+of the required files are expected to be present in an AIX directory.
+ 
+ VM/CMS INSTALLATION
+ 
+   1.  Move the *.cms files to CMS and rename them as *.exec files.
+       The files are REXX code which use VM TCP/IP services.  They
+       should be placed on a normal CMS disk which is in the search
+       list for users of onhost.  TCPMAINT 592 is a convenient disk.
+ 
+       FTP, from the CMS system, is an easy way to move the file from
+       AIX to CMS.  Login to CMS, access TCPMAINT 592, and enter FTP.
+       Follow the FTP prompts and enter the AIX system name, userid,
+       and password.  Then CD to the AIX onhost directory.  Enter
+       MGET *.cms, then QUIT after the file transfers have taken place.
+       Use the CMS rename command to change the CMS filetype from CMS
+       to EXEC.
+ 
+   2.  Try out the onhost code on CMS.  Enter
+
+         ONHOSTLD 
+
+       and expect to see
+
+         RetCode:00000000; OnHost End of Command Flag
+
+       followed by the CMS ready message.  This program is used to
+       initialize the CMS environment for subsequent use by the AIX
+       onhost command.  This command, ONHOSTLD, is sent to CMS as the
+       final part of the AIX hostconnect automatic login sequence.
+ 
+       The ONHOSTLD code uses ONHOSTE, when it is complete, to generate
+       the distinctive end of command flag expected by the AIX onhost
+       command to signal completion of a host command.
+ 
+       Now try one of the AIX-like commands such as
+
+         ONHOST DATE
+
+       and expect to see the date and time displayed in AIX format
+       followed by the end of command flag and CMS ready message.
+
+         Tue Aug 30 15:15:35 PDT 1988
+         RetCode:00000000; OnHost End of Command Flag
+         Ready; (more or less)
+ 
+   3.  To make onhost available to other CMS users, move the EXEC files
+       to a convenient disk, such as TCPMAINT 592.  The VM directory
+       entry for each user of onhost should NOT contain the AUTOCR
+       option on the IPL statement.  The onhost disk should be accessed
+       in each user's PROFILE EXEC.  By the way, PROFILE EXEC must not
+       remove lines from the CMS stack when it is executed.  If it does
+       then ONHOSTLD will not be executed during login by hostconnect and
+       automatic login will not complete properly.
+ 
+   4.  Make sure that you can do the following on each CMS userid to be
+       used by AIX onhost.  First connect to the VM system and clear
+       the screen once.  Then enter L userid when a CP READ appears.
+       After ENTER PASSWORD appears, enter the password.  If CP READ
+       appears, then enter IPL CMS; the VM directory IPL statement
+       eliminates this step and is recommended.  When VM READ appears,
+       enter ONHOSTLD.  After your profile, if any, is executed, you
+       must see the distinctive end of command flag line and VM READ.
+ 
+   5.  This completes installation of the VM/CMS onhost component.

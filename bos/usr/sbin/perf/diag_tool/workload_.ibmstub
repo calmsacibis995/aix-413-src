@@ -1,0 +1,201 @@
+#!/bin/ksh
+# @(#)32	1.8	src/bos/usr/sbin/perf/diag_tool/workload_.sh, pdt, bos411, 9428A410j 4/13/94 16:32:47
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# workload_ 
+# Obtain rudimentary workload information.
+# We include:
+#   workload.1:  15 minute load average
+#                and number of users logged on
+#   workload.2:  number of processes - 
+#                   averaged over 10 2 second samples
+#   workload.3:  time to do 10 copies of a large file
+#   workload.4:  current idle time percentage
+#
+# record result in the SM database.
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+# next, get the number of CPUs on the system
+ncpus=`$pdt_code/getvmparms -n`
+#
+# Awk script - 
+# generates the following SM records
+#    WORKLOAD  loadavg15   value   <mean 15 min loadavg>
+#    WORKLOAD  nusers      value   <number of users>
+#
+# Input: file containing output of the 'uptime' command.
+#
+# process each workload
+workload.1_ | \
+   awk '
+        BEGIN {
+	   load15 = 0
+	   nusers = 0
+        }
+        {
+           x = gsub(/-/," ",c)
+           x = gsub(/-/,",",t)
+           gsub(/,/,"")
+           for (i=1; i<=NF; i++)  {
+               if ($i == "load") {
+                     load1 = $(i+2)
+                     load5 = $(i+3)
+                     load15 = $(i+4)
+               }
+               if (($i == "users") || ($i == "user")) {
+                   nusers = $(i-1)
+               }
+           }
+        }
+        END {
+          print "WORKLOAD", "loadavg15", c, "value",  load15, 1.0, "I(" t ",N)"
+          print "WORKLOAD", "nusers",    c, "value",  nusers, 1.0, "I(" t ",N)"
+        }' c=$curr t="0-0-1"  >>$pdt_SM 2>>$pdt_tmp/.stderr
+#
+# Awk script - 
+# generates the following SM records
+#    WORKLOAD  nprocesses   value   <mean number of processes>
+#    WORKLOAD  STAT_*       value   <mean number of processes in each state *>
+#    USER      userid       nZprocs <mean number of defunct processes>
+#    USER      userid       nprocs  <mean number of processes (including defunct)>
+#
+# Input: file containing output of several 'ps aucg' commands.
+#
+
+workload.2_ | \
+   awk '
+        BEGIN {
+          tot = 0
+          nsamps = 0
+        }
+        {
+           x = gsub(/-/," ",c)
+           x = gsub(/-/,",",t)
+           # deal with the header ------------------------
+           if ($0 ~ /PID/) {
+                    nsamps ++           
+           }
+           # deal with <defunct> processes ---------------
+           else if ($3 == "Z") {
+                 tot ++
+                 STAT["Z"]++
+                 NZPROCS[$1]++
+                 NPROCS[$1]++
+           }
+           # deal with other process entries -------------
+           else {
+                tot ++
+                STAT[substr($8,1,1)]++
+                NPROCS[$1]++
+           }
+        }
+        END {
+	   if (nsamps > 0)
+              print "WORKLOAD", "nprocesses", c, "value", tot/nsamps, 1.0, "I(" t ",PROCS)"
+           for (stat in STAT) {
+               print "WORKLOAD", "STAT_"stat, c, "value", STAT[stat]/nsamps, 
+                     1.0, "I(" t ",PROCS)"
+           }
+           for (user in NZPROCS) {
+               print "USER", user, c, "nZprocs", NZPROCS[user]/nsamps,
+                    1.0, "I(" t ",PROCS)"
+           }
+           for (user in NPROCS)  {
+               print "USER", user, c, "nprocs", NPROCS[user]/nsamps,
+                    1.0, "I(" t ",PROCS)"
+           }
+        }' c=$curr t="2-2-10" >>$pdt_SM 2>>$pdt_tmp/.stderr
+
+#
+# Awk script -
+# generates the following SM record
+#    WORKLOAD  cp   value   <mean delay>
+#
+# Input: file containing output of the 'time' command.
+#
+workload.3_ | \
+   awk '
+        BEGIN {
+           total = 0
+           nsamps = 0
+        }
+        {
+           x = gsub(/-/," ",c)
+           x = gsub(/-/,",",t)
+	   # if the command was not found display an error message
+	   if ($0 ~ /not found/) {
+	      print $0 | "cat 1>&2"
+           }
+	   else
+              if ($0 ~ /real/) {
+                 nsamps ++           
+                 total += $2
+              }
+        }
+        END {
+	   if (nsamps > 0)
+              print "WORKLOAD", "cp", c, "value", total/nsamps, 1.0, "I(" t ",S)"
+        }' c=$curr t="0-0-10" >>$pdt_SM 2>>$pdt_tmp/.stderr
+
+#
+# Awk script -
+# generates the following SM records
+#    WORKLOAD  idle_pct_cpux   value   <cpusecs for idle process for cpu x>
+#    WORKLOAD  idle_pct_avg    value   <average idle cpu for all cpus>
+#
+# Input: file containing output of the 'ps avg' command.
+#
+workload.4_ | \
+   awk '
+        BEGIN {
+	  totalidletime = 0
+	  NCPUS = '"$ncpus"'
+	  for (i=0; i < NCPUS ; i++) {
+	      waitprocid[i] = 258 * (i + 2)
+	  }
+        }
+        {
+           x = gsub(/-/," ",c)
+           x = gsub(/-/,",",t)
+           if (NR == 1) {
+              totalcpu = $1
+              getline
+           }
+	   cpu_id = getCpuID($1)
+           if ( cpu_id < NCPUS ) {
+              split($4,minsec,":")
+              idletime = minsec[1]*60 + minsec[2]
+	      if (totalcpu > 0)
+                 print "WORKLOAD", "idle_pct_cpu" cpu_id, c, "value",
+		       idletime/totalcpu, 1.0, "I(" t ",pct)"
+              totalidletime += idletime
+           }
+        }
+	function getCpuID(pid) {
+	   for ( i=0 ; i < NCPUS ; i++) {
+	       if ( pid == waitprocid[i] )
+		  return i
+           }
+	   return NCPUS
+	}
+        END {
+	      if ( (totalcpu > 0) && (NCPUS > 0) )
+                 print "WORKLOAD", "idle_pct_avg", c, "value",
+		       totalidletime/(totalcpu*NCPUS), 1.0, "I(" t ",pct)"
+        }' c=$curr t="0-0-1"  >>$pdt_SM 2>>$pdt_tmp/.stderr

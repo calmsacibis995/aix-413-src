@@ -1,0 +1,51 @@
+! @(#)08	1.3  src/bos/usr/lpp/zhls/bin/zhdictutil/ZHdictutil, ils-zh_CN, bos41J, 9514A_all 3/28/95 02:16:04
+!
+!   COMPONENT_NAME: ils-zh_CN
+!
+!   FUNCTIONS: none
+!
+!   ORIGINS: 27
+!
+!
+!   (C) COPYRIGHT International Business Machines Corp. 1994
+!   All Rights Reserved
+!   Licensed Materials - Property of IBM
+!   US Government Users Restricted Rights - Use, duplication or
+!   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+!
+*fontList:			-ibm_aix-cjk_song-medium-r-normal--27-170-100-100-m-*-*-*:
+ZHdictutil*fontList:		-ibm_aix-cjk_song-medium-r-normal--27-170-100-100-m-*-*-*:
+*allowShellResize:		true
+*borderWidth:			0
+*highlightThickness:		2
+*traversalOn:			true
+*keyboardFocusPolicy:		pointer
+ZHdictutil*text.rows:		17
+ZHdictutil*text.columns:	20
+ZHdictutil*text.width:		450
+ZHdictutil*text.height:		495
+ZHdictutil*main.width:		470
+ZHdictutil*main.height:		615
+ZHdictutil*Label.foreground:	red
+ZHdictutil*Label.background:	white
+
+!
+!
+ZHdictutil*cancelLabelString: 	取消
+ZHdictutil*okLabelString:    	确认
+*okLabelString:   		确认
+*cancelLabelString:  		取消
+ZHdictutil*filterLabelString:   过滤
+*filterLabelString:   		过滤
+ZHdictutil*applyLabelString: 	过滤
+*applyLabelString:    		过滤
+ZHdictutil*fileListLabelString: 文件表
+*fileListLabelString:   	文件表
+ZHdictutil*dirListLabelString:  目录表
+*dirListLabelString:     	目录表
+ZHdictutil*selectionLabelString:选择
+*selectionLabelString: 		选择
+ZHdictutil*helpLabelString: 	求助
+*helpLabelString: 		求助
+~
+

@@ -1,0 +1,48 @@
+# @(#)61	1.5  src/tcpip/etc/hosts.equiv, tcpip, tcpip411, GOLD410 9/27/91 17:11:34
+# 
+# COMPONENT_NAME: TCPIP hosts.equiv
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 26  27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#  /etc/hosts.equiv
+#
+# This file, along with a local user's $HOME/.rhosts file, defines which
+# users on foreign hosts are permitted to remotely execute commands on
+# your host.  The rshd, rlogind, lpd, and srcmstr programs all use this
+# file to determine remote user access.
+#
+# The format of this file is as follows:
+#
+# hostname [username]
+#
+# Both hostname and username can be preceded by a '-' character to deny
+# access.  A '+' character can be used in place of hostname or username
+# to match any host or user.  If you are using NIS, both the hostname and
+# username may be in the form:
+#
+# +@netgroup
+# -@netgroup
+#
+# where "netgroup" is an NIS netgroup defined in the netgroup map.  The
+# '+' form allows access to any host or user in the netgroup, while the
+# '-' form denies access to any host or user in the netgroup.
+#
+# Lines beginning with a '#' character and blank lines are ignored.
+#
+# Examples:
+#
+# host user		allows access to user on host
+# + user		allows access to user on any host
+# host -user		denies access to user on host
+# -host			denies access to all users on host
+# -@group		denies access to all users on hosts in group
+# +@group1 +@group2	allows access to users in group2 on hosts in group1

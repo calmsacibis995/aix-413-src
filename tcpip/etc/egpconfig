@@ -1,0 +1,22 @@
+# @(#)59	1.2  src/tcpip/etc/egpconfig, tcpip, tcpip411, GOLD410 10/7/89 12:37:16
+# 
+# COMPONENT_NAME: TCPIP egpconfig
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#  /etc/egpconfig
+#
+# This file has a list of EGP neighbors for this machine.
+# Each EGP neighbor may be either "core" or "non-core" gateway.
+#
+core		192.9.207.35
+non-core	192.9.207.205

@@ -1,0 +1,297 @@
+#!/bin/ksh
+# @(#)39    1.1  src/rspc/kernext/pci/ncr810/ncr8xxcnvt, pciscsi, rspc41J, 9507A  1/25/95  13:48:53
+#
+#   COMPONENT_NAME: PCISCSI (ncr8xxcnvt SCRIPT)
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1995
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Description:	This script will create the imbed files for the NCR 53C8XX
+#		from the file output by the NASM SCRIPTS compiler.
+#		A small C program is compiled to do the necessary byte-swapping
+#		and any other needed processing for the SCRIPTS array.
+#		The main processing is performed by the sed commands imbedded
+#		in this file.  These create 4 files:
+#
+#		  ncr8xxss.h	included by ncr8xx.h
+#		  ncr8xxtss.h	included by ncr8xxt.c
+#		  ncr8xxbss.h	included by ncr8xxb.c
+#		  ncr8xxuss.h	included by ncr8xxu.c
+#
+#		Next we append externs for all of the "A_..._Used" arrays
+#		to ncr8xxtss.h and ncr8xxbss.h.
+#
+#		The final bit of processing is to pre-pend prologs to the
+#		front of each file.
+
+PGM=`basename $0 $1`
+USAGE="usage: $PGM main_input_file iowait_input_file"
+DATE=`date`
+
+# Output file names
+OUT_HDR=ncr8xxss.h
+OUT_TOP=ncr8xxtss.h
+OUT_BOT=ncr8xxbss.h
+OUT_UTL=ncr8xxuss.h
+
+# Need some temp file names
+TMPC=cnvt8xx$$.c		# the little C pgm we compile
+TMPO=cnvt8xx$$			# the name of the executable
+TMPH=cnvt8xx$$.h		# modified iowait script file
+TMPI=cnvt8xx$$.i		# the output from executing it
+TMPS=cnvt8xx$$.sed		# the main sed script
+TMPS1=cnvt8xx$$.sed1		# the main sed script
+TMPP=cnvt8xx$$.pp		# used in pre-pending prolog to output files
+TMP_INPUT=cnvt8xx$$.tmp		# concatenated input files
+
+# Need name of files to process
+if [ $# -lt 2 ]; then
+    echo $USAGE
+    exit 1
+fi
+
+# and here they are
+INPUT=$1
+INPUT1=$2
+
+echo $INPUT
+echo $INPUT1
+
+# Get rid of temp files on exit
+trap "rm -f $TMP_INPUT $TMPH $TMPC $TMPO $TMPI $TMPS $TMPS1 $TMPP" 0 1 2 3 15
+
+echo "Converting NCR compiler output into ncr8xx DD imbed files"
+echo "Output files are:"
+echo "	$OUT_HDR	included by ncr8xx.h"
+echo "	$OUT_TOP	included by ncr8xxt.c"
+echo "	$OUT_BOT	included by ncr8xxb.c"
+echo "	$OUT_UTL	included by ncr8xxu.c"
+
+cat >$TMPS1 <<EOF
+s/SCRIPT/IOWAIT_SCRIPT/
+s/INSTRUCTIONS/IOWAIT_INSTRUCTIONS/
+s/	PATCHES/	IOWAIT_PATCHES/
+s/LABELPATCHES/IOWAIT_LABELPATCHES/
+s/_Count/_Count_Iowait/
+s/_Names/_Names_Iowait/
+/^typedef/d
+EOF
+sed -f $TMPS1 $INPUT1 > $TMPH
+cat $INPUT $TMPH >> $TMP_INPUT
+cat >$TMPC <<EOF
+#include <stdio.h>
+#include "$INPUT"
+#include "$TMPH"
+
+main()
+{
+/* this macro returns the byte-swapped version of a 32-bit quantity     */
+#define WORDREVERSE(a)                                                    \
+    (((ulong)(a) & 0xff000000)>>24 | ((ulong)(a) & 0x00ff0000)>>8 |        \
+    ((ulong)(a) & 0x0000ff00)<<8  | ((ulong)(a) & 0x000000ff)<<24)
+
+        ulong   *script_ptr;
+        int     i;
+
+        script_ptr = (ulong)SCRIPT;
+
+        printf("\nULONG\tPSC_SCRIPT[] = {\n");
+        for (i = 0; i < (sizeof(SCRIPT)/sizeof(ULONG)); i++)
+        {
+           if ((i % 2) == 0)
+              printf("\t0x%.8X,",WORDREVERSE(script_ptr[i]));
+           else if (i != (sizeof(SCRIPT)/sizeof(ULONG) - 1))
+              printf("\t0x%.8X,\n",WORDREVERSE(script_ptr[i]));
+           else
+              printf("\t0x%.8X\n",WORDREVERSE(script_ptr[i]));
+        }
+        printf("};\n\n");
+
+        script_ptr = (ulong)IOWAIT_SCRIPT;
+
+        printf("\nULONG\tIOWAIT_SCRIPT[] = {\n");
+        for (i = 0; i < (sizeof(IOWAIT_SCRIPT)/sizeof(ULONG)); i++)
+        {
+           if ((i % 2) == 0)
+              printf("\t0x%.8X,",WORDREVERSE(script_ptr[i]));
+           else if (i != (sizeof(IOWAIT_SCRIPT)/sizeof(ULONG) - 1))
+              printf("\t0x%.8X,\n",WORDREVERSE(script_ptr[i]));
+           else
+              printf("\t0x%.8X\n",WORDREVERSE(script_ptr[i]));
+        }
+        printf("};\n");
+}
+EOF
+cc $TMPC -o $TMPO
+
+./$TMPO $TMP_INPUT > $TMPI
+
+#The sed utility is used to parse the input files and appropriately
+#direct the C constructs it finds into the bottom half, header, or
+#bottom half.
+#handle last comma in array initializers, skipping SCRIPT array
+cat > $TMPS <<EOF
+#/^ULONG	SCRIPT/,/^};\$/{
+#       b main
+#       }
+#/,\$/{
+#       :next
+#       N
+#       s/,\n};/ \
+#};/
+#       t cont
+#       b next
+#       :cont
+#       }
+:main
+# Utilities data structures
+/^ULONG A_.*_Used/,/^\$/{
+       w $OUT_UTL
+       d
+       }
+#bottom-half data structures
+/^ULONG R_cmd_bytes_out_count_U/,/^\$/{
+       w $OUT_BOT
+       d
+       }
+/^ULONG R_data_byte_count_U/,/^\$/{
+       w $OUT_BOT
+       d
+       }
+/^ULONG R_ext_msg_size_U/,/^\$/{
+       w $OUT_BOT
+       d
+       }
+/^ULONG R_tag_patch_U/,/^$/{
+       w $OUT_BOT
+       d
+       }
+/^ULONG R_abdr_tag_patch_U/,/^$/{
+       w $OUT_BOT
+       d
+       }
+/^ULONG R_scntl3_patch_U/,/^\$/{
+       w $OUT_BOT
+       d
+       }
+/^ULONG R_sxfer_patch_U/,/^\$/{
+       w $OUT_BOT
+       d
+       }
+/^ULONG E_data_addr_U/,/^\$/{
+       w $OUT_BOT
+       d
+       }
+/^ULONG E_dsa_offset_U/,/^\$/{
+       w $OUT_BOT
+       d
+       }
+/^ULONG E_scsi_._lun_U/,/^\$/{
+       w $OUT_BOT
+       d
+       }
+/^ULONG	INSTRUCTIONS/{
+       w $OUT_BOT
+       d
+       }
+#
+#header file typedefs and defines
+/^typedef /,/^\$/{
+       w $OUT_HDR
+       d
+       }
+/^#define A_/{
+       w $OUT_HDR
+       d
+       }
+/^#define R_/{
+       w $OUT_HDR
+       d
+       }
+/^#define Ent_/{
+       w $OUT_HDR
+       d
+       }
+/^#define E_/{
+       w $OUT_HDR
+       d
+       }
+#delete unwanted defines and arrays from input stream
+/^#define ..._Count/{
+       d
+       }
+/^char \*[a-zA-Z]*_Names/,/^\$/{
+       d
+       }
+/^ULONG Rel_Patches/,/^\$/{
+       d
+       }
+#process SCRIPT arrays
+/^ULONG	SCRIPT/,/^};\$/{
+       d
+       }
+/^ULONG	IOWAIT_SCRIPT/,/^};\$/{
+       d
+       }
+\$r $TMPI
+EOF
+
+# First sed removes MSDOS CR's, second splits file into four files
+sed -e 's/$//' $TMP_INPUT | sed -f $TMPS > $OUT_TOP
+
+# Now we append externs for all of the "A_..._Used" arrays in
+# $OUT_UTL to $OUT_TOP & $OUT_BOT
+for f in $OUT_TOP $OUT_BOT
+do
+    awk '/^ULONG A/ {print "extern " $1 " " $2 ";"}' <$OUT_UTL >>$f
+done
+
+# Similarly, we now create an extern in $OUT_TOP for all of the
+# E_..._Used arrays in $OUT_BOT.
+awk '/^ULONG E/ {print "extern " $1 " " $2 ";"}' <$OUT_BOT >>$OUT_TOP
+
+# Okay, as the final coup d'gras we pre-pend a prolog to each of
+# our generated files
+for f in $OUT_HDR $OUT_TOP $OUT_BOT $OUT_UTL
+do
+    mv $f $TMPP
+    sed 's;|;%;g' >$f <<EOF
+/* |Z||M|	|I|  |W| |G| |U| */
+
+/*
+ * COMPONENT_NAME: (PCISCSI) IBM SCSI Adapter Driver (NCR 53C8XX)
+ *		SCRIPTS header file
+ *
+ * FUNCTIONS: NONE
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1995
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ *
+ * Note: This file was machine generated from the output file created
+ *	 by the NCR NASM SCSI SCRIPTS compiler -- DO NOT EDIT -- 
+ *	 To change, you should edit the ncr8xx.ss SCRIPTS source file,
+ *	 recompile it, and rerun $PGM against the compiler's
+ *	 output to regenerate this file.
+ *
+ * Created with $PGM on $DATE.
+ */
+
+
+EOF
+    cat $TMPP >>$f
+done
+

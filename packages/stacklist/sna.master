@@ -1,0 +1,37 @@
+/* @(#)94        1.1  src/packages/stacklist/sna.master, pkg, pkg41J, 9515A_all 4/5/95 11:54:23                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for SNA LPP
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+#if defined(SNA) 
+sna
+sna.books
+sna.snapi
+sna.toolkit
+sna.xsna
+sna.msg.en_US
+sna.msg.ja_JP
+dtext.brwsr
+#endif /* SNA  */
+#if defined(SNA16) || defined(SNA64) || defined(SNAUNLIMIT)
+gw.rte
+#endif /* SNA16, SNA64, SNAUNLIMIT */
+#if defined (SNA16)
+gw.ubp.16
+#endif /* SNA16 */
+#if defined(SNA64)
+gw.ubp.64
+#endif /* SNA64 */
+#if defined(SNAUNLIMIT) 
+gw.ubp.unlimited
+#endif /* SNAUNLIMIT */

@@ -1,0 +1,779 @@
+# @(#)03        1.22.1.13  src/bos/usr/share/lib/terminfo/dec.ti, terminfo, bos41J, 9523C_all 6/8/95 15:58:48
+#
+#   COMPONENT_NAME: Terminfo
+#
+#   FUNCTIONS: dec.ti
+#
+#   ORIGINS: 27 71
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1993,1995
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# (c) Copyright 1991, 1992 OPEN SOFTWARE FOUNDATION, INC.
+# ALL RIGHTS RESERVED
+# 
+# OSF/1 1.1 
+
+# "@(#)$RCSfile: dec.ti,v $ $Revision: 1.6.2.5 $ (OSF) $Date: 92/03/31 20:21:19 $"
+
+# NAME:         dec (Digital Equipment Corporation)
+#		Supported Terminals
+# 
+# This module contains definitions for Digital Equipment Corporation's
+# Supported terminals, terminal emulators, and terminal emulation modes.
+#
+# The following are trademarks of Digital Equipment Corporation:
+#	VT	VT52	VT100	VT102	VT125	VT200	VT220
+#	VT240	VT241	VT300	VT320	VT330	VT340	VT400
+#	VT420
+#
+# The Supported terminals are the VT52 (emulation mode only), and selected
+# members of the VT100, VT200, VT300, and VT400 series of terminals.  Not all
+# models of these series are currently Supported by Digital Equipment
+# Corporation.
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT52 definitions:
+#
+vt52|Digital VT52,
+	cr=^M, cud1=^J, ind=^J, nel=^J, bel=^G, cub1=^H, ed=\EJ, el=\EK,
+	clear=\EH\EJ, cup=\EY%p1%' '%+%c%p2%' '%+%c, cols#80, lines#24,
+	cuf1=\EC, ht=^I, it#8, ri=\EI, cuu1=\EA,
+	kcuu1=\EA, kcud1=\EB, kcuf1=\EC, kcub1=\ED, kbs=^H,
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT100/ VT200/ VT300/ VT400 series definitions:
+#
+#			      Notes and Comments
+#
+# Note that the xenl glitch in "vt100" is not quite the same as a Concept
+# terminal, since the cursor is left in a different position while in the
+# weird state (the Concept terminal at beginning of next line, "vt100" at end
+# of the current line) so all versions of vi before vi 3.7 don't handle xenl
+# right on VT100 terminals.  The correct way to handle xenl is when you output
+# the char in column 80, immediately output CR LF and then assume you are in
+# column 1 of the next line.  If xenl is on, am should be on too.
+#
+# It is assumed you have smooth scroll off or are at a slow enough baud rate
+# that it doesn't matter (1200? or less).  Also this assumes that you set
+# auto-nl to "on".  If you set it off, use "vt100-nam" below.
+#
+# Digital provided only one thing here called "vt100", and Digital has chosen
+# to make "vt100-am" the standard "vt100" terminal type, but the site
+# administrator can make a local decision to make another of the VT100 entries
+# standard by editing this file (dec.ti) and inserting "vt100|" immediately
+# preceeding only ONE of the the other VT100 entries, and deleting "vt100|"
+# from the "vt100|vt100-am" entry.  There are several choices, but there are
+# two primary choices.  The choice is between nam (no automatic margins,
+# "vt100-nam"), and am (automatic margins, "vt100-am", as determined by the
+# wrapline switch (group 3 #2) in the VT100's setup.  Since the LAST "vt100"
+# entry in this file is the one that the tic(1) terminfo compiler will leave
+# around, it is important that the "vt100" name be unique, else both
+# "vt100-am" and "vt100-nam" will end up containing the last entry aliased to
+# "vt100".  Digital recommends turning on the bit in the VT100's setup, and
+# using "vt100-am", since having characters overprint on the right margin is
+# difficult to read.  However, the xenl glitch does not occur if you turn the
+# bit off.  In the Digital supplied dec.ti source file, "vt100" is aliased
+# only to the "vt100-am" entry, so the default for "vt100" is "vt100-am".
+#
+# The comments above also apply to the other root terminal type entries,
+# such as "vt102", "vt125", "vt200", etc.
+#
+# The padding requirements listed here are guesses.  It is historically claimed
+# by some that the VT100 needs no padding.  It is possible that it needs
+# padding only if the xon/xoff switch is off.  It is strongly recommended that
+# that xon/xoff be enabled, as this is assumed here.
+#
+# The VT100 entries use `rs2' and `rf', rather than `is2' and `if' because the
+# tab settings are in non-volatile memory and don't need to be reset upon
+# login.  You can type "reset" to get them set to every 8 columns.
+#
+# The VT100 series terminals have cursor ("arrows") keys which can operate
+# in two different modes: Cursor Mode and Application Mode.  "Cursor Mode"
+# is the "reset" state, and is assumed to be the normal state.  "Application
+# Mode" is the "set" state.  In "Cursor Mode", the cursor keys transmit
+# "Esc [ <code>" sequences, conforming to ANSI standards.  In "Application
+# Mode", the cursor keys transmit "Esc O <code>" sequences.  "Application Mode"
+# was provided primarily as an aid to the porting of VT52 applications.  It is
+# assumed that the cursor keys are normally in "Cursor Mode", and expected that
+# applications such as "vi" will always transmit the "smkx" string.  Therefore,
+# the definitions for the cursor keys are made to match what the terminal
+# transmits after the "smkx" string is transmitted.  If the "smkx" string
+# is a null string or is not defined, then cursor keys are assumed to be in
+# "Cursor Mode", and the cursor keys definitions should match that assumption,
+# else the appication may fail.  It is also expected that applications will
+# always transmit the "rmkx" string to the terminal before they exit.
+#
+# The VT100 series terminals have an auxilliary keypad, commonly referred to as
+# the "Numeric Kerypad", because it is a cluster of numeric and function keys.
+# The Numeric Keypad which can operate in two different modes: Numeric Mode and
+# Application Mode.  "Numeric Mode" is the "reset" state, and is assumed to be
+# the normal state.  "Application Mode" is the "set" state.  In "Numeric Mode",
+# the numeric and punctuation keys transmit ASCII 7-bit characters, and the 
+# <ENTER> key transmits the same as the <RETURN> key (Note: the <RETURN> key
+# can be configured to send either LF (\015) or CR LF).  In "Application Mode",
+# all the keypad keys transmit "Esc O <code>" sequences.  The PF1 - PF4 keys
+# always send the same "Esc O <code>" sequences.  It is assumed that the keypad
+# is normally in "Numeric Mode".  If an application requires that the keypad be
+# in "Application Mode" then it is expected that the user, or the application,
+# will set the TERM environment variable to point to a terminfo entry which has
+# defined the "smkx" string to include the codes that switch the keypad into
+# "Application Mode", and the terminfo entry will also define function key
+# fields to match the "Application Mode" control codes.  If the "smkx" string
+# is a null string or is not defined, then the keypad is assumed to be in
+# "Numeric Mode".  If the "smkx" string switches the keypad into "Application
+# Mode", it is expected that the "rmkx" string will contain the control codes
+# necessary to reset the keypad to "Normal" mode, and it is also expected that
+# applications which transnit the "smkx" string will also always transmit the
+# "rmkx" string to the terminal before they exit.
+#
+# In general, the comments above also apply to the VT100, VT200, VT300 and
+# VT400 series terminals.  Exceptions should be noted immediately above the
+# specific entry.
+#
+# VT100 series definitions:
+#
+# EXECUTION ENVIRONMENT:
+#
+# The "vt100-am" entry is the base for most VT1xx definitions.  It basically
+# defines the VT100 Model AB (VT100-AB) which has the "Advanced Video" option,
+# and with Automatic Margins (am mode) enabled.  It is assumed here that
+# xon/xoff is enabled in the terminal.
+#
+#	Normal VT100 entry, with automatic margins
+#
+vt100-am|Digital VT100,
+	cr=^M, bel=^G,
+	cud1=^J, cols#80, lines#24, clear=\E[H\E[2J$<50>, ind=^J,
+	cub1=^H, am, cup=\E[%i%p1%d;%p2%dH$<5>, cuf1=\E[C$<2>, cuu1=\E[A$<2>,
+	el=\E[K$<3>, ed=\E[J$<50>,
+	smso=\E[7m$<2>, rmso=\E[m$<2>, smul=\E[4m$<2>, rmul=\E[m$<2>,
+	bold=\E[1m$<2>, rev=\E[7m$<2>, blink=\E[5m$<2>, sgr0=\E[m\E(B,
+	il1=\E[L,       dl1=\E[M,
+	tbc=\E[3g, hts=\EH,
+	rf=/usr/share/lib/tabset/vt100,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h,
+	smkx=\E=, rmkx=\E>,
+	kcuu1=\E[A, kcud1=\E[B, kcuf1=\E[C, kcub1=\E[D, kbs=^H,
+	cuu=\E[%p1%dA,
+	cud=\E[%p1%dB,
+	cuf=\E[%p1%dC,
+	cub=\E[%p1%dD,
+	home=\E[H, kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	khome=\E[H,     kich1=\E[2~,
+	ht=^I, ri=\EM$<5>, vt#3, xenl,
+	smcup=\E[?7h\E[?1l\E(B\E=,      rmcup=\E[?7h,
+	sc=\E7, rc=\E8, csr=\E[%i%p1%d;%p2%dr, 
+	it#8, xon,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m
+	       %?%p9%t\E(0%e\E(B%;,
+	box1=lqkxjmwuvtn, batt1=f1,
+	box2=lqkxjmwuvtn, batt2=f1md,
+	font0=\E(B, font1=\E(0, msgr,
+	knl=\r,
+	ktab=^I,	civis=\E[?25l,  cnorm=\E[?25h,  cvvis=\E[?25h,
+	nel=\n,		mc5=\E[5i, mc4=\E[4i,
+#
+# EXECUTION ENVIRONMENT:
+#
+#	Normal VT100 entry, no auto margin.
+#       vt100x is needed for usability use of vt100 emulation
+
+vt100|vt100-nam|vt100x|ibm5550|ibm5570|VT100 w/no am,
+	am@, xenl@, smcup=\E[?7l\E[?1l\E(B\E=,      rmcup=\E[?7l,
+	use=vt100-am, 
+#
+# EXECUTION ENVIRONMENT:
+#
+#       VT100's with one of the 24 lines used as a status line.
+#       We put the status line on the top.
+#
+vt100-s|vt100-s-top|VT100 with status line at top,
+	lines#23, is2=\E[2;24r\E[24;1H, cup@, home=\E[H^J,
+	clear=\E[;H^J\E[0J$<50>,
+	hs, eslok, tsl=\E7\E[1;%p1%dH\E[1K, fsl=\E8,
+        dsl=\E7\E[1;24r\E8,
+	use=vt100-am, 
+vt100-s-bot|VT100 with status line at bottom,
+	lines#23, is2=\E[1;23r\E[23;1H,
+	hs, eslok, tsl=\E7\E[24;%p1%dH\E[1K, fsl=\E8,
+        dsl=\E7\E[1;24r\E8,
+	use=vt100-am, 
+#
+# EXECUTION ENVIRONMENT:
+#
+#       Ordinary VT100 in 132 column ("wide") mode.
+
+vt100-w|vt100-w-am|VT100 132 cols (w/advanced video),
+	cols#132, lines#24,
+	rf=/usr/share/lib/tabset/vt100,
+	rs2=\E>\E[?3h\E[?4l\E[?5l\E[?7h\E[?8h,
+	use=vt100-am, 
+
+#	VT100 in 132 column ("wide") mode with no automatic margins
+
+vt100-w-nam|VT100 132 cols (w/advanced video); no am,
+	am@, xenl@,
+	rs2=\E>\E[?3h\E[?4l\E[?5l\E[?7l\E[?8h, vt@,
+	use=vt100-w-am, 
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT100 Model AA (VT100-AA) (with NO Advanced Video option)
+#
+#    The VT100-AA does NOT have Bold, Blink, Underline, nor Negative (Reverse)
+#    character attributes.  Cursor Display is blinking underline (_) or
+#    blinking block, controled by cursor switch (group 1 #4) in the setup,
+#    only.  Therefore, there is only ONE character attribute -- the Cursor
+#    Display attribute -- and specifying either Underline or Negative displays
+#    whatever the Cursor Display is set to.  Attempts to tell the terminal to
+#    display in Bold or Blink are ignored.
+#
+#    The VT100-AA also displays only 14 scroll lines when it is set to "wide"
+#    mode (132 columns).
+#
+vt100-nav|vt100-nav-am|Digital VT100 Model AA (VT100-AA) w/ am,
+	bold@, blink@,
+	sgr@,
+	use=vt100-am, 
+vt100-nav-nam|VT100-AA w/no autowrap,
+	am@, xenl@,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7l\E[?8h,
+	use=vt100-nav-am, 
+vt100-nav-w|vt100-nav-w-am|vt100-14-w|VT100-AA 132 cols (14 lines),
+	cols#132, lines#14,
+	is2=\E[1;14r\E[14;1H,
+	rs2=\E>\E[?3h\E[?4l\E[?5l\E[?7h\E[?8h\E[1;14r\E[14;1H,
+	use=vt100-nav-am, 
+vt100-nav-w-nam|vt100-14-w-nam|VT100-AA 132 cols (14 lines); w/no autowrap,
+	am@, xenl@, vt@,
+	rs2=\E>\E[?3h\E[?4l\E[?5l\E[?7l\E[?8h\E[1;14r\E[14;1H,
+	use=vt100-nav-w-am,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       xterm entry for DEC vt100 emulation.
+
+xterm|vs100|xterm terminal emulator,
+	ind=^J, cols#80, lines#25,
+	clear=\E[H\E[2J, cub1=^H, cup=\E[%i%p1%d;%p2%dH,
+	cuf1=\E[C, cuu1=\E[A, el=\E[K, ed=\E[J,
+	cud=\E[%p1%dB, cuu=\E[%p1%dA, cub=\E[%p1%dD,
+	cuf=\E[%p1%dC, km,
+	smso=\E[7m, rmso=\E[m, smul@, rmul@,
+	bold=\E[1m, rev=\E[7m, blink@, 
+	rs1=\E>\E[1;3;4;5;6l\E[?7h\E[m\E[r\E[2J\E[H, rs2@,
+	kf1=\E[11\176, kf2=\E[12\176, kf3=\E[13\176, kf4=\E[14\176,
+	kf5=\E[15\176, kf6=\E[17\176, kf7=\E[18\176, kf8=\E[19\176,
+	kf9=\E[20\176, kf10=\E[21\176, kf11=\E[22\176, kf12=\E[23\176,
+	kpp=\E[5\176,knp=\E[6\176,kdch1=\177,
+	ht=^I, ri=\EM,
+	vt@, xon@, csr=\E[%i%p1%d;%p2%dr,
+	il=\E[%p1%dL, dl=\E[%p1%dM, il1=\E[L, dl1=\E[M,
+	ich=\E[%p1%d@, dch=\E[%p1%dP, ich1=\E[@, dch1=\E[P,
+	box1=lqkxjmwuvtn,
+	box2=lqkxjmwuvtn,
+	use=vt100-nam,
+
+xterms|vs100s|xterm terminal emulator (small screen 24x80),
+	cols#80, lines#24,
+	use=xterm,
+
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT102 definitions:
+#
+#    The VT102 is like the VT100 Model AB (VT100-AB) (a VT100 with Advanced
+#    Video option), except it has no expansion capabilities.  It cannot
+#    be hardware-upgraded.  It cannot have printers attached.
+#
+#    It has multiple character display attributes, just like the VT100-AB.
+#    In `wide' mode, it has 24 lines, just like the VT100-AB.
+#
+#    In addition, it has insert/replace mode, insert line, delete line, and
+#    delete character capabilities.  It does NOT have the "insert null"
+#    glitch problem.  These capabilities do not exist in the VT100 terminals.
+#
+
+VT102|vt102-am|Digital VT102 with autowrap,
+	smir=\E[4h, rmir=\E[4l, mir,
+	il1=\E[1L, il=\E[%p1%dL,
+	dl1=\E[1M, dl=\E[%p1%dM,
+	dch1=\E[1P, dch=\E[%p1%dP, 
+	use=vt100-am,
+vt102-nam|VT102 w/no autowrap,
+	am@, xenl@,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7l\E[?8h,
+	use=vt102-am,
+vt102-w|VT102 132 cols,
+	use=vt100-w-am,
+vt102-w-nam|VT102 132 cols; w/no autowrap,
+	use=vt100-w-nam,
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT125 definitions:
+#
+#    The VT125 is like the VT102 but with additional capabilities.
+#
+vt125|vt125-am|Digital VT125,
+	cr=^M, cud1=^J, ind=^J, bel=^G,
+	cr=^M, nel=^J, bel=^G, ht=^I,
+	xenl, cud1=^J, cols#80, lines#24, clear=\E[H\E[2J$<50>, 
+	am, cub1=^H, cup=\E[%i%p1%d;%p2%dH$<5>,
+	cuf1=\E[C$<2>, cuu1=\E[A$<2>, el=\E[K$<3>, ed=\E[J$<50>,
+	smso=\E[7m$<2>, rmso=\E[m$<2>,
+	smul=\E[4m$<2>, rmul=\E[m$<2>,
+	bold=\E[1m$<2>, rev=\E[7m$<2>, blink=\E[5m$<2>,
+	sgr0=\E[m$<2>, if=/usr/share/lib/tabset/vt100,
+	is2=\E[1;24r\E[24;1H, rf=/usr/share/lib/tabset/vt100,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H,
+	smkx=\E=, rmkx=\E[?1l, kcuu1=\EOA, kcud1=\EOB,
+	kcuf1=\EOC, kcub1=\EOD, kbs=^H, home=\E[H, kf1=\EOP, kf2=\EOQ,
+	kf3=\EOR, kf4=\EOS, ht=^I, ri=\EM$<5>, vt#3, sc=\E7, rc=\E8,
+	csr=\E[%i%p1%d;%p2%dr,
+vt125-nam|Digital VT125 no automatic margin,
+	cr=^M, cud1=^J, ind=^J, bel=^G,
+	am@,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7l\E[?8h\E[1;24r\E[24;1H,
+	use=vt125-am,
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT200 series definitions:
+#
+#    The VT200 series is like the VT102, but has additional feaures, such
+#    as 8-bit character sets, erase character capabilities, and can run
+#    in "8-Bit Controls" mode.  Some models have graphics and color
+#    capabilities.
+#
+# The beginning of VT200-series 8-bit terminals.
+#
+# VT200 and VT220 definitions; 7-Bit Controls Mode:
+#
+vt200|vt200-am|vt200-js|Digital VT200 series with am,
+	smir=\E[4h, rmir=\E[4l, mir,
+	il1=\E[1L, il=\E[%p1%dL,
+	dl1=\E[1M, dl=\E[%p1%dM,
+	dch1=\E[1P, dch=\E[%p1%dP, 
+	el=\E[K, clear=\E[H\E[J, ed=\E[J,
+	cup=\E[%i%p1%d;%p2%dH, cuf1=\E[C, cuu1=\E[A,
+	smso=\E[7m, rmso=\E[27m, smul=\E[4m, rmul=\E[24m,
+	bold=\E[1m, rev=\E[7m, blink=\E[5m, sgr0=\E[m,
+	nel=\n,
+	eo, km,
+	ech=\E[%p1%dX,
+	kf6=\E[17~,     kf7=\E[18~,     kf8=\E[19~,     kf9=\E[20~,
+	kf10=\E[21~,    kf11=\E[23~,    kf12=\E[24~,    kf13=\E[25~,
+	kf14=\E[26~,    kf17=\E[31~,    kf18=\E[32~,    kf19=\E[33~,
+	kf20=\E[34~,    kdo=\E[29~,
+	kich1=\E[2~,    knp=\E[6~,
+	kpp=\E[5~,      khlp=\E[28~,    civis=\E[?25l,  cnorm=\E[?25h,
+	cvvis=\E[?25h,
+	use=vt100-am,
+vt200-nam|VT200 w/no am,
+	am@,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7l\E[?8h,
+	use=vt200-am,
+#
+vt200-ss|vt220-ss|Digital VT200 series with smooth scroll,
+	rs2=\E>\E[?3l\E[?4h\E[?5l\E[?7h\E[?8h,
+	use=vt220-am,
+vt200-w|vt220-w|vt200-wj|vt220-wj|VT200 series; 132 col.,
+	cols#132,
+	rf=/usr/share/lib/tabset/vt100,
+	rs2=\E>\E[?3h\E[?4l\E[?5l\E[?7h\E[?8h,
+	use=vt200-am,
+vt200-ws|vt220-ws|Digital VT200 series; 132 col.; smooth scroll,
+	cols#132,
+	rf=/usr/share/lib/tabset/vt100,
+	rs2=\E>\E[?3h\E[?4h\E[?5l\E[?7h\E[?8h,
+	use=vt200-ss,
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT200 series Color terminals:
+#
+# VT240 and VT241 definitions; 7-Bit Controls Mode:
+#
+# This generic "vt240" entry does not alter foreground/background colors
+# when doing a "tset" or "reset".
+vt240|vt240-am|Digital VT240 with autowrap; no color,
+	use=vt200-am,
+vt240-nam|Digital VT240; no autowrap,
+	use=vt200-nam,
+#
+# colored backgrounds for VT24x:
+#
+vt240black|vt241black|Digital VT240 black background,
+	rmul=\E[m\EPpS(M0(AD))\E\\,
+	rmso=\E[m\EPpS(M0(AD))\E\\,
+	clear=\E[;H\E[2J\EPpS(M0(AD))\E\\,
+	is2=\E[1;24r\E[24;1H\EPpS(M0(AD))\E\\,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H\EPpS(M0(AD))\E\\,
+	use=vt240-am,
+vt240red|vt241red|Digital VT240 red background,
+	rmul=\E[m\EPpS(M0(AR))\E\\,
+	rmso=\E[m\EPpS(M0(AR))\E\\,
+	clear=\E[;H\E[2J\EPpS(M0(AR))\E\\,
+	is2=\E[1;24r\E[24;1H\EPpS(M0(AR))\E\\,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H\EPpS(M0(AR))\E\\,
+	use=vt240-am,
+vt240green|vt241green|Digital VT240 green background,
+	rmul=\E[m\EPpS(M0(AG))\E\\,
+	rmso=\E[m\EPpS(M0(AG))\E\\,
+	clear=\E[;H\E[2J\EPpS(M0(AG))\E\\,
+	is2=\E[1;24r\E[24;1H\EPpS(M0(AG))\E\\,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H\EPpS(M0(AG))\E\\,
+	use=vt240-am,
+vt240blue|vt241blue|Digital VT240 blue background,
+	rmul=\E[m\EPpS(M0(AB))\E\\,
+	rmso=\E[m\EPpS(M0(AB))\E\\,
+	clear=\E[;H\E[2J\EPpS(M0(AB))\E\\,
+	is2=\E[1;24r\E[24;1H\EPpS(M0(AB))\E\\,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H\EPpS(M0(AB))\E\\,
+	use=vt240-am,
+vt240cyan|vt241cyan|Digital VT240 cyan background,
+	rmul=\E[m\EPpS(M0(AC))\E\\,
+	rmso=\E[m\EPpS(M0(AC))\E\\,
+	clear=\E[;H\E[2J\EPpS(M0(AC))\E\\,
+	is2=\E[1;24r\E[24;1H\EPpS(M0(AC))\E\\,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H\EPpS(M0(AC))\E\\,
+	use=vt240-am,
+vt240yellow|vt241yellow|Digital VT240 yellow background,
+	rmul=\E[m\EPpS(M0(AY))\E\\,
+	rmso=\E[m\EPpS(M0(AY))\E\\,
+	clear=\E[;H\E[2J\EPpS(M0(AY))\E\\,
+	is2=\E[1;24r\E[24;1H\EPpS(M0(AY))\E\\,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H\EPpS(M0(AY))\E\\,
+	use=vt240-am,
+vt240magenta|vt241magenta|Digital VT240 magenta background,
+	rmul=\E[m\EPpS(M0(AM))\E\\,
+	rmso=\E[m\EPpS(M0(AM))\E\\,
+	clear=\E[;H\E[2J\EPpS(M0(AM))\E\\,
+	is2=\E[1;24r\E[24;1H\EPpS(M0(AM))\E\\,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H\EPpS(M0(AM))\E\\,
+	use=vt240-am,
+vt240white|vt241white|Digital VT240 white background,
+	rmul=\E[m\EPpS(M0(AW))\E\\,
+	rmso=\E[m\EPpS(M0(AW))\E\\,
+	clear=\E[;H\E[2J\EPpS(M0(AW))\E\\,
+	is2=\E[1;24r\E[24;1H\EPpS(M0(AW))\E\\,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H\EPpS(M0(AW))\E\\,
+	use=vt240-am,
+vt241|vt241-am|Digital VT241,
+	use=vt240-am,
+vt241-nam|Digital VT241 w/no autowrap,
+	use=vt240-nam,
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT300 series definitions:
+#
+# The beginning of VT300 series 8-bit terminals.
+#
+# The VT300 series terminals are like the VT200 series, but with more
+# features.
+#
+# Tabstops can be set and reset more efficiently via a control code sequence
+# designed for this series.  Therefore, the `rf' field references a different
+# "tabset" file.
+#
+# VT300 and VT320 definitions; 7-Bit Controls Mode:
+# Definitions include functionality of 25th line as a status line.
+#
+vt300|vt300-am|Digital VT300,
+	hs, eslok, tsl=\E[1$}\E[;H\E[K, fsl=\E[0$}, dsl=\E[1$}\E[;H\E[K\E[0$},
+	rf=/usr/share/lib/tabset/vt100,
+	use=vt200-am,
+vt300-nam|VT300 w/no am,
+	am@,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7l\E[?8h,
+	use=vt300-am,
+vt320|vt320-am|Digital VT320,
+	use=vt300-am,
+vt320-nam|Digital VT320 w/no am,
+	use=vt300-nam,
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT300 series Graphics and Color terminals:
+#
+# VT330 and VT340 definitions; 7-Bit Controls Mode:
+#
+# VT330 Graphics terminal (monochrome):
+#
+vt330|vt330-am|Digital VT320,
+	use=vt320-am,
+vt330-nam|Digital VT330 w/no am,
+	use=vt320-nam,
+#
+# VT340 Graphics and Color terminal:
+#
+vt340|vt340-am|Digital VT340,
+	use=vt330-am,
+vt340-nam|VT340 w/no am,
+	use=vt330-nam,
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT400 series definitions:
+#
+# The beginning of VT400-series 8-bit terminals.
+#
+# VT400 and VT420 definitions; 7-Bit Controls Mode:
+#
+#    The VT420 terminal is like the VT320 terminal, but has more
+#    memory and more features.
+#
+vt400|vt400-am|vt420|vt420-am|Digital VT420,
+	rs2=\E>\E[80$|\E[24*|\E[24t\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H,
+	use=vt320-am,
+vt400-nam|vt420-nam|VT420 w/no am,
+	am@,
+	rs2=\E>\E[80$|\E[24*|\E[24t\E[?4l\E[?5l\E[?7l\E[?8h\E[1;24r\E[24;1H,
+	use=vt320-am,
+vt400-w|vt420-w|VT400 series; vt420-am 132 cols,
+	cols#132,
+	rs2=\E>\E[132$|\E[24*|\E[24t\E[?4l\E[?5l\E[?7h\E[?8h\E[1;24r\E[24;1H,
+	use=vt320-am,
+vt400-w-nam|vt420-w-nam|VT400 series; vt420-nam 132 cols,
+	cols#132, am@,
+	rs2=\E>\E[132$|\E[24*|\E[24t\E[?4l\E[?5l\E[?7l\E[?8h\E[1;24r\E[24;1H,
+	use=vt320-am,
+vt400-36|vt420-36|VT400 series; vt420-am 36 lines; 80 cols,
+	lines#36, is2=\E[1;36r\E[36;1H,
+	rs2=\E>\E[80$|\E[36*|\E[36t\E[?4l\E[?5l\E[?7h\E[?8h\E[1;36r\E[36;1H,
+	use=vt320-am,
+vt400-36-nam|vt420-36-nam|VT400 series; vt420-nam 36 lines; 80 cols,
+	lines#36, am@, is2=\E[1;36r\E[36;1H,
+	rs2=\E>\E[80$|\E[36*|\E[36t\E[?4l\E[?5l\E[?7l\E[?8h\E[1;36r\E[36;1H,
+	use=vt320-am,
+vt400-36-w|vt420-36-w|VT400 series; vt420-am 36 lines; 132 cols,
+	cols#132, lines#36, is2=\E[1;36r\E[36;1H,
+	rs2=\E>\E[132$|\E[36*|\E[36t\E[?4l\E[?5l\E[?7h\E[?8h\E[1;36r\E[36;1H,
+	use=vt320-am,
+vt400-36-w-nam|vt420-36-w-nam|VT400; vt420-nam 36 lines; 132 cols,
+	cols#132, lines#36, am@, is2=\E[1;36r\E[36;1H,
+	rs2=\E>\E[132$|\E[36*|\E[36t\E[?4l\E[?5l\E[?7l\E[?8h\E[1;36r\E[36;1H,
+	use=vt320-am,
+
+
+#	dec_Unsupported.ti	4.1	(DEC OSF/1)	03/01/92
+#
+# NAME:         dec_Unsuppported (Digital Equipment Corporation)
+#		Unsupported Terminals
+# 
+# This module contains definitions for Digital Equipment Corporation's
+# Unsupported terminals, terminal emulators, and terminal emulation modes.
+# The Unsupported terminals are terminals manufactured by Digital Equipment
+# Corporation that are no longer sold or maitained by Digital.  "terminals"
+# also includes certain terminal modes, and terminal/peripherals combinations,
+# and emulators.
+#
+# This information is provided "as is".  Its accuracy or correctness has not
+# been verified.
+#
+# The following are trademarks of Digital Equipment Corporation:
+#	VT	VT100	VT101	VT132	VT200	VT220
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+# VT100/ VT200 series definitions:
+#
+#			Notes and Comments
+#
+# Note that the xenl glitch in "vt100" is not quite the same as a Concept
+# terminal, since the cursor is left in a different position while in the
+# weird state (the Concept terminal at beginning of next line, "vt100" at end
+# of this line) so all versions of vi before vi 3.7 don't handle xenl right on
+# VT100 terminals.  The correct way to handle xenl is when you output the char
+# in column 80, immediately output CR LF and then assume you are in column 1 of
+# the next line.  If xenl is on, am should be on too.
+#
+# It is assumed you have smooth scroll off or are at a slow enough baud rate
+# that it doesn't matter (1200? or less).  Also this assumes that you set
+# auto-nl to "on".  If you set it off, use "vt100-nam" below.
+#
+# Since there are two things here called "vt100", the site administrator can
+# make a local decision to make either one standard "vt100" by editing this
+# file (dec.ti) and inserting "vt100|" immediately preceeding only one of the
+# two "vt100-???" entries, and deleting "vt100|" from the other of the two
+# "vt100-???" entries.  The choice is between nam (no automatic margins,
+# "vt100-nam"), and am (automatic margins, "vt100-am", as determined by the
+# wrapline switch (group 3 #2) in the VT100's setup.  Since the last "vt100"
+# in this file is the one that the tic(1) terminfo compiler will leave around,
+# it is important that the "vt100" name be unique, else both "vt100-am" and
+# "vt100-nam" will end up containing the last entry aliased to "vt100".
+# Digital recommends turning on the bit in the VT100's setup, and using
+# "vt100-am", since having stuff hammer on the right margin is sort of hard to
+# read.  However, the xenl glitch does not occur if you turn the bit off.
+# In the Digital-supplied dec.ti source file, "vt100" is aliased only to the
+# "vt100-am" entry, so the default for "vt100" is "vt100-am".
+#
+# The padding requirements listed here are guesses.  It is historically claimed
+# by some that the VT100 needs no padding.  It is possible that it needs
+# padding only if the xon/xoff switch is off.  It is strongly recommended that
+# that xon/xoff be enabled, as this is assumed here.
+#
+# The VT100 entries use `rs2' and `rf', rather than `is2' and `if' because the
+# tab settings are in non-volatile memory and don't need to be reset upon
+# login.  You can type "reset" to get them set.
+#
+# VT100 series definitions:
+#
+# EXECUTION ENVIRONMENT:
+#
+# The "vt100-am" entry is the base for most VT1xx definitions.  It basically
+# defines the VT100 Model AB (VT100-AB) which has the "Advanced Video" option,
+# with Automatic Margins (am mode) enabled.
+#
+#
+vt100-np|VT100 with no padding (for psl games),
+	clear=\E[H\E[2J, ri=\EM,
+	cup=\E[%i%p1%d;%p2%dH, cuf1=\E[C, cuu1=\E[A, el=\E[K, ed=\E[J,
+	smso=\E[7m, rmso=\E[m, smul=\E[4m, rmul=\E[m, bold=\E[1m,
+	rev=\E[7m, blink=\E[5m, sgr0=\E[m, use=vt100,
+#
+# The beginning of "vt100p" with printer options.  It is identical to
+# "vt100-nam" (VT100 w/no am) with some insert delete chars improvement.
+#
+vt100p|vt100p-nam|Digital VT100 with printer options,
+	il1=\E[L, bel=^G, cub1=^H,
+	ed=\E[J$<50>, el=\E[K$<3>, clear=\E[;H\E[2J$<50>,
+	cup=\E[%i%p1%d;%p2%dH$<10>,
+	cols#80, cr=^M, csr=\E[%i%p1%d;%p2%dr, tbc=\E[3g$<2>, hts=\EH$<2>,
+	dch1=\E[P, dl1=\E[M, cud1=^J, rmir=\E[4l, home=\E[H,
+	smir=\E[4h, is2=\E[1;24r\E[24;1H, kf1=\EOP, kf2=\EOQ, kf3=\EOR,
+	kf4=\EOS, kbs=^H, kcud1=\EOB, rmkx=\E[?1l, kcub1=\EOD,
+	kcuf1=\EOC, smkx=\E[?1h, kcuu1=\EOA, cub1=^H, lines#24,
+	bold=\E[1m$<2>, rev=\E[7m$<2>, blink=\E[5m$<2>, sgr0=\E[m$<2>, mir,
+	cuf1=\E[C, nel=^J, ht=^I, rc=\E8,
+	rf=/usr/share/lib/tabset/vt100,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7l\E[?8h, sc=\E7, rmso=\E[m,
+	smso=\E[7m, ri=\EM, ht=^I, rmul=\E[m, cuu1=\E[A, smul=\E[4m,
+	vt#3, xenl,
+#
+# VT101 definitions:
+#  The VT101 is a VT100 Model AA  (a VT100 without Advanced Video option)
+#  with no expansion capabilities.  In `wide' mode, it has only 14 lines.
+#  It cannot be upgraded.  It cannot have printers attached.
+#
+vt101|vt101-am|vt101-nav|vt101-nav-am|Digital VT101 w/ am,
+	cr=^M, cud1=^J, ind=^J, bel=^G,
+	use=vt100-am,
+vt101-nam|vt101-nav-nam|VT101 w/no autowrap,
+	cr=^M, cud1=^J, ind=^J, bel=^G,
+	am@, xenl@,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7l\E[?8h, use=vt101-am,
+vt101-w|vt101-w-am|vt101-14-w|vt101-14-w-am|VT101 132 cols (14 lines),
+	cr=^M, cud1=^J, ind=^J, bel=^G,
+	cols#132, lines#14,
+	is2=\E[1;14r\E[14;1H,
+	rs2=\E>\E[?3h\E[?4l\E[?5l\E[?7h\E[?8h\E[1;14r\E[14;1H,
+	use=vt101-am,
+vt101-w-nam|vt101-14-w-nam|VT101 132 cols (14 lines)\054 w/no autowrap,
+	cr=^M, cud1=^J, ind=^J, bel=^G,
+	am@, xenl@, vt@,
+	rs2=\E>\E[?3h\E[?4l\E[?5l\E[?7l\E[?8h\E[1;14r\E[14;1H,
+	use=vt101-w-am,
+#
+#
+# EXECUTION ENVIRONMENT:
+#
+#        Like vt100 but slower and has ins/del line and such.
+
+vt132|Digital Equipment Co VT132,
+	il1=\E[L$<99>, dl1=\E[M$<99>, ip=$<7>, dch1=\E[P$<7>, rmir=\E[4l,
+	smir=\E[4h, xenl, ind=^J$<30>, use=vt100,
+
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       This entry is defined for vt220 when using 7 bit controls.
+
+vt220|Digital Equipment Co VT220,
+	msgr,   eo,     km,     it#8,   lines#24,       cols#80,
+	bel=^G,         cr=^M,          ed=\E[J,        el=\E[K,
+	ind=^J,         il1=\E[L,       dl1=\E[M,       clear=\E[H\E[2J,
+	cup=\E[%i%p1%d;%p2%dH,          ech=\E[%p1%dX,
+	cuu1=\E[A,      cuu=\E[%p1%dA,  kcuu1=\E[A,
+	cud1=\E[B,      cud=\E[%p1%dB,  kcud1=\E[B,
+	cuf1=\E[C,      cuf=\E[%p1%dC,  kcuf1=\E[C,
+	cub1=^H,        cub=\E[%p1%dD,  kcub1=\E[D,
+	smcup=\E[?7l\E[?1l\E(B,         rmcup=\E[?7h,
+	blink=\E[5m,    bold=\E[1m,     rev=\E[7m,      sgr0=\E[0m\E(B,
+	smso=\E[7m,     rmso=\E[0m,     smul=\E[4m,     rmul=\E[0m,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m
+	       %?%p9%t\E(0%e\E(B%;,
+	box1=\154\161\153\170\152\155\167\165\166\164\156, batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156, batt2=f1md,
+	font0=\E(B,     font1=\E(0,
+	kf1=\EOP,       kf2=\EOQ,       kf3=\EOR,       kf4=\EOS,
+	kf6=\E[17~,     kf7=\E[18~,     kf8=\E[19~,     kf9=\E[20~,
+	kf10=\E[21~,    kf11=\E[23~,    kf12=\E[24~,    kf13=\E[25~,
+	kf14=\E[26~,    kf17=\E[31~,    kf18=\E[32~,    kf19=\E[33~,
+	kf20=\E[34~,    kbs=^H,         kdo=\E[29~,
+	kich1=\E[2~,    knl=\r,         knp=\E[6~,      ktab=^I,
+	kpp=\E[5~,      khlp=\E[28~,    civis=\E[?25l,  cnorm=\E[?25h,
+	cvvis=\E[?25h,
+	mc5=\E[5i, mc4=\E[4i,
+
+#
+vt220-nam|VT22 w/no am,
+	am@,
+	rs2=\E>\E[?3l\E[?4l\E[?5l\E[?7l\E[?8h,
+	use=vt200-am,
+vt220-am|vt220-js|VT220 with am,
+	use=vt200-am,
+
+#
+# EXECUTION ENVIRONMENT:
+#
+#       Terminal with 8 bit controls.
+
+vt220-8|vt320-8|vt330-8|Digital Equipment Co VT220/320/330,
+        bel=^G,         ed=\233J,       el=\233K,
+        cr=^M,          ind=^J,
+        il1=\233L,      dl1=\233M,
+        box1=\154\161\153\170\152\155\167\165\166\164\156, batt1=f1,
+        box2=\154\161\153\170\152\155\167\165\166\164\156, batt2=f1md,
+        clear=\233H\233J,               cup=\233%i%p1%d;%p2%dH,
+        cols#80,        cud=\233%p1%dB, cud1=\233B,     eo,
+        lines#24,
+        it#8,           font0=\E(B,     font1=\E(0,     kf1=\217P,
+        kf2=\217Q,      kf3=\217R,      kf4=\217S,      kf6=\23317~,
+        kf7=\23318~,    kf8=\23319~,    kf9=\23320~,    kf10=\23321~,
+        kbs=^H,         kcud1=\233B,
+        kdo=\23329~,    kich1=\2332~,   kcub1=\233D,    km,
+        knl=^M,         knp=\2336~,     ktab=^I,
+        kpp=\2335~,     khlp=\23328~,   kcuf1=\233C,    kcuu1=\233A,
+        cub=\233%p1%dD, cub1=^H,        blink=\2335m,
+        smcup=\233?7l\233?1l\E(B,       rmcup=\233?7h,
+        bold=\2331m,    sgr0=\2330m\E(B,    rev=\2337m,
+        cuf=\233%p1%dC, rmso=\2330m,    smso=\2337m,    cuf1=\233C,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m
+	       %?%p9%t\E(0%e\E(B%;,
+	ech=\2330%p1%dX, civis=\2330?25l, cnorm=\2330?25h, cvvis=\2330?25h,
+        rmul=\2330m,    cuu=\233%p1%dA, cuu1=\233A,     smul=\2334m,
+		mc5=\E[5i, mc4=\E[4i,
+

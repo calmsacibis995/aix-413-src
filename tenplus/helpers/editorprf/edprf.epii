@@ -1,0 +1,325 @@
+# @(#)42	1.4  src/tenplus/helpers/editorprf/edprf.epii, tenplus, tenplus411, 9430C411a 7/18/94 17:52:02
+#
+# COMPONENT_NAME: (INED) INed Editor
+#
+# ORIGINS:  9, 10, 27
+#
+# This module contains IBM CONFIDENTIAL code. -- (IBM
+# Confidential Restricted when combined with the aggregated
+# modules for this product)                  SOURCE MATERIALS
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1994
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+##############################################################################
+#
+# NOTES TO TRANSLATOR:
+#
+# All lines beginning with '#' characters in the first column are comments
+# These lines will not appear to the user and usually contain information
+# concerning the proper translation of the surrounding text.
+# 
+# In this file, many command (function) names are
+# used.  They are all in UPPER CASE.  They should not be translated.
+# Examples:  BOX-MARK, ENTER, TAB, RIGHT-ARROW, and many more.
+#
+
+                        Press USE to continue editing.
+
+
+                               Editor Profile
+                               ==============
+
+The editor profile is used to customize the editor to suit your needs.
+Using it, you can customize:
+
+    o New Task Menu, listing tasks you can execute from the menu;
+
+    o Help Menu, listing subjects on which you can get help;
+
+    o Files the Editor Should Watch, listing files the editor watches
+      to see if they have changed; and
+
+    o Editor Search Paths, listing your directories for forms, helpers,
+      help messages, and forms language scripts.
+
+The system version of the editor profile file is in use until you create
+your own.  To create your own version of the editor profile:
+     o use MENU to display the New Task Menu, then
+     o select the option Edit Your Editor Profile.
+If you do not have a profiles directory, one is created for you. A copy
+of the system version of the editor profile is inserted in $HOME/profiles.
+After the editor displays several messages, including:
+        Creating file
+and
+        Copying standard profile /usr/lib/INed/editorprf
+Then your copy of $HOME/profiles/editorprf editor profile is displayed.
+# NOTE TO TRANSLATOR:  do not translate HOME.
+
+
+The Editor Profile Initial Display
+----------------------------------
+
+Your editor profile looks like something like this:
+
+
+                            Editor Profile File
+
+ This file allows you to modify the behavior of the editor to suit your
+preferences.  Put the cursor on the line of interest and ZOOM-IN to specify
+your choice of options.
+
+               +-----------------------------------------------+
+               |MENU Options                                   |
+               |HELP Options                                   |
+               |Files the Editor Should Watch.                 |
+               |Editor Search Paths.                           |
+               |Other Editor Options.                          |
+               |                                               |
+               |                                               |
+               |                                               |
+               +-----------------------------------------------+
+
+
+To view detailed displays of each of these options, move the cursor to each
+option, then press ZOOM-IN.  To move to the next option, use NEXT, or press
+ZOOM-OUT, move to the next option (using DOWN-ARROW), then press ZOOM-IN.
+
+
+MENU Options
+------------
+
+The MENU Options display looks something like this:
+
+                                 MENU Options
+
+     Description Shown in Menu          Type     Name of File or Program
++---------------------------------------------------------------------------+
+|Show Your Home Directory.            |file  |$HOME                         |
+|Execute shell commands.              |screen|echo \"Press CNTL-D to continue|
+|Run a Shell Command within a Box.    |popbox|Shell Command:                |
+|Show Your Profiles Directory.        |file  |$HOME/profiles                |
+|Edit Your Editor Profile.            |file  |$HOME/profiles/editorprf      |
+|Remove Temporary Files.              |popbox|housekeep                     |
+|Display the History of the Current Fi|helper|history                       |
+|                                     |      |                              |
+|                                     |      |                              |
++---------------------------------------------------------------------------+
+# NOTE TO TRANSLATOR:  in the box above, translate everything in the leftmost
+# box.  Don't translate anything in the middle box.  In the right box,
+# translate "Press" and "to continue" on the second line (be sure to leave the
+# quote mark on the second line); translate "Shell command:" on the third
+# line.  Don't translate anything else in the right box.
+
+(Actually, the phrase 'Shell Command:' on the third line in the rightmost
+box is underlined.  The underlining is important, as explained below.)
+
+For a list of possible New Task Menu options, use HELP and select the option
+Suggestions for Your MENU.  To copy some of the options listed there, use
+PICK-COPY, then return to your editorprf file and use PUT-COPY.
+
+MENU Options contains these fields:
+
+The Description Shown in Menu field lists the text that appears in the
+menu.
+
+The Type field determines what kind of task it is:
+
+        file   = change to a new file
+        helper = change to a new helper program
+        screen = clear the screen and run a program
+        popbox = run a program and put the output in a popup box
+# NOTE TO TRANSLATOR:  in the four lines above, do not translate the words to
+# the left of the equal signs.  Translate the text to the right of the
+# equal signs.
+
+The Name of File or Program field is the name of the file, helper program,
+or program (helper programs are special-purpose programs used by INed).
+This name can contain shell variables and user prompts.  A shell variable
+is denoted by typing a dollar sign ($) followed by the variable name.  The
+editor also has the following special variable names that can be used in
+this field:
+
+        $HOME    = the name of your home (login) directory
+        $FILE    = the name of the file you are editing
+        $ALTFILE = the name of the alternate file
+        $HELPER  = the name of the current helper
+        $SYS     = the editor installation directory, normally /usr/lib/INed.
+# NOTE TO TRANSLATOR:  do not translate any of the words to the left of the
+# equal signs in the above five lines.  Do not translate "/usr/lib/INed".
+
+If there is no environment variable called SYS, then /usr/lib/INed is
+used instead of $SYS.
+# NOTE TO TRANSLATOR: Do not translate "/usr/lib/INed" or SYS.
+
+User prompts are strings of underlined characters.  The editor puts the
+prompt into a popup box and replaces the prompt with whatever the user
+types in the popup box.  If the user uses CANCEL, then the editor returns
+to editing.  If your system had a program named 'phone' that takes as an
+argument the name to look up, a menu entry for it could look like this:
+
+   | Look up a phone number      |popbox|phone Enter name:           |
+# NOTE TO TRANSLATOR:  in the line above, translate "Look up a phone number"
+# and "phone Enter name:".  Do not translate "popbox".
+
+with the whole phrase 'Enter name:' underlined.
+
+On selecting this item, the editor would display this popup box:
+
+   +----------------------------+
+   |Enter name:                 |
+   +----------------------------+
+
+If you typed the string 'Bob,' the editor would run the program 'phone
+Bob.'  You can have several prompts by separating them with spaces, such
+as, 'command parameter1 parameter2 parameter3'.  Any parameter that is
+underlined is used as a user prompt, and the user's typein is substituted
+for the underlined prompt in the command line.  Any parameter that is not
+underlined is passed to the shell as it is.  
+
+If you press ZOOM-IN to see a menu entry, this appears:
+
+                             Details of MENU Option
+
+      Description shown in menu       Type       Name of file or program
++----------------------------------------------------------------------------+
+|                                   |      |                                 |
+|----------------------------------------------------------------------------|
+|Flags:  any non-space character means true                                  |
+|                                                                            |
+|-+                                +-+                                       |
+| | Sync and reopen file           | | Save all files                        |
++----------------------------------------------------------------------------+
+
+The 'Sync and reopen file' box is used for popup box items that may
+change the file.  For example, to remove the history of the current file,
+you could use the following rmhist command on the current file, making sure
+the 'Write out and reopen file' flag is set:
+
+        | Remove history from current file  |popbox|rmhist $FILE           |
+
+This saves the file, runs the program, then reopens the file.  To write out
+and reopen the file in this manner, enter any character in the 'Write out
+and reopen file' box.
+
+The 'Save all files' box is used to save all text files being edited.  If
+the program to be run may read any of the files being edited, set the this
+flag by putting a character into the 'Save all files' box.  This way, if
+you run another program from the shell (such as grep) on a text file that
+you have edited, the program gets the latest version of the file.
+
+
+HELP Options
+------------
+
+If you use NEXT, or press ZOOM-OUT to go to the top level of your
+profile and then press ZOOM-IN with the cursor on the second line
+(labeled 'HELP Options'), something like this is displayed:
+
+                                    HELP Options
+
+      Description Shown in Menu         Type      Name of File or Program
++----------------------------------------------------------------------------+
+|Display an alphabetic List of Editor |file |$SYS/e.cmds                     |
+|How to Perform Various Editing Tasks.|file |$SYS/e.howtos                   |
+|How to Customize the Editing System. |file |$SYS/edprf.hdq                  |
+|Suggestions for Your MENU.           |file |$SYS/emenu                      |
+|Suggestions for Your Print Menu.     |file |$SYS/prthelp                    |
+|Keyboard Layouts.                    |file |$SYS/keys.map                   |
+|                                     |     |                                |
+|                                     |     |                                |
+|                                     |     |                                |
++----------------------------------------------------------------------------+
+
+This determines what your Help Menu looks like.  The Description Shown in
+Menu field is the text that appears in the Help menu.  The Type field is
+normally 'file' to tell the editor to switch to the corresponding file when
+this item is selected.  The Name of File or Program field is the name of
+the file that appears.
+
+
+Files the Editor Should Watch
+-----------------------------
+
+If you use NEXT, or press ZOOM-OUT to goto the top level of your profile
+and then press ZOOM-IN to go to the next line (labeled Files the Editor
+Should Watch), something like this is displayed:
+
+                           Files the Editor Should Watch
+
+     Name of file              Message to display         Program to run
+  +-------------------------------------------------------------------------+
+  |                        |                         |                      |
+  |                        |                         |                      |
+  |                        |                         |                      |
+  |                        |                         |                      |
+  |                        |                         |                      |
+  |                        |                         |                      |
+  |                        |                         |                      |
+  |                        |                         |                      |
+  |                        |                         |                      |
+  |                        |                         |                      |
+  +-------------------------------------------------------------------------+
+
+The editor can watch files to see if they have changed.  The editor checks
+every few minutes to see if the files listed in the Name of File field have
+changed, and if the files have changed, displays a message in a popup box
+and optionally runs a program.
+
+In the Name of File field, list the name of the file to be watched.  The
+file name can contain shell variables.  See the section on MENU Options,
+above, for more information on shell variables.  In the Message to Display
+field, list the message to be displayed in a popup box if the field changes.
+In the Program to Run field, list the program to be run, if any, when the
+file changes.
+
+
+Editor Search Paths
+-------------------
+
+If you use NEXT, or press ZOOM-OUT to go to the top level of your profile
+and then press ZOOM-IN to go to the next line (labeled Editor Search
+Paths), something like this is displayed:
+
+
+                          Editor Search Paths
+
+  This section is used to specify the places the editor should look for forms
+  and helpers.  Each line in each box should be the name of a directory; the
+  directories are searched from top to bottom.
+
+               Forms                               Helpers
+      +--------------------------+        +--------------------------+
+      |$SYS/forms                |        |$SYS/helpers              |
+      |                          |        |                          |
+      |                          |        |                          |
+      |                          |        |                          |
+      |                          |        |                          |
+      +--------------------------+        +--------------------------+
+
+This option is used to list the search paths the editor uses to find forms
+and helper programs.  This is useful if you are developing new forms or
+helper programs. You can put your new files in a directory that is
+private to you, and list the directory ahead of the system directories
+shown here to have the editor search your own directory for these
+types of files.
+
+
+Other Editor Options
+--------------------
+
+If you use NEXT, or press ZOOM-OUT to go to the top level of your profile
+and then press ZOOM-IN to go to the next line (labeled Other Editor
+Options), something like this is displayed:
+
+
+                              Other Editor Options
+
+
+                                                                +-+
+         Wrap punctuation on FORMAT                             |x|
+         (Any non-space character means true.)                  +-+
+
+This lists any miscellaneous INed options.

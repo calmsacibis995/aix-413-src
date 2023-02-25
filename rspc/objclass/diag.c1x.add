@@ -1,0 +1,32 @@
+# @(#)59  1.1  src/rspc/objclass/diag.c1x.add, daartic, rspc41J, 9514A_all 4/4/95 13:39:13
+#
+#   COMPONENT_NAME: DAARTIC
+#
+#   FUNCTIONS: PDiagDev ODM entry
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+PDiagDev:
+        DType = "articmpx"
+        DSClass = "isa"
+        Ports = 0
+        PSet = 43
+        PreTest = 0
+        AttDType = ""
+        AttSClass = ""
+        Conc = 1
+        SupTests = 5
+        Menu = 9
+        DNext = 1
+        DaName = "dartic"
+        Diskette = "6A"
+        EnclDaName = ""
+        SysxFlg = 1
+        DClass = "adapter"

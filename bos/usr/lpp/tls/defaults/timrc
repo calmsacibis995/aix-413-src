@@ -1,0 +1,8 @@
+# @(#)93	1.1  src/bos/usr/lpp/tls/defaults/timrc, libtw, bos411, 9428A410j 5/25/92 15:48:42
+initchar : Alpha_Numerical
+#initchar : TsaNg_JyE
+#initchar : PhOnetIc
+initsize : Half
+#initsize : FULL
+initbeep : Beep_On
+#initbeep : Beep_Off

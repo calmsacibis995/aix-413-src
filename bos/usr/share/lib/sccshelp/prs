@@ -1,0 +1,31 @@
+* @(#)31     1.3 4/25/91 19:27:56
+*
+* COMPONENT_NAME: CMDSCCS       source code control system
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1989, 1991
+* All Rights Reserved
+* Licansed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+*
+*	Diagnostic messages for the 'prs' command
+*
+-4
+Specify the cutoff date in the following format:
+YY[MM[DD[HH[MM[SS]]]]]
+You must specify a cutoff date.
+Either no cutoff date was specified, or the format of the
+date was not intelligible.
+-5
+Do not specify both a cutoff date and an SID.
+The -c and -r flags are mutually exclusive.
+-6
+Specify the -e flag or the -l flag with the -c flag.
+You must specify whether you want earlier or later deltas than the cutoff date.

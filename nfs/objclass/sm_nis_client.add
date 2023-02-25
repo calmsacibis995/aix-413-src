@@ -1,0 +1,557 @@
+# @(#)84	1.2  src/nfs/objclass/sm_nis_client.add, nfsinst, nfs411, GOLD410 2/11/94 10:50:44
+# COMPONENT_NAME: (NFSINST) Network File System Install
+#
+# FUNCTIONS:
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+
+#################  menu_opt for NIS  #################################
+
+sm_menu_opt:
+	id		= "NIS"
+	id_seq_num	= "030"
+	next_id		= "yp"
+	text            = "Network Information Service (NIS)"
+	text_msg_file	= "smit.cat"	
+	text_msg_set	= 39
+	text_msg_id	= 103
+	next_type	= "m"
+	alias		= "y"
+	help_msg_id	= 1831520
+	help_msg_loc	= ""
+
+
+sm_menu_opt:
+	id		= "nfs_menus"
+	id_seq_num	= "030"
+	next_id		= "yp"
+	text            = "Network Information Service (NIS)"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 104
+	next_type	= "m"
+	alias		= "n"
+	help_msg_id	= 1831520
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "yp"
+	id_seq_num	= "020"
+	next_id		= "chypdom"
+	text            = "Change NIS Domain Name of this Host"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 105
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831525
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "yp"
+	id_seq_num	= "030"
+	next_id		= "ypconfigure"
+	text            = "Configure / Modify NIS"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 106
+	next_type	= "m"
+	alias		= "n"
+	help_msg_id	= 1831530
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "rmyp"
+	id_seq_num	= "030"
+	next_id		= "yp"
+	text            = "Configure / Modify NIS"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 106
+	next_type	= "m"
+	alias		= "y"
+	help_msg_id	= 1831530
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "yp"
+	id_seq_num	= "040"
+	next_id		= "ypstartstop"
+	text            = "Start / Stop Configured NIS Daemons"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 107
+	next_type	= "m"
+	alias		= "n"
+	help_msg_id	= 1831743
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypconfigure"
+	id_seq_num	= "005"
+	next_id		= "chypdom"
+	text            = "Change NIS Domain Name of this Host"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 105
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831525
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypconfigure"
+	id_seq_num	= "030"
+	next_id		= "mkclient"
+	text            = "Configure this Host as a NIS Client"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 111
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831555
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypconfigure"
+	id_seq_num	= "070"
+	next_id		= "rmypclient"
+	text            = "Remove NIS Client Configuration from this Host"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 115
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831845
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypstartstop"
+	id_seq_num	= "020"
+	next_id		= "ypstartclient"
+	text            = "Start the Client Daemon, ypbind"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 120
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831765
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypstartstop"
+	id_seq_num	= "060"
+	next_id		= "ypstopclient"
+	text            = "Stop the Client Daemon, ypbind"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 124
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831765
+	help_msg_loc	= ""
+
+############  yp_cmd_hdr  - dialog header definitions for NIS ######
+
+sm_cmd_hdr:
+	id		= "chypdom"
+	option_id	= "_yp.chypdom"
+	has_name_select	= ""
+	name		= "Change NIS Domain Name of this Host"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 127
+	cmd_to_exec	= "/usr/sbin/chypdom"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= "echo \"#domainname\" ; /usr/bin/domainname"
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831525
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "mkclient"
+	option_id	= "_yp.mkclient"
+	has_name_select	= ""
+	name		= "Configure this Host as a NIS Client"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 130
+	cmd_to_exec	= "/usr/sbin/mkclient"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831555
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "rmypclient"
+	option_id	= "_yp.rmypclnt"
+	has_name_select	= ""
+	name		= "Remove NIS Client Configuration from this Host"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 132
+	cmd_to_exec	= "/usr/sbin/rmyp -c"
+	ask		= "y"
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831845
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "ypstartclient"
+	option_id	= ""
+	has_name_select	= ""
+	name		= "Start the Client Daemon, ypbind"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 139
+	cmd_to_exec	= "startsrc -s ypbind"
+	ask		= "y"
+	exec_mode	= ""
+	ghost		= "y"
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831765
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "ypstopclient"
+	option_id	= ""
+	has_name_select	= ""
+	name		= "Stop the Client Daemon, ypbind"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 143
+	cmd_to_exec	= "stopsrc -s ypbind"
+	ask		= "y"
+	exec_mode	= ""
+	ghost		= "y"
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831765
+	help_msg_loc	= ""
+
+#####		NIS SMIT dialog definitions				#####
+#####	chypdom - change the domain name of this machine                #####
+
+sm_cmd_opt:
+	id		= "_yp.chypdom"
+	id_seq_num	= "01"
+	disc_field_name	= "domainname"
+	name		= "Domain name of this host"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 146
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "--"
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831730
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chypdom"
+	id_seq_num	= "02"
+	disc_field_name	= ""
+	name		= "CHANGE domain name take effect\n now, at system restart or both?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 147
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkclient"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "START the NIS client now,\n at system restart, or both?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 158
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.rmypclnt"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "The NIS Client configuration will be removed\n now & for every system restart"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 170
+	op_type		= ""
+	entry_type	= "n"
+	entry_size	= 0
+	required	= ""
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831845
+	help_msg_loc	= ""
+
+#####################  menu opt for rpc  #############################
+
+sm_menu_opt:
+	id		= "nfs_menus"
+	id_seq_num	= "040"
+	next_id		= "rpc"
+	text            = "Configure Secure NFS & NIS"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 178
+	next_type	= "m"
+	alias		= "n"
+	help_msg_id	= 1831890
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "rpc"
+	id_seq_num	= "010"
+	next_id		= "mkkeyserv"
+	text            = "Start Keyserv Daemon"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 179
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831895
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "rpc"
+	id_seq_num	= "020"
+	next_id		= "rmkeyserv"
+	text            = "Stop Keyserv Daemon"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 180
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831895
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "rpc"
+	id_seq_num	= "030"
+	next_id		= "newkey"
+	text            = "Add / Change Keys for Users"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 181
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831905
+	help_msg_loc	= ""
+############  rpc_cmd_hdr  - dialog header definitions for RPC clients ###
+
+sm_cmd_hdr:
+	id		= "mkkeyserv"
+	option_id	= "_startkeyserv"
+	has_name_select	= ""
+	name 		= "Start the Keyserv Daemon"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 182
+	cmd_to_exec	= "/usr/sbin/mkkeyserv"
+	ask		= "n"
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1891895
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "rmkeyserv"
+	option_id	= "_stopkeyserv"
+	has_name_select	= ""
+	name 		= "Stop the Keyserv Daemon"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 183
+	cmd_to_exec	= "/usr/sbin/rmkeyserv"
+	ask		= "n"
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831895
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "newkey"
+	option_id	= "_rpc.newkey"
+	has_name_select	= ""
+	name 		= "Add / Change Keys for Users"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 184
+	cmd_to_exec	= "/usr/sbin/newkey"
+	ask		= "n"
+	exec_mode	= "i"
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831905
+	help_msg_loc	= ""
+#####	newkey - create a new key for users for NFS security ####
+
+sm_cmd_opt:
+	id		= "_startkeyserv"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name 		= "START the keyserv daemon now,\n at system restart or both"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 185
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix 		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_stopkeyserv"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name 		= "STOP the keyserv daemon now,\n at system restart or both"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 186
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix 		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_rpc.newkey"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name 		= "USER that is to have a key created or changed"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 187
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix 		= "-u "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831935
+	help_msg_loc	= ""
+

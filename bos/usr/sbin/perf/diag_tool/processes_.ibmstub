@@ -1,0 +1,142 @@
+#!/bin/ksh
+# @(#)94	1.5	src/bos/usr/sbin/perf/diag_tool/processes_.sh, pdt, bos411, 9428A410j 4/13/94 16:31:00
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# processes_ 
+# Obtain process information, and record it in the
+# SM database
+#
+# thresholds defined: 
+#      thresh : cpu util for getty processes                
+#               passed to ps_cpu.awk.
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+# next, get the number of CPUs on the system
+ncpus=`$pdt_code/getvmparms -n`
+#
+# obtain current process information
+ps avcg > $pdt_tmp/.procs 
+#
+# Awk script to extract process information from
+# the 'ps avcg' command
+#
+# parameters:
+#   c=date
+#   col=column to extract
+#   nam=name of attribute being extracted
+#
+# we take the top 3 cpu, and the top 3 memory consumers.
+# note that we skip all the idle processes
+# SM records produced:
+#    PROCESS  pid               cpu1    <util>
+#    PROCESS  pid               cpu1cmd <cmd>
+#    PROCESS  pid               cpu2  <util>
+#    PROCESS  pid               cpu3  <util>
+#  and
+#    PROCESS  pid               mem1  <util>
+#    PROCESS  pid               mem1cmd <cmd>
+#    etc.
+# first do cpu; 
+sort -n -r +10 $pdt_tmp/.procs | \
+   awk '
+        BEGIN {
+          recnum = 1
+	  NCPUS = '"$ncpus"'
+	  for (i=0; i < NCPUS ; i++) {
+	      waitprocid[i] = 258 * (i + 2)
+	  }
+        }
+        {
+           x=gsub(/-/," ",c)
+           x = gsub(/-/,",",t)
+           if ($1=="PID") getline
+           if ( ! idleProcess($1) ) {
+              print "PROCESS", $1, c, nam recnum, $col, 1.0, "I(" t ",pct)"
+              print "PROCESS", $1, c, nam recnum "cmd", $13, 1.0, "T"
+              recnum++
+              if (recnum > 3) exit
+	   }
+        }
+	function idleProcess(pid) {
+	   for ( i=0 ; i < NCPUS ; i++) {
+	       if ( pid == waitprocid[i] )
+		  return 1
+           }
+	   return 0
+	}
+        END {
+        }' c=$curr col=11 nam=cpu t="0-0-1" >> $pdt_SM
+
+#
+# now memory; .
+sort -n -r +11 $pdt_tmp/.procs | \
+   awk '
+        BEGIN {
+          recnum = 1
+	  NCPUS = '"$ncpus"'
+	  for (i=0; i < NCPUS ; i++) {
+	      waitprocid[i] = 258 * (i + 2)
+	  }
+        }
+        {
+           x=gsub(/-/," ",c)
+           x = gsub(/-/,",",t)
+           if ($1=="PID") getline
+           if ( ! idleProcess($1) ) {
+              print "PROCESS", $1, c, nam recnum, $col, 1.0, "I(" t ",pct)"
+              print "PROCESS", $1, c, nam recnum "cmd", $13, 1.0, "T"
+              recnum++
+              if (recnum > 3) exit
+	   }
+        }
+	function idleProcess(pid) {
+	   for ( i=0 ; i < NCPUS ; i++) {
+	       if ( pid == waitprocid[i] )
+		  return 1
+           }
+	   return 0
+	}
+        END {
+        }' c=$curr col=12 nam=mem t="0-0-1" >> $pdt_SM
+#
+# Awk script to extract process info from the 'ps avc' cmd
+#
+# In particular, those processes exceeding a given threshold,
+# and matching a given pattern are emitted to the .SM file.
+#
+# parameters:
+#   c=date
+#   str=getty
+#   thresh=cpu util threshold to filter on.
+#
+# now getty (identify only those with > 3% cpu utilisation)
+#   note that getty shows up as 'tsm' with the ps avc command
+awk '
+     BEGIN {
+     }
+     {
+        x=gsub(/-/," ",c)
+        x = gsub(/-/,",",t)
+        if ($0 ~ str) 
+        if ($11 > thresh) 
+          print "PROCESS", $1, c, "cpu_too_high", $11, 1.0, "I(" t ",pct)"
+     }
+     END {
+     }' c=$curr str=tsm thresh=3 t="0-0-1" \
+             $pdt_tmp/.procs >> $pdt_SM

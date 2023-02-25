@@ -1,0 +1,189 @@
+* @(#)93  1.8  src/rspc/objclass/adapter.isa_sio.s2a.add, rspccfg, rspc41J, 9520A_all 4/27/95 15:49:57
+*
+*   COMPONENT_NAME: isatty
+*
+*   FUNCTIONS: Stanza
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+*   All Rights Reserved
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+*     Predefined Device Stanza(s) for native serial port2
+PdDv:
+	type       = s2a
+	class      = adapter
+	subclass   = isa_sio
+	prefix     = sa
+	devid      = "PNP05012"
+	base       = 0
+	has_vpd    = 0
+	detectable = 1
+	chgstatus  = 0
+	bus_ext    = 0
+	fru        = 2
+	led        = 2097
+	setno      = 39
+	msgno      = 2
+	catalog    = devices.cat
+	DvDr       = isa/rsdd_rspc
+	Define     = /usr/lib/methods/define_rspc
+	Configure  = /usr/lib/methods/cfgasync_rspc
+	Change     = /usr/lib/methods/chggen
+	Unconfigure= /usr/lib/methods/ucfgdevice
+	Undefine   = /usr/lib/methods/undefine
+	Start      = ""
+	Stop       = ""
+	inventory_only = 0
+	uniquetype = adapter/isa_sio/s2a
+
+*     Predefined Attribute Stanza(s) for native serial port2
+PdAt:
+	uniquetype = "adapter/isa_sio/s2a"
+	attribute = "bus_io_addr"
+	deflt = "0x2f8"
+	values = "0x2f8"
+	width = "0x08"
+	type = "O"
+	generic = "D"
+	rep = "nl"
+	nls_index = 3
+
+PdAt:
+	uniquetype = adapter/isa_sio/s2a
+	attribute  = bus_intr_lvl
+	deflt      = 3
+	values     = 3
+	width      = ""
+	type       = N
+	generic    = D
+	rep        = nl
+	nls_index  = 5
+
+PdAt:
+	uniquetype = adapter/isa_sio/s2a
+	attribute  = intr_priority
+	deflt	   = 1
+	values	   = 1
+	width	   = ""
+	type	   = P
+	generic	   = D
+	rep	   = nl
+	nls_index  = 6
+
+PdAt:
+	uniquetype = adapter/isa_sio/s2a
+	attribute  = frequency
+	deflt      = 115200
+	values 	   = 115200
+	width      = ""
+	type       = R
+	generic    = ""
+	rep        = nl
+	nls_index  = 0
+
+PdAt:
+	uniquetype = adapter/isa_sio/s2a
+	attribute  = driver
+	deflt      = rsdd_rspc
+	values     = rsdd_rspc
+	width      = ""
+	type       = R
+	generic    = ""
+	rep        = sl
+	nls_index  = 0
+
+PdAt:
+        uniquetype = adapter/isa_sio/s2a
+        attribute  = rtrig
+        deflt      = 3
+        values     = "0-3,1"
+        width      = ""
+        type       = E
+        generic    = DU
+        rep        = nr
+        nls_index  = 11
+
+PdAt:
+        uniquetype = adapter/isa_sio/s2a
+        attribute = tbc16
+        deflt = 16
+        values = "1-16,1"
+        width = ""
+        type = E
+        generic = DU
+        rep = nr
+        nls_index = 10
+
+PdAt:
+        uniquetype = adapter/isa_sio/s2a
+        attribute = speed
+        deflt = 9600
+        values = "0,50,75,110,134,150,200,300,600,1200,1800,2400,4800,9600,19200,38400"
+        width = ""
+        type = E
+        generic = DU
+        rep = slm
+        nls_index = 12
+
+* Load module support
+
+PdAt:
+        uniquetype = "adapter/isa_sio/s2a"
+        attribute = "load_module"
+        deflt = "/usr/lib/methods/isaload"
+        values = "/usr/lib/methods/isaload"
+        width = ""
+        type = "E"
+        generic = ""
+        rep = "sl"
+        nls_index = 0
+
+
+* PM device type
+PdAt:
+	uniquetype	= adapter/isa_sio/s2a
+	attribute	= "pm_dev_att"
+	deflt		= "0x00600000"
+	values		= "0x00600000"
+	width		= ""
+	type		= R
+	generic		= ""
+	rep		= n
+	nls_index	= 0
+
+* PM time for idle
+PdAt:
+	uniquetype	= adapter/isa_sio/s2a
+	attribute	= "pm_dev_itime"
+	deflt		= "0"
+	values		= "0"
+	width		= ""
+	type		= R
+	generic		= ""
+	rep		= n
+	nls_index	= 0
+
+* PM time for suspend
+PdAt:
+	uniquetype	= adapter/isa_sio/s2a
+	attribute	= "pm_dev_stime"
+	deflt		= "0"
+	values		= "0"
+	width		= ""
+	type		= R
+	generic		= ""
+	rep		= n
+	nls_index	= 0
+
+PdCn:
+	uniquetype = adapter/isa_sio/s2a
+	connkey    = rs232
+	connwhere  = s2

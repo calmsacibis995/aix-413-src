@@ -1,0 +1,35 @@
+# @(#) 56 1.2 src/bos/usr/sys/inst.data/sys_bundles/GOS.client, pkg, bos411, 9428A410j 3/13/94 14:49:46
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: GOS.client 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Base Graphical Operating System (GOS) Client "Bundle" Concatenation File
+# This  is an APPLY ONLY file and is not installed on the target system. 
+# These contents are added to the Client.bnd file found in
+#  /usr/sys/inst.data/sys_bundles when AIXwindows is installed.
+#
+################################################################
+# AIXwindows Info Support
+X11.info.rte
+# AIXwindows Client Applications
+#
+# X11.apps.clients fileset name is checked for in X11.base.rte post_i script  
+# in order to determine if this file has been appended to other bundles
+#
+X11.apps.clients
+X11.apps.config
+X11.apps.custom
+# AIXwindows Fonts
+X11.fnt.coreX
+# AIXwindows Samples
+X11.samples.apps.clients

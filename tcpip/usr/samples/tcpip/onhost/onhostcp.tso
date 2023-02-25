@@ -1,0 +1,167 @@
+/* REXX */
+/*static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/onhostcp.tso, tcpip, tcpip411, GOLD410 8/14/90 16:32:55";
+ *
+ * COMPONENT_NAME: TCPIP onhostcp.tso
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1986, 1988, 1989
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ * RISC System/6000 is a trademark of International Business Machines
+   Corporation.
+*/
+/*
+    AIXwhat is @(#) onhostcp.tso 1.8 PASC 1.8
+ */ version='onhost - version 1.1 - MVS/TSO'
+/*
+ * onhostcp - perform file transfer using FTP at the host
+ * onhostcp ? for information
+ * uses scratch files allocated by onhostld for control of FTP client
+ */
+ 
+/* define files to control FTP */
+ftpida = "onhostcp.ftpinput"
+ftpoda = "onhostcp.ftptrace"
+
+parse arg cmd opts "(" ftpinfo ")" aix tso
+upper cmd opts
+if (cmd = "?")|(cmd = "-?")|(opts = "-?") then signal tell
+if (aix = "") | (tso = "") then signal tell
+if (cmd ^= "GET")&(cmd ^= "PUT") then do
+  say "unrecognized onhostcp cmd:" cmd
+  signal tell
+  end
+if (opts <> "")&(opts <> "-B") then do
+  say "unrecognized onhostcp option:" opts
+  signal tell
+  end
+ 
+if ftpinfo = "AIXARGS" then do  /* supress prompt if nothing inside parens */
+  ftpargs = ""
+  prompt = true
+  end
+else do
+  ftpargs = strip(ftpinfo)
+  prompt = false;
+  end
+ 
+if ftpargs = "" then do
+  if queued() = 0 & prompt = true then do
+    say "The IBM host needs information about its file transfer partner,"
+    say "  system userid directory"
+    end
+  end
+else push ftpargs
+parse pull ftparg1 ftparg2 ftparg3 ftparg4
+ftparg1 = strip(ftparg1); ftparg2 = strip(ftparg2);
+ftparg3 = strip(ftparg3); ftparg4 = strip(ftparg4);
+if ftparg1 = "" then exit 2  /* allow user an easy way out */
+if ftparg4 = "" then do
+   ftparg4 = ftparg3
+   ftparg3 = ""
+   end
+if ftparg2 = "?" | ftparg2 = "" then do
+   say "  enter userid on" ftparg1
+   parse pull ftparg2
+   ftparg2 = strip(ftparg2);
+   end
+if ftparg2 = "" then exit 2
+if ftparg4 = "" then ftparg4 = "?"
+if ftparg3 = "" | ftparg3 = "?" then do
+   say "  enter password for" ftparg2 "at" ftparg1
+/* 'TCPUTL RDI' on VM/CMS gets password without display and stacks it */
+/* until we have something similar for TSO REXX, use the following 2 lines */
+   rc = 1
+   say "OnHost warning: password will show"  /* signal onhost for non-display */
+   if rc <> 0 then do
+     parse pull ftparg3
+     ftparg3 = strip(ftparg3);
+     end
+   else exit 2
+   end
+if ftparg3 = "" then exit 2
+ftphost = ftparg1; ftpuser = ftparg2; ftppwd = ftparg3; ftpcwd = ftparg4
+ 
+tso = "'"tso"'"
+if substr(aix,1,1) = "/" then ftpcd = ""
+else if (ftpcwd = '.') then ftpcd = ""
+else if (ftpcwd = "?") then do
+   say "working directory unknown - specify or use full path name for" aix
+   exit 3
+   end
+else if ftpcwd = "??" then do
+   say "working directory too long - use full path name for" aix
+   exit 3
+   end
+else ftpcd = ftpcwd
+ 
+/* input and output files for FTP client */
+"ALLOC F(INPUT) DA("ftpida")"
+if rc <> 0 then do
+   "FREE F(INPUT)"
+   "ALLOC F(INPUT) DA("ftpida")"
+   if rc <> 0 then do
+      say "problem allocating" ftpida "(run onhostld)"
+      exit 9
+      end
+   end
+"ALLOC F(OUTPUT) DA("ftpoda")"
+if rc <> 0 then do
+   "FREE F(OUTPUT)"
+   "ALLOC F(OUTPUT) DA("ftpoda")"
+   if rc <> 0 then do
+      "FREE F(INPUT)"
+      say "problem allocating" ftpoda "(run onhostld)"
+      exit 9
+      end
+   end
+push ''
+push 'quit'
+if cmd = "PUT" then push cmd tso aix
+if cmd = "GET" then push cmd aix tso "(replace"
+if opts = "-B" then push "binary"
+if ftpcd <> "" then push "cd" ftpcd
+push ftppwd
+push ftpuser
+push ftphost
+"EXECIO * DISKW input (FINI"
+     /* run FTP until error or complete, then obliterate pwd in input file */
+"FTP (EXIT"
+ftprc = rc
+"EXECIO 1 DISKRU input 3 (SKIP"
+push '********'
+"EXECIO 1 DISKW input (FINI"
+"FREE F(INPUT)"
+"FREE F(OUTPUT)"
+ 
+if ftprc <> 0 then say aix "- transfer failed (see tso:"ftpoda")"
+if ftprc = 10000 then say ftphost "- unknown host (need tcp/ip connection)"
+if ftprc = 16005 then say tso "- pds not found (use onhost mkdir)"
+exit ftprc
+ 
+tell:
+  say version
+  say "onhostcp GET|PUT [-b] ( [host [user [[pwd] cwd]]] ) aixfid tsofid"
+  say "  GET will make or replace tsofid with aixfid from cwd of user on host"
+  say "  PUT will make or replace aixfid in cwd of user on host with tsofid"
+  say "  using FTP client on host (this TSO system)"
+  exit 1

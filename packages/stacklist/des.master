@@ -1,0 +1,19 @@
+/* @(#)78        1.2  src/packages/stacklist/des.master, pkg, pkg41J, 9516a 4/19/95 14:09:58                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for Data Encryption Support
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+des
+#ifndef DEV
+#include <dce.master>
+#endif /* DEV Not defined */

@@ -1,0 +1,320 @@
+* @(#)99	1.1  src/tcpip/usr/samples/snmpd/dpi/dpi11.txt, snmp, tcpip411, GOLD410 9/13/93 14:57:48
+*
+* COMPONENT_NAME: (SNMP) Simple Network Management Protocol Daemon
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1991, 1993
+* All Rights Reserved
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+* Licensed Material - Property of IBM
+*
+* FILE: /usr/samples/snmpd/dpi/rfc1228.txt
+*
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                                      SNMP DPI 1.1 ENHANCEMENTS
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                                            December 11th, 1992
+ 
+ 
+                                                                    Bert Wijnen
+ 
+ 
+                                                   IBM International Operations
+                                                                     P.O.Box 24
+                                                               1423 ND Uithoorn
+                                                                    Netherlands
+ 
+                                                     IBM-vnet: WIJNEN at UITVM1
+                                                  Internet: wijnen@vnet.ibm.com
+ 
+ 
+                                                          IBM Internal Use Only
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+  SNMP DPI VERSION 1.1
+  ____________________
+ 
+ 
+ 
+ 
+ 
+  ABSTRACT
+  ________
+ 
+  This document describes the enhancements made to SNMP-DPI.  The original SNMP
+  DPI (version 1.0) has been documented in RFC1228.  Please refer to that docu-
+  ment for a complete description.
+ 
+  You can also use the MVS, VM or OS2 Programmers Reference Manuals section
+  "SNMP Agent Distributed Program Interface (DPI)" as a reference for SNMP DPI
+  version 1.0.
+ 
+  Version 1.1 basically has the same interface, plus:
+ 
+  o   2 additional DPI Library Routines
+ 
+  o   Some changes to the structures made available.
+ 
+  We will try to code the SNMP DPI 1.1 agents such that they will be able to
+  handle both DPI 1.0 and DPI 1.1 clients.  The DPI 1.0 agents that currently
+  exist (VM, MVS, OS2 and DPID on AIX) only support DPI 1.0 clients.
+ 
+  The following TCP/IP code contains an SNMP DPI 1.1 capable agent that handles
+  both DPI 1.0 and DPI 1.1 agents:
+ 
+  o   MVS TCP/IP V2R2M1
+ 
+  o   OS/2 TCP/IP 1.2.1, December 1992 CSD (planned)
+ 
+  o   VM TCP/IP V2R3M0 (planned)
+ 
+ 
+  NEW DPI LIBRARY  ROUTINES.
+  __________________________
+ 
+ 
+  DPIDEBUG()
+ 
+    #include <snmp_dpi.h>
+    #include <types.h>
+ 
+    void DPIdebug(onoff)
+    int    onoff;
+ 
+  PARAMETER DESCRIPTION
+ 
+  ONOFF     an integer; value of 0 turns tracing off; value of 1 (or non_zero)
+            turns tracing on.
+ 
+  DESCRIPTION: The DPIdebug() routine can be used to turn some DPI internal
+  tracing on or off.
+ 
+ 
+                                                       SNMP DPI Version 1.1  ii
+
+ 
+ 
+  MKDPILIST()
+ 
+    #include <snmp_dpi.h>
+    #include <types.h>
+ 
+    struct dpi_set_packet *mkDPIlist(packet, oid_name, type, len, value)
+    struct dpi_set_packet *packet;
+    char  *oid_name;
+    int    type;
+    int    len;
+    char  *value;
+ 
+  PARAMETER DESCRIPTION
+ 
+  PACKET    a pointer to a structure dpi_set_packet.  Or NULL.
+ 
+  OID_NAME  The object identifier of the variable.
+ 
+  TYPE      The type of the value.
+ 
+  LEN       The length of the value.
+ 
+  VALUE     A pointer to the value.
+ 
+  DESCRIPTION: The mkDPIlist() routine can be used to create the portion of the
+  parse tree that represents a list of name and value pairs.  Each entry in the
+  list represents a name and value pair (as would normally be returned in a
+  response packet).  If the pointer "packet" is NULL, then a new dpi_set_packet
+  structure is dynamically allocated and the pointer to that structure is
+  returned.  The structure will contain the new name and value pair.  If the
+  pointer "packet" is not NULL, then a new dpi_set_packet structure is dynam-
+  ically allocated and chained to the list.  The new structure will contain the
+  new name and value pair.  The pointer "packet" will be returned to the caller.
+  If an error is detected, a NULL pointer is returned.
+ 
+  The value of "type" can be the same as for mkDPIset().  These are defined in
+  the snmp_dpi.h header file.
+ 
+  As a result of this change, the structure dpi_set_packet has changed and now
+  has a next pointer (zero in case of a mkDPIset() call and also zero upon the
+  first mkDPIlist() call).  The new structure looks as follows:
+ 
+    struct dpi_set_packet {
+      char                 *object_id;
+      unsigned char         type;
+      unsigned short        value_len;
+      char                  *value;
+      struct dpi_set_packet *next;
+    };
+ 
+  A sub-agent writer would normally only look at the dpi_set_packet structure
+  when receiving a SNMP_DPI_SET request and after having issued a pDPIpacket()
+  call.
+ 
+ 
+
+
+
+
+                                                      SNMP DPI Version 1.1  iii
+ 
+ 
+ 
+ 
+  MKDPITRAPE()
+ 
+    #include <snmp_dpi.h>
+    #include <types.h>
+ 
+    unsigned char *mkDPItrape(generic, specific, value_list, enterprise_oid)
+    long int  generic;  /* 4 octet integer */
+    long int  specific;
+    struct    dpi_set_packet *value_list;
+    char     *enterprise_oid;
+ 
+  PARAMETER DESCRIPTION
+ 
+  GENERIC   The generic field for the SNMP TRAP packet.
+ 
+  SPECIFIC  The specific field for the SNMP TRAP packet.
+ 
+  VALUE_LIST   A ptr to a structure dpi_set_packet, which contains one or more
+            variables to be send with the SNMP TRAP packet.  Or NULL if no var-
+            iables are to be send.
+ 
+  ENTERPRISE_OID   A ptr to a character string representing the enterprise
+	    object ID (in ASN.1 notation, e.g. 1.3.6.1.4.1.2.2.1.4).  Or NULL
+            if you want the SNMP agent to use its own enterprise object ID.
+ 
+  DESCRIPTION: The mkDPItrape() routine can be used to create an "extended"
+  trap. It is basically the same as the mkDPItrap() routine, but allows you to
+  pass a list of variables, and also a enterprise object ID.
+ 
+  As a result, the structure for dpi_trap_packet has changed, but this struc-
+  ture is not exposed to sub_agent writers.
+ 
+ 
+  PDPIPACKET()
+ 
+  This function returns a ptr to a structure snmp_dpi_hdr, which, in case of a
+  SET request, contains a pointer to a structure dpi_set_packet.  This struc-
+  ture has changed and now looks as follows:
+ 
+    struct dpi_set_packet {
+      char                 *object_id;
+      unsigned char         type;
+      unsigned short        value_len;
+      char                  *value;
+      struct dpi_set_packet *next;
+    };
+ 
+ 
+  EXAMPLE OF AN EXTENDED TRAP
+ 
+  The following is a piece of sample code to send an extended trap.  No error
+  checking is done.
+ 
+ 
+ 
+
+
+
+
+                                                       SNMP DPI Version 1.1  iv
+ 
+
+ 
+ 
+    struct dpi_set_packet *set;
+    int                    len;
+    long int               num = 15;  /* 4 octet integer */
+    unsigned long int      ctr = 1234;
+    char                   str[] = "a string";
+    unsigned char         *packet;
+ 
+    set = 0;
+    set = mkDPIlist(set,"1.3.6.1.4.1.2.2.1.4.1",SNMP_TYPE_NUMBER,sizeof(num),&num);
+    set = mkDPIlist(set,"1.3.6.1.4.1.2.2.1.4.2",SNMP_TYPE_STRING,strlen(str),str);
+    set = mkDPIlist(set,"1.3.6.1.4.1.2.2.1.4.6",SNMP_TYPE_COUNTER,sizeof(ctr),&ctr);
+ 
+    packet = mkDPItrape(6L, 37L, set, "1.3.6.1.4.1.2.2.1.4");
+ 
+    len = *packet * 256 + *(packet+1);
+    len += 2;
+ 
+    write(fd, packet, len)  /* use send on OS/2 */
+ 
+  You can use a mkDPIset() call to create an initial dpi_set_packet for the
+  first name and value pair. So the following sample is equivalent to the one
+  above.
+ 
+    struct dpi_set_packet *set;
+    int                    len;
+    long int               num = 15;  /* 4 octet integer */
+    unsigned long int      ctr = 1234;
+    char                   str[] = "a string";
+    unsigned char         *packet;
+ 
+    set = mkDPIset("1.3.6.1.4.1.2.2.1.4.1",SNMP_TYPE_NUMBER,sizeof(num),&num);
+    set = mkDPIlist(set,"1.3.6.1.4.1.2.2.1.4.2",SNMP_TYPE_STRING,strlen(str),str);
+    set = mkDPIlist(set,"1.3.6.1.4.1.2.2.1.4.6",SNMP_TYPE_COUNTER,sizeof(ctr),&ctr);
+ 
+    packet = mkDPItrape(6L, 37L, set, "1.3.6.1.4.1.2.2.1.4");
+ 
+    len = *packet * 256 + *(packet+1);
+    len += 2;
+ 
+    write(fd, packet, len)  /* use send on OS/2 */
+ 
+  If the high order bit must be on for the specific trap type, then a negative
+  integer must be passed.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+                                                        SNMP DPI Version 1.1  v
+

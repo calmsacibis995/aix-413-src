@@ -1,0 +1,100 @@
+* @(#)85 1.1 src/rspc/objclass/adapter.isa.sio.add, rspccfg, rspc411, GOLD410 6/27/94 19:27:27
+*
+* COMPONENT_NAME: rspccfg 
+*
+* FUNCTIONS: Standard I/O planar predefined data for rspc
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1994
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*
+
+*
+* SIO adapter card
+*
+PdDv:
+	class = "adapter"
+	subclass = "isa"
+	type = "sio"
+	uniquetype = "adapter/isa/sio"
+	prefix = "sio"
+	devid =	""
+	base = 1
+	has_vpd = 0
+	detectable = 1
+	chgstatus = 0
+	bus_ext = 1
+	fru = 2
+	led = 0x812
+	setno = 21
+	msgno = 1
+	catalog = "devices.cat"
+	DvDr = ""
+	Define = "/usr/lib/methods/define_rspc"
+	Configure = "/usr/lib/methods/cfgsio_isa"
+	Change = ""
+	Unconfigure = "/usr/lib/methods/ucfgdevice"
+	Undefine = "/usr/lib/methods/undefine"
+	Start = ""
+	Stop = ""
+
+
+*
+* Identify the connection location the children
+*	   can connect to.
+*
+PdCn:
+	uniquetype = "adapter/isa/sio"
+	connkey = "isa_sio"
+	connwhere = 0
+	
+PdCn:
+	uniquetype = "adapter/isa/sio"
+	connkey = "isa_sio"
+	connwhere = 1
+	
+PdCn:
+	uniquetype = "adapter/isa/sio"
+	connkey = "isa_sio"
+	connwhere = 2
+	
+PdCn:
+	uniquetype = "adapter/isa/sio"
+	connkey = "isa_sio"
+	connwhere = 3
+	
+PdCn:
+	uniquetype = "adapter/isa/sio"
+	connkey = "isa_sio"
+	connwhere = 4
+	
+PdCn:
+	uniquetype = "adapter/isa/sio"
+	connkey = "isa_sio"
+	connwhere = 5
+
+PdCn:
+	uniquetype = "adapter/isa/sio"
+	connkey = "isa_sio"
+	connwhere = 6
+	
+PdCn:
+	uniquetype = "adapter/isa/sio"
+	connkey = "isa_sio"
+	connwhere = 7
+
+PdCn:
+	uniquetype = "adapter/isa/sio"
+	connkey = "isa_sio"
+	connwhere = 8
+
+PdCn:
+	uniquetype = "adapter/isa/sio"
+	connkey = "isa_sio"
+	connwhere = 9

@@ -1,0 +1,94 @@
+#! /usr/bin/ksh
+# @(#)54	1.7	src/bos/usr/sbin/perf/diag_tool/Driver_.sh, pdt, bos411, 9428A410j 4/13/94 16:28:47
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+#
+# Driver_
+#
+#
+# driver to run the appropriate collection/retention/reporting
+# routines when triggered by the cron daemon
+#
+# the only parameter to the routine is the name of the
+# collection profile for which activity is being initiated.
+# This name is used to select those _.sh files to run.
+# For example, if Driver_ is executed with $1=daily,
+# then only those .sh files listed with a 'daily' frequency
+# are run.  Check the respective control files to see which
+# .sh files are driven by which profile names.
+#
+export LANG=En_US
+export pdt_tmp=/var/perf/tmp
+export pdt_dat=/var/perf/dat/diag_tool
+export pdt_config=/var/perf/cfg/diag_tool
+export pdt_code=/usr/sbin/perf/diag_tool
+
+export pdt_SM=$pdt_tmp/.SM
+
+set -A pdt_former_path $PATH
+export PATH=$pdt_code:$PATH
+
+if test -f $pdt_tmp/.stderr
+then rm -f $pdt_tmp/.stderr
+fi
+
+#
+# Awk script to scan a control file and identify
+# routines that are controlled by the input profile.
+# Those that are so identified, are then run.
+#
+# Input: a control file
+#        comments in control file have # in col. 1
+#
+# do the collection routines
+awk '
+BEGIN {
+}
+{
+if ($1 !~ /^#/)
+   if ($2 == profile)        
+      system($1)
+}
+END {
+}' profile=$1 $pdt_config/.collection.control 2>$pdt_tmp/.stderr
+#
+# do the reporting routines
+awk ' 
+BEGIN {
+}
+{
+if ($1 !~ /^#/)
+   if ($2 == profile)        
+      system($1)
+}
+END {
+}' profile=$1 $pdt_config/.reporting.control 2>>$pdt_tmp/.stderr
+#
+# do the retention routines
+awk '
+BEGIN {
+}
+{
+if ($1 !~ /^#/)
+   if ($2 == profile)        
+      system($1)
+}
+END {
+}' profile=$1 $pdt_config/.retention.control 2>>$pdt_tmp/.stderr
+#
+# reset path
+export PATH=$pdt_former_path

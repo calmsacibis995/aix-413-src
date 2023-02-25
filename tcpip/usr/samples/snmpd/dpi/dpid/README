@@ -1,0 +1,87 @@
+* @(#)10	1.2  src/tcpip/usr/samples/snmpd/dpi/dpid/README, snmp, tcpip411, GOLD410 9/14/93 11:30:58
+*
+* COMPONENT_NAME: (SNMP) Simple Network Management Protocol Daemon
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1993
+* All Rights Reserved
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+* Licensed Material - Property of IBM
+*
+* FILE:	/usr/samples/snmpd/dpi/dpid/README
+*
+
+This DPI to SMUX converter proxy agent source code is provided as an example
+to:
+  * convert the DPI protocol to SMUX protocol, 
+  * illustrate a SMUX peer, and
+  * illustrate how to force a program to fork and separate from the tty
+    so that it runs in the background forever.
+
+    INTERNATIONAL BUSINESS MACHINES CORP. PROVIDES THIS SOURCE CODE
+    EXAMPLE "AS IS," WITHOUT WARRANTY OF ANY KIND EITHER EXPRESSED OR
+    IMPLIED INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+    MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  The entire
+    risk as to the quality and performance of this example is with you.
+    Should any part of this source code example prove defective you (and
+    not IBM or an IBM authorized dealer) assume the entire cost of all
+    necessary servicing, repair, or correction.
+
+The DPI to SMUX proxy agent, dpid, converts the DPI protocol to the SMUX
+protocol.  When the dpid daemon is running, DPI peers, or subagents,
+communicate with dpid via the DPI protocol.  The dpid daemon converts the
+information into the SMUX protocol and interfaces with snmpd.  Thus, snmpd
+only knows about the dpid SMUX peer.  snmpd does not know about the DPI
+peers that are communicating with dpid.
+
+The dpid executable must be compiled as only the source code is provided.
+A Makefile has been provided and is ready to use "as is".   This Makefile is
+shipped in the file, /usr/samples/snmpd/dpi/dpid/Makefile.  To compile the 
+dpid DPI to SMUX protocol converter executable, at the shell prompt enter:
+  make
+
+The dpid SMUX peer must run as root user.  It may be easiest to have it
+set-uid root:
+  su
+  Password:
+  chown root dpid
+  chmod u+s dpid
+		
+Before you execute the dpid daemon, you will need to update the 
+/etc/snmpd.peers files by adding the following entry for dpid:
+"dpid"       1.3.6.1.4.1.2.3.1.2.2.1.1.2       "dpid_password"
+
+You will also need to update the /etc/snmpd.conf file by adding a smux entry 
+for dpid:
+smux        1.3.6.1.4.1.2.3.1.2.2.1.1.2 	dpid_password     #dpid
+
+Refresh snmpd so that it will reread the /etc/snmpd.conf file:
+  refresh -s snmpd
+
+Start the dpid SMUX peer:
+  dpid
+
+Using snmpinfo, walk the smux MIB tree to see that dpid has registered
+successfully.  The dump should also show that the dpiSMUXport subtree has
+been registered successfully.
+  /usr/sbin/snmpinfo -v -md smux
+
+The dpid object id as defined above is "1.3.6.1.4.1.2.3.1.2.2.1.1.2".  The
+breakdown of the dotted notation is:
+  1  iso
+  3  org
+  6  dod
+  1  internet
+  4  private
+  1  enterprises
+  2  ibm
+  3  ibmAgents
+  1  aix
+  2  aixRISC6000
+  2  risc6000private
+  1  risc6000samples
+  1  risc6000sampleAgents
+  2  dpid

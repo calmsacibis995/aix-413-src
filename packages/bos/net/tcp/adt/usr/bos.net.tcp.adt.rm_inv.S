@@ -1,0 +1,107 @@
+# @(#)38	1.5  src/packages/bos/net/tcp/adt/usr/bos.net.tcp.adt.rm_inv.S, pkgtcpip, pkg411, 9439A411c 9/27/94 14:36:48
+#
+#   COMPONENT_NAME: pkgtcpip
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+/usr/include/in_extern.h:
+/usr/include/in_params.h:
+/usr/include/isode/fpkt.h:
+/usr/include/isode/pepsy/SMI.ph:
+/usr/include/isode/pepsy/SNMP.ph:
+/usr/include/isode/pepsy/SMUX.ph:
+/usr/include/isode/pepsy/ACS.ph:
+/usr/include/isode/pepsy/DSE.ph:
+/usr/include/isode/pepsy/UNIV.ph:
+/usr/include/isode/pepy/UNIV.ph:
+/usr/include/netioctl.h:
+/usr/include/notice.h:
+/usr/lib/dwm/bootp/bootp.h:
+/usr/lib/dwm/bootp/bootpd.c:
+/usr/lib/dwm/bootp/bootpd.h:
+/usr/lib/dwm/bootp/hash.c:
+/usr/lib/dwm/bootp/hash.h:
+/usr/lib/dwm/bootp/in_netarp.h:
+/usr/lib/dwm/bootp/readfile.c:
+/usr/lib/dwm/bootp/version.c:
+/usr/lib/dwm/bootp:
+/usr/lpp/tcpip/samples/onhost/README.aix:
+/usr/lpp/tcpip/samples/onhost/README.cms:
+/usr/lpp/tcpip/samples/onhost/README.tso:
+/usr/lpp/tcpip/samples/onhost/hostcon0.c:
+/usr/lpp/tcpip/samples/onhost/hostcon0.h:
+/usr/lpp/tcpip/samples/onhost/hostcon1.c:
+/usr/lpp/tcpip/samples/onhost/hostcon2.c:
+/usr/lpp/tcpip/samples/onhost/hostconn.msg:
+/usr/lpp/tcpip/samples/onhost/hostconnect.l:
+/usr/lpp/tcpip/samples/onhost/onhost.cms:
+/usr/lpp/tcpip/samples/onhost/onhost.l:
+/usr/lpp/tcpip/samples/onhost/onhost.make:
+/usr/lpp/tcpip/samples/onhost/onhost.mk:
+/usr/lpp/tcpip/samples/onhost/onhost.msg:
+/usr/lpp/tcpip/samples/onhost/onhost.profil:
+/usr/lpp/tcpip/samples/onhost/onhost.tso:
+/usr/lpp/tcpip/samples/onhost/onhost0.c:
+/usr/lpp/tcpip/samples/onhost/onhost0.h:
+/usr/lpp/tcpip/samples/onhost/onhostcp.cms:
+/usr/lpp/tcpip/samples/onhost/onhostcp.tso:
+/usr/lpp/tcpip/samples/onhost/onhoste.cms:
+/usr/lpp/tcpip/samples/onhost/onhoste.tso:
+/usr/lpp/tcpip/samples/onhost/onhostld.cms:
+/usr/lpp/tcpip/samples/onhost/onhostld.tso:
+/usr/lpp/tcpip/samples/onhost/onhostnm.tso:
+/usr/lpp/tcpip/samples/onhost:
+/usr/lpp/tcpip/samples:
+/usr/lpp/snmpd/dpi/README:
+/usr/lpp/snmpd/dpi/dpi11.txt:
+/usr/lpp/snmpd/dpi/dpid/Makefile:
+/usr/lpp/snmpd/dpi/dpid/README:
+/usr/lpp/snmpd/dpi/dpid/dpid.c:
+/usr/lpp/snmpd/dpi/dpid/dpid.my:
+/usr/lpp/snmpd/dpi/dpid/get_dpi_port.c:
+/usr/lpp/snmpd/dpi/dpid/mkDPI.c:
+/usr/lpp/snmpd/dpi/dpid/register.c:
+/usr/lpp/snmpd/dpi/dpid/snmp_dpi.h:
+/usr/lpp/snmpd/dpi/ping_eng/Makefile:
+/usr/lpp/snmpd/dpi/ping_eng/README:
+/usr/lpp/snmpd/dpi/ping_eng/init.c:
+/usr/lpp/snmpd/dpi/ping_eng/init.h:
+/usr/lpp/snmpd/dpi/ping_eng/io_lib.c:
+/usr/lpp/snmpd/dpi/ping_eng/io_lib.h:
+/usr/lpp/snmpd/dpi/ping_eng/ping_eng.c:
+/usr/lpp/snmpd/dpi/ping_eng/ping_eng.my:
+/usr/lpp/snmpd/dpi/ping_eng/sqeping.c:
+/usr/lpp/snmpd/dpi/ping_eng/stats.c:
+/usr/lpp/snmpd/dpi/ping_eng/stats.h:
+/usr/lpp/snmpd/dpi/ping_eng/subagent.c:
+/usr/lpp/snmpd/dpi/rfc1228.txt:
+/usr/lpp/snmpd/smux/Makefile:
+/usr/lpp/snmpd/smux/README:
+/usr/lpp/snmpd/smux/isodetailor:
+/usr/lpp/snmpd/smux/rfc1227.txt:
+/usr/lpp/snmpd/smux/sampled/Makefile:
+/usr/lpp/snmpd/smux/sampled/README:
+/usr/lpp/snmpd/smux/sampled/sampled.c:
+/usr/lpp/snmpd/smux/sampled/sampled.my:
+/usr/lpp/snmpd/smux/sampled/sqeping.c:
+/usr/lpp/snmpd/smux/sampled/sqeping.h:
+/usr/lpp/snmpd/smux/sampled/stats.c:
+/usr/lpp/snmpd/smux/sampled/stats.h:
+/usr/lpp/snmpd/smux/smux.txt:
+/usr/lpp/snmpd/smux/unixd.c:
+/usr/lpp/snmpd/smux/unixd.defs:
+/usr/lpp/snmpd/dpi/dpid:
+/usr/lpp/snmpd/dpi/ping_eng:
+/usr/lpp/snmpd/dpi:
+/usr/lpp/snmpd/smux/sampled:
+/usr/lpp/snmpd/smux:
+/usr/lpp/snmpd:

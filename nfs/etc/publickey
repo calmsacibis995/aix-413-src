@@ -1,0 +1,16 @@
+# @(#)39	1.3  src/nfs/etc/publickey, cmdnfs, nfs411, GOLD410 9/20/89 15:31:27
+# 
+# COMPONENT_NAME: (CMDNFS) Network File System Commands
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 24 
+#
+# Copyright (c) 1988 Sun Microsystems, Inc.
+#
+# Public Key Database
+#
+# To add an entry to this file, use the yp command "newkey" located
+# in the yp directory on the Yellow Pages master machine.
+#
+nobody c3d91f44568fbbefada50d336d9bd67b16e7016f987bb607:7675cd9b8753b5db09dabf12da759c2bd1331c927bb322861fffb54be13f55e9

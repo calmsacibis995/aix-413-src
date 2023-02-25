@@ -1,0 +1,108 @@
+# @(#)41	1.1  src/tcpip/usr/samples/snmpd/smux/isodetailor, snmp, tcpip411, GOLD410 9/13/93 15:11:52
+#
+# COMPONENT_NAME: (ISODELIB7) ISODE Libraries, Release 7
+#
+# ORIGINS: 60
+#
+# FILE:	/usr/samples/snmpd/smux/isodetailor
+#
+#
+# These are the default values that the isodetailor subroutine uses.  To use a
+# non-default value, uncomment the line and change the value.
+#
+
+# localname :
+# binpath : /bin
+# sbinpath : /usr/sbin
+# etcpath : /etc
+# logpath : /usr/tmp
+
+# The %d in the file names is for the process id of the smux peer.  The 
+# file names may have a single %d in them somewhere for a process id, but it is
+# not required.
+#
+# compatlevel : none
+# compatfile : %d.log
+
+# addrlevel : none
+# addrfile : %d.log
+
+# tsaplevel : none
+# tsapfile : %d.tpkt
+
+# ssaplevel : none
+# ssapfile : %d.spkt
+
+# psaplevel : none
+# psapfile : %d.pe
+
+# psap2level : none
+# psap2file : %d.ppkt
+
+# acsaplevel : none
+# acsapfile : %d.acpkt
+
+# rtsaplevel : none
+# rtsapfile : %d.rtpkt
+
+# rosaplevel : none
+# rosapfile : %d.ropkt
+
+# ts_stacks : all
+# ts_interim :
+# ts_communities : all
+
+# default_nsap_community : realNS
+# default_x25_community : Int-X25
+# default_tcp_community : Internet 
+
+# tsb_communities :
+# tsb_default_address : undefined
+
+# These are X25 values
+# x25_local_dte :
+# x25_local_pid :
+# x25_dnic_prefix : off
+# x25_intl_zero : off
+# x25_strip_dnic :
+
+# reverse_charge : 0
+# recvpktsize : 0
+# sendpktsize : 0
+# recvwndsize : 0
+# sendwndsize : 0
+# recvthruput : 0
+# sendthruput : 0
+# cug_req : 0
+# cug_index : 0
+# fast_select_type : 0
+# rpoa_req : 0
+# rpoa : 0
+
+# x25level : none
+# x25file : x25log
+# End of X25 values
+
+# CAMTEC_CCL variables
+# x25_outgoing_port : A
+# End of CAMTEC_CCL variables
+
+# BRIDGE_X25 variables
+# x25_bridge_host : x25bridge
+# x25_bridge_addr : 000021000018
+# x25_bridge_listen :
+# x25_bridge_pid :
+# x25_bridge_discrim : 0000
+# End of BRIDGE_X25 variables
+
+# BRIDGE_X25 or X25 variable
+# x25_bridge_port : 146
+# End of BRIDGE_X25 or X25 variable
+
+# ses_abort_timer : 30
+# ses_disconnect_timer : 30
+# ses_refuse_timer : 30
+
+# ns_enable : off
+# ns_address : undefined
+

@@ -1,0 +1,48 @@
+/* @(#)77        1.6  src/packages/stacklist/dce.master, pkg, pkg41J, 9522A_all 5/26/95 15:29:33                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for DCE
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+#if defined(DCE)
+dce.compat
+dce.msg.en_US
+#endif /* DCE */
+#if defined(DCECLIENT)
+bos.adt.client
+dce.pthreads
+dce.client
+dce.xdsxom
+dce.dfs_server
+dce.doc
+#endif /* CLIENT */
+#if defined(DES) 
+dce.priv
+#endif /* DES */
+#if defined(DCECDMF) 
+dce.cdmf
+#endif /* DCECDMF  */
+#if defined(DCECDS) 
+dce.cds
+#endif /* DCECDS */
+#if defined(DCESECUR) 
+dce.security
+#endif /* DCESECUR */
+#if defined(DCEEDFS) 
+dce.edfs
+#endif /* DCEEDFS */
+#if defined(DCEDFSNFS) 
+dce.dfsnfs
+#endif /* DCEDFSNFS */
+#if defined(DCETOOLS) 
+dce.tools
+#endif /* DCETOOLS  */

@@ -1,0 +1,21 @@
+/* @(#)87        1.1  src/packages/stacklist/icraft.master, pkg, pkg41J, 9515A_all 4/5/95 11:54:12                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for Info Crafter LPP
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+icraft
+icraft.info.en_US
+icraft.msg.En_US
+icraft.msg.en_US
+icraft.msg.Ja_JP
+icraft.msg.ja_JP

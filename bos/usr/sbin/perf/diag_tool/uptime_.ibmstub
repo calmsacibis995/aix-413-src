@@ -1,0 +1,56 @@
+#!/bin/ksh
+# @(#)11	1.5	src/bos/usr/sbin/perf/diag_tool/uptime_.sh, pdt, bos411, 9428A410j 4/13/94 16:31:15
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# uptime_
+#
+#
+# Awk script to extract cpu uptime info and return it.
+#
+# Input: a file with the output of the 'uptime' co mmand.
+#
+# Handles the following cases:
+#    <time> up 2:50, 4 users, load average: ...
+#    <time> up 15 days, 2:54, 10 users, load average: ...
+#    <time> up 1 day, 2:43, 10 users, load average: ...
+#    <time> up 17 mins, 10 users, load average: ...
+#    <time> up 1 min, 1 user, load average:
+#
+
+# obtain uptime information
+uptime | awk '
+BEGIN {
+uptime = 0
+}
+{
+gsub(/,/,"")
+if (($4 == "days") || ($4 == "day")) {
+   uptime = $3 * 24 * 3600
+   split ($5, hourmin, ":")
+   uptime += hourmin[1] * 3600 + hourmin[2] * 60
+   }
+else if (($4 == "mins") || ($4 == "min")) {
+   uptime = $3 * 60
+   }
+else {
+   split ($3, hourmin, ":")
+   uptime = hourmin[1] * 3600 + hourmin[2] * 60
+   }
+}
+END {
+print uptime
+}'

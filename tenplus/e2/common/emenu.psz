@@ -1,0 +1,322 @@
+$ $Nemenu
+$ $*@(#)25	1.2  src/tenplus/e2/common/emenu.psz, tenplus, tenplus411, GOLD410 7/26/93 15:48:08
+
+$ $*COMPONENT_NAME: (INED) INed Editor
+$ $*
+$ $*ORIGINS:  9, 10, 27
+$ $*
+$ $*This module contains IBM CONFIDENTIAL code. -- (IBM
+$ $*Confidential Restricted when combined with the aggregated
+$ $*modules for this product)                  SOURCE MATERIALS
+$ $*(C) COPYRIGHT International Business Machines Corp. 1985, 1990
+$ $*All Rights Reserved
+$ $*
+$ $*US Government Users Restricted Rights - Use, duplication or
+$ $*disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$quote "
+
+$set 1
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+$ $"$HOME"
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/*/desc
+AA "%+HOME_DIR\n\
+Show your home directory."
+$ $$
+
+$set 2
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+$ $"$HOME/profiles/editorprf"
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/*/desc
+AB "%+EDIT_PROF\n\
+Edit your editor profile."
+$ $$
+
+$set 3
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+$ $"$HOME/profiles"
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/*/desc
+AC "%+SHOW_PROF\n\
+Show your profiles directory."
+$ $$
+
+$set 4
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+$ $"$ALTFILE"
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/*/desc
+AD "%+EDIT_ALT\n\
+Edit your alternate file ($ALTFILE)."
+$ Do not translate ALTFILE.
+$ $$
+
+$set 5
+$ $%0
+$ $.0
+$ $:/*
+
+$set 6
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+$ $"history"
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"helper"
+$ $%3
+$ $.0
+$ $:/*/desc
+AE "%+DISP_HIST\n\
+Display the history of the current file."
+$ $$
+
+$set 7
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+ZY "%+HELP_PROG\n\
+\_Helper program:\+"
+$  TRANSLATOR:  in this message, please include the sequences \_
+$  and \+ exactly as shown.
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"helper"
+$ $%3
+$ $.0
+$ $:/*/desc
+AF "%+CHANGE_HELP\n\
+Change the helper program (it is currently $HELPER)."
+$ Do not translate HELPER.
+$ $$
+
+$set 8
+$ $%0
+$ $.0
+$ $:/*
+
+$set 9
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+ZX "%+FORM_NAME\n\
+\_Form name:\+"
+$  TRANSLATOR:  in this message, please include the sequences \_
+$  and \+ exactly as shown.
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"form"
+$ $%3
+$ $.0
+$ $:/*/desc
+AG "%+CHANGE_FORM\n\
+Change the form (is is currently $FORM)."
+$ Do not translate FORM.
+$ $$
+
+$set 10
+$ $%0
+$ $.0
+$ $:/*
+
+$set 11
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+$ $"date"
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"popbox"
+$ $%3
+$ $.0
+$ $:/*/desc
+AH "%+DISP_DATE\n\
+Display the current date and time."
+$ $$
+
+$set 12
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+ZW "%+SH_COMM\n\
+sh -c \_Command:\+"
+$  TRANSLATOR:  in this message, please include the sequences \_
+$  and \+ exactly as shown.
+$ Translate only the word "Command".
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"popbox"
+$ $%3
+$ $.0
+$ $:/*/desc
+AI "%+RUN_COMM\n\
+Run a command within a box."
+$ $$
+
+$set 13
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+$ $"rmhist $FILE 2>&1"
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"popbox"
+$ $%3
+$ $.0
+$ $:/*/sync
+$ $"x"
+$ $%3
+$ $.0
+$ $:/*/desc
+AJ "%+FCOMPRESS\n\
+Compress the current file ($FILE)."
+$ Do not translate FILE.
+$ $$
+
+$set 14
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+$ $"housekeep"
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"popbox"
+$ $%3
+$ $.0
+$ $:/*/sync
+$ $"x"
+$ $%3
+$ $.0
+$ $:/*/save
+$ $"x"
+$ $%3
+$ $.0
+$ $:/*/desc
+AK "%+RM_TEMP\n\
+Remove temporary files."
+$ $$
+
+$set 15
+$ $%0
+$ $.0
+$ $:/*
+
+$set 16
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/name
+ZZ "%+ECONT\n\
+echo \"Press CNTL-D to continue editing\"; export PS1; PS1='eshell> '; exec sh"
+$ Note:  This line is a shell command.  The punctuation, including quote
+$ marks, must be left exactly as it is.
+$ Translate only "Press" and  "to continue editing."
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"screen"
+$ $%3
+$ $.0
+$ $:/*/sync
+$ $"x"
+$ $%3
+$ $.0
+$ $:/*/save
+$ $"x"
+$ $%3
+$ $.0
+$ $:/*/desc
+AL "%+EXEC_COMM\n\
+Execute shell commands."
+$ $$
+
+$set 17
+$ $%0
+$ $.0
+$ $:/*
+
+$set 18
+$ $%1
+$ $.0
+$ $:/*
+$ $%3
+$ $.0
+$ $:/*/type
+$ $"exit"
+$ $%3
+$ $.0
+$ $:/*/desc
+AM "%+EXIT_EDTR\n\
+Exit the editor."
+$ $$

@@ -1,0 +1,473 @@
+* File name: default.map
+
+* @(#)24	1.8  src/tenplus/termcap/default.msz, tenplus, tenplus411, GOLD410 3/23/93 12:11:46
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10, 27
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 1
+	Flags = 0x1
+
+/*:
+	Type = 1
+	Count = 2
+
+/*/Name:
+	Value = "DEFAULT"
+
+/*/Picture:
+	Type = 1
+	Count = 49
+
+/*/Picture/0:
+
+/*/Picture/1:
+	Type = 1
+	Count = 2
+
+/*/Picture/1/cat-msgno:
+	Value = "%+K_DEFAULT_1"
+
+/*/Picture/1/cat-deftxt:
+	Value = "\011\011\011   Keyboard - Default"
+
+/*/Picture/2:
+
+/*/Picture/3:
+
+/*/Picture/4:
+	Type = 1
+	Count = 2
+
+/*/Picture/4/cat-msgno:
+	Value = "%+K_DEFAULT_4"
+
+/*/Picture/4/cat-deftxt:
+	Value = "\011\011                    Input Sequences"
+
+/*/Picture/5:
+
+/*/Picture/6:
+	Type = 1
+	Count = 2
+
+/*/Picture/6/cat-msgno:
+	Value = "%+K_DEFAULT_6"
+
+/*/Picture/6/cat-deftxt:
+	Value = " Editor Function     Key Sequence       Editor Function     Key Sequence"
+
+/*/Picture/7:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004 \023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/*/Picture/8:
+	Type = 1
+	Count = 2
+
+/*/Picture/8/cat-msgno:
+	Value = "%+K_DEFAULT_8"
+
+/*/Picture/8/cat-deftxt:
+	Value = "\001(1)             \001Ctrl-n 1           \001 \001+LINE           \001Ctrl-n j           \001"
+
+/*/Picture/9:
+	Type = 1
+	Count = 2
+
+/*/Picture/9/cat-msgno:
+	Value = "%+K_DEFAULT_9"
+
+/*/Picture/9/cat-deftxt:
+	Value = "\001(2)             \001Ctrl-n 2           \001 \001-LINE           \001Ctrl-n d           \001"
+
+/*/Picture/10:
+	Type = 1
+	Count = 2
+
+/*/Picture/10/cat-msgno:
+	Value = "%+K_DEFAULT_10"
+
+/*/Picture/10/cat-deftxt:
+	Value = "\001(3)             \001Ctrl-n 3           \001 \001LINEFEED        \001Ctrl-n u           \001"
+
+/*/Picture/11:
+	Type = 1
+	Count = 2
+
+/*/Picture/11/cat-msgno:
+	Value = "%+K_DEFAULT_11"
+
+/*/Picture/11/cat-deftxt:
+	Value = "\001(4)             \001Ctrl-n 4           \001 \001LOCAL-MENU      \001Ctrl-n 9           \001"
+
+/*/Picture/12:
+	Type = 1
+	Count = 2
+
+/*/Picture/12/cat-msgno:
+	Value = "%+K_DEFAULT_12"
+
+/*/Picture/12/cat-deftxt:
+	Value = "\001(5)             \001Ctrl-n 5           \001 \001MARGIN          \001Ctrl-n m           \001"
+
+/*/Picture/13:
+	Type = 1
+	Count = 2
+
+/*/Picture/13/cat-msgno:
+	Value = "%+K_DEFAULT_13"
+
+/*/Picture/13/cat-deftxt:
+	Value = "\001(6)             \001Ctrl-n 6           \001 \001MENU            \001Ctrl-n Ctrl-m      \001"
+
+/*/Picture/14:
+	Type = 1
+	Count = 2
+
+/*/Picture/14/cat-msgno:
+	Value = "%+K_DEFAULT_14"
+
+/*/Picture/14/cat-deftxt:
+	Value = "\001(7)             \001Ctrl-n 7           \001 \001NEXT            \001Ctrl-n .           \001"
+
+/*/Picture/15:
+	Type = 1
+	Count = 2
+
+/*/Picture/15/cat-msgno:
+	Value = "%+K_DEFAULT_15"
+
+/*/Picture/15/cat-deftxt:
+	Value = "\001(8)             \001Ctrl-n 8           \001 \001NEXT-WINDOW     \001Ctrl-n Ctrl-w      \001"
+
+/*/Picture/16:
+	Type = 1
+	Count = 2
+
+/*/Picture/16/cat-msgno:
+	Value = "%+K_DEFAULT_16"
+
+/*/Picture/16/cat-deftxt:
+	Value = "\001up arrow        \001Ctrl-k             \001 \001+PAGE           \001Ctrl-p             \001"
+
+/*/Picture/17:
+	Type = 1
+	Count = 2
+
+/*/Picture/17/cat-msgno:
+	Value = "%+K_DEFAULT_17"
+
+/*/Picture/17/cat-deftxt:
+	Value = "\001right arrow     \001Ctrl-l             \001 \001-PAGE           \001Ctrl-n Ctrl-b      \001"
+
+/*/Picture/18:
+	Type = 1
+	Count = 2
+
+/*/Picture/18/cat-msgno:
+	Value = "%+K_DEFAULT_18"
+
+/*/Picture/18/cat-deftxt:
+	Value = "\001down arrow      \001Ctrl-g             \001 \001PICK-COPY       \001Ctrl-n Ctrl-d      \001"
+
+/*/Picture/19:
+	Type = 1
+	Count = 2
+
+/*/Picture/19/cat-msgno:
+	Value = "%+K_DEFAULT_19"
+
+/*/Picture/19/cat-deftxt:
+	Value = "\001left arrow      \001Ctrl-f             \001 \001PICK-UP         \001Ctrl-n Shift-y     \001"
+
+/*/Picture/20:
+	Type = 1
+	Count = 2
+
+/*/Picture/20/cat-msgno:
+	Value = "%+K_DEFAULT_20"
+
+/*/Picture/20/cat-deftxt:
+	Value = "\001BACKSPACE       \001Ctrl-o             \001 \001PREVIOUS        \001Ctrl-n p           \001"
+
+/*/Picture/21:
+	Type = 1
+	Count = 2
+
+/*/Picture/21/cat-msgno:
+	Value = "%+K_DEFAULT_21"
+
+/*/Picture/21/cat-deftxt:
+	Value = "\001BEGIN-LINE      \001Ctrl-n a           \001 \001PRINT           \001Ctrl-n Shift-p     \001"
+
+/*/Picture/22:
+	Type = 1
+	Count = 2
+
+/*/Picture/22/cat-msgno:
+	Value = "%+K_DEFAULT_22"
+
+/*/Picture/22/cat-deftxt:
+	Value = "\001BOX-MARK        \001Ctrl-b             \001 \001PUT-COPY        \001Ctrl-n Shift-c     \001"
+
+/*/Picture/23:
+	Type = 1
+	Count = 2
+
+/*/Picture/23/cat-msgno:
+	Value = "%+K_DEFAULT_23"
+
+/*/Picture/23/cat-deftxt:
+	Value = "\001BREAK  **       \001Ctrl-c             \001 \001PUT-DOWN        \001Ctrl-n Ctrl-f      \001"
+
+/*/Picture/24:
+	Type = 1
+	Count = 2
+
+/*/Picture/24/cat-msgno:
+	Value = "%+K_DEFAULT_24"
+
+/*/Picture/24/cat-deftxt:
+	Value = "\001CANCEL          \001Ctrl-n Ctrl-n      \001 \001QUIT            \001Ctrl-\\      **     \001"
+
+/*/Picture/25:
+	Type = 1
+	Count = 2
+
+/*/Picture/25/cat-msgno:
+	Value = "%+K_DEFAULT_25"
+
+/*/Picture/25/cat-deftxt:
+	Value = "\001CENTER          \001Ctrl-n c           \001 \001QUOTE           \001Ctrl-n q           \001"
+
+/*/Picture/26:
+	Type = 1
+	Count = 2
+
+/*/Picture/26/cat-msgno:
+	Value = "%+K_DEFAULT_26"
+
+/*/Picture/26/cat-deftxt:
+	Value = "\001DELETE-CHARACTER\001Ctrl-d             \001 \001REFRESH         \001Ctrl-n z           \001"
+
+/*/Picture/27:
+	Type = 1
+	Count = 2
+
+/*/Picture/27/cat-msgno:
+	Value = "%+K_DEFAULT_27"
+
+/*/Picture/27/cat-deftxt:
+	Value = "\001DELETE-LINE     \001Ctrl-n y           \001 \001REPLACE         \001Ctrl-n Ctrl-r      \001"
+
+/*/Picture/28:
+	Type = 1
+	Count = 2
+
+/*/Picture/28/cat-msgno:
+	Value = "%+K_DEFAULT_28"
+
+/*/Picture/28/cat-deftxt:
+	Value = "\001DO              \001Ctrl-n Ctrl-x      \001 \001RESTORE         \001Ctrl-r             \001"
+
+/*/Picture/29:
+	Type = 1
+	Count = 2
+
+/*/Picture/29/cat-msgno:
+	Value = "%+K_DEFAULT_29"
+
+/*/Picture/29/cat-deftxt:
+	Value = "\001END-LINE        \001Ctrl-e             \001 \001RETURN          \001Ctrl-m             \001"
+
+/*/Picture/30:
+	Type = 1
+	Count = 2
+
+/*/Picture/30/cat-msgno:
+	Value = "%+K_DEFAULT_30"
+
+/*/Picture/30/cat-deftxt:
+	Value = "\001ENTER           \001Ctrl-x             \001 \001RIGHT           \001Ctrl-n r           \001"
+
+/*/Picture/31:
+	Type = 1
+	Count = 2
+
+/*/Picture/31/cat-msgno:
+	Value = "%+K_DEFAULT_31"
+
+/*/Picture/31/cat-deftxt:
+	Value = "\001EXECUTE         \001Ctrl-x             \001 \001SAVE            \001Ctrl-n Shift-s     \001"
+
+/*/Picture/32:
+	Type = 1
+	Count = 2
+
+/*/Picture/32/cat-msgno:
+	Value = "%+K_DEFAULT_32"
+
+/*/Picture/32/cat-deftxt:
+	Value = "\001EXIT            \001Ctrl-n Ctrl-e      \001 \001+SEARCH         \001Ctrl-n s           \001"
+
+/*/Picture/33:
+	Type = 1
+	Count = 2
+
+/*/Picture/33/cat-msgno:
+	Value = "%+K_DEFAULT_33"
+
+/*/Picture/33/cat-deftxt:
+	Value = "\001FONT            \001Ctrl-n f           \001 \001-SEARCH         \001Ctrl-n b           \001"
+
+/*/Picture/34:
+	Type = 1
+	Count = 2
+
+/*/Picture/34/cat-msgno:
+	Value = "%+K_DEFAULT_34"
+
+/*/Picture/34/cat-deftxt:
+	Value = "\001FORMAT          \001Ctrl-n Shift-f     \001 \001SET-TAB         \001Ctrl-n t           \001"
+
+/*/Picture/35:
+	Type = 1
+	Count = 2
+
+/*/Picture/35/cat-msgno:
+	Value = "%+K_DEFAULT_35"
+
+/*/Picture/35/cat-deftxt:
+	Value = "\001GO-TO           \001Ctrl-n g           \001 \001TAB             \001Ctrl-i             \001"
+
+/*/Picture/36:
+	Type = 1
+	Count = 2
+
+/*/Picture/36/cat-msgno:
+	Value = "%+K_DEFAULT_36"
+
+/*/Picture/36/cat-deftxt:
+	Value = "\001HELP            \001Ctrl-n ?           \001 \001-TAB            \001Ctrl-n Ctrl-i      \001"
+
+/*/Picture/37:
+	Type = 1
+	Count = 2
+
+/*/Picture/37/cat-msgno:
+	Value = "%+K_DEFAULT_37"
+
+/*/Picture/37/cat-deftxt:
+	Value = "\001HOME            \001Ctrl-n h           \001 \001TEXT-MARK       \001Ctrl-t             \001"
+
+/*/Picture/38:
+	Type = 1
+	Count = 2
+
+/*/Picture/38/cat-msgno:
+	Value = "%+K_DEFAULT_38"
+
+/*/Picture/38/cat-deftxt:
+	Value = "\001INSERT-LINE     \001Ctrl-n o           \001 \001USE             \001Ctrl-u             \001"
+
+/*/Picture/39:
+	Type = 1
+	Count = 2
+
+/*/Picture/39/cat-msgno:
+	Value = "%+K_DEFAULT_39"
+
+/*/Picture/39/cat-deftxt:
+	Value = "\001INSERT-MODE     \001Ctrl-v             \001 \001WINDOW          \001Ctrl-w             \001"
+
+/*/Picture/40:
+	Type = 1
+	Count = 2
+
+/*/Picture/40/cat-msgno:
+	Value = "%+K_DEFAULT_40"
+
+/*/Picture/40/cat-deftxt:
+	Value = "\001LAST-ARG        \001Ctrl-n Ctrl-l      \001 \001ZOOM-IN         \001Ctrl-n Ctrl-j      \001"
+
+/*/Picture/41:
+	Type = 1
+	Count = 2
+
+/*/Picture/41/cat-msgno:
+	Value = "%+K_DEFAULT_41"
+
+/*/Picture/41/cat-deftxt:
+	Value = "\001LEFT            \001Ctrl-n l           \001 \001ZOOM-OUT        \001Ctrl-n Ctrl-k      \001"
+
+/*/Picture/42:
+	Value = "\006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007 \006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/*/Picture/43:
+
+/*/Picture/44:
+	Type = 1
+	Count = 2
+
+/*/Picture/44/cat-msgno:
+	Value = "%+K_DEFAULT_44"
+
+/*/Picture/44/cat-deftxt:
+	Value = "** The BREAK and QUIT characters can be changed using the \"stty\" command"
+
+/*/Picture/45:
+	Type = 1
+	Count = 2
+
+/*/Picture/45/cat-msgno:
+	Value = "%+K_DEFAULT_45"
+
+/*/Picture/45/cat-deftxt:
+	Value = "   from the command line.  They can be viewed by typing \"stty -a\" on the"
+
+/*/Picture/46:
+	Type = 1
+	Count = 2
+
+/*/Picture/46/cat-msgno:
+	Value = "%+K_DEFAULT_46"
+
+/*/Picture/46/cat-deftxt:
+	Value = "   command line; the BREAK character is labeled \"intr=\", the QUIT character"
+
+/*/Picture/47:
+	Type = 1
+	Count = 2
+
+/*/Picture/47/cat-msgno:
+	Value = "%+K_DEFAULT_47"
+
+/*/Picture/47/cat-deftxt:
+	Value = "   is labeled \"quit\"."
+
+/*/Picture/48:
+	Type = 1
+	Count = 2
+
+/*/Picture/48/cat-msgno:
+	Value = "%+K_DEFAULT_48"
+
+/*/Picture/48/cat-deftxt:
+	Value = ""
+

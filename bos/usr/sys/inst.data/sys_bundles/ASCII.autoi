@@ -1,0 +1,25 @@
+# @(#) 89 1.2 src/bos/usr/sys/inst.data/sys_bundles/ASCII.autoi, pkg, bos411, 9428A410j 4/20/94 19:14:16
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: ASCII.autoi 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# ASCII System Auto Install "Bundle" Definition File
+# These product options will be installed by bos install as part of base
+# operating system installation on all systems that do not have a graphical
+# console.
+#
+################################################################
+# Televideo Terminal Support
+bos.terminfo.televideo.data
+# Wyse Terminal Support
+bos.terminfo.wyse.data

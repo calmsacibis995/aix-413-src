@@ -1,0 +1,26 @@
+# @(#) 06 1.1 src/bos/usr/sys/inst.data/sys_bundles/Hdwr-Diag.def, pkg, bos411, 9428A410j 12/7/93 18:44:50
+#
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: diag.bnd 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Hardware Diagnostics and Service Aids bundle definition file. This file has
+# device diagnostic packaging options appended to it during BOS install and
+# when device packages are installed via the cfgmgr -i command. 
+#
+################################################################
+
+# Base Operating System Hardware Diagnostics and Service Aids Package
+bos.diag
+#
+# Dynamically Added Device Package Names 
+#

@@ -1,0 +1,43 @@
+/* @(#)93        1.1  src/packages/stacklist/pex.master, pkg, pkg41J, 9515A_all 4/5/95 11:54:22                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for PEX  & GraPHIGS Graphics LPP
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+PEX_PHIGS.rte
+PEX_PHIGS.PEX.adt
+PEX_PHIGS.dev
+PEX_PHIGS.graPHIGS.adt
+PEX_PHIGS.graPHIGS.rte
+PEX_PHIGS.graPHIGS.fnt
+PEX_PHIGS.info.en_US
+PEX_PHIGS.msg.en_US
+PEX_PHIGS.msg.de_DE
+PEX_PHIGS.msg.es_ES
+PEX_PHIGS.msg.fr_FR
+PEX_PHIGS.msg.it_IT
+PEX_PHIGS.msg.ja_JP
+PEX_PHIGS.msg.ko_KR
+PEX_PHIGS.msg.nl_BE
+PEX_PHIGS.msg.no_NO
+PEX_PHIGS.msg.sv_SE
+PEX_PHIGS.msg.zh_TW
+PEX_PHIGS.msg.De_DE
+PEX_PHIGS.msg.En_US
+PEX_PHIGS.msg.Es_ES
+PEX_PHIGS.msg.Fr_FR
+PEX_PHIGS.msg.It_IT
+PEX_PHIGS.msg.Ja_JP
+PEX_PHIGS.msg.Nl_BE
+PEX_PHIGS.msg.No_NO
+PEX_PHIGS.msg.Sv_SE
+PEX_PHIGS.PEX.rte

@@ -1,0 +1,203 @@
+#if 0
+# @(#)47  1.16  src/packages/bos/bosboot/tape.proto.S, bosboot, bos41J, 9519B_all 5/9/95 12:41:36
+#
+#   COMPONENT_NAME: BOSBOOT
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1989,1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#endif
+/bootrec 12288 0
+d--- 755 0 0
+bin     l--- 777 0 0 /usr/bin
+dev     d--- 755 0 0
+	bus0	  c--- 640 0 0 3 0
+	console   c--- 622 0 0 4 0
+	error	  c--- 622 0 0 6 0
+	errorctl  c--- 600 0 0 6 1
+	kmem	  c--- 440 0 0 2 1
+	mem	  c--- 440 0 0 2 0
+	null	  c--- 666 0 0 2 2
+	nvram	  c--t 640 0 0 3 0
+	ram0	  b--- 600 0 0 0 0
+	ram1	  b--- 600 0 0 0 1
+	sysdump   c--- 600 0 0 7 0
+	sysdumpctl  c--- 600 0 0 7 1
+	sysdumpfile c--- 600 0 0 7 3
+	sysdumpnull c--- 600 0 0 7 2
+	tty	  c--- 666 0 0 1 0
+	$
+etc	d--- 755 0 0
+	drivers	l--- 777 0 0 /usr/lib/drivers
+	init       ---- 777 0 0 /usr/lib/boot/ssh
+	methods l--- 777 0 0 /usr/lib/methods
+	microcode l--- 777 0 0 /usr/lib/microcode
+	objrepos d--- 777 0 0
+		Config_Rules	---- 777 0 0 /tmp/tapeboot_IBM/Config_Rules
+		CuAt	---- 777 0 0 /tmp/tapeboot_IBM/CuAt
+		CuAt.vc ---- 777 0 0 /tmp/tapeboot_IBM/CuAt.vc
+		CuDep	---- 777 0 0 /tmp/tapeboot_IBM/CuDep
+		CuDv	---- 777 0 0 /tmp/tapeboot_IBM/CuDv
+		CuDvDr	---- 777 0 0 /tmp/tapeboot_IBM/CuDvDr
+		CuVPD	---- 777 0 0 /tmp/tapeboot_IBM/CuVPD
+		PdAt	---- 777 0 0 /tmp/tapeboot_IBM/PdAt
+		PdAt.vc ---- 777 0 0 /tmp/tapeboot_IBM/PdAt.vc
+		PdCn	---- 777 0 0 /tmp/tapeboot_IBM/PdCn
+		PdDv	---- 777 0 0 /tmp/tapeboot_IBM/PdDv
+		PdDv.vc ---- 777 0 0 /tmp/tapeboot_IBM/PdDv.vc
+		$
+	vg	d--- 777 0 0
+		$
+	$
+lib	l--- 755 0 0 /usr/lib
+mnt	d--- 755 0 0
+	$
+sbin	d--- 755 0 0
+	rc.boot   ---- 777 0 0 /sbin/rc.boot
+	$
+tmp	d--- 777 0 0
+	$
+usr	d--- 755 0 0
+	bin	d--- 755 0 0
+		bsh  l--- 555 0 0 /usr/bin/ksh
+		ksh  ---- 555 0 0 /usr/bin/ksh
+		mkdir  ---- 555 0 0 /usr/bin/mkdir
+		odmadd  ---- 777 0 0 /usr/bin/odmadd
+		odmdelete  ---- 777 0 0 /usr/bin/odmdelete
+		odmget  ---- 777 0 0 /usr/bin/odmget
+		sh  l--- 555 0 0 /usr/bin/ksh
+		tctl  ---- 777 0 0 /usr/bin/tctl
+		$
+	lib	d--- 755 0 0
+		drivers	d--- 777 0 0
+			ascsidd     ---- 777 0 0 /usr/lib/drivers/ascsidd
+			ascsiddpin  ---- 777 0 0 /usr/lib/drivers/ascsiddpin
+			badisk	---- 777 0 0 /usr/lib/drivers/badisk
+			badiskpin  ---- 777 0 0 /usr/lib/drivers/badiskpin
+			ccmdd  ---- 777 0 0 /usr/lib/drivers/ccmdd
+			ccmdd_pin  ---- 777 0 0 /usr/lib/drivers/ccmdd_pin
+			fd  ---- 777 0 0 /usr/lib/drivers/fd
+			gemdd   ---- 777 0 0 /usr/lib/drivers/gemdd
+			hd_pin	---- 777 0 0 /usr/lib/drivers/hd_pin
+			hd_pin_bot  ---- 777 0 0 /usr/lib/drivers/hd_pin_bot
+			hscsidd   ---- 777 0 0 /usr/lib/drivers/hscsidd
+			kbddd  ---- 777 0 0 /usr/lib/drivers/kbddd
+			ktsdd  ---- 777 0 0 /usr/lib/drivers/ktsdd
+			ldterm  ---- 777 0 0 /usr/lib/drivers/ldterm
+			lft_loadpin  ---- 777 0 0 /usr/lib/drivers/lft_loadpin
+			mid_cdd  ---- 777 0 0 /usr/lib/drivers/mid_cdd
+			mid_cdd_pin  ---- 777 0 0 /usr/lib/drivers/mid_cdd_pin
+			nepdd_load  ---- 777 0 0 /usr/lib/drivers/nepdd_load
+			nepdd_loadpin  ---- 777 0 0 /usr/lib/drivers/nepdd_loadpin
+			pscsi720dd ---- 777 0 0 /usr/lib/drivers/pscsi720dd
+			pscsi720ddpin ---- 777 0 0 /usr/lib/drivers/pscsi720ddpin
+			pscsidd  ---- 777 0 0 /usr/lib/drivers/pscsidd
+			pscsiddpin ---- 777 0 0 /usr/lib/drivers/pscsiddpin
+			rsdd  ---- 777 0 0 /usr/lib/drivers/rsdd
+			scdisk  ---- 777 0 0 /usr/lib/drivers/scdisk
+			scdiskpin  ---- 777 0 0 /usr/lib/drivers/scdiskpin
+			sd  ---- 777 0 0 /usr/lib/drivers/sd
+			sdpin  ---- 777 0 0 /usr/lib/drivers/sdpin
+			sgadd  ---- 777 0 0 /usr/lib/drivers/sgadd
+			skydd  ---- 777 0 0 /usr/lib/drivers/skydd
+			tape  ---- 777 0 0 /usr/lib/drivers/tape
+			tapepin  ---- 777 0 0 /usr/lib/drivers/tapepin
+			tioc     ---- 777 0 0 /usr/lib/drivers/tioc
+			vscsidd     ---- 777 0 0 /usr/lib/drivers/vscsidd
+			vscsiddpin  ---- 777 0 0 /usr/lib/drivers/vscsiddpin
+			pse	d--- 755 0 0
+				pse  ---- 777 0 0 /usr/lib/drivers/pse/pse
+				$
+			$
+		libc.a	---- 555 0 0 /usr/ccs/lib/libc.a.min
+		libcfg.a ---- 555 0 0 /tmp/libcfg.a
+		libodm.a ---- 555 0 0 /tmp/libodm.a
+		libs.a   ---- 555 0 0 /usr/lib/libs.a.min
+		methods d--- 777 0 0
+			cfg_graphics  ---- 777 0 0 /usr/lib/methods/cfg_graphics
+			cfg_mid  ---- 777 0 0 /usr/lib/methods/cfg_mid
+			cfg_nep  ---- 777 0 0 /usr/lib/methods/cfg_nep
+			cfg_sgabus    ---- 777 0 0 /usr/lib/methods/cfg_sgabus
+			cfgascsi    ---- 777 0 0 /usr/lib/methods/cfgascsi
+			cfgasync  ---- 777 0 0 /usr/lib/methods/cfgasync
+			cfgbadisk  ---- 777 0 0 /usr/lib/methods/cfgbadisk
+			cfgbus   ---- 777 0 0 /usr/lib/methods/cfgbus
+			cfgfda  ---- 777 0 0 /usr/lib/methods/cfgfda
+			cfgfdd  ---- 777 0 0 /usr/lib/methods/cfgfdd
+			cfggem  ---- 777 0 0 /usr/lib/methods/cfggem
+			cfghscsi  ---- 777 0 0 /usr/lib/methods/cfghscsi
+			cfgkbd_std  ---- 777 0 0 /usr/lib/methods/cfgkbd_std
+			cfgkma  ---- 777 0 0 /usr/lib/methods/cfgkma
+			cfgktsm  ---- 777 0 0 /usr/lib/methods/cfgktsm
+			cfglft  ---- 777 0 0 /usr/lib/methods/cfglft
+			cfglvdd  ---- 777 0 0 /usr/lib/methods/cfglvdd
+			cfgpscsi  ---- 777 0 0 /usr/lib/methods/cfgpscsi
+			cfgscdisk  ---- 777 0 0 /usr/lib/methods/cfgscdisk
+			cfgsctape  ---- 777 0 0 /usr/lib/methods/cfgsctape
+			cfgserdasda  ---- 777 0 0 /usr/lib/methods/cfgserdasda
+			cfgserdasdc  ---- 777 0 0 /usr/lib/methods/cfgserdasdc
+			cfgserdasdd  ---- 777 0 0 /usr/lib/methods/cfgserdasdd
+			cfgsga  ---- 777 0 0 /usr/lib/methods/cfgsga
+			cfgsio   ---- 777 0 0 /usr/lib/methods/cfgsio
+			cfgsky  ---- 777 0 0 /usr/lib/methods/cfgsky
+			cfgsys   ---- 777 0 0 /usr/lib/methods/cfgsys
+			cfgsys_p ---- 777 0 0 /usr/lib/methods/cfgsys_p
+			cfgtty  ---- 777 0 0 /usr/lib/methods/cfgtty
+			rsddload  ---- 777 0 0 /usr/lib/methods/rsddload
+			cfgvscsi    ---- 777 0 0 /usr/lib/methods/cfgvscsi
+			chggen  ---- 777 0 0 /usr/lib/methods/chggen
+			chgtty  ---- 777 0 0 /usr/lib/methods/chgtty
+			define   ---- 777 0 0 /usr/lib/methods/define
+			deflvm  ---- 777 0 0 /usr/lib/methods/deflvm
+			defsys   ---- 777 0 0 /usr/lib/methods/defsys
+			instdbcln  ---- 777 0 0 /usr/lib/methods/instdbcln
+			showled	---- 777 0 0 /usr/lib/methods/showled
+			startlft  ---- 777 0 0 /usr/lib/methods/startlft
+			starttty  ---- 777 0 0 /usr/lib/methods/starttty
+			ucfgdevice  ---- 777 0 0 /usr/lib/methods/ucfgdevice
+			$
+		microcode d--- 777 0 0
+			8d77.32.54  ---- 777 0 0 /usr/lib/microcode/8d77.32.54
+			8d77.42.58  l--- 777 0 0 /usr/lib/microcode/8d77.44.58
+			8d77.44.58  ---- 777 0 0 /usr/lib/microcode/8d77.44.58
+			8ee3c.01.01  ---- 777 0 0 /usr/lib/microcode/8ee3c.01.01
+			8f9a.00.00  ---- 777 0 0 /usr/lib/microcode/8f9a.00.00
+			8ffdc2.00.04  ---- 777 0 0 /usr/lib/microcode/8ffdc2.00.04
+			8ffdgt.00.04  ---- 777 0 0 /usr/lib/microcode/8ffdgt.00.04
+			8ffdgu.00.04  ---- 777 0 0 /usr/lib/microcode/8ffdgu.00.04
+			8ffdgv.00.04  ---- 777 0 0 /usr/lib/microcode/8ffdgv.00.04
+			8ffdsh.00.04  ---- 777 0 0 /usr/lib/microcode/8ffdsh.00.04
+			8ffdvp.00.03  ---- 777 0 0 /usr/lib/microcode/8ffdvp.00.03
+			$
+		nls	d--- 755 0 0
+			loc	d--- 755 0 0
+				C.lftkeymap  ---- 777 0 0 /usr/lib/nls/loc/C.lftkeymap
+				$
+			$
+		$
+	lpp	d--- 755 0 0
+		bosinst	d--- 755 0 0
+			bi_main  ---- 777 0 0 /usr/lpp/bosinst/bi_main
+			$
+		fonts	d--- 755 0 0
+			Erg11.iso1.snf  ---- 777 0 0 /usr/lpp/fonts/Erg11.iso1.snf
+			Erg22.iso1.snf  ---- 777 0 0 /usr/lpp/fonts/Erg22.iso1.snf
+			$
+		$
+	sbin	d--- 755 0 0
+		bootinfo   ---- 777 0 0 /usr/sbin/bootinfo
+		cfgmgr     ---- 777 0 0 /usr/sbin/cfgmgr
+		lsdev      ---- 777 0 0 /usr/sbin/lsdev
+		restbyname ---- 777 0 0 /usr/sbin/restbyname
+		strload    ---- 777 0 0 /usr/sbin/strload
+		$
+	$
+$

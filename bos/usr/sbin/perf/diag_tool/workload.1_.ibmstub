@@ -1,0 +1,23 @@
+#!/bin/ksh
+# @(#)20	1.4	src/bos/usr/sbin/perf/diag_tool/workload.1_.sh, pdt, bos411, 9428A410j 4/13/94 16:31:49
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# workload.1.sh 
+#   workload.1:  15 minute load average
+#                number of users
+#
+uptime

@@ -1,0 +1,161 @@
+#! /usr/bin/ksh
+# @(#)07	1.5	src/bos/usr/sbin/perf/diag_tool/retention_.sh, pdt, bos411, 9428A410j 4/13/94 16:28:32
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# retention_
+# Perform retention maintenance on the SM database
+#
+#
+
+#
+# This is fix for defect 125148
+# Make sure file does not grow unbounded
+#
+if [ -f $pdt_tmp/.SM.discards ]
+then
+    rm -f $pdt_tmp/.SM.discards
+fi
+
+#
+# first, get date information
+currentdate=`gettime_` 
+curr=`echo $currentdate | tr ' ' '-'`
+#
+# pass retention list and SM database to the retention maintenance
+#
+# First, make a backup copy
+cp $pdt_SM $pdt_SM.last 2>>$pdt_tmp/.stderr
+#
+# Awk script -
+# Applies the retention list to the SM database, and discards
+# out of date records
+# SM records starting with * are passed without processing
+#
+#--------------------------------------------------------
+# input format:
+#   file1 = retention list
+#           see format description below.
+#   file2 = SM
+# 
+# retention list format:
+#
+# <type> <field> "O"/"S" <N>
+# indicates Type of object, Field, whether Original or
+#   Summary data, and the age in DAYS that the data
+#   is to be kept.
+#   (Note that SM records containing a * in any date field
+#   are summary records.)
+#
+# each field in the retention list can be replaced with a wildcard *.
+# The search order is:
+#      first,  check for exact match on type,field,rec_type
+#      second, check for match on type,*,rec_type
+#      third,  check for match on type,field,*
+#      fourth, check for match on type,*,*
+#      fifth,  check for match on *,*,*
+#      last, take the hardcoded default DEFAULT_DAYS 
+# Retention list is terminated with a record consisting of
+#  "END"
+# Retention list records starting with # are ignored.
+# Elements in the retention list are not checked for syntax.
+#
+# examples:
+#   FS size O 20
+#     indicates that for each unique file system object,
+#     we retain the most recent 20 days of size records.
+#   FS * * 5
+#     indicates that (otherwise unmatched) FS records	
+#     have a retention period of 5 days. 
+#
+#--------------------------------------------------------
+#
+# If no retention record is present for a particular
+# <type> <field> "O"/"S" triple, then a global default
+# number are retained.
+# This global default is DEFAULT_DAYS (=35)
+#
+# Example of retention calculation:
+# If date on a record is 1993, 228 (228th day of 1993)
+# and the appropriate retention period is 3, then
+# record will not be discarded until 1993, 232.
+# (It would not be discarded on 231).
+#
+# Leap years are accounted for - so records spanning
+# year boundaries are not a problem.
+#
+# Perform the retention operation
+
+awk '
+     BEGIN {
+       DEFAULT_DAYS = 35 
+       RL ="true"
+     } 
+     {
+        x=gsub(/-/," ",c) 
+        split(c,current_date)
+        current_day=days_since_1_1_1989(current_date[5],current_date[6])
+        if ($0 ~ /^END/) {
+             RL="false"
+        }
+        else if (RL=="true") {
+            if ($1 !~ /^#/)
+              LIMIT[$1,$2,$3]=$4
+        }
+        else if (RL=="false") {
+           discardfile = FILENAME ".discards"
+           #
+           #  skip comment lines in the SM 
+           #
+           if ($0 !~ /^\*/) {
+               type = $1
+               field = $9
+               record_day = days_since_1_1_1989($7,$8)
+
+               if (($3~/\*/)||($4~/\*/)||($5~/\*/)||($6~/\*/)) 
+                      rec_type="S"
+               else rec_type="O"
+
+               if ((type,field,rec_type) in LIMIT) 
+                    retain = LIMIT[type,field,rec_type]
+               else if ((type,"*",rec_type) in LIMIT)
+                    retain = LIMIT[type,"*",rec_type]
+               else if ((type,field,"*") in LIMIT)
+                     retain = LIMIT[type,field,"*"]
+               else if ((type,"*","*") in LIMIT)
+                     retain = LIMIT[type,"*","*"]
+               else if (("*","*","*") in LIMIT)
+                     retain = LIMIT["*","*","*"]
+               else retain = DEFAULT_DAYS
+
+               if (current_day-record_day <= retain) print $0
+                  else print $0 >> discardfile
+           }
+           else print $0  
+        }
+     }
+     END {
+     }
+     function days_since_1_1_1989(y,jd) {
+         # computes days from 1/1/89 to y.jd, where y is the
+         # year, and jd is the julian date.
+         # Note that this function is not valid for y<1989 or y>2100
+        return (y-1989)*365 + int((y-1989)/4) + (jd-1)
+     }' c=$curr $pdt_config/.retention.list \
+    $pdt_SM > $pdt_tmp/.SM2 2>>$pdt_tmp/.stderr
+#
+# Last, update the master copy
+mv $pdt_tmp/.SM2 $pdt_SM 2>>$pdt_tmp/.stderr

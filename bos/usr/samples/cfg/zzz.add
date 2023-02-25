@@ -1,0 +1,143 @@
+* @(#)85	1.2  src/bos/usr/samples/cfg/zzz.add, cfgsamp, bos411, 9428A410j 6/7/91 12:00:58
+*
+* COMPONENT_NAME: (BOSSAMP) IBM BOS Sample Program
+*
+* FUNCTIONS: NONE
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1990
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*
+*	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+*
+* THE SOURCE CODE EXAMPLES PROVIDED BY IBM ARE ONLY INTENDED TO ASSIST IN THE
+* DEVELOPMENT OF A WORKING SOFTWARE PROGRAM.  THE SOURCE CODE EXAMPLES DO NOT
+* FUNCTION AS WRITTEN:  ADDITIONAL CODE IS REQUIRED.  IN ADDITION, THE SOURCE
+* CODE EXAMPLES MAY NOT COMPILE AND/OR BIND SUCCESSFULLY AS WRITTEN.
+* 
+* INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+* EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+* WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+* LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+* PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+* OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+* IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+* DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000 (1) 
+* WORKSTATION DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING,
+* REPAIR OR CORRECTION.
+*
+* IBM does not warrant that the contents of the source code examples, whether
+* individually or as one or more groups, will meet your requirements or that
+* the source code examples are error-free.
+*
+* IBM may make improvements and/or changes in the source code examples at
+* any time.
+*
+* Changes may be made periodically to the information in the source code
+* examples; these changes may be reported, for the sample device drivers
+* included herein, in new editions of the examples.
+*
+* References in the source code examples to IBM products, programs, or
+* services do not imply that IBM intends to make these available in all
+* countries in which IBM operates.  Any reference to an IBM licensed
+* program in the source code examples is not intended to state or imply
+* that only IBM's licensed program may be used.  Any functionally equivalent
+* program may be used.
+*
+* (1) RISC System/6000 is a trademark of International Business Machines 
+*     Corporation.
+*
+***********************************************************************
+*
+*  FUNCTIONS: Sample predefined data for ZZZ pseudo device
+*
+***********************************************************************
+
+** Predefined Device object
+
+PdDv:
+* device is of class adapter
+	class = zzz
+* device is of subclass mca, indicating its connection type
+	subclass = node
+* device is an zzz type of adapter card
+	type = zzz
+* prefix to be used when naming customized devices of this type
+	prefix = zzz
+* not valid for this device
+	devid = 0
+* this device is not a base device
+	base = 0
+* this devices does not have VPD
+	has_vpd = 0
+* this device is not detectable
+	detectable = 0
+* change status is to be set to DONTCARE when defining a device of this type
+	chgstatus = 1
+* this device is not a bus extension
+	bus_ext = 0
+* this device is not a FRU (field replacable unit)
+	fru = 0
+* the LED value to be displayed when being configured at boot time
+	led = 0x599
+* the NLS message catalog containing text descriptions of adapter and
+* its attributes
+	catalog = "somename.cat"
+* the NLS message set number containing text descriptions of adapter and
+* its attributes
+	setno = 3
+* the NLS message number of the text description of the adapter
+	msgno = 1
+* device driver to be loaded when the pseudo device is configured
+	DvDr = zzzdd
+* the name of the define method
+	Define = /etc/methods/defzzz
+* the name of the configure method
+	Configure = /etc/methods/cfgzzz
+* the name of the change method
+	Change = /etc/methods/chgzzz
+* the name of the unconfigure method
+	Unconfigure = /etc/methods/ucfgzzz
+* the name of the undefine method
+	Undefine = /etc/methods/udefzzz
+* this device does not have a start method
+	Start = ""
+* this device does not have a stop method
+	Stop = ""
+* the adapters unique type consisting of class, subclass, and type
+	uniquetype = zzz/node/zzz
+
+
+*
+* Config Rules for ZZZ pseudo device
+* Pseudo devices need to have rules that tell the config
+* manager what to run in order to define them. Once the
+* pseudo device is defined it gets configured like any
+* other device.
+*
+
+* phase determines which boot phase to run the program in.
+* 1 = phase 1,  2 = phase 2,  3 = phase2 service mode.
+
+* seq determines the priority of the rule. 1 is the highest
+* priority. Higher numbers are lower priority. 0 is don't care.
+* Don't care rules get run last.
+
+* rule is the program to run.
+
+Config_Rules:
+	phase = 2
+	seq = 0
+	rule = "/etc/methods/startzzz"
+
+Config_Rules:
+	phase = 3
+	seq = 0
+	rule = "/etc/methods/startzzz"
+

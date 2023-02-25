@@ -1,0 +1,44 @@
+#!/bin/ksh
+# @(#) 16 1.5 src/packages/stacklist/mfg-preload/rspc/preload, pkgrspc, pkg41J, 9521B_all 5/26/95 13:35:55
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: DOS Diskette Based Manufacturing Preload Startup Script
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1995
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# This file is placed on a DOS (FAT based) diskette in the directory
+# /bos/mfg and is read by BOS INSTALL at manufacturing preinstall of AIX
+# to drive the automated preinstall process for AIX on rspc systems.
+#
+################################################################
+/usr/bin/dosread -S /preload.bnd /preload.bnd >/dev/null 2>&1
+/usr/bin/dosread -S /preload.dat /preload.data
+if [ $? -eq 0 ]; then
+	/usr/bin/dosread -S /preload.ver /preload.verify
+fi
+if [ $? -eq 0 ]; then   
+           /usr/bin/dosread -S /preload.lcl /preload.lcl
+           if [ $? -eq 0 ]; then
+             cat /preload.lcl >> /preload.data
+                 else
+                    echo "    CULTURAL_CONVENTION = C" >> /preload.data
+                    echo "    MESSAGES = C" >> /preload.data
+           fi
+           /usr/bin/dosread -S /preload.kyb /preload.kyb
+           if [ $? -eq 0 ]; then
+              cat /preload.kyb >> /preload.data
+           else
+              echo "    KEYBOARD = C" >> /preload.data
+           fi
+	mv /preload.data /bosinst.data
+fi
+
+exit 0

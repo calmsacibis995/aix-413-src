@@ -1,0 +1,38 @@
+# @(#)24	1.5	src/bos/usr/sbin/perf/diag_tool/.collection.control.sh, pdt, bos411, 9428A410j 4/13/94 16:33:27
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# .collection.control.sh
+#
+# Collection control file.
+# For each collection routine, identify its collection profile
+#
+# format:
+#   collection_routine profile_name
+#
+# profiles are identified in the profiles file
+fn_       daily
+fs_       daily 
+pv_        daily
+mem_       daily
+err_       daily
+paging_    daily
+lsattr_    daily 
+processes_ daily
+network_   daily
+workload_  daily
+cpu_       daily
+vmm_       daily

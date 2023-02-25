@@ -1,0 +1,462 @@
+#if 0
+# @(#)50	1.24  src/packages/bos/bosboot/cdfs.proto.S, bosboot, bos41J, 9519B_all 5/9/95 12:34:27
+#
+#   COMPONENT_NAME: bosboot
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+#   combined with the aggregated modules for this product)
+#                    SOURCE MATERIALS
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+#   All Rights Reserved
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# This file is a list of files that are to be included in the
+# cdrom filesystem used during boot/install from cdrom media.  The
+# only files that should be in this list are those that are required
+# to perform cdrom boot and install, which includes the support files
+# for configuring source, target, and display devices for the
+# installation process.  Source devices are cdrom drives, tape drives,
+# diskette drives, and their parent devices.  Target devices are hard
+# drives and their parent devices.  Display devices are tty devices,
+# graphics adapters, and their parent devices.  Please note that
+# graphics adapters must be configured in common character mode instead
+# of full fuction mode whenever possible.
+#
+# Prototype file for CDROM boot/install filesystem
+
+#endif
+<noboot> 0 0
+d-g-  755  3 3
+  bosinst.data	----  644  0 0   /ship/power/bosinst.data
+  image.data	----  644  0 0   /ship/power/image.data
+  root	d-g-  755  0 0
+    etc	d-g-  755  0 0
+      consdef	----  644  0 0   /ship/power/etc/consdef
+      filesystems	----  644  0 0   /ship/power/etc/filesystems
+      objrepos	d-g-  755  0 0
+        CDiagDev	----  644  0 0   /ship/power/etc/objrepos/CDiagDev
+        DAVars	----  644  0 0   /ship/power/etc/objrepos/DAVars
+        FRUB	----  644  0 0   /ship/power/etc/objrepos/FRUB
+        FRUs	----  644  0 0   /ship/power/etc/objrepos/FRUs
+        MenuGoal	----  644  0 0   /ship/power/etc/objrepos/MenuGoal
+        TMInput	----  644  0 0   /ship/power/etc/objrepos/TMInput
+        $
+      preserve.list	----  550  0 0   /ship/power/etc/preserve.list
+      $
+    sbin	d-g-  755  0 0
+      comp.kext	----  555  0 0   /ship/power/sbin/comp.kext
+      comp.uext	----  555  0 0   /ship/power/sbin/comp.uext
+      helpers	d-g-  755  0 0
+        v3fshelper	----  555  0 0   /ship/power/sbin/helpers/v3fshelper
+        $
+      $
+    $
+  usr	d-g-  755  0 0
+    bin	d-g-  755  0 0
+      alog	----  555  0 0   /ship/power/usr/bin/alog
+      ar	l---  555  0 0   /usr/ccs/bin/ar
+      basename	----  555  0 0   /ship/power/usr/bin/basename
+      bootlist	----  550  0 0   /ship/power/usr/bin/bootlist
+      bsh	----  555  0 0   /ship/power/usr/bin/bsh
+      cat	----  555  0 0   /ship/power/usr/bin/cat
+      cdeject	----  550  0 0   /obj/power/bos/usr/lpp/bosinst/cdeject/cdeject
+      copydump	----  550  0 0   /ship/power/usr/bin/copydump
+      copydumpmenu	----  550  0 0   /ship/power/usr/bin/copydumpmenu
+      cp	----  555  0 0   /ship/power/usr/bin/cp
+      cpio	----  550  0 0   /ship/power/usr/bin/cpio
+      cut	----  555  0 0   /ship/power/usr/bin/cut
+      dd	----  555  0 0   /ship/power/usr/bin/dd
+      df	----  555  0 0   /ship/power/usr/bin/df
+      dosread	----  555  0 0   /ship/power/usr/bin/dosdir
+      dspmsg	----  555  0 0   /ship/power/usr/bin/dspmsg
+      expr	----  555  0 0   /ship/power/usr/bin/expr
+      fgrep	----  555  0 0   /ship/power/usr/bin/grep
+      find	----  550  0 0   /ship/power/usr/bin/find
+      getopt	----  555  0 0   /ship/power/usr/bin/getopt
+      grep	----  555  0 0   /ship/power/usr/bin/grep
+      ksh	----  555  0 0   /ship/power/usr/bin/ksh
+      ln	----  555  0 0   /ship/power/usr/bin/ln
+      mkdir	----  555  0 0   /ship/power/usr/bin/mkdir
+      mv	----  555  0 0   /ship/power/usr/bin/mv
+      odmadd	----  555  0 0   /ship/power/usr/bin/odmadd
+      odmdelete	----  555  0 0   /ship/power/usr/bin/odmdelete
+      odmget	----  555  0 0   /ship/power/usr/bin/odmget
+      pax	----  555  0 0   /ship/power/usr/bin/pax
+      rm	----  555  0 0   /ship/power/usr/bin/rm
+      sh	----  555  0 0   /ship/power/usr/bin/ksh
+      sleep	----  555  0 0   /ship/power/usr/bin/sleep
+      tctl	----  555  0 0   /ship/power/usr/bin/tctl
+      tee	----  555  0 0   /ship/power/usr/bin/tee
+      turbocr	----  550  0 0   /obj/power/bos/usr/lpp/bosinst/turbocr/turbocr
+      uncompress	----  550  0 0   /ship/power/usr/bin/compress
+      wc	----  555  0 0   /ship/power/usr/bin/wc
+      $
+    ccs	d-g-  755  0 0
+      bin	d-g-  755  0 0
+        ar	----  555  0 0   /ship/power/usr/ccs/bin/ar
+        $
+      $
+    lib	d-g-  755  0 0
+      boot	d-g-  755  0 0
+        getrootfs	----  640  0 0   /ship/power/usr/lib/boot/getrootfs
+        ssh	----  555  0 0   /ship/power/usr/lib/boot/ssh
+        $
+      drivers	d-g-  755  0 0
+        ascsidd		----  555  0 0   /ship/power/usr/lib/drivers/ascsidd
+        ascsiddpin	----  555  0 0   /ship/power/usr/lib/drivers/ascsiddpin
+        ataide		----  555  0 0   /ship/power/usr/lib/drivers/ataide
+        ataidepin	----  555  0 0   /ship/power/usr/lib/drivers/ataidepin
+        badisk		----  555  0 0   /ship/power/usr/lib/drivers/badisk
+        badiskpin	----  555  0 0   /ship/power/usr/lib/drivers/badiskpin
+        bbldd		----  555  0 0   /ship/power/usr/lib/drivers/bbldd
+        bblddpin	----  555  0 0   /ship/power/usr/lib/drivers/bblddpin
+        ccmdd		----  555  0 0   /ship/power/usr/lib/drivers/ccmdd
+        ccmdd_pin	----  555  0 0   /ship/power/usr/lib/drivers/ccmdd_pin
+        fd		----  550  0 0   /ship/power/usr/lib/drivers/fd
+        gemdd		----  550  0 0   /ship/power/usr/lib/drivers/gemdd
+        hd_pin		----  550  0 0   /ship/power/usr/lib/drivers/hd_pin
+        hd_pin_bot	----  550  0 0   /ship/power/usr/lib/drivers/hd_pin_bot
+        hscsidd		----  555  0 0   /ship/power/usr/lib/drivers/hscsidd
+        idecdrom	----  555  0 0   /ship/power/usr/lib/drivers/idecdrom
+        idecdrompin	----  555  0 0   /ship/power/usr/lib/drivers/idecdrompin
+        idedisk		----  555  0 0   /ship/power/usr/lib/drivers/idedisk
+        idediskpin	----  555  0 0   /ship/power/usr/lib/drivers/idediskpin
+        isa	d-g-  755  0 0
+          fdisa	----  555  0 0   /ship/power/usr/lib/drivers/isa/fdisa
+          kbddd	----  555  0 0   /ship/power/usr/lib/drivers/isa/kbddd
+          rsdd_rspc	----  555  0 0   /ship/power/usr/lib/drivers/isa/rsdd_rspc
+          rspcios	----  555  0 0   /ship/power/usr/lib/drivers/isa/rspcios
+          $
+        kbddd	----  555  0 0   /ship/power/usr/lib/drivers/kbddd
+        ktsdd	----  555  0 0   /ship/power/usr/lib/drivers/ktsdd
+        ldterm	----  555  0 0   /ship/power/usr/lib/drivers/ldterm
+        lft_loadpin	----  555  0 0   /ship/power/usr/lib/drivers/lft_loadpin
+        mid_cdd	----  555  0 0   /ship/power/usr/lib/drivers/mid_cdd
+        mid_cdd_pin	----  555  0 0   /ship/power/usr/lib/drivers/mid_cdd_pin
+        nepdd_load  ---- 777 0 0 /ship/power/usr/lib/drivers/nepdd_load
+        nepdd_loadpin  ---- 777 0 0 /ship/power/usr/lib/drivers/nepdd_loadpin
+        pci	d-g-  755  0 0
+          fgadd	----  555  0 0   /ship/power/usr/lib/drivers/pci/fgadd
+          fgadd_pin	----  555  0 0   /ship/power/usr/lib/drivers/pci/fgadd_pin
+          ggadd	----  555  0 0   /ship/power/usr/lib/drivers/pci/ggadd
+          ggadd_pin	----  555  0 0   /ship/power/usr/lib/drivers/pci/ggadd_pin
+          ggadd_video	----  555  0 0   /ship/power/usr/lib/drivers/pci/ggadd_video
+          hgadd	----  555  0 0   /ship/power/usr/lib/drivers/pci/hgadd
+          hgadd_pin	----  555  0 0   /ship/power/usr/lib/drivers/pci/hgadd_pin
+          igadd	----  555  0 0   /ship/power/usr/lib/drivers/pci/igadd
+          igadd_pin	----  555  0 0   /ship/power/usr/lib/drivers/pci/igadd_pin
+          ncr810dd	----  555  0 0   /ship/power/usr/lib/drivers/pci/ncr810dd
+          vcadd	----  555  0 0   /ship/power/usr/lib/drivers/pci/vcadd
+          vcadd_pin	----  555  0 0   /ship/power/usr/lib/drivers/pci/vcadd_pin
+          wfgdd	----  555  0 0   /ship/power/usr/lib/drivers/pci/wfgdd
+          wfgdd_pin	----  555  0 0   /ship/power/usr/lib/drivers/pci/wfgdd_pin
+          $
+        pscsi720dd	----  555  0 0   /ship/power/usr/lib/drivers/pscsi720dd
+        pscsi720ddpin	----  555  0 0   /ship/power/usr/lib/drivers/pscsi720ddpin
+        pscsidd	----  555  0 0   /ship/power/usr/lib/drivers/pscsidd
+        pscsiddpin	----  555  0 0   /ship/power/usr/lib/drivers/pscsiddpin
+        pse	d-g-  755  0 0
+          pse	----  500  0 0   /ship/power/usr/lib/drivers/pse/pse
+          $
+        rsdd	----  644  0 0   /ship/power/usr/lib/drivers/rsdd
+        scdisk	----  555  0 0   /ship/power/usr/lib/drivers/scdisk
+        scdiskpin	----  555  0 0   /ship/power/usr/lib/drivers/scdiskpin
+        sd	----  555  0 0   /ship/power/usr/lib/drivers/sd
+        sdpin	----  555  0 0   /ship/power/usr/lib/drivers/sdpin
+        sgadd	----  555  0 0   /ship/power/usr/lib/drivers/sgadd
+        skydd	----  555  0 0   /ship/power/usr/lib/drivers/skydd
+        stydd	----  555  0 0   /ship/power/usr/lib/drivers/stydd
+        tape	----  555  0 0   /ship/power/usr/lib/drivers/tape
+        tapepin	----  555  0 0   /ship/power/usr/lib/drivers/tapepin
+        tioc	----  555  0 0   /ship/power/usr/lib/drivers/tioc
+        ttydbg	----  555  0 0   /ship/power/usr/lib/drivers/ttydbg
+        vscsidd	----  555  0 0   /ship/power/usr/lib/drivers/vscsidd
+        vscsiddpin	----  555  0 0   /ship/power/usr/lib/drivers/vscsiddpin
+        $
+      liblvm.a	----  444  0 0   /ship/power/usr/lib/liblvm.a
+      libsm.a	----  444  0 0   /ship/power/usr/lib/libsm.a
+      methods	d-g-  755  0 0
+        cfg_fga	----  500  0 0   /ship/power/usr/lib/methods/cfg_fga
+        cfg_gga	----  500  0 0   /ship/power/usr/lib/methods/cfg_gga
+        cfg_graphics	----  500  0 0   /ship/power/usr/lib/methods/cfg_graphics
+        cfg_hga	----  500  0 0   /ship/power/usr/lib/methods/cfg_hga
+        cfg_iga	----  500  0 0   /ship/power/usr/lib/methods/cfg_iga
+        cfg_mid	----  500  0 0   /ship/power/usr/lib/methods/cfg_mid
+        cfg_nep  ---- 777 0 0 /ship/power/usr/lib/methods/cfg_nep
+        cfg_sgabus	----  500  0 0   /ship/power/usr/lib/methods/cfg_sgabus
+        cfg_wfg	----  500  0 0   /ship/power/usr/lib/methods/cfg_wfg
+        cfgascsi	----  500  0 0   /ship/power/usr/lib/methods/cfgascsi
+        cfgasync	----  500  0 0   /ship/power/usr/lib/methods/cfgasync
+        cfgasync_rspc	----  500  0 0   /ship/power/usr/lib/methods/cfgasync_rspc
+        cfgataide	----  500  0 0   /ship/power/usr/lib/methods/cfgataide
+        cfgbadisk	----  500  0 0   /ship/power/usr/lib/methods/cfgbadisk
+        cfgbbl_pci	----  500  0 0   /ship/power/usr/lib/methods/cfgbbl_pci
+        cfgbus	----  500  0 0   /ship/power/usr/lib/methods/cfgbus
+        cfgbus_isa	----  500  0 0   /ship/power/usr/lib/methods/cfgbus_isa
+        cfgbus_pci	----  500  0 0   /ship/power/usr/lib/methods/cfgbus_pci
+        cfgcon	----  500  0 0   /ship/power/usr/lib/methods/cfgcon
+        cfgfda	----  500  0 0   /ship/power/usr/lib/methods/cfgfda
+        cfgfda_isa	----  500  0 0   /ship/power/usr/lib/methods/cfgfda_isa
+        cfgfdd	----  500  0 0   /ship/power/usr/lib/methods/cfgfdd
+        cfggem	----  500  0 0   /ship/power/usr/lib/methods/cfggem
+        cfghscsi	----  500  0 0   /ship/power/usr/lib/methods/cfghscsi
+        cfgidecdrom	----  500  0 0   /ship/power/usr/lib/methods/cfgidecdrom
+        cfgidedisk	----  500  0 0   /ship/power/usr/lib/methods/cfgidedisk
+        cfgkbd_std	----  500  0 0   /ship/power/usr/lib/methods/cfgkbd_std
+        cfgkma	----  500  0 0   /ship/power/usr/lib/methods/cfgkma
+        cfgkm_isa	----  500  0 0   /ship/power/usr/lib/methods/cfgkm_isa
+        cfgktsm	----  500  0 0   /ship/power/usr/lib/methods/cfgktsm
+        cfglft	----  500  0 0   /ship/power/usr/lib/methods/cfglft
+        cfglvdd	----  500  0 0   /ship/power/usr/lib/methods/cfglvdd
+        cfgncr_scsi	----  500  0 0   /ship/power/usr/lib/methods/cfgncr_scsi
+        cfgpscsi	----  500  0 0   /ship/power/usr/lib/methods/cfgpscsi
+        cfgsccd	----  500  0 0   /ship/power/usr/lib/methods/cfgsccd
+        cfgscdisk	----  500  0 0   /ship/power/usr/lib/methods/cfgscdisk
+        cfgsctape	----  500  0 0   /ship/power/usr/lib/methods/cfgsctape
+        cfgserdasda	----  500  0 0   /ship/power/usr/lib/methods/cfgserdasda
+        cfgserdasdc	----  500  0 0   /ship/power/usr/lib/methods/cfgserdasdc
+        cfgserdasdd	----  500  0 0   /ship/power/usr/lib/methods/cfgserdasdd
+        cfgsga	----  500  0 0   /ship/power/usr/lib/methods/cfgsga
+        cfgsio	----  500  0 0   /ship/power/usr/lib/methods/cfgsio
+        cfgsio_isa	----  500  0 0   /ship/power/usr/lib/methods/cfgsio_isa
+        cfgsky	----  500  0 0   /ship/power/usr/lib/methods/cfgsky
+        cfgsys	----  500  0 0   /ship/power/usr/lib/methods/cfgsys
+        cfgsys_p	----  500  0 0   /ship/power/usr/lib/methods/cfgsys_p
+        cfgsys_rspc	----  500  0 0   /ship/power/usr/lib/methods/cfgsys_rspc
+        cfgtty	----  500  0 0   /ship/power/usr/lib/methods/cfgtty
+        rsddload	----  500  0 0   /ship/power/usr/lib/methods/rsddload
+        isaload	----  500  0 0   /ship/power/usr/lib/methods/isaload
+        cfgtty_rspc	----  500  0 0   /ship/power/usr/lib/methods/cfgtty_rspc
+        cfgvscsi	----  500  0 0   /ship/power/usr/lib/methods/cfgvscsi
+        chgdisk	----  500  0 0   /ship/power/usr/lib/methods/chgdisk
+        chggen	----  500  0 0   /ship/power/usr/lib/methods/chggen
+        chgtty	----  500  0 0   /ship/power/usr/lib/methods/chgtty
+        define	----  500  0 0   /ship/power/usr/lib/methods/define
+        define_rspc	----  500  0 0   /ship/power/usr/lib/methods/define_rspc
+        deflvm	----  500  0 0   /ship/power/usr/lib/methods/deflvm
+        defsys	----  500  0 0   /ship/power/usr/lib/methods/defsys
+        instdbcln	----  555  0 0   /ship/power/usr/lib/methods/instdbcln
+        showled	----  500  0 0   /ship/power/usr/lib/methods/showled
+        startlft	----  500  0 0   /ship/power/usr/lib/methods/startlft
+        starttty	----  500  0 0   /ship/power/usr/lib/methods/starttty
+        ucfgdevice	----  500  0 0   /ship/power/usr/lib/methods/ucfgdevice
+        $
+      microcode	d-g-  755  0 0
+        8d77.32.54	----  444  0 0   /ship/power/usr/lib/microcode/8d77.32.54
+        8d77.44.54	----  444  0 0   /ship/power/usr/lib/microcode/8d77.44.54
+        8d77.44.58	----  444  0 0   /ship/power/usr/lib/microcode/8d77.44.58
+        8ee3c.01.01	----  444  0 0   /ship/power/usr/lib/microcode/8ee3c.01.01
+        8f9a.00.00  ---- 777 0 0 /ship/power/usr/lib/microcode/8f9a.00.00
+        8ffdc2.00.04	----  444  0 0   /ship/power/usr/lib/microcode/8ffdc2.00.04
+        8ffdgt.00.04	----  444  0 0   /ship/power/usr/lib/microcode/8ffdgt.00.04
+        8ffdgu.00.04	----  444  0 0   /ship/power/usr/lib/microcode/8ffdgu.00.04
+        8ffdgv.00.04	----  444  0 0   /ship/power/usr/lib/microcode/8ffdgv.00.04
+        8ffdsh.00.04	----  444  0 0   /ship/power/usr/lib/microcode/8ffdsh.00.04
+        8ffdvp.00.03	----  444  0 0   /ship/power/usr/lib/microcode/8ffdvp.00.03
+        $
+      nls	d-g-  755  0 0
+        loc	d-g-  755  0 0
+          C.lftkeymap	----  444  0 0   /ship/power/usr/lib/nls/loc/C.lftkeymap
+          $
+        msg	d-g-  755  0 0
+          De_DE	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/De_DE/BosMenus.cat
+            $
+          En_US	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/En_US/BosMenus.cat
+            $
+          Es_ES	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/Es_ES/BosMenus.cat
+            $
+          Fr_FR	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/Fr_FR/BosMenus.cat
+            $
+          It_IT	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/It_IT/BosMenus.cat
+            $
+          Ja_JP	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/Ja_JP/BosMenus.cat
+            $
+          Nl_BE	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/Nl_BE/BosMenus.cat
+            $
+          No_NO	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/No_NO/BosMenus.cat
+            $
+          Sv_SE	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/Sv_SE/BosMenus.cat
+            $
+          de_DE	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/de_DE/BosMenus.cat
+            $
+          en_US	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/en_US/BosMenus.cat
+            $
+          es_ES	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/es_ES/BosMenus.cat
+            $
+          fr_FR	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/fr_FR/BosMenus.cat
+            $
+          it_IT	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/it_IT/BosMenus.cat
+            $
+          ja_JP	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/ja_JP/BosMenus.cat
+            $
+          ko_KR	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/ko_KR/BosMenus.cat
+            $
+          nl_BE	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/nl_BE/BosMenus.cat
+            $
+          no_NO	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/no_NO/BosMenus.cat
+            $
+          sv_SE	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/sv_SE/BosMenus.cat
+            $
+          zh_TW	d-g-  755  0 0
+            BosMenus.cat	----  644  0 0   /ship/power/usr/lib/nls/msg/zh_TW/BosMenus.cat
+            $
+          $
+        $
+      objrepos	d-g-  755  0 0
+        CC	----  644  0 0   /ship/power/usr/lib/objrepos/CC
+        CC.vc	----  644  0 0   /ship/power/usr/lib/objrepos/CC.vc
+        FONT	----  644  0 0   /ship/power/usr/lib/objrepos/FONT
+        FONT.vc	----  644  0 0   /ship/power/usr/lib/objrepos/FONT.vc
+        KEYBOARD	----  644  0 0   /ship/power/usr/lib/objrepos/KEYBOARD
+        KEYBOARD.vc	----  644  0 0   /ship/power/usr/lib/objrepos/KEYBOARD.vc
+        MESSAGES	----  644  0 0   /ship/power/usr/lib/objrepos/MESSAGES
+        MESSAGES.vc	----  644  0 0   /ship/power/usr/lib/objrepos/MESSAGES.vc
+        PDiagAtt	----  644  0 0   /ship/power/usr/lib/objrepos/PDiagAtt
+        PDiagAtt.vc	----  644  0 0   /ship/power/usr/lib/objrepos/PDiagAtt.vc
+        PDiagDev	----  644  0 0   /ship/power/usr/lib/objrepos/PDiagDev
+        PDiagDev.vc	----  644  0 0   /ship/power/usr/lib/objrepos/PDiagDev.vc
+        $
+      $
+    lpp	d-g-  755  0 0
+      bos	d-g-  755  0 0
+        inst_root	d-g-  755  0 0
+          etc	d-g-  755  0 0
+            preserve.list	----  666  0 0   /ship/power/etc/preserve.list
+            $
+          sbin	d-g-  755  0 0
+            comp.kext	----  555  0 0   /ship/power/sbin/comp.kext
+            comp.uext	----  555  0 0   /ship/power/sbin/comp.uext
+            helpers	d-g-  755  0 0
+              v3fshelper	----  555  0 0   /ship/power/sbin/helpers/v3fshelper
+              $
+            $
+          $
+        liblpp.a	----  555  0 0   /obj/power/packages/bos/rte/liblpp.a
+        $
+      bosinst	d-g-  755  0 0
+        Animate	----  550  0 0   /ship/power/usr/lpp/bosinst/Animate
+        BosMenus	----  550  0 0   /ship/power/usr/lpp/bosinst/BosMenus
+        CheckSize	----  550  0 0   /ship/power/usr/lpp/bosinst/CheckSize
+        Get_RVG_Disks	----  550  0 0   /ship/power/usr/lpp/bosinst/Get_RVG_Disks
+        adjfs	----  550  0 0   /ship/power/usr/lpp/bosinst/adjfs
+        berror	----  550  0 0   /ship/power/usr/lpp/bosinst/berror
+        bi_io	----  550  0 0   /ship/power/usr/lpp/bosinst/bi_io
+        bi_main	----  550  0 0   /ship/power/usr/lpp/bosinst/bi_main
+        bicfgsup	----  550  0 0   /ship/power/usr/lpp/bosinst/bicfgsup
+        bidata	----  550  0 0   /ship/power/usr/lpp/bosinst/bidata
+        blvset	----  550  0 0   /ship/power/usr/lpp/bosinst/blvset
+        bosinst.template	----  644  0 0   /ship/power/usr/lpp/bosinst/bosinst.template
+        datadaemon	----  550  0 0   /ship/power/usr/lpp/bosinst/datadaemon
+        getprtpkgs	----  550  0 0   /ship/power/usr/lpp/bosinst/getprtpkgs
+        image.template	----  644  0 0   /ship/power/usr/lpp/bosinst/image.template
+        rda	----  550  0 0   /ship/power/usr/lpp/bosinst/rda
+        $
+      diagnostics	d-g-  755  0 0
+        bin	d-g-  755  0 0
+          dctrl	----  544  0 0   /ship/power/usr/lpp/diagnostics/bin/dctrl
+          diagdskpt	----  544  0 0   /ship/power/usr/lpp/diagnostics/bin/diagdskpt
+          $
+        da	d-g-  755  0 0
+          dh2dasd	----  544  0 0   /ship/power/usr/lpp/diagnostics/da/dh2dasd
+          dhf	----  544  0 0   /ship/power/usr/lpp/diagnostics/da/dhf
+          dhfd	----  544  0 0   /ship/power/usr/lpp/diagnostics/da/dhfd
+          $
+        lib	d-g-  755  0 0
+          libdiag.a	----  444  0 0   /ship/power/usr/lpp/diagnostics/lib/libdiag.a
+          $
+        $
+      fonts	d-g-  755  0 0
+        Erg11.iso1.snf	----  444  0 0   /ship/power/usr/lpp/fonts/Erg11.iso1.snf
+        Erg22.iso1.snf	----  444  0 0   /ship/power/usr/lpp/fonts/Erg22.iso1.snf
+        $
+      $
+    sbin	d-g-  755  0 0
+      allocp	----  555  0 0   /ship/power/usr/sbin/allocp
+      bootinfo	----  550  0 0   /ship/power/usr/sbin/bootinfo
+      cfgmgr	----  550  0 0   /ship/power/usr/sbin/cfgmgr
+      chcons	----  550  0 0   /ship/power/usr/sbin/chcons
+      chdev	----  550  0 0   /ship/power/usr/sbin/chdev
+      chfs	----  550  0 0   /ship/power/usr/sbin/lsfs
+      chlv	----  550  0 0   /ship/power/usr/sbin/chlv
+      extendvg	----  550  0 0   /ship/power/usr/sbin/extendvg
+      fsck	----  555  0 0   /ship/power/usr/sbin/fsck
+      getlvcb	----  550  0 0   /ship/power/usr/sbin/getlvcb
+      getlvname	----  550  0 0   /ship/power/usr/sbin/getlvname
+      getlvodm	----  555  0 0   /ship/power/usr/sbin/getlvodm
+      getvgname	----  550  0 0   /ship/power/usr/sbin/getvgname
+      imfs	----  550  0 0   /ship/power/usr/sbin/lsfs
+      importvg	----  550  0 0   /ship/power/usr/sbin/importvg
+      lcreatelv	----  550  0 0   /ship/power/usr/sbin/lcreatelv
+      lcreatevg	----  550  0 0   /ship/power/usr/sbin/lcreatevg
+      ldeletelv	----  550  0 0   /ship/power/usr/sbin/ldeletelv
+      lextendlv	----  550  0 0   /ship/power/usr/sbin/lextendlv
+      linstallpv	----  550  0 0   /ship/power/usr/sbin/linstallpv
+      lmktemp	----  555  0 0   /ship/power/usr/sbin/lmktemp
+      logform	----  555  0 0   /ship/power/usr/sbin/logform
+      logredo	----  555  0 0   /ship/power/usr/sbin/logredo
+      lquerylv	----  555  0 0   /ship/power/usr/sbin/lquerylv
+      lquerypv	----  555  0 0   /ship/power/usr/sbin/lquerypv
+      lqueryvg	----  555  0 0   /ship/power/usr/sbin/lqueryvg
+      lreducelv	----  550  0 0   /ship/power/usr/sbin/lreducelv
+      lsdev	----  555  0 0   /ship/power/usr/sbin/lsdev
+      lslv	----  555  0 0   /ship/power/usr/sbin/lslv
+      lvaryoffvg	----  550  0 0   /ship/power/usr/sbin/lvaryoffvg
+      lvaryonvg	----  550  0 0   /ship/power/usr/sbin/lvaryonvg
+      lvgenmajor	----  550  0 0   /ship/power/usr/sbin/lvgenmajor
+      lvgenminor	----  550  0 0   /ship/power/usr/sbin/lvgenminor
+      lvmmsg	----  555  0 0   /ship/power/usr/sbin/lvmmsg
+      lvrelmajor	----  550  0 0   /ship/power/usr/sbin/lvrelmajor
+      lvrelminor	----  550  0 0   /ship/power/usr/sbin/lvrelminor
+      mkboot	----  555  0 0   /ship/power/usr/sbin/mkboot
+      mkfs	----  555  0 0   /ship/power/usr/sbin/mkfs
+      mklv	----  550  0 0   /ship/power/usr/sbin/mklv
+      mknod	----  555  0 0   /ship/power/usr/sbin/mknod
+      mkvg	----  550  0 0   /ship/power/usr/sbin/mkvg
+      mount	----  555  0 0   /ship/power/usr/sbin/mount
+      putlvcb	----  550  0 0   /ship/power/usr/sbin/putlvcb
+      putlvodm	----  550  0 0   /ship/power/usr/sbin/putlvodm
+      redefinevg	----  550  0 0   /ship/power/usr/sbin/redefinevg
+      restbyname	----  555  0 0   /ship/power/usr/sbin/restbyname
+      rmlv	----  550  0 0   /ship/power/usr/sbin/rmlv
+      strload	----  500  0 0   /ship/power/usr/sbin/strload
+      swapon	----  550  0 0   /ship/power/usr/sbin/swapon
+      synclvodm	----  550  0 0   /ship/power/usr/sbin/synclvodm
+      sync	----  555  0 0   /ship/power/usr/sbin/sync
+      umount	----  555  0 0   /ship/power/usr/sbin/mount
+      updatelv	----  550  0 0   /ship/power/usr/sbin/updatelv
+      updatevg	----  550  0 0   /ship/power/usr/sbin/updatevg
+      varyonvg	----  550  0 0   /ship/power/usr/sbin/varyonvg
+      $
+    sys	d-g-  755  0 0
+      inst.images	d-g-  755  0 0
+        $
+      $
+    $
+  $
+$

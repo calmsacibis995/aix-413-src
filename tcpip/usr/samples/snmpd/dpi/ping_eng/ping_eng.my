@@ -1,0 +1,134 @@
+-- @(#)36	1.1  src/tcpip/usr/samples/snmpd/dpi/ping_eng/ping_eng.my, snmp, tcpip411, GOLD410 9/13/93 15:09:22
+--
+-- COMPONENT_NAME: (SNMP) Simple Network Management Protocol Daemon
+--
+-- ORIGINS: 27
+--
+-- (C) COPYRIGHT International Business Machines Corp. 1993
+-- All Rights Reserved
+-- US Government Users Restricted Rights - Use, duplication or
+-- disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+--
+-- Licensed Material - Property of IBM
+--
+-- FILE:	/usr/samples/snmpd/dpi/ping_eng/ping_eng.my
+--
+
+--
+-- INTERNATIONAL BUSINESS MACHINES CORP. PROVIDES THIS SOURCE CODE
+-- EXAMPLE, ASSOCIATED LIBRARIES AND FILES "AS IS," WITHOUT WARRANTY 
+-- OF ANY KIND EITHER EXPRESSED OR IMPLIED INCLUDING BUT NOT LIMITED 
+-- TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+-- PARTICULAR PURPOSE.  The entire risk as to the quality and performance 
+-- of this example is with you.  Should any part of this source code 
+-- example prove defective you (and not IBM or an IBM authorized 
+-- dealer) assume the entire cost of all necessary servicing, repair, 
+-- or correction.
+--
+
+
+PINGENG-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	dpismux, OBJECT-TYPE
+		FROM RFC1228-DPID;
+
+-- the pingeng group
+
+pingeng		OBJECT IDENTIFIER ::=   { dpismux 2 }
+
+pingNumber	OBJECT-TYPE
+		SYNTAX	INTEGER
+		ACCESS	read-only
+		STATUS	mandatory
+		DESCRIPTION
+			"A count of the number of items in the ping table."
+		::= { pingeng 1 }
+
+pingTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF PingEntry
+      ACCESS  not-accessible
+      STATUS  mandatory
+      DESCRIPTION
+              "A list of ping entries.  The number of
+              entries is given by the value of pingNumber."
+      ::= { pingeng 2 }
+
+pingEntry OBJECT-TYPE
+      SYNTAX  PingEntry
+      ACCESS  not-accessible
+      STATUS  mandatory
+      DESCRIPTION
+              "A ping entry containing statistical objects."
+      INDEX   { pingAddr }
+      ::= { pingTable 1 }
+
+PingEntry ::=
+      SEQUENCE {
+          pingAddr
+              IpAddress,
+          pingMin
+              INTEGER,
+          pingMax
+              INTEGER,
+          pingAve
+              INTEGER,
+          pingTries
+              INTEGER,
+          pingResponses
+              INTEGER
+      }
+
+pingAddr OBJECT-TYPE
+      SYNTAX  IpAddress
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+              "A unique value for each ping.  Its value
+               is the address of the pinged object.  The row
+               has the data for that object."
+      ::= { pingEntry 1 }
+
+pingMin OBJECT-TYPE
+      SYNTAX  INTEGER
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+              "The minimum time of a round trip icmp echo packet."
+      ::= { pingEntry 2 }
+
+pingMax OBJECT-TYPE
+      SYNTAX  INTEGER
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+              "The maximum time of a round trip icmp echo packet."
+      ::= { pingEntry 3 }
+
+pingAve OBJECT-TYPE
+      SYNTAX  INTEGER
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+              "The average time of a round trip icmp echo packet.
+               Determined by summing the times for the number of 
+               packets in pingtries and dividing by pingtries."
+      ::= { pingEntry 4 }
+
+pingTries OBJECT-TYPE
+      SYNTAX  INTEGER
+      ACCESS  read-write
+      STATUS  mandatory
+      DESCRIPTION
+              "The number of pings to attempt."
+      ::= { pingEntry 5 }
+
+pingResponses OBJECT-TYPE
+      SYNTAX  INTEGER
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+              "The number of ping responses received."
+      ::= { pingEntry 6 }
+
+END

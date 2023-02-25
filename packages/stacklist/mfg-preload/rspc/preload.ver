@@ -1,0 +1,196 @@
+#!/bin/ksh
+# @(#) 19 1.16 src/packages/stacklist/mfg-preload/rspc/preload.ver, pkgrspc, pkg41J, 9523C_all 6/10/95 15:24:54
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: DOS Diskette Based Manufacturing Preload Verification Script
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# This file is placed on a DOS (FAT based) diskette in the directory
+# /bos/mfg and is read by BOS INSTALL at manufacturing preinstall of AIX
+# to verify the automated preinstall process for AIX on rspc systems.
+#
+################################################################
+cp /SPOT/usr/bin/dosread /../doswrite
+/usr/sbin/chcons -a login=enable /dev/lft0
+if [ $? -ne 0 ]; then
+	echo "CuAt:\n name = \"sys0\"\n attribute = \"syscons\"\n value = \"/dev/lft0\"\n" >/../syscons.add
+	/usr/bin/odmchange -o CuAt -q "attribute=syscons" /../syscons.add
+	/usr/bin/odmdelete  -o CuAt -q "attribute=conslogin"
+fi
+/usr/sbin/savebase -d /dev/$BLVDISK
+#
+# Remove manufacturing parameters from bosinst.data file in /var/adm/ras
+#
+/SPOT/usr/lpp/bosinst/bidata -b -m control_flow -f PROMPT -e yes
+/SPOT/usr/lpp/bosinst/bidata -b -m control_flow -f CUSTOMIZATION_FILE -e ''
+/SPOT/usr/lpp/bosinst/bidata -b -m control_flow -f BUNDLES -e ''
+/SPOT/usr/lpp/bosinst/bidata -b -m control_flow -f CONSOLE -e ''
+/SPOT/usr/lpp/bosinst/bidata -b -m control_flow -f EXISTING_SYSTEM_OVERWRITE -e no
+/SPOT/usr/lpp/bosinst/bidata -b -m control_flow -f INSTALL_METHOD -e ''
+/SPOT/usr/lpp/bosinst/bidata -b -m control_flow -f INSTALL_X_IF_ADAPTER -e yes
+/SPOT/usr/lpp/bosinst/bidata -w
+sleep 1
+mv /bosinst.data /../bosinst.data
+/usr/sbin/sync
+/usr/sbin/sync
+echo "FAILED" >/../failed
+echo "PASSED" >/../passed
+#
+# Check the installp.summary log for installation errors
+#
+STATUS=failed
+if [ -s /var/adm/sw/installp.summary ]; then
+   /../doswrite -S /var/adm/sw/installp.summary /preload.summary
+   cat /var/adm/sw/installp.summary | cut -d: -f1 | grep -v -e "^0" >/../errors.sum
+   if [ $? -eq 1 ]; then
+	STATUS=passed	
+   else
+#
+# check to see if all errors were merely "all ready installed" warnings
+#
+   	cat /../errors.sum | cut -d: -f1 | grep -v -s -q -e "^402" 
+   	if [ $? -eq 1 ]; then
+		STATUS=passed	
+	fi
+   fi
+fi
+#
+# Check for Softwindows, and if installed ensure paging space is at least
+# 48 Meg.
+#
+if [ "$STATUS" = "passed" ] ; then
+   cat /var/adm/sw/installp.summary | cut -d: -f2 | grep -e "SoftWindows.obj" 
+	if [ $? -eq 0 ] ; then
+		PS_SIZE=`lsps -c hd6 | grep hd6 | cut -d: -f4`
+		if [ "$PS_SIZE" -lt 12 ] ; then
+		    echo "Increasing Paging Space by $(( 12 - PS_SIZE )) lps"
+	   	    chps -s $(( 12 - PS_SIZE )) -a y hd6
+		    if [ $? -ne 0 ] ; then
+			echo "chps failed with return code $?"
+			STATUS=failed
+	   		fi
+		fi
+#
+# Create softwindows license if Softwindows was installed.
+#
+   SOFTINFO=`cat /var/adm/sw/installp.summary | grep -e "SoftWindows.obj" | cut -d: -f5` 
+		if [ "$SOFTINFO" = "1.2.0.0" -a "$STATUS" = passed ] ; then
+			cd /SPOT/usr/bin
+			./ibminst
+			if [ $? -ne 0 ] ; then
+				STATUS=failed
+			else
+				echo "SoftWindows License Installed"
+				STATUS=failed
+#
+# Put in patched lmgrd (lmgrdp) which will correct the Insignia Softwindows
+# license when the hostname is altered by the customer.
+#
+				dosread lmgrdp /usr/lpp/SoftWindows/FLEXlm/lmgrdp
+				/usr/bin/chmod 744 /usr/lpp/SoftWindows/FLEXlm/lmgrdp
+				if [ "$?" -eq 0 ] ; then
+					/usr/sbin/chitab "isl:234:respawn:/usr/lpp/SoftWindows/FLEXlm/lmgrdp"
+					if [ "$?" -eq 0 ] ; then
+						STATUS=passed
+					fi
+				fi
+			fi
+		fi
+	fi
+fi
+# setup the correct keyboard parameters for LA Spanish, Korean and Traditioanl 
+# Chinese
+#
+VAL=`cat /preload.kyb | grep KEYBOARD | sed 's/ //g'`
+NEWVAL=${VAL#*=}
+if [ "$NEWVAL" = "ko_KR@alt" ]; then
+   chkbd /usr/lib/nls/loc/ko_KR@alt.lftkeymap >>/var/adm/ras/devinst.log 2>&1
+fi
+if [ "$NEWVAL" = "zh_TW@alt" ]; then
+   chkbd /usr/lib/nls/loc/zh_TW@alt.lftkeymap >>/var/adm/ras/devinst.log 2>&1
+fi
+if [ "$NEWVAL" = "es_LA" ]; then
+   if [ ! -f /usr/lib/nls/loc/es_LA.lftkeymap ]
+   then
+   ln -s /usr/lib/nls/loc/es_ES.lftkeymap /usr/lib/nls/loc/es_LA.lftkeymap
+   fi
+   chkbd /usr/lib/nls/loc/es_LA.lftkeymap >>/var/adm/ras/devinst.log 2>&1
+fi
+#
+# Install Welcome Center if present on the cd
+#
+if [ -f /SPOT/usr/welcome/welcome.tar.Z ] ; then
+	echo "Creating /welcome filesystem on target system" 
+	WSTAT=failed
+	export ODMDIR=/etc/objrepos
+	crfs -v jfs -g 'rootvg' -a size='188416' -m '/welcome' -A 'yes' -p 'rw' -t 'no' -a frag=512 -a nbpi=4096 -a compress=no
+	if [ $? -eq 0 ] ; then
+		echo "Installing Welcome Center" 
+		echo "Installing Welcome Center" >/dev/console
+		mount /welcome
+		cd /welcome
+		uncompress -c /SPOT/usr/welcome/welcome.tar.Z | tar -xpf- .
+#
+# Run Welcome Center setup program
+#
+		if [ $? -eq 0 ] ; then
+			echo "Welcome Center Install Successful" 
+			./setup.preload
+			if [ $? -ne 0 ] ; then
+				echo "Welcome Center Setup Failed" 
+			else
+				WSTAT=passed	
+				echo "Welcome Center Setup Successful" >/dev/console
+			fi
+		else
+			echo "Welcome Center Install Failed" 
+		fi
+	else
+		echo "Could not create /welcome filesystem"
+	fi
+	cd /
+	if [ "$WSTAT" = failed ] ; then
+		STATUS=failed
+	fi
+fi
+#
+# Sync the filesystem data and update base customized info (console changes &
+# welcome filesystem/logical volume information)
+#
+/usr/sbin/savebase -d /dev/$BLVDISK
+/usr/sbin/sync
+/usr/sbin/sync
+/usr/sbin/sync
+#
+# Write out manufacturing status, and cleanup root filesystem
+#
+/../doswrite -S /var/adm/ras/devinst.log /preload.log
+/../doswrite -S /../$STATUS /$STATUS
+rm -f /preload.verify
+# 
+# If manufacturing file exists to control reboot then reboot,
+# otherwise return to bos install
+#
+dosread mfgdiags.6xe /../junk
+if [ "$?" -eq 0 ] ; then
+	rm -f /liblpp.a /lpp_name /SPOT /../Update_Status.pn
+	cat /../var/adm/ras/bi.log /var/adm/ras/bi.log | \
+		alog -t bosinst -q -s 16384
+	rm -f /var/adm/ras/bi.log
+	cp /../var/adm/ras/BosMenus.log /var/adm/ras 2>/dev/null
+	cp /../bosinst.data /var/adm/ras 2>/dev/null
+	cp /../image.data /var/adm/ras 2>/dev/null
+	/usr/sbin/sync
+	/usr/sbin/sync
+	/usr/sbin/reboot -q
+fi
+exit 0

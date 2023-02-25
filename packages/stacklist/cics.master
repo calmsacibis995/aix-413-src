@@ -1,0 +1,26 @@
+/* @(#)76        1.4  src/packages/stacklist/cics.master, pkg, pkg41J, 9523A_all 6/1/95 12:02:07                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for CICS LPP
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+cics.base
+cics.server
+cics.client
+cics.books
+cics.info.en_US
+cics.msg.en_US
+cics.msg.Ja_JP
+cics.msg.ja_JP
+cics.msg.ko_KR
+cics.msg.zh_CN
+dtext.brwsr

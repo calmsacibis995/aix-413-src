@@ -1,0 +1,582 @@
+* File name: ibm3101.map
+
+* @(#)25	1.8  src/tenplus/termcap/ibm3101.msz, tenplus, tenplus411, GOLD410 3/23/93 12:12:32
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10, 27
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 1
+	Flags = 0x1
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/Name:
+	Value = "ibm3101"
+
+/*/FromTo:
+	Type = 1
+	Count = 0
+
+/*/Date:
+	Type = 1
+	Count = 0
+
+/*/Subject:
+	Type = 1
+	Count = 0
+
+/*/Picture:
+	Type = 1
+	Count = 64
+
+/*/Picture/0:
+
+/*/Picture/1:
+	Type = 1
+	Count = 2
+
+/*/Picture/1/cat-msgno:
+	Value = "%+K_IBM3101_1"
+
+/*/Picture/1/cat-deftxt:
+	Value = "\011\011\011  Keyboard - ibm3101"
+
+/*/Picture/2:
+
+/*/Picture/3:
+
+/*/Picture/4:
+	Type = 1
+	Count = 2
+
+/*/Picture/4/cat-msgno:
+	Value = "%+K_IBM3101_4"
+
+/*/Picture/4/cat-deftxt:
+	Value = "CANCEL is ALT-RESET (Model 2x only)."
+
+/*/Picture/5:
+
+/*/Picture/6:
+	Type = 1
+	Count = 2
+
+/*/Picture/6/cat-msgno:
+	Value = "%+K_IBM3101_6"
+
+/*/Picture/6/cat-deftxt:
+	Value = "The following switch setting must be in effect for the editor to work."
+
+/*/Picture/7:
+
+/*/Picture/8:
+	Type = 1
+	Count = 2
+
+/*/Picture/8/cat-msgno:
+	Value = "%+K_IBM3101_8"
+
+/*/Picture/8/cat-deftxt:
+	Value = "\011Group 1           Group 2           Group 3"
+
+/*/Picture/9:
+	Value = "   \023\021\024\021\024\021\024\021\024\021\024\021\024\021\024\021\004 \023\021\024\021\024\021\024\021\024\021\024\021\024\021\024\021\004 \023\021\024\021\024\021\024\021\024\021\024\021\024\021\024\021\004"
+
+/*/Picture/10:
+	Type = 1
+	Count = 2
+
+/*/Picture/10/cat-msgno:
+	Value = "%+K_IBM3101_10"
+
+/*/Picture/10/cat-deftxt:
+	Value = "on \001 \001 \001x\001 \001 \001 \001x\001x\001 \001x\001 \001 \001 \001 \001 \001 \001 \001 \001x\001 \001x\001x\001 \001 \001 \001 \001"
+
+/*/Picture/11:
+	Value = "   \027\021\032\021\032\021\032\021\032\021\032\021\032\021\032\021\005 \027\021\032\021\032\021\032\021\032\021\032\021\032\021\032\021\005 \027\021\032\021\032\021\032\021\032\021\032\021\032\021\032\021\005"
+
+/*/Picture/12:
+	Type = 1
+	Count = 2
+
+/*/Picture/12/cat-msgno:
+	Value = "%+K_IBM3101_12"
+
+/*/Picture/12/cat-deftxt:
+	Value = "off\001x\001x\001 \001x\001x\001x\001 \001 \001 \001 \001x\001x\001x\001x\001x\001x\001x\001 \001 \001x\001 \001 \001x\001x\001x\001x\001"
+
+/*/Picture/13:
+	Value = "   \006\021\022\021\022\021\022\021\022\021\022\021\022\021\022\021\007 \006\021\022\021\022\021\022\021\022\021\022\021\022\021\022\021\007 \006\021\022\021\022\021\022\021\022\021\022\021\022\021\022\021\007"
+
+/*/Picture/14:
+
+/*/Picture/15:
+
+/*/Picture/16:
+	Type = 1
+	Count = 2
+
+/*/Picture/16/cat-msgno:
+	Value = "%+K_IBM3101_16"
+
+/*/Picture/16/cat-deftxt:
+	Value = "\011\011\011       Input Sequences"
+
+/*/Picture/17:
+
+/*/Picture/18:
+	Type = 1
+	Count = 2
+
+/*/Picture/18/cat-msgno:
+	Value = "%+K_IBM3101_18"
+
+/*/Picture/18/cat-deftxt:
+	Value = " Editor Function     Key Sequence       Editor Function     Key Sequence"
+
+/*/Picture/19:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004 \023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/*/Picture/20:
+	Type = 1
+	Count = 2
+
+/*/Picture/20/cat-msgno:
+	Value = "%+K_IBM3101_20"
+
+/*/Picture/20/cat-deftxt:
+	Value = "\001(1)             \001ESC 1              \001 \001LEFT            \001ESC l              \001"
+
+/*/Picture/21:
+	Type = 1
+	Count = 2
+
+/*/Picture/21/cat-msgno:
+	Value = "%+K_IBM3101_21"
+
+/*/Picture/21/cat-deftxt:
+	Value = "\001(2)             \001ESC 2              \001 \001+LINE           \001PF2                \001"
+
+/*/Picture/22:
+	Type = 1
+	Count = 2
+
+/*/Picture/22/cat-msgno:
+	Value = "%+K_IBM3101_22"
+
+/*/Picture/22/cat-deftxt:
+	Value = "\001(3)             \001ESC 3              \001 \001-LINE           \001PF5                \001"
+
+/*/Picture/23:
+	Type = 1
+	Count = 2
+
+/*/Picture/23/cat-msgno:
+	Value = "%+K_IBM3101_23"
+
+/*/Picture/23/cat-deftxt:
+	Value = "\001(4)             \001ESC 4              \001 \001LINEFEED        \001ESC return         \001"
+
+/*/Picture/24:
+	Type = 1
+	Count = 2
+
+/*/Picture/24/cat-msgno:
+	Value = "%+K_IBM3101_24"
+
+/*/Picture/24/cat-deftxt:
+	Value = "\001(5)             \001ESC 5              \001 \001LOCAL-MENU      \001ALT-{              \001"
+
+/*/Picture/25:
+	Type = 1
+	Count = 2
+
+/*/Picture/25/cat-msgno:
+	Value = "%+K_IBM3101_25"
+
+/*/Picture/25/cat-deftxt:
+	Value = "\001(6)             \001ESC 6              \001 \001MARGIN          \001ESC m              \001"
+
+/*/Picture/26:
+	Type = 1
+	Count = 2
+
+/*/Picture/26/cat-msgno:
+	Value = "%+K_IBM3101_26"
+
+/*/Picture/26/cat-deftxt:
+	Value = "\001(7)             \001ESC 7              \001 \001MENU            \001ALT-'              \001"
+
+/*/Picture/27:
+	Type = 1
+	Count = 2
+
+/*/Picture/27/cat-msgno:
+	Value = "%+K_IBM3101_27"
+
+/*/Picture/27/cat-deftxt:
+	Value = "\001(8)             \001ESC 8              \001 \001NEXT            \001ALT-n              \001"
+
+/*/Picture/28:
+	Type = 1
+	Count = 2
+
+/*/Picture/28/cat-msgno:
+	Value = "%+K_IBM3101_28"
+
+/*/Picture/28/cat-deftxt:
+	Value = "\001up arrow        \001up arrow           \001 \001NEXT-WINDOW     \001ESC n              \001"
+
+/*/Picture/29:
+	Type = 1
+	Count = 2
+
+/*/Picture/29/cat-msgno:
+	Value = "%+K_IBM3101_29"
+
+/*/Picture/29/cat-deftxt:
+	Value = "\001right arrow     \001right arrow        \001 \001+PAGE           \001PF1                \001"
+
+/*/Picture/30:
+	Type = 1
+	Count = 2
+
+/*/Picture/30/cat-msgno:
+	Value = "%+K_IBM3101_30"
+
+/*/Picture/30/cat-deftxt:
+	Value = "\001down arrow      \001down arrow         \001 \001-PAGE           \001PF4                \001"
+
+/*/Picture/31:
+	Type = 1
+	Count = 2
+
+/*/Picture/31/cat-msgno:
+	Value = "%+K_IBM3101_31"
+
+/*/Picture/31/cat-deftxt:
+	Value = "\001left arrow      \001left arrow         \001 \001PICK-COPY       \001ERASE INPUT        \001"
+
+/*/Picture/32:
+	Type = 1
+	Count = 2
+
+/*/Picture/32/cat-msgno:
+	Value = "%+K_IBM3101_32"
+
+/*/Picture/32/cat-deftxt:
+	Value = "\001BACKSPACE       \001BACKSPACE          \001 \001PICK-UP         \001ERASE EOL/EOF      \001"
+
+/*/Picture/33:
+	Type = 1
+	Count = 2
+
+/*/Picture/33/cat-msgno:
+	Value = "%+K_IBM3101_33"
+
+/*/Picture/33/cat-deftxt:
+	Value = "\001BEGIN-LINE      \001ALT-a              \001 \001PREVIOUS        \001ALT-p              \001"
+
+/*/Picture/34:
+	Type = 1
+	Count = 2
+
+/*/Picture/34/cat-msgno:
+	Value = "%+K_IBM3101_34"
+
+/*/Picture/34/cat-deftxt:
+	Value = "\001BOX-MARK        \001ALT-b              \001 \001PRINT           \001ALT-a p            \001"
+
+/*/Picture/35:
+	Type = 1
+	Count = 2
+
+/*/Picture/35/cat-msgno:
+	Value = "%+K_IBM3101_35"
+
+/*/Picture/35/cat-deftxt:
+	Value = "\001BREAK           \001CTL-c   **         \001 \001*PRINT          \001PRINT              \001"
+
+/*/Picture/36:
+	Type = 1
+	Count = 2
+
+/*/Picture/36/cat-msgno:
+	Value = "%+K_IBM3101_36"
+
+/*/Picture/36/cat-deftxt:
+	Value = "\001CANCEL          \001ALT-v              \001 \001PUT-COPY        \001CLEAR              \001"
+
+/*/Picture/37:
+	Type = 1
+	Count = 2
+
+/*/Picture/37/cat-msgno:
+	Value = "%+K_IBM3101_37"
+
+/*/Picture/37/cat-deftxt:
+	Value = "\001*CANCEL         \001CANCEL             \001 \001PUT-DOWN        \001ERASE EOS          \001"
+
+/*/Picture/38:
+	Type = 1
+	Count = 2
+
+/*/Picture/38/cat-msgno:
+	Value = "%+K_IBM3101_38"
+
+/*/Picture/38/cat-deftxt:
+	Value = "\001CENTER          \001ALT-c              \001 \001QUIT            \001CTL-\\ or CTL-| **  \001"
+
+/*/Picture/39:
+	Type = 1
+	Count = 2
+
+/*/Picture/39/cat-msgno:
+	Value = "%+K_IBM3101_39"
+
+/*/Picture/39/cat-deftxt:
+	Value = "\001DELETE-CHARACTER\001DEL                \001 \001QUOTE           \001ESC q              \001"
+
+/*/Picture/40:
+	Type = 1
+	Count = 2
+
+/*/Picture/40/cat-msgno:
+	Value = "%+K_IBM3101_40"
+
+/*/Picture/40/cat-deftxt:
+	Value = "\001DELETE-LINE     \001ALT-l              \001 \001REFRESH         \001ALT-y              \001"
+
+/*/Picture/41:
+	Type = 1
+	Count = 2
+
+/*/Picture/41/cat-msgno:
+	Value = "%+K_IBM3101_41"
+
+/*/Picture/41/cat-deftxt:
+	Value = "\001DO              \001ALT-x              \001 \001REPLACE         \001PF8                \001"
+
+/*/Picture/42:
+	Type = 1
+	Count = 2
+
+/*/Picture/42/cat-msgno:
+	Value = "%+K_IBM3101_42"
+
+/*/Picture/42/cat-deftxt:
+	Value = "\001END-LINE        \001ALT-z              \001 \001RESTORE         \001ALT-r              \001"
+
+/*/Picture/43:
+	Type = 1
+	Count = 2
+
+/*/Picture/43/cat-msgno:
+	Value = "%+K_IBM3101_43"
+
+/*/Picture/43/cat-deftxt:
+	Value = "\001ENTER           \001PRINT MSG          \001 \001RETURN          \001return             \001"
+
+/*/Picture/44:
+	Type = 1
+	Count = 2
+
+/*/Picture/44/cat-msgno:
+	Value = "%+K_IBM3101_44"
+
+/*/Picture/44/cat-deftxt:
+	Value = "\001ENTER           \001ALT-e              \001 \001RIGHT           \001ESC r              \001"
+
+/*/Picture/45:
+	Type = 1
+	Count = 2
+
+/*/Picture/45/cat-msgno:
+	Value = "%+K_IBM3101_45"
+
+/*/Picture/45/cat-deftxt:
+	Value = "\001EXECUTE         \001PRINT MSG          \001 \001SAVE            \001ESC s              \001"
+
+/*/Picture/46:
+	Type = 1
+	Count = 2
+
+/*/Picture/46/cat-msgno:
+	Value = "%+K_IBM3101_46"
+
+/*/Picture/46/cat-deftxt:
+	Value = "\001EXECUTE         \001ALT-e              \001 \001+SEARCH         \001PF3                \001"
+
+/*/Picture/47:
+	Type = 1
+	Count = 2
+
+/*/Picture/47/cat-msgno:
+	Value = "%+K_IBM3101_47"
+
+/*/Picture/47/cat-deftxt:
+	Value = "\001EXIT            \001ALT-d              \001 \001-SEARCH         \001PF6                \001"
+
+/*/Picture/48:
+	Type = 1
+	Count = 2
+
+/*/Picture/48/cat-msgno:
+	Value = "%+K_IBM3101_48"
+
+/*/Picture/48/cat-deftxt:
+	Value = "\001FONT            \001ESC o              \001 \001SET-TAB         \001ESC v              \001"
+
+/*/Picture/49:
+	Type = 1
+	Count = 2
+
+/*/Picture/49/cat-msgno:
+	Value = "%+K_IBM3101_49"
+
+/*/Picture/49/cat-deftxt:
+	Value = "\001FORMAT          \001ALT-f              \001 \001TAB             \001tab                \001"
+
+/*/Picture/50:
+	Type = 1
+	Count = 2
+
+/*/Picture/50/cat-msgno:
+	Value = "%+K_IBM3101_50"
+
+/*/Picture/50/cat-deftxt:
+	Value = "\001FUCTIONS        \001ESC h              \001 \001-TAB            \001ALT-t              \001"
+
+/*/Picture/51:
+	Type = 1
+	Count = 2
+
+/*/Picture/51/cat-msgno:
+	Value = "%+K_IBM3101_51"
+
+/*/Picture/51/cat-deftxt:
+	Value = "\001GO-TO           \001ALT-g              \001 \001TEXT-MARK       \001ESC t              \001"
+
+/*/Picture/52:
+	Type = 1
+	Count = 2
+
+/*/Picture/52/cat-msgno:
+	Value = "%+K_IBM3101_52"
+
+/*/Picture/52/cat-deftxt:
+	Value = "\001HELP            \001PF7                \001 \001USE             \001ALT-u              \001"
+
+/*/Picture/53:
+	Type = 1
+	Count = 2
+
+/*/Picture/53/cat-msgno:
+	Value = "%+K_IBM3101_53"
+
+/*/Picture/53/cat-deftxt:
+	Value = "\001HOME            \001home               \001 \001WINDOW          \001ALT-w              \001"
+
+/*/Picture/54:
+	Type = 1
+	Count = 2
+
+/*/Picture/54/cat-msgno:
+	Value = "%+K_IBM3101_54"
+
+/*/Picture/54/cat-deftxt:
+	Value = "\001INSERT-LINE     \001ALT-o              \001 \001ZOOM-IN         \001ALT-j              \001"
+
+/*/Picture/55:
+	Type = 1
+	Count = 2
+
+/*/Picture/55/cat-msgno:
+	Value = "%+K_IBM3101_55"
+
+/*/Picture/55/cat-deftxt:
+	Value = "\001INSERT-MODE     \001ESC i              \001 \001ZOOM-OUT        \001ALT-k              \001"
+
+/*/Picture/56:
+	Type = 1
+	Count = 2
+
+/*/Picture/56/cat-msgno:
+	Value = "%+K_IBM3101_56"
+
+/*/Picture/56/cat-deftxt:
+	Value = "\001LAST-ARG        \001ESC y              \001 \006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/*/Picture/57:
+	Value = "\006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/*/Picture/58:
+
+/*/Picture/59:
+	Type = 1
+	Count = 2
+
+/*/Picture/59/cat-msgno:
+	Value = "%+K_IBM3101_59"
+
+/*/Picture/59/cat-deftxt:
+	Value = "** The BREAK and QUIT characters can be changed using the \"stty\" command"
+
+/*/Picture/60:
+	Type = 1
+	Count = 2
+
+/*/Picture/60/cat-msgno:
+	Value = "%+K_IBM3101_60"
+
+/*/Picture/60/cat-deftxt:
+	Value = "   from the command line.  They can be viewed by typing \"stty -a\" on the"
+
+/*/Picture/61:
+	Type = 1
+	Count = 2
+
+/*/Picture/61/cat-msgno:
+	Value = "%+K_IBM3101_61"
+
+/*/Picture/61/cat-deftxt:
+	Value = "   command line; the BREAK character is labeled \"intr=\", the QUIT character"
+
+/*/Picture/62:
+	Type = 1
+	Count = 2
+
+/*/Picture/62/cat-msgno:
+	Value = "%+K_IBM3101_62"
+
+/*/Picture/62/cat-deftxt:
+	Value = "   is labeled \"quit\"."
+
+/*/Picture/63:
+	Type = 1
+	Count = 2
+
+/*/Picture/63/cat-msgno:
+	Value = "%+K_IBM3101_63"
+
+/*/Picture/63/cat-deftxt:
+	Value = ""
+

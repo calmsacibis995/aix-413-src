@@ -1,0 +1,253 @@
+* @(#)52        1.6  src/rspc/objclass/POWER/stok.add, pcitok, rspc41J, 9520A_all 5/16/95 00:08:00
+*
+*   COMPONENT_NAME: PCITOK
+*
+*   FUNCTIONS: Stanza
+*
+*   ORIGINS: 27
+*
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1995
+*   All Rights Reserved
+*   Licensed Materials - Property of IBM
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*     Predefined Device Stanza(s) for PCI Tokenring Device Driver
+*
+
+PdDv:
+	type 		= "14101800"
+	class 		= "adapter"
+	subclass 	= "pci"
+	prefix 		= "tok"
+* pci ids are byte reversed
+	devid 		= "0x14101800"
+	base 		= "0"
+	has_vpd 	= "1"
+	detectable 	= "1"
+	chgstatus 	= "0"
+	bus_ext 	= "0"
+	fru 		= "1"
+	led 		= "0x0750"
+	setno 		= "28"
+	msgno 		= "39"
+	catalog 	= "devices_tok.cat"
+	DvDr 		= "pci/stokdd"
+	Define 		= "/usr/lib/methods/define_rspc"
+	Configure 	= "/usr/lib/methods/cfgstok"
+	Change 		= "/usr/lib/methods/chgtok"
+	Unconfigure 	= "/usr/lib/methods/ucfgtok"
+	Undefine 	= "/usr/lib/methods/undefine"
+	Start 		= ""
+	Stop 		= ""
+	inventory_only 	= "0"
+	uniquetype 	= "adapter/pci/14101800"
+
+PdCn:
+	uniquetype 	= "adapter/pci/14101800"
+	connkey 	= "tok"
+	connwhere 	= ""
+
+* "busio" - Hardware attribute
+* Value set by system and not modifiable by user.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+        uniquetype      = "adapter/pci/14101800"
+        attribute       = "busio"
+        deflt           = "0"
+        values          = "0x0-0x3ffffe00,0x100"
+        width           = "0x100"
+        type            = "O"
+        generic         = "D"
+        rep             = "nr"
+        nls_index       = "3"
+
+* "busintr" - Hardware attribute
+* Value set by system and not modifiable by user.
+* The interrupt level for this device is shareable with other devices.
+* Displayable with "lsattr" command.
+* No help text.
+
+PdAt:
+        uniquetype      = "adapter/pci/14101800"
+        attribute       = "busintr"
+        deflt           = ""
+        values          = ""
+        width           = ""
+        type            = "I"
+        generic         = "D"
+        rep             = "nl"
+        nls_index       = "4"
+
+* "xmt_que_size" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/14101800"
+        attribute       = "xmt_que_size"
+        deflt           = 96
+        values          = "32-160,1"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "nr"
+        nls_index       = 7
+
+* "rx_que_size" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/14101800"
+        attribute       = "rx_que_size"
+        deflt           = 32
+        values          = "32-160,1"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "nr"
+        nls_index       = 40
+
+* "p_xmt_que_size" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/14101800"
+        attribute       = "p_xmt_que_size"
+        deflt           = 32
+        values          = "32-160,1"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "nr"
+        nls_index       = 41
+
+* "ring_speed" - Device attribute
+* value of 0 indicates autosense
+* Value modifiable by user.
+* Displayable with "lsattr" command.
+* Help text available.
+* Value also stored and updated in NVRAM
+PdAt:
+        uniquetype      = "adapter/pci/14101800"
+        attribute       = "ring_speed"
+        deflt           = "autosense"
+        values          = "4,16,autosense"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "sl"
+        nls_index       = 12
+
+* "attn_mac" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/14101800"
+        attribute       = "attn_mac"
+        deflt           = "no"
+        values          = "yes,no"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "sl"
+        nls_index       = 10
+
+* "beacon_mac" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/14101800"
+        attribute       = "beacon_mac"
+        deflt           = "no"
+        values          = "yes,no"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "sl"
+        nls_index       = 15
+
+* "use_alt_addr" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/14101800"
+        attribute       = "use_alt_addr"
+        deflt           = "no"
+        values          = "yes,no"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "sl"
+        nls_index       = 13
+
+* "alt_addr" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/14101800"
+        attribute       = "alt_addr"
+        deflt           = "0x"
+        values          = ""
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "s"
+        nls_index       = 14
+
+* "cfg_ring_speed" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Not displayable with "lsattr" command.
+* No help text.
+* Value also stored and updated in NVRAM
+PdAt:
+        uniquetype = "adapter/pci/14101800"
+        attribute = "cfg_ring_speed"
+        deflt = "4"
+        values = "4,16"
+        width = ""
+        type = "R"
+        generic = "U"
+        rep = "sl"
+        nls_index = "24"
+
+* "priority_tx" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype = "adapter/pci/14101800"
+        attribute = "priority_tx"
+        deflt = "no"
+        values = "yes,no"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = "23"
+
+* "addl_dvdr" - Configurable attribute
+* Value modifiable through command line only.
+* Not displayable with "lsattr" command.
+* No help text.
+* This attribute is the name of the method to be executed to configure or
+* unconfigure an additional driver in the kernel for this device.
+PdAt:
+        uniquetype = "adapter/pci/14101800"
+        attribute = "addl_dvdr"
+        deflt = "/usr/lib/methods/cfgdmxtok"
+        values = ""
+        width = ""
+        type = "R"
+        generic = "U"
+        rep = "s"
+        nls_index = "0"
+

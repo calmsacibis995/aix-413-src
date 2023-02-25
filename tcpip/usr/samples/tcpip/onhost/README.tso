@@ -1,0 +1,208 @@
+/*static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/README.tso, tcpip, tcpip411, GOLD410 6/14/91 15:57:32";
+ *
+ * COMPONENT_NAME: TCPIP readme.tso
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1986, 1988, 1989
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ * RISC System/6000 is a trademark of International Business Machines
+   Corporation.
+*/
+ 
+         I N S T A L L A T I O N    I N S T R U C T I O N S
+
+               onhost version 1.1, MVS/TSO component
+               AIXwhat is @(#) readme.tso 1.5 PASC 1.5
+ 
+Onhost consists of three parts: the part which executes on AIX, the
+part which executes on VM/CMS, and the part which executes on MVS/TSO.
+These instructions cover installation of the MVS/TSO component.  All
+of the required files are expected to be present in an AIX directory.
+ 
+ MVS/TSO INSTALLATION
+ 
+   1.  You must logon to your TSO id and allocate a partitioned file
+       to contain the onhost commands.  To do this you may follow these
+       steps;
+ 
+       If you have the prompt "***" at the bottom of your screen,
+       press your enter key to go to the next screen.
+ 
+       If you have the prompt "READY" as the last thing on your screen,
+       enter the command "ISPF".
+ 
+       If you have an ISPF menu (It should say so somewhere on the
+       screen) you can proceed to step 2.
+ 
+       If you have some other screen, you might try pressing the clear
+       screen key.  If that presents you with new prompts try entering
+       the command "END".
+ 
+       If you still do not have the "READY" prompt above, ask for help
+       on getting to ISPF, then start at step 2.
+ 
+   2.  The partitioned file you are going to allocate must be compatible
+       with other CLIST files already on your system. To identify these
+       files, select screen 6, and enter on that screen the following
+       command;
+ 
+       COMMAND ==> lista status sysnames
+ 
+       You will be presented with a list of file names and DDnames.
+       Press enter at the "***" prompt, until you see the DDname
+       SYSPROC. Copy the file name from the line above the DDname and
+       continue to press enter until you are presented with the command
+       entry screen again.
+ 
+   3.  To gather the attribute information on this file, enter the
+       following command;
+ 
+       COMMAND ==> =3.2
+ 
+       You will be presented with a screen with a prompt about half
+       way down where you will enter the file name surrounded by single
+       quotes;
+ 
+       OTHER PARTITIONED OR SEQUENTIAL DATA SET:
+          DATA SET NAME ===> 'SYS1.CMDPROC...'   (press enter)
+ 
+       You will now be presented with a screen containing information
+       about the file which ISPF will remember for you.  Pressing PF3
+       should return you the the screen above.  Now enter the name of
+       the file you want to allocate and select the allocate option by;
+ 
+       OPTION ==> A                (for allocate, press enter)
+ 
+ 
+       OTHER PARTITIONED OR SEQUENTIAL DATA SET:
+          DATA SET NAME ===> 'SYS1.ONHOST.TSOEXEC'
+ 
+       You will now get a screen showing you all the things remembered
+       by ISPF.  Press enter again.
+ 
+       You should get a message in the upper right of the next screen
+       indicating DATASET ALLOCATED.  If not try again changing the name
+       of the dataset to one that begins with your userid.
+ 
+       If you still do not get confirmation that the file is allocated,
+       try removing the volume id on the second screen by positioning
+       the cursor on the field and spacing out the old one.
+ 
+       If allocation still fails, seek help.
+ 
+       If the file is allocated, you should exit ISPF (=x command).
+ 
+   4.  Move the *.tso files to TSO and install them in a PDS.
+       You might begin a dialogue with FTP to transfer the REXX
+       programs to the TSO environment;
+ 
+         FTP
+       Check for the response as before;
+                 COMMAND FTP NOT FOUND
+ 
+         login id              - to login to AIX system
+         password
+         CD working directory  - to where onhost resides
+                               - to allocate to your file above
+         MGET *.tso            - should load members to PDS
+         QUIT                  - to close the connection and exit
+ 
+   5.  Install the Onhost commands for your TSO id by logging on and
+       entering the following command;
+ 
+       CONCATD DA('sys1.onhost.tsoexec') F(SYSPROC) SHR
+ 
+         WHERE: sys1.onhost.tsoexec is the name of the PDS that contains
+       the onhost commands.
+ 
+   6.  Execute the following command;
+ 
+       ONHOSTLD
+ 
+         If the response is;
+            RetCode:00000000; OnHost End of Command Flag
+         all is well, so far, and continue to the next step
+ 
+         If the response is simply;
+            READY   (With no end of command flag)
+         you probably have the prototype REXX installed, which will not
+         work with onhost.
+ 
+         However, If the response tells you that REXX is not available
+         then you either don't have the needed REXX interpreter on your
+         system or it may have been improperly installed.  You should
+         contact your systems programmer, since REXX must be available
+         for Onhost to work.
+ 
+   7.  Execute the following command;
+ 
+       ONHOST DATE
+ 
+         The reply should be something like;
+                Tue Aug 30 15:15:35 PDT 1988
+                RetCode:00000000; OnHost End of Command Flag
+         if this is so, then Onhost should function correctly on your
+       system.  Now try a few other commands to be sure.
+ 
+       ONHOST WHO    :should give you a list of TSO users followed by
+                RetCode:00000000; OnHost End of Command Flag
+       ONHOST LS -L  :should give you a list of files followed by
+                RetCode:00000000; OnHost End of Command Flag
+ 
+ 
+   8.  Evaluate the following to see if you need to customize the REXX
+       code contained in onhost.tso;
+ 
+       a. Timezone is set to the Pacific time zones (PDT & PST) and the
+       cutover dates (from & to Daylight Savings Time) are entered for
+       fall 1988 and spring 1989. You may need to modify to support
+       your local timezone.
+ 
+       b. Offline files are identified by a hex code that may vary from
+       one site to another. You can identify these codes in an IDCAMS
+       catalog listing. Scan the REXX onhost code for the word "offline"
+       to locate the area of the needed change.
+ 
+       c. Disk file space calculations are based upon a 3380 disk drive.
+       If you have other drives, you will need to customize the Onhost
+       REXX code near every occurrence of the number 47476.
+ 
+       d. If your users are transferring large files (as opposed to
+       small source files) you may wish to change the DEFAULT space
+       allocation found at the beginning of the onhost exec.
+ 
+   9.  To make Onhost available to other users, concatenate the
+       following JCL statement in the logon procedure to be used
+       users of onhost;
+ 
+       //SYSPROC  DD  DSN=sys1.onhost.tsoexec,DISP=SHR
+ 
+         WHERE: sys1.onhost.tsoexec is the name of the PDS you created.
+ 
+   or
+       Add the following command to a CLIST that will be executed upon
+       logon to TSO by selected users who need access to Onhost.
+ 
+       CONCATD DA('sys1.onhost.tsoexec') F(SYSPROC) SHR
+ 
+  10.  This completes installation of the MVS/TSO onhost component.

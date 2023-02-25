@@ -1,0 +1,37 @@
+/* @(#)85        1.1  src/packages/stacklist/hcon.master, pkg, pkg41J, 9515A_all 4/5/95 11:54:08                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for HCON LPP
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+hcon
+hcon.terminfo.data
+hcon.loc
+hcon.info.en_US
+hcon.msg.en_US
+hcon.msg.de_DE
+hcon.msg.es_ES
+hcon.msg.fr_FR
+hcon.msg.it_IT
+hcon.msg.ja_JP
+hcon.msg.ko_KR
+hcon.msg.nl_BE
+hcon.msg.sv_SE
+hcon.msg.zh_TW
+hcon.msg.De_DE
+hcon.msg.En_US
+hcon.msg.Es_ES
+hcon.msg.Fr_FR
+hcon.msg.It_IT
+hcon.msg.Ja_JP
+hcon.msg.Nl_BE
+hcon.msg.Sv_SE

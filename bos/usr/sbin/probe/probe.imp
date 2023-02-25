@@ -1,0 +1,18 @@
+#!/unix
+* @(#)16	1.1  src/bos/usr/sbin/probe/probe.imp, cmdfs, bos411, 9428A410j 5/9/91 03:23:35
+* 
+* COMPONENT_NAME: (CMDFS) commands that deal with the file system
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1991
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*************************************************************************
+*
+* logredo needs this system call to service hanfs records
+* probe will get it from nfs if it's loaded
+*
+nfs_dupsave	syscall

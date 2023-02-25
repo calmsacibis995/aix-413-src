@@ -1,0 +1,41 @@
+# @(#)31        1.3  src/rspc/objclass/adapter.pci.14101c00.add, pwrsysx, rspc41J, 9510A 3/8/95 05:16:45
+*
+*  COMPONENT_NAME: PWRSYSX
+*
+*  FUNCTIONS: Power Management Kernel Extension Config
+*
+*  ORIGINS: 27
+*
+*  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+*  All Rights Reserved
+*  Licensed Materials - Property of IBM
+*
+*  US Government Users Restricted Rights - Use, duplication or
+*  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+PdDv:
+          type = "14101c00"
+          class = "adapter"
+          subclass = "pci"
+          prefix = "pmc"
+          devid = "0x14101c00"
+          base = 0
+          has_vpd = 0
+          detectable = 1
+          chgstatus = 0
+          bus_ext = 0
+          fru = 0
+          led = 744
+          setno = 2
+          msgno = 1
+          catalog = "pmctrl.cat"
+          DvDr = ""
+          Define = "/usr/lib/methods/define_rspc"
+          Configure = "/usr/lib/methods/cfgpmc"
+          Change = ""
+          Unconfigure = "/usr/lib/methods/ucfgpmc"
+          Undefine = "/usr/lib/methods/undefine"
+          Start = ""
+          Stop = ""
+          uniquetype = "adapter/pci/14101c00"

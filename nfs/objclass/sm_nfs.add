@@ -1,0 +1,2774 @@
+# @(#)02	1.57  src/nfs/objclass/sm_nfs.add, nfsinst, nfs411, GOLD410 5/10/94 17:27:03
+# COMPONENT_NAME: (NFSINST) Network File System Install
+#
+# FUNCTIONS:
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+
+#####################  menu opt for nfs  #############################
+
+sm_menu_opt:
+	id		= "commo"
+	id_seq_num	= "020"
+	next_id		= "nfs_menus"
+	text            = "NFS"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 1
+	next_type	= "m"
+	alias		= "n"
+	help_msg_id	= 1831005
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "manfs"
+	id_seq_num	= "030"
+	next_id		= "manfs_to_nfs"
+	text            = "Network File System (NFS)"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 4
+	next_type	= "m"
+	alias		= "n"
+	help_msg_id	= 1831005
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "manfs_to_nfs"
+	id_seq_num	= "030"
+	next_id		= "nfs_menus"
+	text            = "NFS"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 1
+	next_type	= "m"
+	alias		= "y"
+	help_msg_id	= 1831005
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "NFS"
+	id_seq_num	= "020"
+	next_id		= "nfs_menus"
+	text            = "NFS"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 2
+	next_type	= "m"
+	alias		= "y"
+	help_msg_id	= 1831005
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "nfs"
+	id_seq_num	= "020"
+	next_id		= "nfs_menus"
+	text            = "NFS"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 2
+	next_type	= "m"
+	alias		= "y"
+	help_msg_id	= 1831005
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "automount"
+	id_seq_num	= "040"
+	next_id		= "mkautomnt"
+	text            = "Start Automounter"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 2
+	next_type	= "d"
+	alias		= "y"
+	help_msg_id	= 1831075
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "nfs_menus"
+	id_seq_num	= "010"
+	next_id		= "nfs_to_tcpip"
+	text            = "Configure TCP/IP (If Not Already Configured)"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 3
+	next_type	= "m"
+	alias		= "n"
+	help_msg_id	= 1831015
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "nfs_to_tcpip"
+	id_seq_num	= "010"
+	next_id		= "tcpip"
+	text            = "Configure TCP/IP (If Not Already Configured)"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 3
+	next_type	= "m"
+	alias		= "y"
+	help_msg_id	= 1831015
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "nfs_menus"
+	id_seq_num	= "020"
+	next_id		= "_nfs"
+	text            = "Network File System (NFS)"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 4
+	next_type	= "m"
+	alias		= "n"
+	help_msg_id	= 1831005
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "_nfs"
+	id_seq_num	= "010"
+	next_id		= "nfsconfigure"
+	text            = "Configure NFS on This System"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 5
+	next_type	= "m"
+	alias		= "n"
+	help_msg_id	= 1831025
+	help_msg_loc	= ""
+
+#########################################################################
+
+sm_menu_opt:
+	id		= "_nfs"
+	id_seq_num	= "020"
+	next_id		= "mknfsexp"
+	text            = "Add a Directory to Exports List"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 6
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831030
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "_nfs"
+	id_seq_num	= "030"
+	next_id		= "chnfsexp"
+	text            = "Change / Show Attributes of an Exported Directory"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 7
+	next_type	= "n"
+	alias		= "n"
+	help_msg_id	= 1831110
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "_nfs"
+	id_seq_num	= "040"
+	next_id		= "rmnfsexp"
+	text            = "Remove a Directory from Exports List"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 8
+	next_type	= "n"
+	alias		= "n"
+	help_msg_id	= 1831115
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "_nfs"
+	id_seq_num	= "050"
+	next_id		= "mknfsmnt"
+	text            = "Add a File System for Mounting"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 9
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831045
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "_nfs"
+	id_seq_num	= "060"
+	next_id		= "chnfsmnt"
+	text            = "Change / Show Attributes of an NFS File System"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 26
+	next_type	= "n"
+	alias		= "n"
+	help_msg_id	= 1831050
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "_nfs"
+	id_seq_num	= "070"
+	next_id		= "rmnfsmnt"
+	text            = "Remove an NFS File System"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 11
+	next_type	= "n"
+	alias		= "n"
+	help_msg_id	= 1831055
+	help_msg_loc	= ""
+
+###########################################################
+sm_menu_opt:
+	id		= "nfsconfigure"
+	id_seq_num	= "010"
+	next_id		= "mknfs"
+	text            = "Start NFS"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 12
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831363
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "nfsconfigure"
+	id_seq_num	= "020"
+	next_id		= "rmnfs"
+	text            = "Stop NFS"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 13
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831364
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "nfsconfigure"
+	id_seq_num	= "030"
+	next_id		= "chnfs"
+	text            = "Change Number of nfsd & biod Daemons"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 14
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831366
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "nfsconfigure"
+	id_seq_num	= "040"
+	next_id		= "mkautomnt"
+	text            = "Start Automounter"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 15
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831075
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "nfsconfigure"
+	id_seq_num	= "050"
+	next_id		= "rmautomnt"
+	text            = "Stop Automounter"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 16
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831075
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "nfs_startup"
+	id_seq_num	= "010"
+	next_id		= "mknfs"
+	text            = "Start NFS"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 12
+	next_type	= "d"
+	alias		= ""
+	help_msg_id	= 00001
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "nfs_startup"
+	id_seq_num	= "020"
+	next_id		= "mknfsmnt"
+	text            = "Add a File System for Mounting"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 9
+	next_type	= "d"
+	alias		= ""
+	help_msg_id	= 1831045
+	help_msg_loc	= ""
+
+######################################################
+
+sm_cmd_hdr:
+	id		= "mknfs"
+	option_id	= "_nfs.mknfs"
+	has_name_select	= "n"
+	name		= "Start NFS"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 17
+	cmd_to_exec	= "/usr/sbin/mknfs"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831363
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "rmnfs"
+	option_id	= "_nfs.rmnfs"
+	has_name_select	= "n"
+	name		= "Stop NFS"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 18
+	cmd_to_exec	= "/usr/sbin/rmnfs"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831364
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "chnfs"
+	option_id	= "_nfs.chnfs"
+	has_name_select	= "n"
+	name		= "Change Number of nfsd & biod Daemons"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 19
+	cmd_to_exec	= "/usr/sbin/chnfs"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831366
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "mknfsexp"
+	option_id	= "_nfs.mknfsexp"
+	has_name_select	= "n"
+	name		= "Add a Directory to Exports List"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 20
+	cmd_to_exec	= "/usr/sbin/mknfsexp"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831030
+	help_msg_loc	= ""
+
+sm_name_hdr:
+	id		= "chnfsexp"
+	next_id		= "chnfsexp.dialog"
+	option_id	= "_nfs.chnfsexp.select"
+	name		= "Change / Show Attributes of an Exported Directory"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 21
+	type		= "j"
+	ghost		= ""
+	cmd_to_classify	= ""
+	cmd_to_classify_postfix = ""
+	raw_field_name	= ""
+	cooked_field_name = ""
+	next_type	= "d"
+	help_msg_id	= 1831110
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "chnfsexp.dialog"
+	option_id	= "_nfs.chnfsexp"
+	has_name_select	= ""
+	name		= "Change Attributes of an Exported Directory"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 22
+	cmd_to_exec	= "/usr/sbin/chnfsexp"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= "/usr/sbin/lsnfsexp"
+	cmd_to_discover_postfix	= "-c _rawname"
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831110
+	help_msg_loc	= ""
+
+sm_name_hdr:
+	id		= "rmnfsexp"
+	next_id		= "rmnfsexp.dialog"
+	option_id	= "_nfs.rmnfsexp.select"
+	name		= "Remove a Directory from Exports List"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 23
+	type		= "j"
+	ghost		= ""
+	cmd_to_classify	= ""
+	cmd_to_classify_postfix = ""
+	raw_field_name	= ""
+	cooked_field_name = ""
+	next_type	= "d"
+	help_msg_id	= 1831115
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "rmnfsexp.dialog"
+	option_id	= "_nfs.rmnfsexp"
+	has_name_select	= "n"
+	name		= "Remove a Directory from Exports List"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 24
+	cmd_to_exec	= "/usr/sbin/rmnfsexp"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831115
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "mknfsmnt"
+	option_id	= "_nfs.mknfsmnt"
+	has_name_select	= "n"
+	name		= "Add a File System for Mounting"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 25
+	cmd_to_exec	= "/usr/sbin/mknfsmnt"
+	ask		= "n"
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831045
+	help_msg_loc	= ""
+
+sm_name_hdr:
+	id		= "chnfsmnt"
+	next_id		= "chnfsmnt.dialog"
+	option_id	= "_nfs.chnfsmnt.select"
+	name		= "Change / Show Attributes of an NFS File System"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 26
+	type		= "j"
+	ghost		= ""
+	cmd_to_classify	= ""
+	cmd_to_classify_postfix = ""
+	raw_field_name	= ""
+	cooked_field_name = ""
+	next_type	= "d"
+	help_msg_id	= 1831050
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "chnfsmnt.dialog"
+	option_id	= "_nfs.chnfsmnt"
+	has_name_select	= "n"
+	name		= "Change / Show Attributes of an NFS File System"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 27
+	cmd_to_exec	= "/usr/sbin/chnfsmnt"
+	ask		= "n"
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= "/usr/sbin/lsnfsmnt"
+	cmd_to_discover_postfix	= "-c _rawname"
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831050
+	help_msg_loc	= ""
+
+sm_name_hdr:
+	id		= "rmnfsmnt"
+	next_id		= "rmnfsmnt.dialog"
+	option_id	= "_nfs.rmnfsmnt.select"
+	name		= "Remove an NFS File System"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 28
+	type		= "j"
+	ghost		= ""
+	cmd_to_classify	= ""
+	cmd_to_classify_postfix = ""
+	raw_field_name	= ""
+	cooked_field_name = ""
+	next_type	= "d"
+	help_msg_id	= 1831055
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "rmnfsmnt.dialog"
+	option_id	= "_nfs.rmnfsmnt"
+	has_name_select	= "n"
+	name		= "Remove an NFS File System"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 29
+	cmd_to_exec	= "/usr/sbin/rmnfsmnt"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831055
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "mkautomnt"
+	option_id	= "_nfs.mkautomnt"
+	has_name_select	= "n"
+	name		= "Start Automounter"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 30
+	cmd_to_exec	= "/usr/sbin/automount"
+	ask		= "n"
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831075
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "rmautomnt"
+	option_id	= ""
+	has_name_select	= "n"
+	name		= "Stop Automounter"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 31
+	cmd_to_exec	= "kill `ps -ea | grep automoun | awk '{print $1}'` 2>/dev/null"
+	ask		= "n"
+	exec_mode	= ""
+	ghost		= "y"
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831075
+	help_msg_loc	= ""
+
+#####		mknfs - start nfs on this machine. (Maybe on IPL, etc)	#####
+sm_cmd_opt:
+	id		= "_nfs.mknfs"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "START NFS now, on system restart or both"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 32
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,now,restart"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 274
+	aix_values	= "-B,-N,-I"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+#####	rmnfs - remove NFS from this machine. (Maybe on IPL, etc)	#####
+
+sm_cmd_opt:
+	id		= "_nfs.rmnfs"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "STOP NFS now, system restart or both"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 33
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "now,restart,both"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 275
+	aix_values	= "-N,-I,-B"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+#####		chnfs - change the number of daemons for NFS	#####
+
+sm_cmd_opt:
+	id		= "_nfs.chnfs"
+	id_seq_num	= "01"
+	disc_field_name	= "nfsd"
+	name		= "NUMBER of nfsd (Server) daemons to run"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 34
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-n "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831175
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfs"
+	id_seq_num	= "02"
+	disc_field_name	= "biod"
+	name		= "NUMBER of biod (Client) daemons to run"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 35
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-b "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831180
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfs"
+	id_seq_num	= "03"
+	disc_field_name	= ""
+	name		= "CHANGE number now, system restart or both"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 36
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,now,restart"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 274
+	aix_values	= "-B,-N,-I"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+#####		mknfsexp - export a file system for NFS   #####
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsexp"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "PATHNAME of directory to export"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 37
+	op_type		= ""
+	entry_type	= "f"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-d "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831190
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsexp"
+	id_seq_num	= "02"
+	disc_field_name	= ""
+	name		= "MODE to export directory"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 38
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-t "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "read-write,read-only,read-mostly"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 276
+	aix_values	= "rw,ro,rm"
+	help_msg_id	= 1831195
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsexp"
+	id_seq_num	= "03"
+	disc_field_name	= ""
+	name		= "HOSTS & NETGROUPS allowed client access"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 42
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-c "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831215
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsexp"
+	id_seq_num	= "04"
+	disc_field_name	= ""
+	name		= "Anonymous UID"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 40
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-a "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= "-2"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "-2"
+	help_msg_id	= 1831205
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsexp"
+	id_seq_num	= "05"
+	disc_field_name	= ""
+	name		= "HOSTS allowed root access"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 41
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-r "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831210
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsexp"
+	id_seq_num	= "06"
+	disc_field_name	= ""
+	name		= "HOSTNAME list. If exported read-mostly"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 39
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-h "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "y"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831200
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsexp"
+	id_seq_num	= "07"
+	disc_field_name	= ""
+	name		= "Use SECURE option?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 43
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "n"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "no,yes"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 277
+	aix_values	= "-n,-s"
+	help_msg_id	= 1831220
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsexp"
+	id_seq_num	= "08"
+	disc_field_name	= ""
+	name		= "EXPORT directory now, system restart or both"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 44
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsexp"
+	id_seq_num	= "09"
+	disc_field_name	= ""
+	name		= "PATHNAME of alternate Exports file"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 211
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-f"
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831226
+	help_msg_loc	= ""
+#####		chnfsexp - change the attributes of an exported file system ##
+#####		chnfsexp - change the attributes of an exported file system ##
+sm_cmd_opt:
+	id		= "_nfs.chnfsexp.select"
+	id_seq_num	= "0"
+	disc_field_name	= ""
+	name		= "PATHNAME of exported directory"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 45
+	op_type		= "l"
+	entry_type	= "f"
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= "/usr/sbin/lsnfsexp | cut -d\" \" -f1"
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831190
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsexp"
+	id_seq_num	= "01"
+	disc_field_name	= "_rawname"
+	name		= "PATHNAME of Directory to Export"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 46
+	op_type		= ""
+	entry_type	= "n"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-d "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831190
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsexp"
+	id_seq_num	= "02"
+	disc_field_name	= "type"
+	name		= "MODE to export directory"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 47
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-t "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "read-write,read-only,read-mostly"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 276
+	aix_values	= "rw,ro,rm"
+	help_msg_id	= 1831195
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsexp"
+	id_seq_num	= "03"
+	disc_field_name	= "access"
+	name		= "HOSTS & NETGROUPS allowed client access"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 51
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-c "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831215
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsexp"
+	id_seq_num	= "04"
+	disc_field_name	= "anonuid"
+	name		= "Anonymous UID"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 49
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-a "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= "-2"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "-2"
+	help_msg_id	= 1831205
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsexp"
+	id_seq_num	= "05"
+	disc_field_name	= "root"
+	name		= "HOSTS allowed root access"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 50
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-r "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831210
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsexp"
+	id_seq_num	= "06"
+	disc_field_name	= "mostly"
+	name		= "HOSTNAME list. If exported read-mostly"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 48
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-h "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831200
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsexp"
+	id_seq_num	= "07"
+	disc_field_name	= "secure"
+	name		= "Use SECURE OPTION?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 52
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "n"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "no,yes"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 277
+	aix_values	= "-n,-s"
+	help_msg_id	= 1831220
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsexp"
+	id_seq_num	= "08"
+	disc_field_name	= ""
+	name		= "CHANGE export now, system restart or both"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 53
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsexp"
+	id_seq_num	= "09"
+	disc_field_name	= ""
+	name		= "PATHNAME of alternate Exports file"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 211
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-f"
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831226
+	help_msg_loc	= ""
+#####		rmnfsexp - remove a file system from the exports list ####
+#####		rmnfsexp - remove a file system from the exports list ####
+sm_cmd_opt:
+	id		= "_nfs.rmnfsexp.select"
+	id_seq_num	= "0"
+	disc_field_name	= ""
+	name		= "PATHNAME of exported directory to be removed"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 54
+	op_type		= "l"
+	entry_type	= "f"
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= "/usr/sbin/lsnfsexp -a" 
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831190
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.rmnfsexp"
+	id_seq_num	= "01"
+	disc_field_name	= "_rawname"
+	name		= "PATHNAME of directory to be removed \n from the NFS exports list"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 55
+	op_type		= ""
+	entry_type	= "f"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-d "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831190
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.rmnfsexp"
+	id_seq_num	= "02"
+	disc_field_name	= ""
+	name		= "REMOVE export now, system restart or both"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 56
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+
+sm_cmd_opt:
+	id		= "_nfs.rmnfsexp"
+	id_seq_num	= "03"
+	disc_field_name	= ""
+	name		= "PATHNAME of alternate Exports file"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 211
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-f "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831226
+	help_msg_loc	= ""
+
+#####		mknfsmnt - mount a file system using nfs   	#####
+#####		mknfsmnt - mount a file system using nfs   	#####
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "PATHNAME of mount point"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 57
+	op_type		= ""
+	entry_type	= "f"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-f "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831290
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "02"
+	disc_field_name	= ""
+	name		= "PATHNAME of remote directory"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 58
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-d "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831295
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "03"
+	disc_field_name	= ""
+	name		= "HOST where remote directory resides"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 59
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-h "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831300
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "04"
+	disc_field_name	= ""
+	name		= "Mount type NAME"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 60
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-m "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831305
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "05"
+	disc_field_name	= ""
+	name		= "Use SECURE mount option?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 61
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "no,yes"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 277
+	aix_values	= "-n,-s"
+	help_msg_id	= 1831310
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "06"
+	disc_field_name	= ""
+	name		= "MOUNT now, add entry to /etc/filesystems or both?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 62
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "now,both,filesystems"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 279
+	aix_values	= "-N,-B,-I"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "07"
+	disc_field_name	= ""
+	name		= "/etc/filesystems entry will mount the directory\n on system RESTART."
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 212
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "no,yes"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 277
+	aix_values	= "-a,-A"
+	help_msg_id	= 1831367
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "08"
+	disc_field_name	= ""
+	name		= "MODE for this NFS file system"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 63
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-t "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "read-write,read-only"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 280
+	aix_values	= "rw,ro"
+	help_msg_id	= 1831320
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "09"
+	disc_field_name	= ""
+	name		= "ATTEMPT mount in background or foreground"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 64
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-w "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "background,foreground"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 281
+	aix_values	= "bg,fg"
+	help_msg_id	= 1831325
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "10"
+	disc_field_name	= ""
+	name		= "NUMBER of times to attempt mount"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 65
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-r "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831330
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "11"
+	disc_field_name	= ""
+	name		= "Buffer SIZE for read"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 66
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-b "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831335
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "12"
+	disc_field_name	= ""
+	name		= "Buffer SIZE for writes"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 67
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-c "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831340
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "13"
+	disc_field_name	= ""
+	name		= "NFS TIMEOUT. In tenths of a second"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 68
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-o "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831345
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "14"
+	disc_field_name	= ""
+	name		= "Internet port NUMBER for server"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 69
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-P "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831350
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "15"
+	disc_field_name	= ""
+	name		= "Mount file system soft or hard"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 70
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "hard,soft"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 282
+	aix_values	= "-H,-S"
+	help_msg_id	= 1831355
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "16"
+	disc_field_name	= ""
+	name		= "Allow keyboard INTERRUPTS on hard mounts?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 71
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= ""
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-E,-e"
+	help_msg_id	= 1831356
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "17"
+	disc_field_name	= ""
+	name		= "Minimum TIME, in seconds, for holding\n attribute cache after file modification"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 72
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-u "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "3"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "3"
+	help_msg_id	= 1831357
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "18"
+	disc_field_name	= ""
+	name		= "Maximum TIME, in seconds, for holding\n attribute cache after file modification"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 73
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-U "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "60"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "60"
+	help_msg_id	= 1831358
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "19"
+	disc_field_name	= ""
+	name		= "Minimum TIME, in seconds, for holding\n attribute cache after directory modification"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 74
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-v "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "30"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "30"
+	help_msg_id	= 1831359
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "20"
+	disc_field_name	= ""
+	name		= "Maximum TIME, in seconds, for holding\n attribute cache after directory modification"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 75
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-V "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "60"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "60"
+	help_msg_id	= 1831361
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "21"
+	disc_field_name	= ""
+	name		= "Minimum & Maximum TIME, in seconds, for\n holding attribute cache after any modification"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 76
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-T "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831362
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "22"
+	disc_field_name	= ""
+	name		= "The Maximum NUMBER of biod daemons allowed\n to work on this file system"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 77
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-p "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "6"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "6"
+	help_msg_id	= 1831180
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "23"
+	disc_field_name	= ""
+	name		= "Allow execution of SUID and sgid programs\n in this file system?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 214
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-Y,-y"
+	help_msg_id	= 1831373
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "24"
+	disc_field_name	= ""
+	name		= "Allow DEVICE access via this mount?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 215
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-Z,-z"
+	help_msg_id	= 1831374
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mknfsmnt"
+	id_seq_num	= "25"
+	disc_field_name	= ""
+	name		= "Server supports long DEVICE NUMBERS?"
+	name_msg_file	= "smit.cat" 
+	name_msg_set	= 39
+	name_msg_id	= 216
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-X,-x"
+	help_msg_id	= 1831376
+	help_msg_loc	= ""
+#####		chnfsmnt - change the attributes of a mounted file system ##
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt.select"
+	id_seq_num	= "0"
+	disc_field_name	= ""
+	name		= "PATHNAME of NFS directory"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 78
+	op_type		= "l"
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= "/usr/sbin/lsnfsmnt -p | egrep \^/ | cut -d\"|\" -f1"
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831290
+	help_msg_loc	= ""
+
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "01"
+	disc_field_name	= "_rawname"
+	name		= "PATHNAME of mount point"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 79
+	op_type		= ""
+	entry_type	= "n"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-f "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831290
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "02"
+	disc_field_name	= "remotepath"
+	name		= "PATHNAME of Remote Directory"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 80
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-d "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831295
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "03"
+	disc_field_name	= "nodename"
+	name		= "HOST where remote directory resides"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 81
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-h "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831300
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "04"
+	disc_field_name	= "type"
+	name		= "Mount type NAME"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 82
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-m "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831305
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "05"
+	disc_field_name	= "secure"
+	name		= "Use SECURE mount option?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 83
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "no,yes"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 277
+	aix_values	= "-n,-s"
+	help_msg_id	= 1831310
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "06"
+	disc_field_name	= ""
+	name		= "Remount file system now,\n update /etc/filesystems or both?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 84
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,filesystems,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 284
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "07"
+	disc_field_name	= "auto"
+	name		= "/etc/filesystems entry will mount the directory\n on system RESTART."
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 213
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "no,yes"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 277
+	aix_values	= "-a,-A"
+	help_msg_id	= 1831367
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "08"
+	disc_field_name	= "readtype"
+	name		= "MODE for this NFS file system"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 85
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-t "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "read-write,read-only"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 280
+	aix_values	= "rw,ro"
+	help_msg_id	= 1831320
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "09"
+	disc_field_name	= "when"
+	name		= "ATTEMPT mount in background or foreground?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 86
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-w "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "background,foreground"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 281
+	aix_values	= "bg,fg"
+	help_msg_id	= 1831325
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "10"
+	disc_field_name	= "retry"
+	name		= "NUMBER of times to attempt mount"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 87
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-r "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831330
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "11"
+	disc_field_name	= "rsize"
+	name		= "Buffer SIZE for read"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 88
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-b "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831335
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "12"
+	disc_field_name	= "wsize"
+	name		= "Buffer SIZE for writes"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 89
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-c "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831340
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "13"
+	disc_field_name	= "timeo"
+	name		= "NFS TIMEOUT. In tenths of a second"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 90
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-o "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831345
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "14"
+	disc_field_name	= "port"
+	name		= "Internet port NUMBER for server"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 91
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-P "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831350
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "15"
+	disc_field_name	= "softhard"
+	name		= "Mount file system soft or hard"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 92
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "soft,hard"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 289
+	aix_values	= "-S,-H"
+	help_msg_id	= 1831355
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "16"
+	disc_field_name	= "intr"
+	name		= "Allow keyboard INTERRUPTS on hard mounts?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 93
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= ""
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-E,-e"
+	help_msg_id	= 1831356
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "17"
+	disc_field_name	= "acregmin"
+	name		= "Minimum TIME, in seconds, for holding\n attribute cache after file modification"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 94
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-u "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "3"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "3"
+	help_msg_id	= 1831357
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "18"
+	disc_field_name	= "acregmax"
+	name		= "Maximum TIME, in seconds, for holding\n attribute cache after file modification"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 95
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-U "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "60"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "60"
+	help_msg_id	= 1831358
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "19"
+	disc_field_name	= "acdirmin"
+	name		= "Minimum TIME, in seconds, for holding\n attribute cache after directory modification"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 96
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-v "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "30"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "30"
+	help_msg_id	= 1831359
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "20"
+	disc_field_name	= "acdirmax"
+	name		= "Maximum TIME, in seconds, for holding\n attribute cache after directory modification"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 97
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-V "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "60"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "60"
+	help_msg_id	= 1831361
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "21"
+	disc_field_name	= "actimeo"
+	name		= "Minimum & Maximum TIME, in seconds, for\n holding attribute cache after any modification"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 98
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-T "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831362
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "22"
+	disc_field_name	= "biods"
+	name		= "The Maximum NUMBER of biod daemons allowed\n to work on this file system"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 99
+	op_type		= ""
+	entry_type	= "#"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-p "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "6"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= "6"
+	help_msg_id	= 1831180
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "23"
+	disc_field_name	= "suid"
+	name		= "Allow execution of SUID and sgid programs\n in this file system?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 214
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-Y,-y"
+	help_msg_id	= 1831373
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "24"
+	disc_field_name	= "dev"
+	name		= "Allow DEVICE access via this mount?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 215
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-Z,-z"
+	help_msg_id	= 1831374
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.chnfsmnt"
+	id_seq_num	= "25"
+	disc_field_name	= "shortdev"
+	name		= "Server supports long DEVICE NUMBERS?"
+	name_msg_file	= "smit.cat" 
+	name_msg_set	= 39
+	name_msg_id	= 216
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-X,-x"
+	help_msg_id	= 1831376
+	help_msg_loc	= ""
+
+#####		rmnfsmnt - remove (unmount) an NFS mounted file system ###
+sm_cmd_opt:
+	id		= "_nfs.rmnfsmnt.select"
+	id_seq_num	= "0"
+	disc_field_name	= ""
+	name		= "PATHNAME of mount point"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 100
+	op_type		= "l"
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= "/usr/sbin/lsnfsmnt -p | egrep \^/ | cut -d\"|\" -f1"
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831290
+	help_msg_loc	= ""
+
+
+sm_cmd_opt:
+	id		= "_nfs.rmnfsmnt"
+	id_seq_num	= "01"
+	disc_field_name	= "_rawname"
+	name		= "PATHNAME of mount point"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 101
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "-f "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831290
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.rmnfsmnt"
+	id_seq_num	= "02"
+	disc_field_name	= ""
+	name		= "REMOVE entry from /etc/filesystems,\n unmount now, or both?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 102
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix 		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,filesystems,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 284
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_nfs.mkautomnt"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name 		= "PARAMETERS to be used for the automount daemon"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 188
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= ""
+	prefix 		= "--"
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831940
+	help_msg_loc	= ""
+

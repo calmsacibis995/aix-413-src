@@ -1,0 +1,39 @@
+/* @(#)96        1.1  src/packages/stacklist/sx25.master, pkg, pkg41J, 9515A_all 4/5/95 11:54:31                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for SX25 LPP
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+#if defined(SX25LITE)
+sx25.lc
+#endif /* SX25LITE */
+#if defined(SX25) 
+sx25
+#endif /* SX25 and DEV */
+sx25.adt
+sx25.info.en_US
+sx25.msg.de_DE
+sx25.msg.en_US
+sx25.msg.es_ES
+sx25.msg.fr_FR
+sx25.msg.it_IT
+sx25.msg.ja_JP
+sx25.msg.ko_KR
+sx25.msg.nl_BE
+sx25.msg.zh_TW
+sx25.msg.De_DE
+sx25.msg.En_US
+sx25.msg.Es_ES
+sx25.msg.Fr_FR
+sx25.msg.It_IT
+sx25.msg.Ja_JP
+sx25.msg.Nl_BE

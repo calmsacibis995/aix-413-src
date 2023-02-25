@@ -1,0 +1,44 @@
+# @(#)45	1.4  src/nfs/kernext/kdes/Makefile, sysxnfs, nfs411, GOLD410 6/30/94 20:31:54
+#
+#   COMPONENT_NAME: SYSXNFS
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+#   combined with the aggregated modules for this product)
+#                    SOURCE MATERIALS
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1993
+#   All Rights Reserved
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+
+.include <${MAKETOP}bos/kernext/Kernext.mk>
+
+
+VPATH           +=:${MAKETOP}/des/libdes:${MAKETOP}/des/kernext:
+
+INCFLAGS        = -I${MAKETOP}/des/libdes
+
+KERNEL_EXT	= nfs_kdes_null.ext
+
+IDIR            = /usr/lib/drivers/
+ILIST           = nfs_kdes_null.ext
+
+LIBS		= ${KERNEXT_LIBS}
+
+nfs_kdes_null.ext_ENTRYPOINT      = kdes_config
+nfs_kdes_null.ext_EXPORTS         = -bE:kdes.exp
+
+kdes_config.o_CFLAGS = -D_NO_DES_CRYPT
+
+DEP             = kdes.exp
+
+OFILES	=		\
+	kdes_config.o
+
+.include        <${RULES_MK}>

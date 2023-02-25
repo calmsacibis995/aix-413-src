@@ -1,0 +1,424 @@
+/*static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/onhost.cms, tcpip, tcpip411, GOLD410 8/14/90 16:26:53";
+ *
+ * COMPONENT_NAME: TCPIP onhost.cms 
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1986, 1988, 1989
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ * RISC System/6000 is a trademark of International Business Machines
+   Corporation.
+*/
+/*
+    AIXwhat is @(#) onhost.cms 1.5 PASC 1.5
+ */ version='onhost - version 1.1 - VM/CMS'
+/*
+ * onhost simulates some AIX commands on VM/CMS
+ *   may overwrite cms.exec.a and scratch (defined below)
+ * onhost ? for information
+ */
+ 
+   scratch = 'ONHOST$$ $$TEMP$$ A'
+   theirs = queued()
+   signal on syntax
+   parse arg . lcargs
+   if substr(lcargs,1,1) = "-" then parse arg . . lcargs
+   arg cmd options arglist
+   if substr(options,1,1) ^= "-" then do
+      arglist = options arglist
+      options = ""
+   end
+   arglist = strip(arglist)
+   lower = "abcdefghijklmnopqrstuvwxyz"
+   upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+   retcode = 0
+   select
+/******************************************************************/
+      when cmd = "?" then do
+say version
+say "onhost cat hfn               display host file"
+say "onhost cp [-b] ufn cms:hfn   copy (binary) ufn to host as hfn"
+say "onhost cp [-b] cms:hfn ufn   copy (binary) hfn from host as ufn"
+say "onhost cp cms:hfn1 cms:hfn2  copy hfn1 to hfn2 on host system"
+say "onhost date                  display host date and time"
+say "onhost df [../fm]            display space on (selected) host disks"
+say "onhost head [-n] hfn         display 10 (or n) lines of host file"
+say "onhost ls [-1lrt] [hfn]      list host files (or selected files)"
+say "onhost ls [-1l] ..[/fm]      list host disks (or files on a disk)"
+say "onhost mv hfn1 hfn2          move hfn1 to hfn2 on host system"
+say "onhost rm hfn                remove host file"
+say "onhost tail [-n] hfn         display last 10 (or n) lines of file"
+say "onhost who [am i]            show host system users (or show me)"
+say "onhost write nnn sss         send the message sss to host user nnn"
+say "onhost any-command           executes any unrecognized host command"
+say ""
+say " where hfn = fn.ft.fm for CMS file fn ft in directory fm"
+say "       ufn = AIX file name"
+        retcode = 0
+      end /* ? */
+/******************************************************************/
+      when cmd = "CAT" then do
+        Call Getfn
+        Call Checkfile
+        "type" fn ft fm
+        retcode   = rc
+      end /* CAT */
+/******************************************************************/
+      when cmd = "CP" | cmd = "CPY" then do
+        parse arg . lcargs
+        'onhostcp' lcargs
+        retcode   = rc
+      end /* CP */
+/******************************************************************/
+      when cmd = "DATE" then do
+         makebuf
+         "execio * cp (string" query time
+         parse pull . . hour tz day mm "/" dd "/" yr
+         day = substr(day,1,1) || translate(substr(day,2,2),lower,upper)
+         months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec"
+         say day word(months,mm) dd hour tz "19" || yr
+         pull
+         dropbuf
+      end /* DATE */
+/******************************************************************/
+      when cmd = "DF" then do
+        if lcargs = '' then fm = '*'
+        else call Getfn
+        makebuf
+        'query disk' fm '( stack'
+        pull
+        say "Filesystem  Mounted as    kbytes      used      free  used"
+        do while queued() > theirs
+          parse pull aline
+          label=substr(aline,1,6);  aline=substr(aline,8)
+         parse value aline with cuu m . . . blksize . used . "-" usedp . total .
+          m=translate(substr(m,1,1),lower,upper)
+          used = used * blksize % 1024
+          total = total * blksize % 1024
+          line = label cuu '         ' m format(total,9) format(used,9)
+          line = line format(total-used,9) format(usedp,4)
+          say line || "%"
+        end  /* while queued */
+        dropbuf
+      end /* DF */
+/******************************************************************/
+      when cmd = "HEAD" then do
+        if options = "" then n = "10"
+        else n = substr(options,2)
+        Call Getfn
+        Call Checkfile
+         "type" fn ft fm  "1" n
+        retcode   = rc
+      end /* HEAD */
+/******************************************************************/
+      when cmd = "LS" then do
+         singlecol = 0
+         if index(options,"1") > 0 then singlecol = 1
+         if index(options,"L") > 0 then singlecol = 1
+         if lcargs = '..' then
+         do /* show directories  */
+            makebuf
+            "query disk ( stack"
+            pull
+            line = ""
+            do while queued() > theirs
+               parse pull aline
+               label=substr(aline,1,6);  aline=substr(aline,8)
+               parse value aline with cuu mode stat rest
+               rmode = translate(substr(mode,3,1),lower,upper)
+               mode = translate(substr(mode,1,1),lower,upper)
+               if substr(stat,3,1) = "W" then do
+                 stat = "d-rw"
+                 rmode = ''
+                 end
+               else do
+                 stat  = "d-r-"
+                 if rmode<>'' then
+                   if rmode<>mode
+                   then rmode = ' (extends' rmode')'
+                   else rmode = ''
+                 end
+               if index(options,"L") > 0 then
+                  say stat || "------ " || mode rmode
+               else if singlecol then say mode
+               else do
+                   line = line mode " "
+                   if length(line) > 75 then do
+                              say line; line = ""
+                   end
+               end
+            end  /* while queued */
+            if line ^= "" then say line
+            dropbuf
+            call onhoste 0
+         end /* show directories  */
+ 
+         Call Getfn
+         if (fn = '') then fn = '*'
+         if (ft = '') then ft = '*'
+         set cmstype ht
+         "LISTFILE" fn ft fm "(EXEC DATE %?"
+         if rc ^= 0 then do
+            rs = rc
+            set cmstype rt
+            if rs = 28 then call onhoste 0  /* No match or no files */
+            if rs = 36 then
+              say "onhost ls failed because CMS A disk is read-only"
+            call onhoste rs
+            end
+         if index(options,"R") > 0 then rev = 1
+         else rev = -1    /* rev > 0 means output last line first */
+         if index(options,"T") > 0 then
+         do
+            rev = - rev   /* CMS sort is upwards only */
+/* cms exec file will contain records of this form - system dependent
+   . . fn ft fm format reclen numrecs numblks day time
+         1         2         3         4         5         6         7
+12345678901234567890123456789012345678901234567890123456789012345678901234567890
+ &1 &2 ONHOST   EXEC     A1 V         80        380          4  6/10/88  8:00:26
+ */         PUSH "70 71 64 65 67 68 73 80" /* sort by time */
+         end
+         else
+            PUSH " 8 28                  " /* sort by name */
+         'SORT CMS EXEC A' scratch
+         'ERASE CMS EXEC A'
+         'RENAME' scratch 'CMS EXEC A'
+         set cmstype rt
+         if index(options,"L") > 0 then dolong=1 ;else dolong=0
+         if index(options,"X") > 0 then dohoriz=1 ;else dohoriz=0
+         ptr = 0
+         if dolong then  /* get info for all the disks */
+         do
+            makebuf
+            "query disk * ( stack"
+            do while queued() > theirs
+              parse pull aline
+              label=substr(aline,1,6);  aline=substr(aline,8)
+              parse value aline with . mode stat . . blksize .
+              mode = substr(mode,1,1)
+              if substr(stat,3,1) = "W" then stat = "-rw"
+              else stat  = "-r-"
+              disk.mode.1 = stat
+              disk.mode.2 = translate(label,lower,upper)
+              disk.mode.3 = blksize
+            end  /* while queued */
+            dropbuf
+            curdate = date(U)
+            parse value curdate with cmm "/" cdd "/" cyy
+            months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec"
+         end
+         else time = ""
+      /* read CMS EXEC A and print the results */
+         line = ''
+         makebuf
+         if (rev > 0) then order='LIFO' ;else order='FIFO'
+         'EXECIO * DISKR CMS EXEC A ('order
+         do while queued() > theirs
+            if dolong then do
+               parse pull . . cfn cft cfm fmt lrec len blk m "/" d "/" y hm
+               xx = (12 * cyy + cmm) - (12 * y + m)
+               if xx > 12 then hm = " 19" || y
+               else hm = left(hm,5)
+               time = word(months,m) d hm || " "
+               cfm = substr(cfm,1,1)
+               /* disk.cfm.n is 1=r/w 2=label 3=blksize  */
+               if (cft = "EXEC") | (cft = "MODULE") then xx = disk.cfm.1 || "x"
+               else xx = disk.cfm.1 || "-"
+               /* estimate number of bytes - is exact if F format */
+               len1 = blk * disk.cfm.3
+               len2 = lrec * len
+               xx = xx || "------ 1 " disk.cfm.2 format( min(len1,len2) ,7)
+               time = xx  time
+            end
+            else  parse pull . . cfn cft cfm .
+            cfn = translate(cfn || "." || cft,lower,upper)
+            if singlecol then say time || cfn
+            else do
+              if dohoriz then do
+                line = line substr(time || cfn,1,18)
+                if length(line) > 70 then do
+                           say line; line = ""
+                end
+              end
+              else do
+                ptr = ptr + 1 /* save them */
+                filel.ptr = substr(time || cfn,1,18)
+              end /* dohoriz */
+            end  /* dolong */
+         end  /* queued */
+         if line ^= "" then say line
+         if ptr > 0 then do   /* print them vertically */
+           offset = ptr % 4
+           if (ptr // 4) ^= 0 then offset = offset + 1
+           do x = 1 to offset
+             do y = x by offset while y < ptr + 1
+               t = y
+               line = line || filel.y
+             end  /* across line */
+             say strip(line)
+             line = ""
+           end  /* left col */
+         end  /* ptr */
+         dropbuf
+         "ERASE CMS EXEC A"
+      end /* ls */
+/******************************************************************/
+      when cmd = "MV" then do
+        Call Getfn
+        Call Checkfile
+        fn1 = fn;         ft1 = ft;         fm1 = fm
+        Call Getfn
+        if fm1 = fm then "rename" fn1 ft1 fm1 fn ft fm
+        else do
+           "copy" fn1 ft1 fm1 fn ft fm
+           if rc = 0 then "erase" fn1 ft1 fm1
+        end
+        retcode  = rc
+      end /* MV */
+/******************************************************************/
+      when cmd = "RM" then do
+        Call Getfn
+        Call Checkfile
+        "erase" fn ft fm
+        retcode   = rc
+      end /* RM */
+/******************************************************************/
+      when cmd = "TAIL" then do
+        if options = "" then n = "10"
+        else n = substr(options,2)
+        Call Getfn
+        Call Checkfile
+         makebuf
+         "LISTFILE " fn ft fm "(STACK DATE"
+         if rc ^= 0 then do
+            retcode = rc
+            dropbuf
+            call onhoste retcode
+         end
+         parse pull . . . . . len rest
+         dropbuf
+         n = len +1 - n
+         if n < 1 then n = 1
+         "type" fn ft fm  n "*"
+        retcode   = rc
+      end /* TAIL */
+/******************************************************************/
+      when cmd = "WHO" then do
+         if arglist = "" then me = ""
+         else do
+            "execio * cp (string" query userid
+             parse pull me .
+         end
+         makebuf
+         "execio * cp (string" query names
+         x = queued()
+         do y = 1 to x
+            pull line
+            do until line = ""
+               parse value line with a "-" b "," rest
+               if (b <> "DSC") & (left(strip(a),4) <> 'LOGO') then
+                 if (me = "") | (me = a) then do
+                    entry = left(strip(a),8) b
+                    queue translate(entry,lower,upper)
+                 end
+               line = rest
+            end
+         end /* loop through q names output */
+         queue ""
+         'EXECIO * DISKW' scratch '1 F 15 (FINI'
+            PUSH ""
+            PUSH " 01 08                    " /* sort by name */
+         set cmstype ht
+         'SORT' scratch 'CMS EXEC A'
+         'ERASE' scratch
+         'EXECIO * DISKR CMS EXEC A'
+         set cmstype rt
+         do while queued() > 0
+            parse pull line
+            if line ^= "" then say line
+         end /* while queued */
+         'ERASE CMS EXEC A'
+         dropbuf
+      end /* WHO */
+/******************************************************************/
+      when cmd = "WRITE" then do
+        'CP MSG' lcargs
+        retcode = rc
+      end /* WRITE */
+/******************************************************************/
+      otherwise  /* execute an arbitrary command */
+      if cmd = '' then retcode = 0
+      else do
+        parse arg cmdline
+        trace off
+        cmdline
+        retcode = rc
+        end
+/******************************************************************/
+   end /* select */
+   call onhoste retcode
+/******************************************************************/
+/******************************************************************/
+ 
+onhoste: procedure
+   arg r .
+   'onhoste' r
+    exit rc  /* let onhoste set the return code */
+ 
+Checkfile: procedure  Expose fn ft fm lcargs
+     if ( ( fn = '' ) | ( fn = '*' ) ) then do
+       say 'no file name'
+       call onhoste 1
+       end
+     if ( ( ft = '' ) | ( ft = '*' ) ) then do
+       say 'no file type'
+       call onhoste 1
+       end
+     set cmstype ht
+     "state " fn ft fm
+     retcode   = rc
+     set cmstype rt
+     if ( retcode ^= 0 ) then do
+        say "file not found"
+        call onhoste retcode
+     end
+     return
+ 
+getfn: procedure  Expose arglist fn ft fm
+  /* change an AIX style filename into a CMS fn ft fm */
+   parse value arglist with onearg arglist
+   fn = ""; ft = ""; fm = ""
+   if '' = onearg then return
+   if '../' = substr(onearg,1,3) then
+     if (3 = length(onearg))
+     then do; fm = 'a'; return; end
+     else do; fm = substr(onearg,4,1); return; end
+   parse value onearg with lhalf ":" rhalf
+   if (rhalf <> "") then lhalf = rhalf  /* forget xxx: prefix  and*/
+   parse value lhalf with fn "." ft "." fm /* make it easy on the user */
+   if fn = '' then fn = '*'
+   if ft = '' then ft = '*'
+   if fm = '' then fm = 'a'
+   return
+ 
+syntax: say "Rexx syntax error in onhost exec at line" sigl
+   call onhoste 9999

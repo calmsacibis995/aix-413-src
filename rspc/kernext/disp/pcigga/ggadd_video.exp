@@ -1,0 +1,26 @@
+* @(#)67  1.4  src/rspc/kernext/disp/pcigga/ggadd_video.exp, pcigga, rspc41B, 9504A 1/12/95 17:14:21 
+* ggadd_video.exp
+*
+*   COMPONENT_NAME: (PCIGGA) Weitek PCI Graphics Adapter Device Driver
+*
+*   FUNCTIONS:
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1994
+*   All Rights Reserved
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+#!/usr/lib/drivers/pci/ggadd_video
+
+video_ioctl
+video_open
+video_close
+video_mpx
+video_pm_handler

@@ -1,0 +1,27 @@
+# @(#)45	1.5	src/bos/usr/sbin/perf/diag_tool/.thresholds.sh, pdt, bos411, 9428A410j 4/13/94 16:34:32
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# .thresholds.sh
+#
+DISK_STORAGE_BALANCE 800
+PAGING_SPACE_BALANCE 4
+NUMBER_OF_BALANCE 1
+MIN_UTIL 3
+FS_UTIL_LIMIT 90
+MEMORY_FACTOR .9
+TREND_THRESHOLD .01
+EVENT_HORIZON 30

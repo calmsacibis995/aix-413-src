@@ -1,0 +1,1150 @@
+* File name: tstat.frm
+* @(#)83	1.4  src/tenplus/helpers/dir/tstat.fsz, tenplus, tenplus411, GOLD410 3/23/93 11:56:47
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 2
+	Flags = 0x1
+
+/invtext:
+	Type = 1
+	Count = 23
+
+/invtext/0:
+	Value = "[title                                                                         ]"
+
+/invtext/1:
+	Value = "\011      \023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/2:
+	Value = "\011      \001[wtext_1        ][Full_path_name                      ] \001"
+
+/invtext/3:
+	Value = "[wtext_2     ]\001[wtext_3            ][Bytes][wtext_4              ][  ] \001"
+
+/invtext/4:
+	Value = "\011      \001[wtext_5   ][File_type      ][wtext_6          ][ ]     \001"
+
+/invtext/5:
+	Value = "\011      \001[wtext7][   ][wtext_8        ][   ][wtext_9     ][   ]  \001"
+
+/invtext/6:
+	Value = "\011      \006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/invtext/7:
+	Type = 0
+
+/invtext/8:
+	Value = "\011      \023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/9:
+	Value = "[wtext_10    ]\001[wtext_11          ][Owner ][wtext_12        ][Ui]      \001"
+
+/invtext/10:
+	Value = "\011      \001[wtext_13          ][Group ][wtext_14        ][Gi]      \001"
+
+/invtext/11:
+	Value = "\011      \006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/invtext/12:
+	Type = 0
+
+/invtext/13:
+	Value = "\011      \023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/14:
+	Value = "[wtext_15    ]\001[wtxt16][Y][wtext_17     ][G][wtext_18    ][O]          \001"
+
+/invtext/15:
+	Value = "\011      \001[wtext_19]\\[wtext_20       ]\\[wtext_21              ]\\  \001"
+
+/invtext/16:
+	Value = "\011      \006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/invtext/17:
+	Type = 0
+
+/invtext/18:
+	Value = "\011      \023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/19:
+	Value = "[wtext_22    ]\001[wtext_23                         ][Last_access_time  ] \001"
+
+/invtext/20:
+	Value = "[wtext_24    ]\001[wtext_25                         ][Last_modify_time  ] \001"
+
+/invtext/21:
+	Value = "[wtext_26    ]\001[wtext_27                         ][Last_status_change] \001"
+
+/invtext/22:
+	Value = "\011      \006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/fields:
+	Type = 1
+	Count = 51
+
+/fields/0:
+	Type = 1
+	Count = 4
+
+/fields/0/number:
+	Value = "1"
+
+/fields/0/name:
+	Value = "title"
+
+/fields/0/cat-msgno:
+	Value = "%-F_TSTAT_TITLE"
+
+/fields/0/cat-deftxt:
+	Value = "                        Detailed File Status Information                        "
+
+/fields/1:
+	Type = 1
+	Count = 4
+
+/fields/1/number:
+	Value = "2"
+
+/fields/1/name:
+	Value = "wtext_1"
+
+/fields/1/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_1"
+
+/fields/1/cat-deftxt:
+	Value = " Full path name: "
+
+/fields/2:
+	Type = 1
+	Count = 6
+
+/fields/2/number:
+	Value = "3"
+
+/fields/2/name:
+	Value = "Full_path_name"
+
+/fields/2/data-path:
+	Value = "Full_path_name"
+
+/fields/2/no-zoom:
+	Value = "x"
+
+/fields/2/4:
+	Type = 0
+
+/fields/2/userro:
+	Value = "x"
+
+/fields/3:
+	Type = 1
+	Count = 4
+
+/fields/3/number:
+	Value = "4"
+
+/fields/3/name:
+	Value = "wtext_2"
+
+/fields/3/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_2"
+
+/fields/3/cat-deftxt:
+	Value = " Description  "
+
+/fields/4:
+	Type = 1
+	Count = 4
+
+/fields/4/number:
+	Value = "5"
+
+/fields/4/name:
+	Value = "wtext_3"
+
+/fields/4/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_3"
+
+/fields/4/cat-deftxt:
+	Value = " File Size in Bytes: "
+
+/fields/5:
+	Type = 1
+	Count = 6
+
+/fields/5/number:
+	Value = "6"
+
+/fields/5/name:
+	Value = "Bytes"
+
+/fields/5/data-path:
+	Value = "Bytes"
+
+/fields/5/no-zoom:
+	Value = "x"
+
+/fields/5/4:
+	Type = 0
+
+/fields/5/userro:
+	Value = "x"
+
+/fields/6:
+	Type = 1
+	Count = 4
+
+/fields/6/number:
+	Value = "7"
+
+/fields/6/name:
+	Value = "wtext_4"
+
+/fields/6/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_4"
+
+/fields/6/cat-deftxt:
+	Value = "  File Size in Blocks: "
+
+/fields/7:
+	Type = 1
+	Count = 6
+
+/fields/7/number:
+	Value = "8"
+
+/fields/7/name:
+	Value = "Blocks"
+
+/fields/7/data-path:
+	Value = "Blocks"
+
+/fields/7/no-zoom:
+	Value = "x"
+
+/fields/7/4:
+	Type = 0
+
+/fields/7/userro:
+	Value = "x"
+
+/fields/8:
+	Type = 1
+	Count = 4
+
+/fields/8/number:
+	Value = "9"
+
+/fields/8/name:
+	Value = "wtext_5"
+
+/fields/8/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_5"
+
+/fields/8/cat-deftxt:
+	Value = " File Type: "
+
+/fields/9:
+	Type = 1
+	Count = 6
+
+/fields/9/number:
+	Value = "10"
+
+/fields/9/name:
+	Value = "File_type"
+
+/fields/9/data-path:
+	Value = "File_type"
+
+/fields/9/no-zoom:
+	Value = "x"
+
+/fields/9/4:
+	Type = 0
+
+/fields/9/userro:
+	Value = "x"
+
+/fields/10:
+	Type = 1
+	Count = 4
+
+/fields/10/number:
+	Value = "11"
+
+/fields/10/name:
+	Value = "wtext_6"
+
+/fields/10/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_6"
+
+/fields/10/cat-deftxt:
+	Value = "  Number of Links: "
+
+/fields/11:
+	Type = 1
+	Count = 6
+
+/fields/11/number:
+	Value = "12"
+
+/fields/11/name:
+	Value = "Lns"
+
+/fields/11/data-path:
+	Value = "Lns"
+
+/fields/11/no-zoom:
+	Value = "x"
+
+/fields/11/4:
+	Type = 0
+
+/fields/11/userro:
+	Value = "x"
+
+/fields/12:
+	Type = 1
+	Count = 4
+
+/fields/12/number:
+	Value = "13"
+
+/fields/12/name:
+	Value = "wtext7"
+
+/fields/12/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_7"
+
+/fields/12/cat-deftxt:
+	Value = " Inode: "
+
+/fields/13:
+	Type = 1
+	Count = 6
+
+/fields/13/number:
+	Value = "14"
+
+/fields/13/name:
+	Value = "Inode"
+
+/fields/13/data-path:
+	Value = "Inode"
+
+/fields/13/no-zoom:
+	Value = "x"
+
+/fields/13/4:
+	Type = 0
+
+/fields/13/userro:
+	Value = "x"
+
+/fields/14:
+	Type = 1
+	Count = 4
+
+/fields/14/number:
+	Value = "15"
+
+/fields/14/name:
+	Value = "wtext_8"
+
+/fields/14/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_8"
+
+/fields/14/cat-deftxt:
+	Value = "   Directory ID: "
+
+/fields/15:
+	Type = 1
+	Count = 6
+
+/fields/15/number:
+	Value = "16"
+
+/fields/15/name:
+	Value = "DID_dir"
+
+/fields/15/data-path:
+	Value = "DID_dir"
+
+/fields/15/no-zoom:
+	Value = "x"
+
+/fields/15/4:
+	Type = 0
+
+/fields/15/userro:
+	Value = "x"
+
+/fields/16:
+	Type = 1
+	Count = 4
+
+/fields/16/number:
+	Value = "17"
+
+/fields/16/name:
+	Value = "wtext_9"
+
+/fields/16/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_9"
+
+/fields/16/cat-deftxt:
+	Value = "   Device ID: "
+
+/fields/17:
+	Type = 1
+	Count = 6
+
+/fields/17/number:
+	Value = "18"
+
+/fields/17/name:
+	Value = "DID_sf"
+
+/fields/17/data-path:
+	Value = "DID_sf"
+
+/fields/17/no-zoom:
+	Value = "x"
+
+/fields/17/4:
+	Type = 0
+
+/fields/17/userro:
+	Value = "x"
+
+/fields/18:
+	Type = 1
+	Count = 4
+
+/fields/18/number:
+	Value = "19"
+
+/fields/18/name:
+	Value = "wtext_10"
+
+/fields/18/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_10"
+
+/fields/18/cat-deftxt:
+	Value = "   Ownership  "
+
+/fields/19:
+	Type = 1
+	Count = 4
+
+/fields/19/number:
+	Value = "20"
+
+/fields/19/name:
+	Value = "wtext_11"
+
+/fields/19/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_11"
+
+/fields/19/cat-deftxt:
+	Value = " Owner of the file: "
+
+/fields/20:
+	Type = 1
+	Count = 8
+
+/fields/20/number:
+	Value = "21"
+
+/fields/20/name:
+	Value = "Owner"
+
+/fields/20/data-path:
+	Value = "Owner"
+
+/fields/20/no-zoom:
+	Value = "x"
+
+/fields/20/dotted:
+	Value = "x"
+
+/fields/20/5:
+	Type = 0
+
+/fields/20/doumod:
+
+/fields/20/userro:
+	Value = "x"
+
+/fields/21:
+	Type = 1
+	Count = 4
+
+/fields/21/number:
+	Value = "22"
+
+/fields/21/name:
+	Value = "wtext_12"
+
+/fields/21/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_12"
+
+/fields/21/cat-deftxt:
+	Value = "             Uid: "
+
+/fields/22:
+	Type = 1
+	Count = 8
+
+/fields/22/number:
+	Value = "23"
+
+/fields/22/name:
+	Value = "Ui"
+
+/fields/22/data-path:
+	Value = "Ui"
+
+/fields/22/no-zoom:
+	Value = "x"
+
+/fields/22/dotted:
+	Value = "x"
+
+/fields/22/5:
+	Type = 0
+
+/fields/22/doumod:
+
+/fields/22/userro:
+	Value = "x"
+
+/fields/23:
+	Type = 1
+	Count = 4
+
+/fields/23/number:
+	Value = "24"
+
+/fields/23/name:
+	Value = "wtext_13"
+
+/fields/23/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_13"
+
+/fields/23/cat-deftxt:
+	Value = " Group of the file: "
+
+/fields/24:
+	Type = 1
+	Count = 8
+
+/fields/24/number:
+	Value = "25"
+
+/fields/24/name:
+	Value = "Group"
+
+/fields/24/data-path:
+	Value = "Group"
+
+/fields/24/no-zoom:
+	Value = "x"
+
+/fields/24/dotted:
+	Value = "x"
+
+/fields/24/5:
+	Type = 0
+
+/fields/24/doumod:
+
+/fields/24/userro:
+	Value = "x"
+
+/fields/25:
+	Type = 1
+	Count = 4
+
+/fields/25/number:
+	Value = "26"
+
+/fields/25/name:
+	Value = "wtext_14"
+
+/fields/25/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_14"
+
+/fields/25/cat-deftxt:
+	Value = "             Gid: "
+
+/fields/26:
+	Type = 1
+	Count = 8
+
+/fields/26/number:
+	Value = "27"
+
+/fields/26/name:
+	Value = "Gi"
+
+/fields/26/data-path:
+	Value = "Gi"
+
+/fields/26/no-zoom:
+	Value = "x"
+
+/fields/26/dotted:
+	Value = "x"
+
+/fields/26/5:
+	Type = 0
+
+/fields/26/doumod:
+
+/fields/26/userro:
+	Value = "x"
+
+/fields/27:
+	Type = 1
+	Count = 4
+
+/fields/27/number:
+	Value = "28"
+
+/fields/27/name:
+	Value = "wtext_15"
+
+/fields/27/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_15"
+
+/fields/27/cat-deftxt:
+	Value = " Permissions  "
+
+/fields/28:
+	Type = 1
+	Count = 4
+
+/fields/28/number:
+	Value = "29"
+
+/fields/28/name:
+	Value = "wtxt16"
+
+/fields/28/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_16"
+
+/fields/28/cat-deftxt:
+	Value = " Owner: "
+
+/fields/29:
+	Type = 1
+	Count = 8
+
+/fields/29/number:
+	Value = "30"
+
+/fields/29/name:
+	Value = "Y"
+
+/fields/29/data-path:
+	Value = "Y"
+
+/fields/29/no-zoom:
+	Value = "x"
+
+/fields/29/dotted:
+	Value = "x"
+
+/fields/29/5:
+	Type = 0
+
+/fields/29/doumod:
+
+/fields/29/userro:
+	Value = "x"
+
+/fields/30:
+	Type = 1
+	Count = 4
+
+/fields/30/number:
+	Value = "31"
+
+/fields/30/name:
+	Value = "wtext_17"
+
+/fields/30/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_17"
+
+/fields/30/cat-deftxt:
+	Value = "        Group: "
+
+/fields/31:
+	Type = 1
+	Count = 8
+
+/fields/31/number:
+	Value = "32"
+
+/fields/31/name:
+	Value = "G"
+
+/fields/31/data-path:
+	Value = "G"
+
+/fields/31/no-zoom:
+	Value = "x"
+
+/fields/31/dotted:
+	Value = "x"
+
+/fields/31/5:
+	Type = 0
+
+/fields/31/doumod:
+
+/fields/31/userro:
+	Value = "x"
+
+/fields/32:
+	Type = 1
+	Count = 4
+
+/fields/32/number:
+	Value = "33"
+
+/fields/32/name:
+	Value = "wtext_18"
+
+/fields/32/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_18"
+
+/fields/32/cat-deftxt:
+	Value = "       Other: "
+
+/fields/33:
+	Type = 1
+	Count = 8
+
+/fields/33/number:
+	Value = "34"
+
+/fields/33/name:
+	Value = "O"
+
+/fields/33/data-path:
+	Value = "O"
+
+/fields/33/no-zoom:
+	Value = "x"
+
+/fields/33/dotted:
+	Value = "x"
+
+/fields/33/5:
+	Type = 0
+
+/fields/33/doumod:
+
+/fields/33/userro:
+	Value = "x"
+
+/fields/34:
+	Type = 1
+	Count = 4
+
+/fields/34/number:
+	Value = "35"
+
+/fields/34/name:
+	Value = "wtext_19"
+
+/fields/34/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_19"
+
+/fields/34/cat-deftxt:
+	Value = " Set Uid: "
+
+/fields/35:
+	Type = 1
+	Count = 8
+
+/fields/35/number:
+	Value = "36"
+
+/fields/35/name:
+	Value = "Set_uid"
+
+/fields/35/data-path:
+	Value = "Set_uid"
+
+/fields/35/no-zoom:
+	Value = "x"
+
+/fields/35/dotted:
+	Value = "x"
+
+/fields/35/5:
+	Type = 0
+
+/fields/35/doumod:
+
+/fields/35/userro:
+	Value = "x"
+
+/fields/36:
+	Type = 1
+	Count = 4
+
+/fields/36/number:
+	Value = "37"
+
+/fields/36/name:
+	Value = "wtext_20"
+
+/fields/36/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_20"
+
+/fields/36/cat-deftxt:
+	Value = "        Set Gid: "
+
+/fields/37:
+	Type = 1
+	Count = 8
+
+/fields/37/number:
+	Value = "38"
+
+/fields/37/name:
+	Value = "Set_gid"
+
+/fields/37/data-path:
+	Value = "Set_gid"
+
+/fields/37/no-zoom:
+	Value = "x"
+
+/fields/37/dotted:
+	Value = "x"
+
+/fields/37/5:
+	Type = 0
+
+/fields/37/doumod:
+
+/fields/37/userro:
+	Value = "x"
+
+/fields/38:
+	Type = 1
+	Count = 4
+
+/fields/38/number:
+	Value = "39"
+
+/fields/38/name:
+	Value = "wtext_21"
+
+/fields/38/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_21"
+
+/fields/38/cat-deftxt:
+	Value = "       Save text image: "
+
+/fields/39:
+	Type = 1
+	Count = 8
+
+/fields/39/number:
+	Value = "40"
+
+/fields/39/name:
+	Value = "Sticky_bit"
+
+/fields/39/data-path:
+	Value = "Sticky_bit"
+
+/fields/39/no-zoom:
+	Value = "x"
+
+/fields/39/dotted:
+	Value = "x"
+
+/fields/39/5:
+	Type = 0
+
+/fields/39/doumod:
+
+/fields/39/userro:
+	Value = "x"
+
+/fields/40:
+	Type = 1
+	Count = 4
+
+/fields/40/number:
+	Value = "41"
+
+/fields/40/name:
+	Value = "wtext_22"
+
+/fields/40/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_22"
+
+/fields/40/cat-deftxt:
+	Value = "        File  "
+
+/fields/41:
+	Type = 1
+	Count = 4
+
+/fields/41/number:
+	Value = "42"
+
+/fields/41/name:
+	Value = "wtext_23"
+
+/fields/41/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_23"
+
+/fields/41/cat-deftxt:
+	Value = " Time of last file access:         "
+
+/fields/42:
+	Type = 1
+	Count = 8
+
+/fields/42/number:
+	Value = "43"
+
+/fields/42/name:
+	Value = "Last_access_time"
+
+/fields/42/data-path:
+	Value = "Last_access_time"
+
+/fields/42/no-zoom:
+	Value = "x"
+
+/fields/42/dotted:
+	Value = "x"
+
+/fields/42/5:
+	Type = 0
+
+/fields/42/doumod:
+
+/fields/42/userro:
+	Value = "x"
+
+/fields/43:
+	Type = 1
+	Count = 4
+
+/fields/43/number:
+	Value = "44"
+
+/fields/43/name:
+	Value = "wtext_24"
+
+/fields/43/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_24"
+
+/fields/43/cat-deftxt:
+	Value = "      Access  "
+
+/fields/44:
+	Type = 1
+	Count = 4
+
+/fields/44/number:
+	Value = "45"
+
+/fields/44/name:
+	Value = "wtext_25"
+
+/fields/44/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_25"
+
+/fields/44/cat-deftxt:
+	Value = " Time of last data modification:   "
+
+/fields/45:
+	Type = 1
+	Count = 8
+
+/fields/45/number:
+	Value = "46"
+
+/fields/45/name:
+	Value = "Last_modify_time"
+
+/fields/45/data-path:
+	Value = "Last_modify_time"
+
+/fields/45/no-zoom:
+	Value = "x"
+
+/fields/45/dotted:
+	Value = "x"
+
+/fields/45/5:
+	Type = 0
+
+/fields/45/doumod:
+
+/fields/45/userro:
+	Value = "x"
+
+/fields/46:
+	Type = 1
+	Count = 4
+
+/fields/46/number:
+	Value = "47"
+
+/fields/46/name:
+	Value = "wtext_26"
+
+/fields/46/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_26"
+
+/fields/46/cat-deftxt:
+	Value = "       Times  "
+
+/fields/47:
+	Type = 1
+	Count = 4
+
+/fields/47/number:
+	Value = "48"
+
+/fields/47/name:
+	Value = "wtext_27"
+
+/fields/47/cat-msgno:
+	Value = "%-F_TSTAT_WTEXT_27"
+
+/fields/47/cat-deftxt:
+	Value = " Time of last file status change:  "
+
+/fields/48:
+	Type = 1
+	Count = 8
+
+/fields/48/number:
+	Value = "49"
+
+/fields/48/name:
+	Value = "Last_status_change"
+
+/fields/48/data-path:
+	Value = "Last_status_change"
+
+/fields/48/no-zoom:
+	Value = "x"
+
+/fields/48/4:
+	Type = 0
+
+/fields/48/5:
+	Type = 0
+
+/fields/48/6:
+	Type = 0
+
+/fields/48/userro:
+	Value = "x"
+
+/fields/49:
+	Type = 1
+	Count = 11
+
+/fields/49/number:
+	Value = "50"
+
+/fields/49/name:
+	Value = "Contents"
+
+/fields/49/data-path:
+	Value = "Contents"
+
+/fields/49/ganged-to:
+	Value = "Contents, File, Type"
+
+/fields/49/4:
+	Type = 0
+
+/fields/49/5:
+	Type = 0
+
+/fields/49/6:
+	Type = 0
+
+/fields/49/7:
+	Type = 0
+
+/fields/49/8:
+	Type = 0
+
+/fields/49/pick-name:
+	Value = "file"
+
+/fields/49/invisible:
+	Value = "x"
+
+/fields/50:
+	Type = 1
+	Count = 10
+
+/fields/50/number:
+	Value = "51"
+
+/fields/50/name:
+	Value = "Files"
+
+/fields/50/data-path:
+	Value = "Files"
+
+/fields/50/ganged-to:
+	Value = "Contents, File, Type"
+
+/fields/50/4:
+	Type = 0
+
+/fields/50/5:
+	Type = 0
+
+/fields/50/6:
+	Type = 0
+
+/fields/50/7:
+	Type = 0
+
+/fields/50/pick-name:
+	Value = "file"
+
+/fields/50/invisible:
+	Value = "x"
+

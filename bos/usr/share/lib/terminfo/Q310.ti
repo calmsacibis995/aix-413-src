@@ -1,0 +1,482 @@
+# @(#)32        1.6  src/bos/usr/share/lib/terminfo/Q310.ti, terminfo, bos411, 9428A410j 4/18/94 18:56:59
+#
+#   COMPONENT_NAME: Terminfo
+#
+#   FUNCTIONS: Q310.ti
+#
+#   ORIGINS: 83,27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1991,1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+BQ303|BQ310|Q303|Q310|dec vt320 8859-1 80 columns terminal,
+# --------------------------------------------------------------------------
+
+#  This entry is used for terminals with vt320 emulation mode
+#  and following set-up : 
+#    8 bit ISO Latin Character Set (ISO 8859-1),
+#    7 bit Control Characters, 
+#    80 columns screen.    
+
+#  Hereafter are some DEC vt terminals' commands. (valid on vt200 and 300)
+#  They are used in string capabilities with vt220-320 emulation mode.
+#  In the following DEC definitions, two kinds of terminfo databases are
+#    provided :
+#    1. the first with Command Sequence Introducer starting with escape 
+#       sequence in 7 bits characters ex. ESC [ : 2 chars. in 7-bit mode.
+#    2. the second with Command Sequence Introducer starting with escape 
+#       sequence in 8 bits characters ex. ESC [ : 1 char. 'CSI' =x9B.
+
+#	Soft Terminal Reset		esc [ ! p
+#	RIS (erases screen):		esc c
+#	DECKPNM numeric keypad mode:	esc >
+#	DECKPAM applic. keypad mode:	esc =
+#	DECSTBM Scrolling region:	esc [ r
+#	SCS select G0 = US:		esc ( B
+#	SCS select G1 = line-graphic:	esc ) 0
+#	Select 7-bit C1 controls:	esc sp F
+#	Select 8-bit C1 controls:	esc sp G
+#	Select cursor home:		esc [  H
+#	Select erase screen:		esc [  J
+#	SM KAM lock keyboard:		esc [ 2 h
+#	RM KAM unlock keyboard:		esc [ 2 l
+#	SM SRM local echo off:		esc [ 1 2 h
+#	RM SRM local echo on:		esc [ 1 2 l
+#	SM LNM New line :		esc [ 2 0 h
+#	RM LNM return = CR only:	esc [ 2 0 l
+#	SM DECCKM cursor keys mode:	esc [ ? 1 h
+#	RM DECCKM appli. keys mode:	esc [ ? 1 l
+#	SM DECANM ANSI mode on:		esc [ ? 2 h
+#	RM DECANM ANSI mode off:	esc [ ? 2 l
+#	SM DECCOLM 132-column screen:	esc [ ? 3 h
+#	RM DECCOLM 80-column screen:	esc [ ? 3 l
+#	SM DECSCLM Smooth scroll:	esc [ ? 4 h
+#	RM DECSCLM Jump scroll:		esc [ ? 4 l
+#	SM DECSCNM screen light backgr.	esc [ ? 5 h
+#	RM DECSCNM screen dark backgr.	esc [ ? 5 l
+#	SM DECOM move within margins:	esc [ ? 6 h
+#	RM DECOM move outside margins:	esc [ ? 6 l
+#	SM DECAWM auto right margin:	esc [ ? 7 h
+#	RM DECAWM auto right margin:	esc [ ? 7 l
+#	SM DECARM auto repeat:		esc [ ? 8 h
+#	RM DECARM auto repeat:		esc [ ? 8 l
+#	DECSASD Select active main:	esc [ 0 $ } 
+#	DECSASD Select active status:	esc [ 1 $ } 
+#	DECSSDT Select status none:	esc [ 0 $ ~ 
+#	DECSSDT Select status indic.:	esc [ 1 $ ~ 
+#	DECSSDT Select status host-wr:	esc [ 2 $ ~ 
+#	SM DECTCEM Visible cursor:	esc [ ? 2 5 h
+#	RM DECTCEM Invisible cursor:	esc [ ? 2 5 l
+#	SM DECNCRM 7 bits NCR set:	esc [ ? 4 2 h
+#	RM DECNCRM Multi or ISO latin:	esc [ ? 4 2 l
+#	SM DECNKM numeric keypad mode:	esc [ ? 6 6 h
+#	RM DECNKM numeric keypad appl.:	esc [ ? 6 6 l
+#	SM DECKBUM clavier informatique	esc [ ? 6 8 h
+#	RM DECKBUM clavier bureautique:	esc [ ? 6 8 l
+#	DECSCL vt300 mode 8-bit ctrl:	esc [ 6 3 " p
+# or	DECSCL vt300 mode 8-bit ctrl:	esc [ 6 3 ; 0 " p
+# or	DECSCL vt300 mode 8-bit ctrl:	esc [ 6 3 ; 2 " p
+#	DECSCL vt300 mode 7-bit ctrl:	esc [ 6 3 ; 1 " p
+#	Char. and Line attributes:	esc [ Ps ... Ps m
+# with:  0 All off, 1 Bold, 4 Underline, 5 Blinking, 7 Reverse
+# and : 22 Bold off, 24 Underline off, 25 Blinking off, 27 Reverse off
+	xenl,
+	km, mc5i, mir, msgr,
+# Type/Dimensioning:
+	vt#3,
+	cols#80, lines#24, it#8,
+# Status Line:
+	hs, eslok, wsl#80,
+	dsl=\E[1$}\E[2$~\n\E[0$}, fsl=\E[0$}, tsl=\E[1$}\E[2$~,
+# Initialization and Reset strings
+	is1=\E[63;1"p\E[2h,
+	is2=\E[?2h\E[?3l\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	is3=\E[0$}\E[?25h\E[2l\E[H\E[J,
+	rs1=\E[!p,
+	rs2=\E[?3l,
+#	smkx=\E[?1h\E=,
+	rmkx=\E[?1l\E>,
+# Flow control:
+	xon,
+# Alarm/Status:
+	bel=^G,
+# Erasing:
+	clear=\E[H\E[J, home=\E[H,
+	enacs=\E(B\E)0, flash=\E[?5h$<50>\E[?5l,
+	cr=^M,
+# Cursor attributes:
+	civis=\E[?25l, cnorm=\E[?25h, cvvis=\E[?25h,
+# Cursor positioning:
+	cub=\E[%p1%dD, cud=\E[%p1%dB, cuf=\E[%p1%dC, cuu=\E[%p1%dA,
+	cup=\E[%i%p1%d;%p2%dH,
+# Cursor positioning (1 position):
+	cub1=\E[D, cud1=\E[B, cuf1=\E[C, cuu1=\E[A,
+# Save and Restore cursor:
+	sc=\E7, rc=\E8,
+# Selectively Erasing Text:
+	ed=\E[J, el=\E[K,
+# Inserting/Deleting characters:
+	dch=\E[%p1%dP, ech=\E[%p1%dX, ich=\E[%p1%d@,
+	dch1=\E[P,
+# Inserting/Deleting/Scrolling lines:
+	dl=\E[%p1%dM, il=\E[%p1%dL,
+	dl1=\E[M, el1=\E[1K, il1=\E[L,
+# Tabulations:
+	ht=^I, hts=\EH, tbc=\E[3g,
+	ind=\ED,
+# Undistinctive function keys:
+#	kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	kf6=\E[17~, kf7=\E[18~, kf8=\E[19~,
+	kf9=\E[20~, kf10=\E[21~, kf11=\E[23~,
+	kf12=\E[24~, kf13=\E[25~, kf14=\E[26~,
+	kf15=\E[28~, kf16=\E[29~, kf17=\E[31~,
+	kf18=\E[32~, kf19=\E[33~, kf20=\E[34~,
+# keypad (upper left & right, lower left & right corners, center)
+	ka1=\EOw, ka3=\EOy,
+	kb2=\EOu,
+	kc1=\EOq, kc3=\EOs,
+# Insert actions
+	csr=\E[%i%p1%d;%p2%dr,
+# Distinctive function keys:
+	kcub1=\E[D, kcud1=\E[B, kcuf1=\E[C, kcuu1=\E[A,
+	khlp=\E[28~, krdo=\E[29~,
+	kfnd=\E[1~, kich1=\E[2~, kdch1=\E[3~,
+	kslt=\E[4~, ksel=\E[4~, kpp=\E[5~, knp=\E[6~,
+#	kbs=\E[24~,
+	kbs=^H,  
+	lf1=pf1, lf2=pf2, lf3=pf3, lf4=pf4,
+	ri=\EM, nel=\EE,
+# Character set and attributes:
+	sgr0=\E[0m\E(B, rev=\E[7m,
+	blink=\E[5m, bold=\E[1m,
+	smacs=^N, rmacs=^O,
+	smam=\E[?7h, rmam=\E[?7l,
+	smir=\E[4h, rmir=\E[4l,
+	smso=\E[7m, rmso=\E[27m,
+	smul=\E[4m, rmul=\E[24m,
+# Auxiliary printer: Printing Control Sequences
+	mc0=\E[i, mc4=\E[4i, mc5=\E[5i,
+# Semi-graphic set
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+# extensions
+	box1=\154\161\153\170\152\155\167\165\166\164\156, batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156, batt2=f1md,
+	font0=\E(B,     font1=\E(0,
+	smcup=\E[?7l\E[?1l\E(B,         rmcup=\E[?7h,
+	sgr=\E[%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m
+	       %?%p9%t\E(0%e\E(B%;,
+	kdo=\E[29~, kich1=\E[2~, knl=\r, ktab=^I, eo,
+
+BQ303-rv|BQ310-rv|Q303-rv|Q310-rv|dec vt320 reverse mode 80 columns,
+# -----------------------------------------------------------------------------------------
+	is2=\E[?2h\E[?3l\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+#	is2=\E[?2h\E[?3l\E[?5h,
+	flash=\E[?5l$<50>\E[?5h,
+	use=BQ303,
+
+BQ303-w|BQ310-w|Q303-w|Q310-w|dec vt320 132 columns terminal,
+# --------------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+#	is2=\E[?2h\E[?3h\E[?5l,
+	rs2=\E[?3h,
+	use=BQ303,
+
+BQ303-w-rv|BQ310-w-rv|Q303-w-rv|Q310-w-rv|dec vt320 reverse mode 132 columns,
+# ------------------------------------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+#	is2=\E[?2h\E[?3h\E[?5h,
+	flash=\E[?5l$<50>\E[?5h,
+	rs2=\E[?3h,
+	use=BQ303,
+
+#vt300|vt320|dec vt300 terminal 80 columns,
+#--------------------------------------------------
+#	use=BQ303,
+
+#vt300-rv|vt320-rv|dec vt300 terminal revese mode 80 columns,
+#-----------------------------------------------------------------------
+#	use=BQ303-rv,
+
+#vt300-w|vt320-w|dec vt300 terminal 132 columns,
+#---------------------------------------------------------
+#	use=BQ303-w,
+
+#vt300-w-rv|vt320-w-rv|dec vt300 terminal revese mode 132 columns,
+#------------------------------------------------------------------------------
+#	use=BQ303-w-rv,
+
+
+#  Q310 Q303  VT 320 emulation mode  in FULL 8 bits mode (char. and control).
+
+BQ303-8|BQ310-8|Q303-8|Q310-8|dec vt320 full 8 bits 80 columns,
+# ----------------------------------------------------------------------------------
+
+#  This entry is used for terminals with vt320 emulation mode
+#  and following set-up : 
+#    8 bit ISO Latin Character Set (ISO 8859-1),
+#    8 bit Control Characters, (CSI coded as x9B for ESC [)
+#    80 columns screen.    
+
+#	Soft Terminal Reset		csi ! p
+#	RIS (erases screen):		esc c
+#	DECKPNM numeric keypad mode:	esc >
+#	DECKPAM applic. keypad mode:	esc =
+#	DECSTBM Scrolling region:	esc [ r
+#	SCS select G0 = US:		esc ( B
+#	SCS select G1 = line-graphic:	esc ) 0
+#	Select 7-bit C1 controls:	esc sp F
+#	Select 8-bit C1 controls:	esc sp G
+#	Select cursor home:		csi H
+#	Select erase screen:		csi J
+#	SM KAM lock keyboard:		csi 2 h
+#	RM KAM unlock keyboard:		csi 2 l
+#	SM SRM local echo off:		csi 1 2 h
+#	RM SRM local echo on:		csi 1 2 l
+#	SM LNM New line :		csi 2 0 h
+#	RM LNM return = CR only:	csi 2 0 l
+#	SM DECCKM cursor keys mode:	csi ? 1 h
+#	RM DECCKM appli. keys mode:	csi ? 1 l
+#	SM DECANM ANSI mode on:		csi ? 2 h
+#	RM DECANM ANSI mode off:	csi ? 2 l
+#	SM DECCOLM 132-column screen:	csi ? 3 h
+#	RM DECCOLM 80-column screen:	csi ? 3 l
+#	SM DECSCLM Smooth scroll:	csi ? 4 h
+#	RM DECSCLM Jump scroll:		csi ? 4 l
+#	SM DECSCNM screen light backgr.	csi ? 5 h
+#	RM DECSCNM screen dark backgr.	csi ? 5 l
+#	SM DECOM move within margins:	csi ? 6 h
+#	RM DECOM move outside margins:	csi ? 6 l
+#	SM DECAWM auto right margin:	csi ? 7 h
+#	RM DECAWM auto right margin:	csi ? 7 l
+#	SM DECARM auto repeat:		csi ? 8 h
+#	RM DECARM auto repeat:		csi ? 8 l
+#	DECSASD Select active main:	csi 0 $ } 
+#	DECSASD Select active status:	csi 1 $ } 
+#	DECSSDT Select status none:	csi 0 $ ~ 
+#	DECSSDT Select status indic.:	csi 1 $ ~ 
+#	DECSSDT Select status host-wr:	csi 2 $ ~ 
+#	SM DECTCEM Visible cursor:	csi ? 2 5 h
+#	RM DECTCEM Invisible cursor:	csi ? 2 5 l
+#	SM DECNCRM 7 bits NCR set:	csi ? 4 2 h
+#	RM DECNCRM Multi or ISO latin:	csi ? 4 2 l
+#	DECSCL vt300 mode 8-bit ctrl:	csi 6 3 " p
+# or	DECSCL vt300 mode 8-bit ctrl:	csi 6 3 ; 0 " p
+#	DECSCL vt300 mode 7-bit ctrl:	csi 6 3 ; 1 " p
+#	Char. and Line attributes:	csi Ps ... Ps m
+# with:  0 All off, 1 Bold, 4 Underline, 5 Blinking, 7 Reverse
+# and : 22 Bold off, 24 Underline off, 25 Blinking off, 27 Reverse off
+	xenl,
+	km, mc5i, mir, msgr,
+# Type/Dimensioning:
+	vt#3,
+	cols#80, lines#24, it#8,
+# Status Line:
+	hs, eslok, wsl#80,
+	dsl=\2331$}\2332$~\n\2330$}, fsl=\2330$}, tsl=\2331$}\2332$~,
+# Initialization and Reset strings
+	is1=\E[63;2"p\E[2h,
+	is2=\E[?2h\E[?3l\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	is3=\2330$}\233?25h\2332l\233H\233J,
+	rs1=\E[!p,
+	rs2=\E[?3l,
+#	smkx=\233?1h\E=,
+	rmkx=\233?1l\E>,
+# Flow control:
+	xon,
+# Alarm/Status:
+	bel=^G,
+# Erasing:
+	clear=\233H\233J, home=\233H,
+	enacs=\E(B\E)0, flash=\233?5h$<50>\233?5l,
+	cr=^M, csr=\233%i%p1%d;%p2%dr,
+# Cursor attributes:
+	civis=\233?25l, cnorm=\233?25h, cvvis=\233?25h,
+# Cursor positioning:
+	cub=\233%p1%dD, cud=\233%p1%dB, cuf=\233%p1%dC, cuu=\233%p1%dA,
+	cup=\233%i%p1%d;%p2%dH,
+# Cursor positioning (1 position):
+	cub1=\233D, cud1=\233B, cuf1=\233C, cuu1=\233A,
+# Save and Restore cursor:
+	sc=\E7, rc=\E8,
+# Selectively Erasing Text:
+	ed=\233J, el=\233K,
+# Inserting/Deleting characters:
+	dch=\233%p1%dP, ech=\233%p1%dX, ich=\233%p1%d@,
+	dch1=\233P,
+# Inserting/Deleting/Scrolling lines:
+	dl=\233%p1%dM, il=\233%p1%dL,
+	dl1=\233M, el1=\2331K, il1=\233L,
+# Tabulations:
+	ht=^I, hts=\EH, tbc=\2333g,
+	ind=\ED,
+# Undistinctive function keys:
+#	kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	kf1=\217P, kf2=\217Q, kf3=\217R, kf4=\217S,
+	kf6=\23317~, kf7=\23318~, kf8=\23319~,
+	kf9=\23320~, kf10=\23321~, kf11=\23323~,
+	kf12=\23324~, kf13=\23325~, kf14=\23326~,
+	kf15=\23328~, kf16=\23329~, kf17=\23331~,
+	kf18=\23332~, kf19=\23333~, kf20=\23334~,
+# keypad (upper left & right, lower left & right corners, center)
+	ka1=\217w, ka3=\217y,
+	kb2=\217u,
+	kc1=\217q, kc3=\217s,
+# Insert actions
+	csr=\233%i%p1%d;%p2%dr,
+# Distinctive function keys:
+	kcub1=\233D, kcud1=\233B, kcuf1=\233C, kcuu1=\233A,
+	khlp=\23328~, krdo=\23329~,
+	kfnd=\2331~, kich1=\2332~, kdch1=\2333~,
+	kslt=\2334~, ksel=\2334~, kpp=\2335~, knp=\2336~,
+#	kbs=\23324~,
+	kbs=^H,
+	lf1=pf1, lf2=pf2, lf3=pf3, lf4=pf4,
+	ri=\EM, nel=\EE,
+# Character set and attributes:
+	sgr0=\2330m\E(B, rev=\2337m,
+	blink=\2335m, bold=\2331m,
+	smacs=^N, rmacs=^O,
+	smam=\233?7h, rmam=\233?7l,
+	smir=\2334h, rmir=\2334l,
+	smso=\2337m, rmso=\23327m,
+	smul=\2334m, rmul=\23324m,
+# Auxiliary printer: Printing Control Sequences
+	mc0=\233i, mc4=\2334i, mc5=\2335i,
+# Semi-graphic set
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+# extensions
+	box1=\154\161\153\170\152\155\167\165\166\164\156, batt1=f1,
+	box2=\154\161\153\170\152\155\167\165\166\164\156, batt2=f1md,
+	font0=\E(B,     font1=\E(0,
+	smcup=\233?7l\233?1l\E(B,         rmcup=\233?7h,
+	sgr=\233%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p6%t;1%;m
+	       %?%p9%t\E(0%e\E(B%;,
+	kdo=\23329~, kich1=\2332~, knl=\r, ktab=^I, eo,
+
+BQ303-8rv|BQ310-8rv|Q303-8rv|Q310-8rv|dec vt320 reverse mode 80 columns,
+# -----------------------------------------------------------------------------------------------
+	is2=\E[?2h\E[?3l\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	flash=\233?5l$<50>\233?5h,
+	use=BQ303-8,
+
+BQ303-8w|BQ310-8w|Q303-8w|Q310-8w|dec vt320 full 8 bits 132 columns,
+# -----------------------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	rs2=\233?3h,
+	use=BQ303-8,
+
+BQ303-8w-rv|BQ310-8w-rv|Q303-8w-rv|Q310-8w-rv|dec vt320 reverse mode 132 columns,
+# ------------------------------------------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	rs2=\233?3h,
+	flash=\233?5l$<50>\233?5h,
+	use=BQ303-8,
+
+Q303-pc|Questar 303 with PC keyboard 8859-1 80 columns,
+# ----------------------------------------------------------------
+
+#  This entry is used for terminals with vt320 emulation mode
+#  a 102 keys keyboard (PC scancode !) and following set-up : 
+#    8 bit ISO Latin Character Set (ISO 8859-1),
+#    7 bit Control Characters, 
+#    80 columns screen.    
+
+# Undistinctive function keys:
+	kf1=\E[17~, kf2=\E[18~, kf3=\E[19~,
+	kf4=\E[20~, kf5=\E[21~, kf6=\E[23~,
+	kf7=\E[24~, kf8=\E[25~, kf9=\E[26~,
+	kf10=\E[28~, kf11=\E[29~, kf12=\E[31~,
+	kf13@, kf14@, kf15@, kf16@, kf17@,
+	kf18@, kf19@, kf20@,
+# Distinctive function keys:
+	khlp@, krdo@, kfnd@, kslt@, ksel@,
+	kbs=^H, khome=\E[1~,
+	kich1=\E[2~, kdch1=\E[3~,
+	kend=\E[4~, kpp=\E[5~, knp=\E[6~,
+	lf1@, lf2@, lf3@, lf4@,
+	use=BQ303,
+
+Q303-pc-rv|Questar 303 with PC keyboard 8859-1 reverse mode 80 columns,
+# ---------------------------------------------------------------------
+	is2=\E[?2h\E[?3l\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	flash=\E[?5l$<50>\E[?5h,
+	use=Q303-pc,
+
+Q303-pc-w|Questar 303 with PC keyboard 8859-1 132 columns terminal,
+# ------------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	rs2=\E[?3h,
+	use=Q303-pc,
+
+Q303-pc-w-rv|Questar 303 with PC keyboard in reverse mode 132 columns,
+# --------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sF\E[?42l\E[?4l,
+	flash=\E[?5l$<50>\E[?5h,
+	rs2=\E[?3h,
+	use=Q303-pc,
+
+Q303-8-pc|Questar 303 with PC keyboard in full 8 bits 80 columns,
+# ---------------------------------------------------------------
+
+#    8 bit ISO Latin Character Set (ISO 8859-1),
+#    8 bit Control Characters, 
+#    80 columns screen.    
+
+#	is1=\E[63;2"p\E[2h,
+#	is2=\E[?2h\E[?3l\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+# Undistinctive function keys:
+	kf1=\23317~, kf2=\23318~, kf3=\23319~,
+	kf4=\23320~, kf5=\23321~, kf6=\23323~,
+	kf7=\23324~, kf8=\23325~, kf9=\23326~,
+	kf10=\23328~, kf11=\23329~, kf12=\23331~,
+	kf13@, kf14@, kf15@, kf16@, kf17@,
+	kf18@, kf19@, kf20@,
+# Distinctive function keys:
+	khlp@, krdo@, kfnd@, kslt@, ksel@,
+	kbs=^H, khome=\2331~,
+	kich1=\2332~, kdch1=\2333~,
+	kend=\2334~, kpp=\2335~, knp=\2336~,
+	lf1@, lf2@, lf3@, lf4@,
+	use=BQ303-8,
+
+Q303-8-pc-rv|Questar 303 with PC keyboard full 8 bits reverse mode 80 columns,
+# ----------------------------------------------------------------------------
+	is2=\E[?2h\E[?3l\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	flash=\E[?5l$<50>\E[?5h,
+	use=Q303-8-pc,
+
+Q303-8-pc-w|Questar 303 with PC keyboard full 8 bits 132 columns,
+# ---------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5l\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	rs2=\E[?3h,
+	use=Q303-8-pc,
+
+Q303-8-pc-w-rv|Questar 303 with PC keyboard full 8 bits reverse 132 columns,
+# -------------------------------------------------------------------------
+	cols#132,
+	wsl#132,
+	is2=\E[?2h\E[?3h\E[?5h\E[?7h\E[?8h\E>\E[?1l\E\sG\E[?42l\E[?4l,
+	flash=\E[?5l$<50>\E[?5h,
+	rs2=\E[?3h,
+	use=Q303-8-pc,
+

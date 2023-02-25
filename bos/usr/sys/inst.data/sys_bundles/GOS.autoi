@@ -1,0 +1,56 @@
+# @(#) 54 1.13 src/bos/usr/sys/inst.data/sys_bundles/GOS.autoi, pkg, bos41J, 9523A_all 6/1/95 17:22:57
+#
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: GOS.autoi 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1995
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Base Graphical Operating System (GOS) Auto Install "Bundle" Definition File
+# These product options will be installed by BOSS install as part of base
+# operating system installation on systems having a graphics console.
+#
+################################################################
+# AIXwindows Runtime Environment
+X11.base
+# AIXwindows Motif Runtime Environment
+X11.motif.lib
+# AIXwindows Motif Window Manager
+X11.motif.mwm
+# AIXwindows X11r3 and X11r4 Compatability Libraries
+X11.compat.lib
+# AIXwindows aixterm client Compatability
+X11.apps.aixterm
+# AIXwindows clients
+X11.apps.clients
+# AIXwindows Default Fonts
+X11.fnt.defaultFonts
+X11.fnt.iso1
+X11.fnt.coreX
+# AIXwindows Locale Configuration
+X11.loc.[lang].base
+# AIXwindows Messages
+X11.msg.[msg]
+#
+# Options Required for Visual System Management
+#
+# AIXwindows Application Runtime 
+X11.apps.rte
+# AIX Graphical SMIT
+X11.apps.msmit
+# AIX Visual System Management
+X11.vsm.rte
+# AIX Desktop runtime libraries
+X11.Dt.lib
+# AIX Desktop Helps
+X11.Dt.helprun
+X11.Dt.helpmin
+# Desktop Tooltalk Support
+X11.Dt.ToolTalk

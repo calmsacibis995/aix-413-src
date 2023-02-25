@@ -1,0 +1,314 @@
+$ static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/onhost.man, tcpip, tcpip411, GOLD410 8/14/90 16:28:19";
+$
+$ COMPONENT_NAME:  TCPIP onhost.l
+$
+$ ORIGINS: 27
+$
+$ (C) COPYRIGHT International Business Machines Corp. 1989
+$ All Rights Reserved
+$ Licensed Materials - Property of IBM
+$
+$ US Government Users Restricted Rights - Use, duplication or
+$ disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$
+$	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+$
+$ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+$ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+$ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+$ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+$ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+$ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+$ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+$ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+$ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+$ CORRECTION.
+$
+$  RISC System/6000 is a trademark of International Business Machines
+$   Corporation.
+$
+$
+$ man pages for onhost
+$
+
+onhost, version 1.1
+ 
+
+PURPOSE
+ 
+Execute commands on an IBM VM or MVS host
+ 
+ 
+SYNTAX
+ 
+   onhost [-?dnps] [-a [alias]] [ccc]
+ 
+ 
+DESCRIPTION
+ 
+onhost uses the host connection maintained by the hostconnect command to
+execute commands on the host system.  onhost acts in one of three modes.  
+
+o   ccc is not present.  This signals full-screen mode.  onhost sets up
+    full-screen emulation using an unmodified IBM 3278-2 terminal emulator
+    such as tn or tn3270.  The emulator name can be specified in the
+    onhost.alias file - see hostconnect.
+ 
+o   ccc is rewritten and passed to the host for execution.  This process
+    is called special command mode.   Rewriting is controlled by the
+    onhost.profil as described below and may be suppressed with the -n
+    option.  When the host command completes, a distinguished end of
+    command line signals onhost to terminate with the exit code set by
+    the host.  Host input and output may be redirected.
+ 
+o   Additional input lines are passed to the host.  This is normal line
+    mode.  An exception is made if the line begins with a caret and one
+    of these characters: 1234567890-=abez.  In this case, onhost simulates
+    one of these 3270 keys: pf1, pf2, .. pf12, pa1, pa2, enter, and clear.
+    This allows limited control of full-screen host applications by onhost
+    in normal line mode.  Host input and output may be redirected.
+ 
+NOTE: the AIX shell scans the command line before it is passed to onhost,
+so you must escape any shell meta-characters.  The simplest way to do this
+is to put the command in double quotes.  For example,
+ 
+  onhost "ls cms:*.exec.a"
+ 
+will list all files of type exec in your CMS A-disk directory, whereas
+ 
+  onhost ls cms:*.exec.a
+ 
+will typically report a "No match." error from the shell.
+ 
+ 
+OPTIONS
+ 
+-?        This option displays information about the onhost command.
+
+-a alias  The "-a alias" option selects the host connection made by
+          "hostconnect -a alias".  The "-a" option simply displays the
+          last alias specified by the onhost or hostconnect command,
+          which is the alias used if this option is not present.
+ 
+-d        This option turns on debugging to study the code or track down
+          a problem.  -d sends debug output to the terminal.  -d1 sends
+          debug output (-d2 sends more) to the file "onhost.debug".
+ 
+-n        This option forces normal line mode treatment for ccc.
+ 
+-p        This option displays a prompt before all host input.  Special
+          command mode is indicated by >>, normal line mode by >.
+ 
+-s        This option shows the host return code.
+ 
+ 
+FULL SCREEN MODE
+ 
+If onhost is invoked without any command, it sets up full-screen mode by
+informing hostconnect, then it executes tn or tn3270, for example, with
+the socket address of hostconnect, and disappears.  The emulator behaves
+normally.  But if you close the emulator, using ctrl-t, "c" with tn, for
+example, hostconnect will maintain the host connection for later use by
+onhost.  You must logoff the host to close the connection.
+ 
+ 
+SPECIAL COMMAND MODE
+ 
+onhost simulates some aspects of certain AIX commands.  Actually, the
+CMS or TSO portion of onhost does the simulation.  The AIX onhost code
+simply looks up the command line token in "onhost.profil", where the
+entry determines what is sent to the host.  In most cases, a command
+such as "ls" is replaced by the string "onhost ls", then sent to the
+host.  You could do the same thing in full-screen mode, for example, by
+entering "onhost ls".  Enter "onhost ?" for a host reference display.
+ 
+The simulation does not attempt to provide AIX facilities on CMS or TSO,
+it simply helps you to do cat, ls, and rm, for example, without having to
+learn CMS or TSO.  Most of the commands are simulated by a program named
+onhost.  This program is written in REXX, the interpretive language on
+CMS and TSO.  It can be modified to extend the scope and number of the 
+commands which it simulates.
+ 
+ 
+SPECIAL COMMAND DESCRIPTIONS
+ 
+Several of the following special command examples use CMS file names as
+indicated by the "cms:" prefix.  Except for the "onhost cp" command, the
+prefix "cms:" or "tso:" is assumed for CMS or TSO if it is not present.
+CMS and TSO file names are made upper case.
+
+A file in CMS has a name and a type, each no longer than eight characters.
+A disk directory in CMS is identified by a single letter, called the mode
+when alone or suffixed with  a single digit.  A file with filename "fn"
+and filetype "ft" in the disk directory "fm" is specified by "cms:fn.ft.fm".
+
+A data set name in TSO comprises one or more qualifiers separated by periods.
+Each qualifier is one to eight characters.  The prefix (leftmost) qualifier
+of a data set name is normally supplied by onhost.  The complete data set
+name must not exceed 44 characters including periods.  Data set members are
+named by one to eight character names enclosed within parentheses.  Roughly,
+onhost treats the prefix qualifier as the default directory.  A partitioned
+data set contains zero or more members and can be treated as a subdirectory.
+ 
+ONHOST ? Displays information about onhost as implemented on the host.
+
+ONHOST CAT Displays a file on standard output.  For example,
+ 
+          onhost cat cms:fn.ft.fm
+          onhost cat tso:pds.data.set(member)
+ 
+        Only one file name may appear and there are no options.  Pipe
+        the result to "cat -n" for the -n and similar cat options.
+        Lines with more than 79 or 80 characters may be broken.
+ 
+        Use the standard CMS copy command to catenate files into the
+        single file, "fn ft fm," as for example,
+ 
+          onhost copy fn1 ft1 fm1 fn2 ft2 fm2 ... fn ft fm (replace
+ 
+ONHOST CD (TSO only) Sets the TSO high level qualifier.  A partitioned 
+        data set name can also be set.  For example,
+
+          onhost cd /userid
+          onhost cd partitioned.data.set.name
+
+        is equivalent to
+
+          onhost cd /userid/partitioned.data.set.name
+
+ONHOST CP Copies files between AIX and the host.  These commands will
+        copy a file from AIX to CMS, from CMS to AIX, and from CMS to
+        CMS.  The files are copied between systems using TCP/IP FTP;
+        see the file transfer section, below, for details.
+ 
+          onhost cp test1.pascal cms:test1.pascal.a
+          onhost cp -b cms:output.data.a output.data
+          onhost cp tso:test1.pascal tso:old.pascal(test1)
+ 
+        The first file is the source.  The second file is replaced and
+        carries the current timestamp.  The -b option specifies binary.
+ 
+ONHOST DATE Displays the date and time for the local time zone.
+ 
+ONHOST DF Displays the amount of free space on all accessed CMS disks or
+        TSO partitioned data sets.  The CMS mode letter or TSO partitioned
+        data set name can be specified.
+
+ONHOST HEAD Displays a file on standard output.  The command
+ 
+          onhost head -n cms:fn.ft.fm
+ 
+        displays the first n lines of the CMS file.  Only one file name
+        may appear.   If -n is omitted then the default value of 10 is
+        used.  Lines with more than 79 or 80 characters may be broken.
+ 
+ONHOST LS Lists the contents of a CMS disk directory or TSO user files
+        or members of a TSO partitioned data set.
+ 
+        The  -l option gives a long form of listing (except for members
+        of a TSO partitioned data set).  The -t option orders the result
+        according to time, with the newest file at the head of the list.
+        The -r option reverses the order.  The options can be combined.
+
+        CMS files may be listed which match patterns allowed by the CMS
+        listfile command.  Briefly, an asterisk represents any number of
+        characters, and a percent represents any single character.  TSO
+        files may be listed in a similar manner.
+ 
+        The C-shell type of pattern matching using [ ] and the C-Shell
+        use of { } is not supported.  The format and main results are
+        similar to those of the AIX ls command but some of the results
+        differ.  However, the command does show what files exist,
+        whether they can be read or written, and their (approximate)
+        size and date.
+ 
+ONHOST MKDIR (TSO only) Allocates a TSO partitioned data set.
+
+ONHOST PWD (TSO only) Displays the high level qualifier and, if present,
+        the partitioned data set name as set by the "onhost df" command.
+
+ONHOST RM Removes a file.
+ 
+ONHOST TAIL Displays the end of a file in the manner of "onhost head".
+ 
+ONHOST WHO Lists users of the host system running with terminals connected.
+        The userid and terminal is displayed.  The command will show how
+        long a user has been logged in if this information is available.
+        "onhost who am i" will show your userid and terminal.
+ 
+ONHOST WRITE Writes a message to a user of the host system.
+ 
+          onhost write user message text
+ 
+        sends the message text to the user.  Unlike AIX, it does not
+        warn the recipient or wait for you to type the message.
+ 
+ 
+ONHOST.PROFIL
+ 
+The "onhost.profil" file controls rewriting of onhost special commands.
+It is found in one of the directories specified in your path.  There is
+a default onhost.profil in one of the standard directories.  This file
+has entries of the form:
+ 
+  www sss
+ 
+where www is a word and sss is a string.  If you enter "onhost www xxx"
+and the word www is found in onhost.profil, then www is replaced by the
+string sss, and "sss xxx" is sent to the host.  If www is not found, then
+"onhost www xxx" is sent to the host.
+ 
+This file also controls some aspects of automatic login by hostconnect.  
+These entries are described in the file itself and should not normally
+be changed because they are tightly bound to the hostconnect code.  The
+file also carries a version number which is checked by hostconnect.
+
+ 
+FILE TRANSFER
+ 
+The VM or MVS TCP/IP FTP client is used for file transfer.  On CMS, the FTP
+console output is spooled and saved in the file "cms:onhostcp.ftptrace.a"
+which is then checked to determine if the FTP file transfer was successful.
+On TSO, input for the FTP command is preserved in "tso:onhostcp.ftpinput"
+and the FTP output is preserved in "tso:onhostcp.ftptrace".  If the file
+transfer is unsuccessful, "cat onhostcp.ftptrace" to see the trace file.
+Notice that TCP/IP FTP is always used for file transfer, even if LDSF is
+specified for the hostconnect command.
+ 
+The onhost cp command is not different than any other special command.
+However, the address  of the local system, the userid, and the password
+must be supplied to the CMS or TSO system so FTP can connect to the AIX
+system.  This information is needed on every file transfer request. The
+token, $FTPAUPW, found in onhost.profil, is replaced by the AIX address
+of the onhost command, the AIXuserid, AIXpasswd, and the working directory
+of the onhost command before the special command is sent to the host.
+The setting of AIXuserid and AIXpasswd is described in the "onhost.alias"
+section of hostconnect.
+ 
+ 
+NOTES
+ 
+It is difficult for onhost to properly handle the many situations which
+can arise in host communication.  If a host command takes too long
+(taking communication delays into account) or behaves poorly, then enter
+control-c (or your escape character) to interrupt onhost.  If onhost is
+waiting for your input, it will terminate.  If onhost is waiting for CMS
+or TSO to read, the interrupt will force a line to the host, or if no line
+is present, you will be prompted for a line or full-screen mode.
+ 
+A VM host may have the console spooled with no output, as indicated by no
+display of entered lines; enter "sp cons stop" to clear this condition.
+More problem conditions are discussed in the notes section of hostconnect.
+
+Modifications to the onhost.alias and onhost.profil files may not affect
+the current onhost sessions.
+ 
+When onhost initiates or terminates full-screen mode, it sends a 3270 clear
+key to the host.
+
+
+SEE ALSO
+ 
+hostconnect
+
+AIXwhat is @(#) onhost.l 1.4 PASC 1.4

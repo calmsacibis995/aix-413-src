@@ -1,0 +1,23 @@
+# @(#)54	1.6  src/nfs/var/yp/updaters, cmdnfs, nfs411, GOLD410 2/3/94 16:20:20
+#  
+#  COMPONENT_NAME: (CMDNFS) Network File System Commands
+#  
+#  FUNCTIONS: 
+#
+# ORIGINS: 24 
+#
+# Copyright (c) 1988 by Sun Microsystems, Inc.
+# 
+#
+#	Sample /var/yp/updaters file
+#
+#	Update file for yellow pages
+#
+# where the yp files live
+DIR=/etc
+# where the yp binaries live
+EXEDIR=/usr/sbin
+
+publickey.byname:
+	-@$(EXEDIR)/udpublickey $(DIR)/publickey  "make publickey"; \
+	echo $$?

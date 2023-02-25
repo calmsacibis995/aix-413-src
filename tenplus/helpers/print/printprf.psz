@@ -1,0 +1,107 @@
+$ $Nprintprf
+$ $*@(#)39      1.1  src/tenplus/helpers/print/printprf.psz, tenplus, tenplus411, GOLD410 3/17/93 14:01:16
+
+$ COMPONENT_NAME: (INED) INed Editor
+$
+$ ORIGINS:  9, 10, 27
+$
+$ This module contains IBM CONFIDENTIAL code. -- (IBM
+$ Confidential Restricted when combined with the aggregated
+$ modules for this product)                  SOURCE MATERIALS
+$ (C) COPYRIGHT International Business Machines Corp. 1985, 1990
+$ All Rights Reserved
+$
+$ US Government Users Restricted Rights - Use, duplication or
+$ disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$quote "
+
+$set 1
+$ $%1
+$ $.0
+$ $:/menu
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+$ $"| qprt -T $FILE -"
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AA "%+P_DFPRINT\n\
+Print on the default printer."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AB "%+P_DFPRINTING\n\
+Printing on the default printer."
+$ $$
+
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+ZZ "%+P_QPRT_OPT\n\
+| qprt -T $FILE \\_qprt options:\\+"
+$ Translate only the word "options", leave everything else unchanged.
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AC "%+P_PRNT_ASK\n\
+Print (ask for options)."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AD "%+P_PRINTING\n\
+Printing."
+$ $$
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+$ $">"
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AE "%+P_PRINT_OVER\n\
+Print to the file. Write over existing data."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AF "%+P_PRTFILE1\n\
+Printing to file $PRTFILE."
+$ Do not tranlate PRTFILE.
+$ $$
+$ $%1
+$ $.0
+$ $:/menu/*
+$ $%3
+$ $.0
+$ $:/menu/*/cmd
+$ $">>"
+$ $%3
+$ $.0
+$ $:/menu/*/dispcmd
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/*/dispdesc
+$ $"x"
+$ $%3
+$ $.0
+$ $:/menu/*/desc
+AG "%+P_PRINT_APP\n\
+Print to the file. Append to existing data."
+$ $%3
+$ $.0
+$ $:/menu/*/popdesc
+AH "%+P_PRTFILE2\n\
+Printing to file $PRTFILE."
+$ Do not tranlate PRTFILE.
+$ $$
+$ $$

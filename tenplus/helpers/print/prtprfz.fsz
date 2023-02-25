@@ -1,0 +1,338 @@
+* File name: prtprfz.frm
+
+* @(#)98	1.4  src/tenplus/helpers/print/prtprfz.fsz, tenplus, tenplus411, GOLD410 3/23/93 11:59:45
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 2
+	Flags = 0x1
+
+/invtext:
+	Type = 1
+	Count = 21
+
+/invtext/0:
+	Value = "[title                                                                         ]"
+
+/invtext/1:
+
+/invtext/2:
+	Value = "[subtitle_1                                                                    ]"
+
+/invtext/3:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/4:
+	Value = "\001[desc                               ]\001[cmd                                   ]\001"
+
+/invtext/5:
+	Value = "\006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/invtext/6:
+
+/invtext/7:
+	Value = "[subtitle_2                                                                    ]"
+
+/invtext/8:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/9:
+	Value = "\001[popdesc                                                                     ]\001"
+
+/invtext/10:
+	Value = "\006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/invtext/11:
+
+/invtext/12:
+
+/invtext/13:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/invtext/14:
+	Value = "\001[wtext_1                                                                     ]\001"
+
+/invtext/15:
+	Value = "\001                                                                              \001"
+
+/invtext/16:
+	Value = "\027\021\004                              \023\021\004                                           \001"
+
+/invtext/17:
+	Value = "\001`\001[wtext_2                     ]\001`\001[wtext_3                                  ]\001"
+
+/invtext/18:
+	Value = "\027\021\005                              \027\021\005                                           \001"
+
+/invtext/19:
+	Value = "\001`\001[wtext_4                     ]\001`\001[wtext_5                                  ]\001"
+
+/invtext/20:
+	Value = "\006\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+
+/fields:
+	Type = 1
+	Count = 15
+
+/fields/0:
+	Type = 1
+	Count = 4
+
+/fields/0/number:
+	Value = "1"
+
+/fields/0/name:
+	Value = "title"
+
+/fields/0/cat-msgno:
+	Value = "%-F_PRTPRFZ_TITLE"
+
+/fields/0/cat-deftxt:
+	Value = "                            Details of Print Option                             "
+
+/fields/1:
+	Type = 1
+	Count = 4
+
+/fields/1/number:
+	Value = "2"
+
+/fields/1/name:
+	Value = "subtitle_1"
+
+/fields/1/cat-msgno:
+	Value = "%-F_PRTPRFZ_SUBTITLE_1"
+
+/fields/1/cat-deftxt:
+	Value = "      Description shown in menu                       Command                   "
+
+/fields/2:
+	Type = 1
+	Count = 5
+
+/fields/2/name:
+	Value = "desc"
+
+/fields/2/data-path:
+	Value = "desc"
+
+/fields/2/number:
+	Value = "3"
+
+/fields/2/no-zoom:
+	Value = "x"
+
+/fields/2/4:
+	Type = 0
+
+/fields/3:
+	Type = 1
+	Count = 5
+
+/fields/3/name:
+	Value = "cmd"
+
+/fields/3/data-path:
+	Value = "cmd"
+
+/fields/3/number:
+	Value = "4"
+
+/fields/3/no-zoom:
+	Value = "x"
+
+/fields/3/4:
+	Type = 0
+
+/fields/4:
+	Type = 1
+	Count = 4
+
+/fields/4/number:
+	Value = "5"
+
+/fields/4/name:
+	Value = "subtitle_2"
+
+/fields/4/cat-msgno:
+	Value = "%-F_PRTPRFZ_SUBTITLE_2"
+
+/fields/4/cat-deftxt:
+	Value = "                        Description for popbox                                  "
+/fields/5:
+	Type = 1
+	Count = 4
+
+/fields/5/name:
+	Value = "popdesc"
+
+/fields/5/data-path:
+	Value = "popdesc"
+
+/fields/5/number:
+	Value = "6"
+
+/fields/5/no-zoom:
+	Value = "x"
+
+/fields/6:
+	Type = 1
+	Count = 4
+
+/fields/6/number:
+	Value = "7"
+
+/fields/6/name:
+	Value = "wtext_1"
+
+/fields/6/cat-msgno:
+	Value = "%-F_PRTPRFZ_WTEXT_1"
+
+/fields/6/cat-deftxt:
+	Value = "Flags:  any non-space character means true                                    "
+/fields/7:
+	Type = 1
+	Count = 4
+
+/fields/7/name:
+	Value = "save"
+
+/fields/7/data-path:
+	Value = "save"
+
+/fields/7/number:
+	Value = "8"
+
+/fields/7/no-zoom:
+	Value = "x"
+
+/fields/8:
+	Type = 1
+	Count = 4
+
+/fields/8/number:
+	Value = "9"
+
+/fields/8/name:
+	Value = "wtext_2"
+
+/fields/8/cat-msgno:
+	Value = "%-F_PRTPRFZ_WTEXT_2"
+
+/fields/8/cat-deftxt:
+	Value = "Save all ASCII files          "
+
+/fields/9:
+	Type = 1
+	Count = 4
+
+/fields/9/number:
+	Value = "10"
+
+/fields/9/name:
+	Value = "gr_out"
+
+/fields/9/data-path:
+	Value = "gr_out"
+
+/fields/9/no-zoom:
+	Value = "x"
+
+/fields/10:
+	Type = 1
+	Count = 4
+
+/fields/10/number:
+	Value = "11"
+
+/fields/10/name:
+	Value = "wtext_3"
+
+/fields/10/cat-msgno:
+	Value = "%-F_PRTPRFZ_WTEXT_3"
+
+/fields/10/cat-deftxt:
+	Value = "Print graphics box (use w/ printer filter) "
+
+/fields/11:
+	Type = 1
+	Count = 4
+
+/fields/11/name:
+	Value = "clear"
+
+/fields/11/data-path:
+	Value = "clear"
+
+/fields/11/number:
+	Value = "12"
+
+/fields/11/no-zoom:
+	Value = "x"
+
+/fields/12:
+	Type = 1
+	Count = 4
+
+/fields/12/number:
+	Value = "13"
+
+/fields/12/name:
+	Value = "wtext_4"
+
+/fields/12/cat-msgno:
+	Value = "%-F_PRTPRFZ_WTEXT_4"
+
+/fields/12/cat-deftxt:
+	Value = "Clear screen and run command  "
+
+/fields/13:
+	Type = 1
+	Count = 4
+
+/fields/13/name:
+	Value = "allout"
+
+/fields/13/data-path:
+	Value = "allout"
+
+/fields/13/number:
+	Value = "14"
+
+/fields/13/no-zoom:
+	Value = "x"
+
+/fields/14:
+	Type = 1
+	Count = 4
+
+/fields/14/number:
+	Value = "15"
+
+/fields/14/name:
+	Value = "wtext_5"
+
+/fields/14/cat-msgno:
+	Value = "%-F_PRTPRFZ_WTEXT_5"
+
+/fields/14/cat-deftxt:
+	Value = " Display all output of command             "

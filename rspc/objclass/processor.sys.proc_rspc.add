@@ -1,0 +1,62 @@
+* @(#)65 1.1 src/rspc/objclass/processor.sys.proc_rspc.add, rspccfg, rspc41J, 9511A_all 3/6/95 16:04:01
+*
+*  COMPONENT_NAME: (RSPCCFG) PROCESSOR DEVICE STANZA FILE
+*				processor.sys.proc_rspc.add
+*  FUNCTIONS:
+*
+*  ORIGINS: 27
+*
+*  (C) COPYRIGHT International Business Machines Corp. 1995
+*  All Rights Reserved
+*  Licensed Materials - Property of IBM
+*
+*  US Government Users Restricted Rights - Use, duplication or
+*  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+PdDv:
+	type = proc_rspc
+	class = processor
+	subclass = sys
+	prefix = proc
+	devid = ""
+	base = 0
+	has_vpd = 0
+	detectable = 1
+	chgstatus = 0
+	bus_ext = 0
+	fru = 2
+	led = 0x811
+	setno = 1
+	msgno = 47
+	catalog = devices.cat
+	DvDr = ""
+	Define = "/usr/lib/methods/define_rspc"
+	Configure = ""
+	Change = ""
+	Unconfigure = ""
+	Undefine = "/usr/lib/methods/undefine"
+	Start = ""
+	Stop = ""
+	uniquetype = processor/sys/proc_rspc
+
+PdAt:
+    	uniquetype = "processor/sys/proc_rspc"
+    	attribute = "state"
+    	deflt = "enable"
+    	values = "enable,disable,faulty"
+    	width = ""
+    	type = "R"
+    	generic = "D"
+    	rep = "sl"
+    	nls_index = 48
+
+PdAt:
+        uniquetype = "processor/sys/proc_rspc"
+        attribute = "type"
+        deflt = "POWER"
+        values = ""
+        width = ""
+        type = "R"
+        generic = "D"
+        rep = "sl"
+        nls_index = 49

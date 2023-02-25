@@ -1,0 +1,26 @@
+#!/usr/bin/ksh -
+# @(#)25	1.2  src/bos/usr/sbin/sliplogin/slip.logout, cmdnet, bos411, 9428A410j 3/11/94 16:40:15
+# 
+# COMPONENT_NAME: CMDNET
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 26  27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#	@(#)slip.login	5.1 (Berkeley) 7/1/90
+
+#
+# generic logout file for a slip line.  sliplogin invokes this with
+# the parameters:
+#      1        2         3        4          5         6     7-n
+#   slipunit ttyspeed loginname local-addr remote-addr mask opt-args
+#
+/usr/sbin/ifconfig sl$1 delete $4 $5 up
+exit

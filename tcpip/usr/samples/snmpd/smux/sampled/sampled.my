@@ -1,0 +1,257 @@
+-- @(#)48	1.2  src/tcpip/usr/samples/snmpd/smux/sampled/sampled.my, snmp, tcpip411, GOLD410 9/14/93 11:51:29
+--
+-- COMPONENT_NAME: (SNMP) Simple Network Management Protocol Daemon
+--
+-- ORIGINS: 27
+--
+-- (C) COPYRIGHT International Business Machines Corp. 1993
+-- All Rights Reserved
+-- US Government Users Restricted Rights - Use, duplication or
+-- disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+--
+-- Licensed Material - Property of IBM
+--
+-- FILE:	/usr/samples/snmpd/smux/sampled/sampled.my
+--
+
+--
+-- INTERNATIONAL BUSINESS MACHINES CORP. PROVIDES THIS SOURCE CODE
+-- EXAMPLE, ASSOCIATED LIBRARIES AND FILES "AS IS," WITHOUT WARRANTY 
+-- OF ANY KIND EITHER EXPRESSED OR IMPLIED INCLUDING BUT NOT LIMITED 
+-- TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+-- PARTICULAR PURPOSE.  The entire risk as to the quality and performance 
+-- of this example is with you.  Should any part of this source code 
+-- example prove defective you (and not IBM or an IBM authorized 
+-- dealer) assume the entire cost of all necessary servicing, repair, 
+-- or correction.
+--
+
+
+TEST-MIB DEFINITIONS ::= BEGIN
+
+--IMPORTS
+--	enterprises
+--		FROM RFC1155-SMI;
+
+IMPORTS
+	enterprises, OBJECT-TYPE
+		FROM RFC1155-SMI;
+
+ibm		        OBJECT IDENTIFIER ::=   { enterprises 2 }
+
+-- the Agents group
+ibmAgents		OBJECT IDENTIFIER ::=	{ ibm 3 }
+
+-- the operating system
+aix		        OBJECT IDENTIFIER ::=	{ ibmAgents 1 }
+
+-- hardware
+aixRISC6000		OBJECT IDENTIFIER ::=	{ aix 2 }
+
+-- risc6000 tree
+risc6000agents		OBJECT IDENTIFIER ::=	{ aixRISC6000 1 }
+risc6000private		OBJECT IDENTIFIER ::=	{ aixRISC6000 2 }
+risc6000public		OBJECT IDENTIFIER ::=	{ aixRISC6000 3 }
+
+risc6000snmpd		OBJECT IDENTIFIER ::=	{ risc6000agents 1 }
+risc6000gated		OBJECT IDENTIFIER ::=	{ risc6000agents 2 }
+
+risc6000samples		OBJECT IDENTIFIER ::=	{ risc6000private 1 }
+risc6000sampleAgents	OBJECT IDENTIFIER ::=	{ risc6000samples 1 }
+
+-- my private mib subtree
+myAgents	        OBJECT IDENTIFIER ::=	{ risc6000public 1 }
+myMIBs			OBJECT IDENTIFIER ::=	{ risc6000public 2 }
+
+sampled			OBJECT IDENTIFIER ::=	{ myAgents 1 }
+
+
+-- the test group
+
+test		OBJECT IDENTIFIER ::=	{ myMIBs 1 }
+test-ping	OBJECT IDENTIFIER ::=   { myMIBs 3 }
+
+sampleInt	OBJECT-TYPE
+		SYNTAX	Counter
+		ACCESS	read-only
+		STATUS	mandatory
+		DESCRIPTION
+			"A count of the number of times this private MIB 
+			variable is accessed."
+		::= { test 1 }
+
+sampleTick	OBJECT-TYPE
+		SYNTAX	TimeTicks
+		ACCESS	read-only
+		STATUS	mandatory
+		DESCRIPTION
+			"The time (in hundredths of a second) since this
+			SMUX peer was booted."
+		::= { test 2 }
+
+sampleTrap	OBJECT-TYPE
+		SYNTAX	INTEGER
+		ACCESS	read-only
+		STATUS	mandatory
+		DESCRIPTION
+			"An enterprise-specific trap is generated when this
+			MIB variable is read.  If the trap is generated, the
+			value of the MIB variable is 1.  If the trap fails,
+			the value of the MIB variable is 0."
+		::= { test 3 }
+
+sampleObjectID	OBJECT-TYPE
+		SYNTAX	OBJECT IDENTIFIER
+		ACCESS	read-only
+		STATUS	mandatory
+		DESCRIPTION
+			"The object identifier of this MIB variable."
+		::= { test 4 }
+
+sampleString	OBJECT-TYPE
+		SYNTAX	DisplayString
+		ACCESS	read-only
+		STATUS	mandatory
+		DESCRIPTION
+			"A simple string, 'This is a string example'."
+		::= { test 5 }
+
+windowNumber	OBJECT-TYPE
+		SYNTAX	INTEGER
+		ACCESS	read-only
+		STATUS	mandatory
+		DESCRIPTION
+			"The number of aixterm's running on the system."
+		::= { test 6 }
+
+windowRunning	OBJECT-TYPE
+		SYNTAX	INTEGER
+		ACCESS	read-only
+		STATUS	mandatory
+		DESCRIPTION
+			"If the X program is running, value = 1, else 0"
+		::= { test 7 }
+
+windowOpen	OBJECT-TYPE
+		SYNTAX	DisplayString
+		ACCESS	read-write
+		STATUS	mandatory
+		DESCRIPTION
+			"A string that when written to opens a window to the 
+			 specified X server.  When read, it returns the last
+             X server specified. "
+		::= { test 8 }
+
+windowProgram	OBJECT-TYPE
+		SYNTAX	DisplayString
+		ACCESS	read-write
+		STATUS	mandatory
+		DESCRIPTION
+			"A string that contains the program that aixterm runs
+			 when windowOpen is used. "
+		::= { test 9 }
+
+testInt		OBJECT-TYPE
+		SYNTAX  Counter
+		ACCESS  read-only
+		STATUS  mandatory
+		DESCRIPTION
+			"An integer counter"
+		::= { test 10 }
+
+ping2Number OBJECT-TYPE
+		SYNTAX  INTEGER
+		ACCESS  read-only
+		STATUS  mandatory
+		DESCRIPTION
+			"The number of ping entries (regardless of
+			their current state) present on this system."
+		::= { test-ping 1 }
+
+ping2Table OBJECT-TYPE
+		SYNTAX  SEQUENCE OF Ping2Entry
+		ACCESS  not-accessible
+		STATUS  mandatory
+		DESCRIPTION
+			"A list of ping entries.  The number of
+			entries is given by the value of ping2Number."
+		::= { test-ping 2 }
+
+ping2Entry OBJECT-TYPE
+		SYNTAX  Ping2Entry
+		ACCESS  not-accessible
+		STATUS  mandatory
+		DESCRIPTION
+			"A ping entry containing statistical objects."
+		INDEX   { ping2Addr }
+		::= { ping2Table 1 }
+
+Ping2Entry ::=
+		SEQUENCE {
+			ping2Addr
+				IpAddress,
+			ping2Min
+				INTEGER,
+			ping2Max
+				INTEGER,
+			ping2Ave
+				INTEGER,
+			ping2Tries
+				INTEGER,
+			ping2Responses
+				INTEGER
+		}
+
+ping2Addr OBJECT-TYPE
+		SYNTAX  IpAddress
+		ACCESS  read-only
+		STATUS  mandatory
+		DESCRIPTION
+			"A unique value for each ping.  Its value
+			is the address of the pinged object.  The row
+			has the data for that object."
+		::= { ping2Entry 1 }
+
+ping2Min OBJECT-TYPE
+		SYNTAX  INTEGER
+		ACCESS	read-only
+		STATUS  mandatory
+		DESCRIPTION
+			"The minimum time of a round trip icmp echo packet."
+		::= { ping2Entry 2 }
+
+ping2Max OBJECT-TYPE
+		SYNTAX  INTEGER
+		ACCESS  read-only
+		STATUS  mandatory
+		DESCRIPTION 
+			"The maximum time of a round trip icmp echo packet."
+		::= { ping2Entry 3 }
+
+ping2Ave OBJECT-TYPE
+		SYNTAX  INTEGER
+		ACCESS  read-only
+		STATUS  mandatory
+		DESCRIPTION
+			"The average time of a round trip icmp echo packet.
+			Determined by summing the times for the number of 
+			packets in pingtries and dividing by pingtries."
+		::= { ping2Entry 4 }
+
+ping2Tries OBJECT-TYPE
+		SYNTAX  INTEGER
+		ACCESS  read-write
+		STATUS  mandatory
+		DESCRIPTION
+			"The number of pings to attempt."
+		::= { ping2Entry 5 }
+
+ping2Responses OBJECT-TYPE
+		SYNTAX  INTEGER
+		ACCESS  read-only
+		STATUS  mandatory
+		DESCRIPTION
+			"The number of ping responses received."
+		::= { ping2Entry 6 }
+
+END

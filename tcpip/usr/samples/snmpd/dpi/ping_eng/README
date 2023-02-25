@@ -1,0 +1,67 @@
+* @(#)21	1.1  src/tcpip/usr/samples/snmpd/dpi/ping_eng/README, snmp, tcpip411, GOLD410 9/13/93 15:08:06
+*
+* COMPONENT_NAME: (SNMP) Simple Network Management Protocol Daemon
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1993
+* All Rights Reserved
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+* Licensed Material - Property of IBM
+*
+* FILE:	/usr/samples/snmpd/dpi/ping_eng/README
+*
+
+This DPI PING SNMP proxy agent code is provided as an example to
+demonstrate the use of the DPI facility.
+
+    INTERNATIONAL BUSINESS MACHINES CORP. PROVIDES THIS SOURCE CODE
+    EXAMPLE "AS IS," WITHOUT WARRANTY OF ANY KIND EITHER EXPRESSED OR
+    IMPLIED INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+    MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  The entire
+    risk as to the quality and performance of this example is with you.
+    Should any part of this source code example prove defective you (and
+    not IBM or an IBM authorized dealer) assume the entire cost of all
+    necessary servicing, repair, or correction.
+
+The DPI PING SNMP proxy agent allows an SNMP network management station to
+request a remote SNMP agent to perform ICMP ECHO ("ping") requests to a
+specified IP host.  This is useful for determining delays across a link from
+the perspective of the remote host.
+
+The "ping_eng" executable must be compiled as only the source code is
+provided.  A Makefile has been provided and is ready to use "as is".   This
+Makefile is shipped in the file, /usr/samples/snmpd/dpi/ping_eng/Makefile.  To
+compile the ping_eng DPI peer executable, at the shell prompt enter:
+  make
+
+
+The PING engine must run as root user because it needs to open a raw socket.
+It may be easiest to have it set-uid root:
+  su
+  Password:
+  chown root ping_eng
+  chmod u+s ping_eng
+		
+The PING engine takes two arguments.  The first is the host on which the SNMP
+agent is running and the second is the community name to use to inquire what
+the DPI port is.  To execute the ping_eng DPI peer, enter at the shell
+prompt:
+  ./ping_eng <localhost> <community>
+      where:  <localhost> specifies the local host name or IP address
+                          or the word, localhost.
+              <community> specifies a community name with read/write
+			  access.
+		  
+The MIB variables supported by the ping_eng DPI peer are listed in the 
+/usr/samples/snmpd/dpi/ping_eng/ping_eng.my file.
+
+You need to update the /etc/mib.defs file so that you can test the MIB
+variable support via the snmpinfo command.  The Makefile produces a MIB
+definition file named ping_eng.defs.  Concatenate ping_eng.defs to the bottom
+of the /etc/mib.defs file *BEFORE* you run the snmpinfo command.
+
+Make sure that the dpid SMUX peer is executing *BEFORE* you start the
+ping_eng DPI peer.

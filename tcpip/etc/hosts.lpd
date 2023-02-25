@@ -1,0 +1,46 @@
+# @(#)62	1.5  src/tcpip/etc/hosts.lpd, tcpip, tcpip411, GOLD410 9/27/91 17:11:51
+# 
+# COMPONENT_NAME: TCPIP hosts.lpd
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 26  27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#  /etc/hosts.lpd
+#
+# This file, along with the /etc/hosts.equiv file, defines which foreign
+# hosts are permitted to remotely print on your host.  To allow a user
+# from another host to print on your host, that foreign hostname must be
+# in this file or in /etc/hosts.equiv.  The lpd daemon searches
+# /etc/hosts.equiv before this file, so the definitions in it take
+# precedence.
+#
+# The format of this file is as follows:
+#
+# [-]hostname
+#
+# The hostname can be preceded by a '-' character to deny access.  If you
+# are using NIS, the hostname may be in the form:
+#
+# +@netgroup
+# -@netgroup
+#
+# where "netgroup" is an NIS netgroup defined in the netgroup map.  The
+# '+' form allows access to any host in the netgroup, while the '-' form
+# denies access to any host in the netgroup.
+#
+# Lines beginning with a '#' character and blank lines are ignored.
+#
+# Examples:
+#
+# host			allows access to all users on host
+# -host			denies access to all users on host
+# +@group		allows access to all users on hosts in group
+# -@group		denies access to all users on hosts in group

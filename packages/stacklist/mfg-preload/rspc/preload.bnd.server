@@ -1,0 +1,122 @@
+# @(#) 12 1.1 src/packages/stacklist/mfg-preload/rspc/preload.bnd.server, pkgrspc, pkg41J, 9511A_all 3/7/95 14:30:00
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: Server. Manufacturing Bundle File
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1995
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# AIX Server  "Bundle" Definition File
+# These product filesets will be installed by the customer selecting the 
+# Server installation bundle from  the Easy or Advanced Installation Tasks.
+#
+#
+################################################################
+# Network License Server Support
+bos.ifor_ls.server
+# Info hypertext support
+bos.info.rte
+bos.info.en_US.info_help
+bos.info.en_US.nav
+bos.info.en_US.manage_gds
+bos.info.en_US.probsolv_gds
+# Base System Networking
+bos.net.ncs
+bos.net.nfs
+bos.net.nis
+bos.net.tcp
+bos.net.uucp
+# Base Performance Tools
+bos.perf.diag_tool
+bos.perf.pmr
+# System Management Tools
+bos.sysmgt.trace
+bos.sysmgt.serv_aid
+bos.sysmgt.sysbr
+bos.sysmgt.quota
+# Base Terminal Function Support
+bos.terminfo.print.data
+#Printer backend runtime
+printers.rte
+# 10 common Printer definitions
+printers.ibm4019
+printers.ibm4029
+printers.ibm4039
+printers.hplj-3
+printers.hplj-4
+printers.hplj-3si
+printers.ibm4079
+printers.ibm4037
+printers.ibm2380-2
+printers.ibm2390-2
+# @(#) 56 1.2 src/bos/usr/sys/inst.data/sys_bundles/GOS.client, pkg, bos411, 9428A410j 3/13/94 14:49:46
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: GOS.client 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Base Graphical Operating System (GOS) Client "Bundle" Concatenation File
+# This  is an APPLY ONLY file and is not installed on the target system. 
+# These contents are added to the Client.bnd file found in
+#  /usr/sys/inst.data/sys_bundles when AIXwindows is installed.
+#
+################################################################
+# AIXwindows Info Support
+X11.info.rte
+# AIXwindows Client Applications
+#
+# X11.apps.clients fileset name is checked for in X11.base.rte post_i script  
+# in order to determine if this file has been appended to other bundles
+#
+X11.apps.clients
+X11.apps.config
+X11.apps.custom
+# AIXwindows Fonts
+X11.fnt.coreX
+# AIXwindows Samples
+X11.samples.apps.clients
+# @(#) 57 1.3 src/bos/usr/sys/inst.data/sys_bundles/GOS.server, pkg, bos411, 9428A410j 4/13/94 18:02:53
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: GOS.server 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Base Graphical Operating System (GOS) Server "Bundle" Concatenation File
+# This  is an APPLY ONLY file and is not installed on the target system. 
+# These contents along with the GOS.client file contents are added to
+# the Server.bnd file found in /usr/sys/inst.data/sys_bundles when AIXwindows
+# is installed.
+#
+################################################################
+# AIXwindows Fontserver
+X11.fnt.fontServer
+#
+# AIXwindows Desktop
+#
+X11.Dt.rte
+X11.Dt.helpinfo

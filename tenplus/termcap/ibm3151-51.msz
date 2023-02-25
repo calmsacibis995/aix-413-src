@@ -1,0 +1,180 @@
+* File name: ibm3151-51.map
+
+* @(#)84        1.1  src/tenplus/termcap/ibm3151-51.msz, tenplus, tenplus411, 9430C411a 7/12/94 15:29:27
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10, 27
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1994
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 1
+	Flags = 0x1
+
+/*:
+	Type = 1
+	Count = 2
+
+/*/Name:
+	Value = "ibm3151-51 ibm3151-61"
+
+/*/Picture:
+	Type = 1
+	Count = 49
+
+/*/Picture/0:
+
+/*/Picture/1:
+	Value = "\011\011\011      Keyboard - ibm3151"
+
+/*/Picture/2:
+
+/*/Picture/3:
+
+/*/Picture/4:
+	Value = "\011\011\011       Input Sequences"
+
+/*/Picture/5:
+
+/*/Picture/6:
+	Value = "  Editor Function      Key Name         Editor Function      Key Name"
+
+/*/Picture/7:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004 \023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/*/Picture/8:
+	Value = "\001(1)              \001CTL-a 1          \001 \001MENU             \001F3               \001"
+
+/*/Picture/9:
+	Value = "\001(2)              \001CTL-a 2          \001 \001LINES UP         \001F11              \001"
+
+/*/Picture/10:
+	Value = "\001(3)              \001CTL-a 3          \001 \001PAGE UP          \001Page Up          \001"
+
+/*/Picture/11:
+	Value = "\001(4)              \001CTL-a 4          \001 \001SEARCH UP        \001SH F7            \001"
+
+/*/Picture/12:
+	Value = "\001(5)              \001CTL-a 5          \001 \001BACKTAB          \001TAB <---         \001"
+
+/*/Picture/13:
+	Value = "\001(6)              \001CTL-a 6          \001 \001NEXT             \001SH F4            \001"
+
+/*/Picture/14:
+	Value = "\001(7)              \001CTL-a 7          \001 \001NEXT-WINDOW      \001CTL-a n          \001"
+
+/*/Picture/15:
+	Value = "\001(8)              \001CTL-a 8          \001 \001PICK-COPY        \001F9               \001"
+
+/*/Picture/16:
+	Value = "\001BACKSPACE        \001backspace        \001 \001PICK-UP          \001F7               \001"
+
+/*/Picture/17:
+	Value = "\001BEGIN-LINE       \001SH F5            \001 \001LINES DOWN       \001F12              \001"
+
+/*/Picture/18:
+	Value = "\001BOX-MARK         \001CTL-a b          \001 \001PAGE DOWN        \001Page Down        \001"
+
+/*/Picture/19:
+	Value = "\001BREAK            \001CTL-C  **        \001 \001SEARCH DOWN      \001SH F8            \001"
+
+/*/Picture/20:
+	Value = "\001CANCEL           \001F2               \001 \001PREVIOUS         \001SH F3            \001"
+
+/*/Picture/21:
+	Value = "\001CENTER           \001CTL-a c          \001 \001PRINT            \001CTL-a p          \001"
+
+/*/Picture/22:
+	Value = "\001DELETE-CHARACTER \001Delete           \001 \001PUT-COPY         \001F10              \001"
+
+/*/Picture/23:
+	Value = "\001DELETE-LINE      \001CTL-Delete       \001 \001PUT-DOWN         \001F8               \001"
+
+/*/Picture/24:
+	Value = "\001DO               \001CTL-a x          \001 \001QUIT             \001CTL-\\ or CTL-|   \001"
+
+/*/Picture/25:
+	Value = "\001DOWN-ARROW       \001Down Arrow       \001 \001QUOTE            \001CTL-a q          \001"
+
+/*/Picture/26:
+	Value = "\001END-LINE         \001SH F6            \001 \001REFRESH          \001CTL-a z          \001"
+
+/*/Picture/27:
+	Value = "\001EXECUTE          \001Send             \001 \001REPLACE          \001SH F1            \001"
+
+/*/Picture/28:
+	Value = "\001EXIT             \001CTL-a d          \001 \001RESTORE          \001CTL-Insert Char  \001"
+
+/*/Picture/29:
+	Value = "\001FONT             \001CTL-a f          \001 \001RETURN           \001Return           \001"
+
+/*/Picture/30:
+	Value = "\001FORMAT           \001F5               \001 \001RIGHT            \001CTL-a r          \001"
+
+/*/Picture/31:
+	Value = "\001GO-TO            \001SH F2            \001 \001RIGHT-ARROW      \001Right Arrow      \001"
+
+/*/Picture/32:
+	Value = "\001HELP             \001F1               \001 \001SAVE             \001CTL-a s          \001"
+
+/*/Picture/33:
+	Value = "\001HOME             \001Home             \001 \001SET-TAB          \001CTL-a v          \001"
+
+/*/Picture/34:
+	Value = "\001INSERT-LINE      \001F6               \001 \001TAB              \001TAB --->         \001"
+
+/*/Picture/35:
+	Value = "\001INSERT-MODE      \001Insert Char      \001 \001TEXT-MARK        \001CTL-a t          \001"
+
+/*/Picture/36:
+	Value = "\001LAST-ARG         \001CTL-a a          \001 \001UP-ARROW         \001Up Arrow         \001"
+
+/*/Picture/37:
+	Value = "\001LEFT             \001CTL-a l          \001 \001USE              \001CTL-a u          \001"
+
+/*/Picture/38:
+	Value = "\001LEFT-ARROW       \001Left Arrow       \001 \001WINDOW           \001CTL-a w          \001"
+
+/*/Picture/39:
+	Value = "\001LINE-FEED        \001                 \001 \001ZOOM-IN          \001SH F9            \001"
+
+/*/Picture/40:
+	Value = "\001LOCAL-MENU       \001F4               \001 \001ZOOM-OUT         \001SH F10           \001"
+
+/*/Picture/41:
+	Value = "\001MARGIN           \001CTL-a m          \001 \006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/*/Picture/42:
+	Value = "\006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/*/Picture/43:
+
+/*/Picture/44:
+	Value = "** The BREAK and QUIT characters can be changed using the \"stty\" command"
+
+/*/Picture/45:
+	Value = "   from the command line.  They can be viewed by typing \"stty -a\" on the"
+
+/*/Picture/46:
+	Value = "   command line; the BREAK character is labeled \"intr=\", the QUIT character"
+
+/*/Picture/47:
+	Value = "   is labeled \"quit=\"."
+
+/*/Picture/48:
+	Value = ""
+

@@ -1,0 +1,232 @@
+* @(#)86 1.3 src/rspc/objclass/sys.node.rspc.add, rspccfg, rspc41J, 9513A_all 3/28/95 16:28:38
+* 
+*  COMPONENT_NAME: (rspccfg) SYSTEM DEVICES STANZA FILE
+* 
+*  FUNCTIONS:
+* 
+*  ORIGINS: 27
+* 
+*  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+*  All Rights Reserved
+*  Licensed Materials - Property of IBM
+* 
+*  US Government Users Restricted Rights - Use, duplication or
+*  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+
+* sys device
+PdDv:
+	type = "rspc"
+	class = "sys"
+	subclass = "node"
+	prefix = "sys"
+	devid = "rspc"
+	base = 1
+	has_vpd = 0
+	detectable = 0
+	chgstatus = 1
+	bus_ext = 0
+	led = 0x811
+	setno = 1
+	msgno = 1
+	fru = 1
+	catalog = "devices.cat"
+	DvDr = ""
+	Define = "/usr/lib/methods/define_rspc -n"
+	Configure = "/usr/lib/methods/cfgsys_rspc"
+	Change = "/usr/lib/methods/chggen"
+	Unconfigure = ""
+	Undefine = ""
+	Start = ""
+	Stop = ""
+	uniquetype = "sys/node/rspc"
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "syscons"
+	deflt = ""
+	values = ""
+	width = ""
+	type = "R"
+	generic = ""
+	rep = "s"
+	nls_index = 0
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "sysconsp"
+	deflt = ""
+	values = ""
+	width = ""
+	type = "R"
+	generic = ""
+	rep = "s"
+	nls_index = 0
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "altcons"
+	deflt = ""
+	values = ""
+	width = ""
+	type = "R"
+	generic = ""
+	rep = "s"
+	nls_index = 0
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "tmpcons"
+	deflt = ""
+	values = ""
+	width = ""
+	type = "R"
+	generic = ""
+	rep = "s"
+	nls_index = 0
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "modelcode"
+	deflt = "0x0"
+	values = "0x0-0xffffffff,0x1"
+	width = ""
+	type = "R"
+	generic = ""
+	rep = "nr"
+	nls_index = 0
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "keylock"
+	deflt = ""
+	values = "service,normal,secure"
+	width = ""
+	type = "R"
+	generic = "D"
+	rep = "sl"
+	nls_index = 17
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "maxbuf"
+	deflt = "20"
+	values = "20-1000,1"
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "nr"
+	nls_index = 18
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "maxmbuf"
+	deflt = "2048"
+	values = "2048-524288,1"
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "nr"
+	nls_index = 19
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "maxuproc"
+	deflt = "40"
+	values = "40-131072,1"
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "nr"
+	nls_index = 20
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "autorestart"
+	deflt = "false"
+	values = "false,true"
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "sl"
+	nls_index = 21
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "iostat"
+	deflt = "true"
+	values = "false,true"
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "sl"
+	nls_index = 22
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "realmem"
+	deflt = "0x0"
+	values = "0x0-0xffffffff,0x1"
+	width = ""
+	type = "R"
+	generic = "D"
+	rep = "nr"
+	nls_index = 23
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "conslogin"
+	deflt = "enable"
+	values = "enable,disable"
+	width = ""
+	type = "R"
+	generic = "D"
+	rep = "sl"
+	nls_index = 26
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "fwversion"
+	deflt = ""
+	values = ""
+	width = ""
+	type = "R"
+	generic = "D"
+	rep = "s"
+	nls_index = 54
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "maxpout"
+	deflt = "0"
+	values = "0-131072,1"
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "nr"
+	nls_index = 27
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "minpout"
+	deflt = "0"
+	values = "0-131072,1"
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "nr"
+	nls_index = 28
+
+
+PdAt:
+	uniquetype = "sys/node/rspc"
+	attribute = "fullcore"
+	deflt = "false"
+	values = "false,true"
+	width = ""
+	type = "R"
+	generic = "DU"
+	rep = "sl"
+	nls_index = 45
+

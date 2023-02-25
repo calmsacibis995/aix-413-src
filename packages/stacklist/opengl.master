@@ -1,0 +1,43 @@
+/* @(#)91        1.1  src/packages/stacklist/opengl.master, pkg, pkg41J, 9515A_all 4/5/95 11:54:19                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for OpenGL Graphics LPP
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+OpenGL.GL32.adt
+OpenGL.GL32.dev
+OpenGL.GL32.rte
+OpenGL.info.en_US
+OpenGL.msg.en_US
+OpenGL.msg.de_DE
+OpenGL.msg.es_ES
+OpenGL.msg.fr_FR
+OpenGL.msg.it_IT
+OpenGL.msg.Ja_JP
+OpenGL.msg.ja_JP
+OpenGL.msg.ko_KR
+OpenGL.msg.nl_BE
+OpenGL.msg.no_NO
+OpenGL.msg.sv_SE
+OpenGL.msg.zh_TW
+OpenGL.msg.De_DE
+OpenGL.msg.En_US
+OpenGL.msg.Es_ES
+OpenGL.msg.Fr_FR
+OpenGL.msg.It_IT
+OpenGL.msg.Nl_BE
+OpenGL.msg.No_NO
+OpenGL.msg.Sv_SE
+OpenGL.OpenGL_X.adt
+OpenGL.OpenGL_X.dev
+OpenGL.OpenGL_X.rte
+OpenGL.OpenGL_X.tools

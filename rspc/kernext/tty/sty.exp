@@ -1,0 +1,44 @@
+#!/usr/lib/drivers/stydd
+* @(#)26	1.3  src/rspc/kernext/tty/sty.exp, isatty, rspc411, GOLD410 6/25/94 17:25:06
+*
+*   COMPONENT_NAME: isatty
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1994
+*   All Rights Reserved
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+sty_register
+sty_unregister
+sty_allocmsg
+sty_err
+sty_termios_set
+sty_termiox_set
+sty_pcmds
+sty_scmds
+*
+* openDisc probably needs to be removed, similar to the way the flowDisc
+* functions were internalized.  Until then,....
+*
+openDisc_input
+*
+* various debugger exports
+*
+sty_print
+sty_printd
+dump_data
+dump_bits
+dump_hex
+dump_flags
+db_d2
+krash_add
+krash_del
+_db_trace
+db_tflags

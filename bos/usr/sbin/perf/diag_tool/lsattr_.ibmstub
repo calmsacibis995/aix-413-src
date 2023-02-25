@@ -1,0 +1,143 @@
+#!/bin/ksh
+# @(#)78	1.5	src/bos/usr/sbin/perf/diag_tool/lsattr_.sh, pdt, bos411, 9428A410j 4/13/94 16:29:49
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# lsattr_
+# Obtain system parameter information, and record it in the
+# SM database
+#
+# first, get date information
+currentdate=`(gettime_)`
+curr=`echo $currentdate | tr ' ' '-'`
+#
+# Awk script to extract info from the lsattr command, and to provide a
+# formatted output of the obtained information.
+# Produces the following SM records:
+#     SYS iopacing - enabled/disabled state of i/o pacing
+#     SYS maxmbuf  - max KB set aside for mbufs
+#     SYS memscrub - true/false, state of mem scrubbing
+#     SYS maxuproc - maxuproc (number of user proceses)
+#
+# Input: the output of the lsattr command
+# obtain information, and format output
+lsattr -E -l sys0 | \
+   awk '
+        BEGIN {
+          pacing="false"
+        }
+        {
+           x=gsub(/-/," ",c)
+           x=gsub(/-/,",",t)
+           # get maxmbuf
+           #
+           if ($1 ~ /maxmbuf/) print "SYS", "sys0", c, "maxmbuf", $2,
+                       1.0, "I(" t ",KB)"
+           # determine if I/O pacing is active
+           # 
+           if ($1 ~ /maxpout/) {
+             if ($2>0) pacing="true"
+             print "SYS", "sys0", c, "maxpout", $2, 1.0, "I(" t ",PAGES)"
+           }
+           if ($1 ~ /minpout/) {
+             print "SYS", "sys0", c, "minpout", $2, 1.0, "I(" t ",PAGES)"
+             if ($2>0) pacing="true"
+           }
+           # determine state of memory scrubbing
+           #
+           if ($1 ~ /memscrub/) {
+              print "SYS", "sys0", c, "memscrub", $2, 1.0, "B"
+           }
+           if ($1 ~ /maxuproc/) {
+             print "SYS", "sys0", c, "maxuproc", $2, 1.0, "I(" t ",PROCS)"
+           }
+        }
+        END {
+          #
+          # is pacing active? 
+          print "SYS", "sys0", c, "iopacing", pacing, 1.0, "B"
+        }' c=$curr t="0-0-1" >>$pdt_SM
+
+#
+# Awk script to create an SM record including the name of the
+# host.
+#
+# Record produced is:
+#     SYS sys0  <date> hostname <name of host> ...
+#
+# Input: the output of the hostname command
+# get system id information and format output
+hostname | \
+   awk '
+       BEGIN {
+       }
+       {
+          x=gsub(/-/," ",c)
+          x=gsub(/-/,",",t)
+          print "SYS", "sys0", c, "hostname", $1, 1.0, "T"
+       }
+       END {
+       }' c=$curr t="0-0-1" >>$pdt_SM
+#
+# Awk script to create an SM record including the values of various
+# system parameters.
+# Input to this program is a file having 2 records:
+#   record 1:  var1name var2name var3name ...
+#   record 2:  var1val var2val var3val ...
+#
+# Records produced are of type SYS,
+#                         for object sys0,
+#                         and have attribute name determined by the input record
+# get load control parameters and record them
+getschedparms | \
+   awk '
+        BEGIN {
+        }
+        {
+          x=gsub(/-/," ",c)
+          x=gsub(/-/,",",t)
+          if (NR==1)
+          for (i=1; i<=NF; i++) 
+               NAMES[i]=$i
+          if (NR==2)
+          for (i=1; i<=NF; i++)
+              VALUES[i]=$i
+        }
+        END {
+          for (i in NAMES) 
+             print "SYS sys0 " c, NAMES[i], VALUES[i], 1.0, "I(" t ",N)"
+        }' c=$curr t="0-0-1" >>$pdt_SM
+
+#
+# get vmm parameters and record them
+getvmparms | \
+   awk '
+        BEGIN {
+        }
+        {
+          x=gsub(/-/," ",c)
+          x=gsub(/-/,",",t)
+          if (NR==1)
+          for (i=1; i<=NF; i++) 
+               NAMES[i]=$i
+          if (NR==2)
+          for (i=1; i<=NF; i++)
+              VALUES[i]=$i
+        }
+        END {
+          for (i in NAMES) 
+             print "SYS sys0 " c, NAMES[i], VALUES[i], 1.0, "I(" t ",N)"
+        }' c=$curr t="0-0-1" >>$pdt_SM

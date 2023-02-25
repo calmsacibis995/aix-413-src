@@ -1,0 +1,93 @@
+#!/bin/ksh
+# @(#)93	1.3	src/bos/usr/sbin/perf/pmr/trace_.sh, perfpmr, bos411, 9428A410j 4/14/94 10:11:50
+#
+# COMPONENT_NAME: perfpmr
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# trace_
+#
+# invoke RISC System/6000 trace command or generate report
+#
+
+if [ $# -eq 0 ]
+then
+ echo "trace_: usage: trace_ time"
+ echo "          time is total time in seconds to trace"
+ echo "                 --- OR ---"
+ echo "trace_: usage: trace_ -r [-k]"
+ echo "          -r   is flag to request readable ascii file be produced"
+ echo "               from existing trace.tr and trace.nm files."
+ echo "          -k   optional flag to eliminate lockl hooks from report"
+ exit 0
+fi
+
+# move to proper directory
+cd /var/perf/tmp
+
+# see if trace to be taken now
+if [ $1 != "-r" ]
+then
+ echo "\n     TRACE_: Starting trace for $1 seconds...."
+ trace -L 10485760 -ao trace.raw; sleep $1; trcstop
+ echo "     TRACE_: Trace collected...."
+
+ echo "     TRACE_: Binary trace data is in file trace.raw"
+
+ trcnm > trace.nm
+ echo "     TRACE_: Trcnm data is in file trace.nm"
+
+ cp /etc/trcfmt trace.fmt
+ echo "     TRACE_: /etc/trcfmt saved in file trace.fmt"
+ exit 0
+fi
+
+# see if needed files are here
+if [ ! -f trace.raw ]
+then
+  echo "    TRACE_: trace.raw file not found..."
+  exit 1
+fi
+
+if [ ! -f trace.fmt ]
+then
+  echo "    TRACE_: trace.fmt file not found..."
+  exit 1
+fi
+
+if [ ! -f trace.nm ]
+then
+  echo "    TRACE_: trace.nm file not found..."
+  exit 1
+fi
+
+# check for second parm of -k
+if [ $# -gt 1 ]
+then
+  if [ $2 = "-k" ]
+  then
+    echo "\n     TRACE_: Generating report...."
+    echo "\n\n\n        T  R  A  C  E    I  N  T  E  R  V  A  L    O  U  T  P  U  T\n" > trace.int
+  trcrpt -r trace.raw > trace.tr
+  rm trace.raw
+    trcrpt -k20E,20F -t trace.fmt -n trace.nm -O exec=on,pid=on trace.tr >> trace.int
+  else
+    echo "Invalid second parameter: $2\n"
+    exit 0
+  fi
+else
+  echo "\n     TRACE_: Generating report...."
+  echo "\n\n\n        T  R  A  C  E    I  N  T  E  R  V  A  L    O  U  T  P  U  T\n" > trace.int
+  trcrpt -r trace.raw > trace.tr
+  rm trace.raw
+  trcrpt -t trace.fmt -n trace.nm -O exec=on,pid=on trace.tr >> trace.int
+fi
+echo "     TRACE_: Trace report is in file trace.int"

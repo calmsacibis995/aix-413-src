@@ -1,0 +1,526 @@
+#! /bin/ksh
+# @(#)54        1.33  src/tcpip/usr/sbin/mktcpip/mktcpip, tcpip, tcpip411, GOLD410 7/5/94 08:56:05
+#
+# COMPONENT_NAME: (TCPIP)
+#
+# FUNCTIONS: mktcpip.sh
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+## [End of PROLOG]
+
+
+# 
+# FILE NAME: mktcpip
+#
+# FILE DESCRIPTION: High-level shell command for performing minimal
+#   configuration required to get a machine up and running TCP/IP.
+#
+#   Basic functions performed are:
+#   1)  the hostname is set both in the config database and in running machine
+#   2)  the IP address of the interface is set in the config database.
+#   3)  /etc/hosts entries made for hostname and IP address
+#   4)  the IP address of the nameserver and domain name are set
+#   5)  the subnet mask is set
+#   6)  destination and gateway routes are set
+#   7)  TCP/IP deamons started
+#       or
+#   8)  Retrieve the above information for SMIT display 
+#   9)  the cable type (bnc or dix) is set in database
+#
+#   See Usage message for explanation of parms
+#
+#
+# RETURN VALUE DESCRIPTION: 
+#                             0         Successful
+#                             non-zero  Unsuccessful
+# 
+#
+# EXTERNAL PROCEDURES CALLED: chdev, hostname, hostent, lsdev
+#                             mkdev, netstat, namerslv, /etc/rc.tcpip
+#
+#
+# GLOBAL VARIABLES: none
+#
+
+################################# usage #######################################
+#
+# NAME: usage()
+#
+# DESCRIPTION: Issue "usage" message and exit.
+#
+# INPUT: 
+#        None
+#
+# OUTPUT:
+#        Error messages (Standard Error)
+#
+# RETURN VALUE DESCRIPTION:
+#                           2
+#
+# NOTE: This function will not return (i.e., it will exit the entire
+#       script with exit status of 2).
+#
+usage(){
+   cat <<- HERE >&2
+   Usage:  $NAME {-S interface | -h hostname -a address -i interface
+               [-n nameserver_address -d domain] [-m subnet_mask] 
+               [-g gateway_address]] [-t cable_type] [-r ring_speed]
+	       [-c subchannel -D destination_address] [-s]}
+
+   -h hostname            Hostname of your machine
+   -a address             IP address of the interface specified by -i
+                          (must be in dotted decimal notation)
+   -i interface           Interface to associate with the -a IP address
+   -n nameserver_address  IP address of nameserver machine
+                          (must be in dotted decimal notation)
+   -d domain              Domain name, only use with -n
+   -m subnet_mask         Subnetwork mask (dotted decimal or 0x notation)
+   -g gateway_address     Gateway destination address
+                          (dotted decimal or symbolic name)
+   -t cable_type	  Cable type for ethernet, either 'bnc', 'dix' or 'N/A'
+   -r ring_speed          Ring speed for token ring adapter, either 4 or 16
+   -s                     Start the TCP/IP daemon
+   -c subchannel          Subchannel Address for 370 Channel Adapter
+   -D destination_address Destination IP address for 370 Channel Adapter
+   -S interface           Retrieve information for SMIT display
+
+   Example: $NAME -h fred.austin.ibm.com -a 192.9.200.9 -i tr0
+
+HERE
+   exit 2			# don't return
+}
+
+############################# mandatory #######################################
+#
+# NAME: mandatory()
+#
+# DESCRIPTION: Issue "mandatory" message and invoke "usage" function.
+#
+# INPUT: 
+#        None
+#
+# OUTPUT:
+#        Error messages (Standard Error)
+#
+# RETURN VALUE DESCRIPTION:
+#                           None
+#
+mandatory(){
+   echo "$NAME: Mandatory flag(s) missing" >&2
+   usage			# issue msg and don't return
+}
+
+############################## problem ########################################
+#
+# NAME: problem()
+#
+# DESCRIPTION: Issue "problem" message and exit
+#
+# INPUT: 
+#        $RTNCODE
+#        $1		Name of command that encountered an error
+#
+# OUTPUT:
+#        Error messages (Standard Error)
+#
+# RETURN VALUE DESCRIPTION:
+#                           $RTNCODE
+#
+# NOTE: This function will not return (i.e., it will exit the entire
+#       script with exit status of $RTNCODE).
+#
+problem(){
+   echo "$NAME: Problem with $1 command, return code = $RTNCODE" >&2
+   exit $RTNCODE			# don't return
+}
+
+############################### dotted ########################################
+#
+# NAME: dotted()
+#
+# DESCRIPTION: Perform rudimentary check of IP address to see if composed
+#              of dots and numbers.  Will issue error message and invoke
+#              usage function if error detected.
+#
+# INPUT: 
+#        $1, IP Address
+#
+# OUTPUT:
+#        Error messages (Standard Error).  If error detected.
+#
+# RETURN VALUE DESCRIPTION:
+#                           0     (Successful)
+#                           None  (Will invoke usage function if error)
+#
+dotted(){
+# compare number chars to number of "decimal and 0-9" characters
+if [ "`expr $1 : '.*'`" -ne "`expr $1 : '[.0-9]*'`" ] ; then
+   echo "$NAME: IP address, $1, not in dotted decimal notation" >&2
+   usage			# issue message and don't return
+fi
+}
+
+############################## main ############################################
+
+PATH=/bin:/usr/bin:/usr/sbin:/etc:/usr/ucb export PATH
+
+NAME=$0
+
+# Parse command flags and arguments
+set -- `getopt h:a:i:n:d:m:g:t:r:sc:D:S: $*`
+if [ $? != 0 ] ; then		# test for syntax error
+   usage			# issue msg and don't return
+fi
+
+#if [ $# -lt 3 ] ; then		# test for too few parms
+#   mandatory			# issue msg and don't return
+#fi
+
+HOSTNAME= IPADDRESS= INTERFACE= NAMESERVER= DOMAIN= SUBNETMASK= DESTINATION= GATEWAY= STARTTCP= SHOW= TYPE= DESTADDR= SUBCHANNEL= RING=
+
+while [ "$1" != "--" ]
+do
+   case $1 in
+      -h)
+	 HOSTNAME=$2 shift 2
+      ;;
+      -a)
+	 IPADDRESS=$2 shift 2
+      ;;
+      -i)
+	 INTERFACE=$2 shift 2
+	 echo "$INTERFACE"
+      ;;
+      -n)
+	 NAMESERVER=$2 shift 2
+      ;;
+      -d)
+	 DOMAIN=$2 shift 2
+      ;;
+      -m)
+	 SUBNETMASK=" -a netmask=$2" shift 2
+      ;;
+      -g)
+	 GATEWAY=$2 shift 2
+      ;;
+      -t)
+	 TYPE=$2 shift 2
+      ;;
+      -r)
+	 RING=$2 shift 2
+      ;;
+      -s)
+	 STARTTCP=1 shift
+      ;;
+      -c)
+	 SUBCHANNEL=$2 shift 2
+      ;;
+      -D)
+	 DESTADDR=$2 shift 2
+      ;;
+      -S)
+	 SHOW=$2 shift 2
+      ;;
+      *)
+	 usage				# shouldn't ever hit this
+      ;;
+   esac
+done
+
+if [ $# -gt 1 ] ; then			# see if extra parms specified
+   echo "$NAME: Too many flags" >&2
+   usage				# issue msg and don't return
+fi
+
+# get the domain and nameserver in /etc/resolv.conf, if any
+grep domain /etc/resolv.conf > /dev/null 2>&1
+RTNCODE=$?
+if [ $RTNCODE -ne 0 ] ; then
+   SNAME=
+   DOMN=
+else
+   TMP=`/usr/sbin/namerslv -sI | awk '{ print $2}'`
+   SNAME=`echo $TMP | awk '{ print $1}'`
+   DOMN=`/usr/sbin/namerslv -sn | awk '{ print $2}'`
+fi
+
+if [ "$SHOW" != "" ] ; then
+   # Find whether the interface is for Ethernet, Token ring or else ..
+   SHW=`echo $SHOW | cut -c1-2`
+   # get the hostname
+   HOST=`hostname`
+   # get the IPaddr and the subnetmask
+   ADDR=`lsattr -E -l $SHOW -F "value" -a netaddr`
+	
+   # Channel adapter needs netmask for real world
+   #if [ "$SHW" != ca ]; then
+       # no netmask for 370 channel
+       MASK=`lsattr -E -l $SHOW -F "value" -a netmask`
+   #fi
+
+   # get the default gateway address
+   FLAGS=`netstat -rn | grep default | head -1 | awk '{ print $3 }'`
+   if [ "$FLAGS" = "UG" ]; then
+        GATE=`netstat -rn | grep default | head -1 | awk '{ print $2 }'`
+   fi
+
+   # we don't want rc.tcpip started again accidentally
+   START="no"
+   if [ "$SHW" = tr ]; then
+        INT=`echo $SHOW | cut -c3-4`
+        SPEED=`lsattr -E -l tok$INT -F "value" -a ring_speed`
+        # print all of the requested information in command to discover format
+        echo "#host:addr:mask:_rawname:nameserv:domain:gateway:speed:start" >&2
+        echo "$HOST:$ADDR:$MASK:$SHOW:$SNAME:$DOMN:$GATE:$SPEED:$START" >&2
+        exit 0
+   fi
+   if [ "$SHW" = en -o "$SHW" = et ]; then
+   	# get the value of 'bnc_select' attribute
+   	INT=`echo $SHOW | cut -c3-4`       
+   	lsattr -E -l ent$INT | grep bnc_select > /dev/null 2>&1
+	RTNCODE=$?
+  	if [ $RTNCODE -ne 0 ]; then
+		CABLE="N/A"
+	else
+		CABLE=`lsattr -E -l ent$INT -F "value" -a bnc_select` 
+	fi
+        # print all of the requested information in command to discover format
+        echo "#host:addr:mask:_rawname:nameserv:domain:gateway:type:start" >&2
+        echo "$HOST:$ADDR:$MASK:$SHOW:$SNAME:$DOMN:$GATE:$CABLE:$START" >&2
+        exit 0
+   fi
+   if [ "$SHW" = ca ]; then
+   	INT=`echo $SHOW | cut -c3-4`       
+	CLAWSET=`lsattr -E -l cat$INT -F "value" -a clawset`
+	DEST=`lsattr -E -l ca$INT -F "value" -a dest`
+        # print all of the requested information in command to discover format
+        echo "#host:addr:dest:mask:subchannel:_rawname:nameserv:domain:gateway:start" >&2
+        echo "$HOST:$ADDR:$DEST:$MASK:$CLAWSET:$SHOW:$SNAME:$DOMN:$GATE:$START" >&2
+	exit 0
+   fi
+   # print all of the requested information in command to discover format
+   echo "#host:addr:mask:_rawname:nameserv:domain:gateway:start" >&2
+   echo "$HOST:$ADDR:$MASK:$SHOW:$SNAME:$DOMN:$GATE:$START" >&2
+   exit 0
+fi
+
+SHW=`echo $INTERFACE | cut -c1-2`	#to get first two letters, ex. en, et..
+INT=`echo $INTERFACE | cut -c3-4`	#to get last digits in interface.
+
+# See if mandatory parms were specified
+if [ "$HOSTNAME" = "" -o "$IPADDRESS" = "" -o "$INTERFACE" = "" ] ; then
+   mandatory
+fi
+
+# check some requirements for 370 channel
+if [ "$SHW" = ca ]; then
+    if [ "$DESTADDR" = "" -o "$SUBCHANNEL" = "" ] ; then
+	mandatory
+    fi
+    # ensure nil entry
+    #  Netmask is valid in ODM
+    #SUBNETMASK=
+fi
+
+GWAY=`echo "$GATEWAY" | awk '{split($0,a,","); print a[1]}'`
+if [ "$GWAY" != "" ] ; then
+	GATEWAY="$GWAY"
+fi
+# See if default gateway addresses present 
+if [ "$GATEWAY" != "" ] ; then
+   DESTINATION="0"
+else
+   DESTINATION=
+fi
+
+dotted $IPADDRESS		# rudimentary check on address
+
+# See if DOMAIN specified without NAMESERVER, and vice versa
+if [ "$DOMAIN" != "" -a "$NAMESERVER" = "" ] ; then
+   echo "$NAME: -d flag cannot be specified without -n flag" >&2
+   usage			# issue message and don't return
+fi
+if [ "$NAMESERVER" != "" -a "$DOMAIN" = "" ] ; then
+   echo "$NAME: -n flag cannot be specified without -d flag" >&2
+   usage			# issue message and don't return
+fi
+
+# Save off current umask and set it to 022 so that any creation
+# of the files /etc/resolv.conf or /etc/hosts by namerslv or hostent
+# will have the correct 644 permissions.
+UMASKSAVE=`umask`
+umask 022
+
+[ "$NAMESERVER" != "" ] && dotted $NAMESERVER	# rudimentary address check
+# Make entry in local /etc/hosts
+# Make sure that /etc/hosts exists
+if [ ! -f /etc/hosts ]; then
+	touch /etc/hosts
+fi
+# Make sure that the address isn't commented out
+grep -F -w "$IPADDRESS" /etc/hosts | grep -v ".*#.*$IPADDRESS" > /dev/null 2>&1
+RTNCODE=$?
+# If new IP address is in /etc/hosts file then add the new hostname as an alias
+# Else enter the IP address and hostname as new entry in /etc/hosts file.
+if [ $RTNCODE -eq 0 ]; then
+        ONAMES=`grep -F -w "$IPADDRESS" /etc/hosts | \
+               grep -v ".*#.*$IPADDRESS" | \
+               awk '{for(i=2;i<=NF;i++)
+                         if(substr($i,1,1)=="#")
+                           break;
+                         else
+                           printf("%s ",$i) }'`
+        # if new hostname is anywhere on old entry, don't add it
+        DONTADD=0
+        for i in $ONAMES
+          do
+            if [ $HOSTNAME = $i ]; then
+              DONTADD=1
+            fi
+          done
+        if [ $DONTADD -eq 0 ]; then
+                hostent -c "$IPADDRESS" -h "$ONAMES $HOSTNAME"
+		RTNCODE=$?
+		[ $RTNCODE -ne 0 ] && problem hostent
+	fi
+else
+	hostent -a "$IPADDRESS" -h "$HOSTNAME"
+	RTNCODE=$?
+	[ $RTNCODE -ne 0 ] && problem hostent
+fi
+# Set hostname in the running system
+hostname "$HOSTNAME"
+RTNCODE=$?
+[ $RTNCODE -ne 0 ] && problem hostname
+
+# Set hostid  of  the running system
+hostid `hostname`
+RTNCODE=$?
+[ $RTNCODE -ne 0 ] && problem hostid
+
+# Set uname of the running system
+uname -S "${HOSTNAME%%.*}"
+RTNCODE=$?
+[ $RTNCODE -ne 0 ] && problem uname
+
+# Set hostname and IP addr in config DB
+
+# Avoid a 2nd mkdev if inet0 already exists.  If the user accidentally
+# "committed" before entering all SMIT commands, they'll need to re-enter
+# the data and try again.  The 1st time would have created inet0
+if lsdev -C -c tcpip | egrep inet0 2>&1 > /dev/null ; then
+   : 			# inet0 already exists
+else
+   mkdev -t inet
+   RTNCODE=$?
+   [ $RTNCODE -ne 0 ] && problem mkdev
+fi
+
+chdev -l inet0 -a hostname="$HOSTNAME"
+RTNCODE=$?
+[ $RTNCODE -ne 0 ] && problem chdev
+
+if [ "$SHW" = tr ]; then
+# For Token Ring, set the Ring Speed
+	chdev -l $INTERFACE -a state=detach > /dev/null 2>&1
+	rmdev -l tok$INT > /dev/null 2>&1
+	chdev -l tok$INT -a ring_speed=$RING  > /dev/null 2>&1
+	if [ $? != 0 ] ; then
+		chdev -P -l tok"$INT" -a ring_speed=$RING 
+			> /dev/null 2>&1
+		echo "Warning: Token Ring device busy. The ring speed change"
+		echo "         (if any) will take effect on the next reboot."
+	fi
+	mkdev -l tok$INT > /dev/null 2>&1
+fi
+if [ "$SHW" = en -o "$SHW" = et ]; then
+# For Ethernet, set the Cable Type except integrated ethernet adapter
+   	lsattr -E -l ent$INT | grep bnc_select > /dev/null 2>&1
+	RTNCODE=$?
+  	if [ $RTNCODE -ne 0 ]; then
+          lsattr -E -l ent$INT | grep bnc_dix_jumper > /dev/null 2>&1
+          RTNCODE=$?
+          if [ $RTNCODE -eq 0 ]; then
+             JUMPER=no
+             JUMPER=`lsattr -E -l ent$INT -a bnc_dix_jumper -F value`
+             if [ "$JUMPER" = "yes" ]; then
+                  if [ "$TYPE" = "dix" -o "$TYPE" = "bnc" ]; then
+                  echo "To select bnc or dix on the integrated ethernet adapter,
+                  please change the jumper on the adapter."
+                  fi
+             fi
+	  fi
+        else 
+	  if [ "$TYPE" = "dix" -o "$TYPE" = "bnc" ]; then
+	  	chdev -l $INTERFACE -a state=detach > /dev/null 2>&1
+	 	rmdev -l ent$INT > /dev/null 2>&1
+		chdev -l ent"$INT" -a bnc_select="$TYPE" > /dev/null 2>&1
+		if [ $? != 0 ] ; then
+			chdev -P -l ent"$INT" -a bnc_select="$TYPE" 
+				> /dev/null 2>&1
+			echo "Warning: Ethernet device busy. Changing to $TYPE"
+			echo "         will take effect on the next reboot."
+		fi
+	  	mkdev -l ent$INT > /dev/null 2>&1
+	  else
+		echo "Select either 'bnc' or 'dix'"
+	  fi
+	fi
+fi
+if [ "$SHW" = ca ]; then
+# 370 Channel, set the subchannel and destaddr
+    eval chdev -l "$INTERFACE" -a subchan="$SUBCHANNEL" -a dest="$DESTADDR" -a netaddr="$IPADDRESS" "$SUBNETMASK" -a state=up
+    RTNCODE=$?
+    [ $RTNCODE -ne 0 ] && problem chdev
+else
+    eval chdev -l "$INTERFACE" -a netaddr="$IPADDRESS" "$SUBNETMASK" -a state=up
+    RTNCODE=$?
+    [ $RTNCODE -ne 0 ] && problem chdev
+fi
+
+# Change nameserver and domain entries, if the new entry is same as old then
+# Don't change.
+if [ "$NAMESERVER" != "" -a "$NAMESERVER" != "$SNAME" ] ; then
+   /usr/sbin/namerslv -a -i "$NAMESERVER"
+   RTNCODE=$?
+   [ $RTNCODE -ne 0 ] && problem /usr/sbin/namerslv
+fi
+
+if [ "$DOMAIN" != "" -a "$DOMAIN" != "$DOMN" ] ; then
+   /usr/sbin/namerslv -c "$DOMAIN"
+   RTNCODE=$?
+   [ $RTNCODE -ne 0 ] && problem /usr/sbin/namerslv
+fi
+
+# Change inet0 with route if route present 
+if [ "$DESTINATION" != "" ] ; then
+   GATE2=`lsattr -E -l inet0 -F "value" -a route`
+   if [ "$GATE2" != "" ] ; then
+   	chdev -l inet0 -a delroute="$GATE2" > /dev/null 2>&1
+   fi
+   FLAGS=`netstat -rn | grep default | head -1 | awk '{ print $3 }'`
+   if [ "$FLAGS" = "UG" ]; then
+      GATE1=`netstat -rn | grep default | awk '{ print $2 }'`
+      if [ "$GATE1" != "" ] ; then
+                chdev -l inet0 -a delroute="$DESTINATION","$GATE1" > /dev/null 2>&1
+      fi
+   fi
+   chdev -l inet0 -a route="$DESTINATION","$GATEWAY"
+   RTNCODE=$?
+   [ $RTNCODE -ne 0 ] && problem chdev
+fi
+
+# Set the umask back to the original value.
+umask $UMASKSAVE
+
+# Start TCP/IP if need be
+[ "$STARTTCP" = "1" ] && exec /etc/rc.tcpip
+exit 0

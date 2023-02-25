@@ -1,0 +1,38 @@
+# @(#)47	1.1  src/bos/usr/sbin/netstart/hosts, cmdnet, bos411, 9428A410j 7/24/91 10:00:46
+# 
+# COMPONENT_NAME: TCPIP hosts
+# 
+# FUNCTIONS: loopback 
+#
+# ORIGINS: 26  27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#  /etc/hosts
+#
+# This file contains the hostnames and their address for hosts in the
+# network.  This file is used to resolve a hostname into an Internet
+# address.  
+#
+# At minimum, this file must contain the name and address for each
+# device defined for TCP in your /etc/net file.  It may also contain
+# entries for well-known (reserved) names such as timeserver
+# and printserver as well as any other host name and address.
+#
+# The format of this file is:
+# Internet Address	Hostname	# Comments
+# Items are separated by any number of blanks and/or tabs.  A '#'
+# indicates the beginning of a comment; characters up to the end of the
+# line are not interpreted by routines which search this file.  Blank
+# lines are allowed.
+
+# Internet Address	Hostname	# Comments
+# 192.9.200.1     	net0sample	# ethernet name/address
+# 128.100.0.1		token0sample	# token ring name/address
+# 10.2.0.2		x25sample	# x.25 name/address
+127.0.0.1		loopback localhost	# loopback (lo0) name/address

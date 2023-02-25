@@ -1,0 +1,28 @@
+# @(#)37	1.5	src/bos/usr/sbin/perf/diag_tool/.retention.control.sh, pdt, bos411, 9428A410j 4/13/94 16:34:05
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# .retention.control.sh
+#
+# Retention control file.
+# For each retention routine, identify its execution profile
+#
+# format:
+#   retention_routine profile_name
+#
+# profiles are identified in the profiles file
+#
+retention_ offweekly

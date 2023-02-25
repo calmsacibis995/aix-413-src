@@ -1,0 +1,97 @@
+# @(#)90	1.6  src/rspc/objclass/adapter.isa_sio.isa_mouse.add, rspccfg, rspc41J, bai15 4/11/95 15:50:45
+#
+#   COMPONENT_NAME: rspccfg
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+#
+# Stanzas for the mouse predefined values
+#
+
+# adapter predefined values
+PdDv:
+ type = "isa_mouse"
+ class = "adapter"
+ subclass = "isa_sio"
+ prefix = "sioma"
+ devid = "PNP0F03"
+ base = 0
+ has_vpd = 0
+ detectable = 1
+ chgstatus = 0
+ bus_ext = 0
+ fru = 2
+ led = 0x823
+ setno = 127
+ msgno = 1
+ catalog = "devices.cat"
+ DvDr = "isa/mousedd"
+ Define = "/usr/lib/methods/define_rspc"
+ Configure = "/usr/lib/methods/cfgkm_isa"
+ Change = "/usr/lib/methods/chggen_rspc"
+ Unconfigure = "/usr/lib/methods/ucfgdevice"
+ Undefine = "/usr/lib/methods/undefine"
+ Start = ""
+ Stop = ""
+ uniquetype = "adapter/isa_sio/isa_mouse"
+
+PdAt:
+ uniquetype = "adapter/isa_sio/isa_mouse"
+ attribute = "bus_io_addr"
+ deflt = "0x60"
+ values = "0x60"
+ width = "0x1"
+ type = "O"
+ generic = ""
+ rep = "n"
+ nls_index = 0
+
+PdAt:
+ uniquetype = "adapter/isa_sio/isa_mouse"
+ attribute = "xbus_io_key"
+ deflt = ""
+ values = "bus_io_addr"
+ width = ""
+ type = "S"
+ generic = ""
+ rep = "sl"
+ nls_index = 0
+
+PdAt:
+ uniquetype = "adapter/isa_sio/isa_mouse"
+ attribute = "bus_intr_lvl"
+ deflt = "12"
+ values = "12"
+ width = ""
+ type = "N"
+ generic = ""
+ rep = "n"
+ nls_index = 0
+
+PdAt:
+ uniquetype = "adapter/isa_sio/isa_mouse"
+ attribute = "intr_priority"
+ deflt = "3"
+ values = "3"
+ width = ""
+ type = "P"
+ generic = ""
+ rep = "n"
+ nls_index = 0
+
+# predefined connections
+PdCn:
+ uniquetype = "adapter/isa_sio/isa_mouse"
+ connkey = "std_m"
+ connwhere = "mouse"

@@ -1,0 +1,98 @@
+# @(#)64	1.11  src/tcpip/etc/3270.keys, tcpip, tcpip411, GOLD410 6/2/94 13:26:30
+#
+#   COMPONENT_NAME: TCPIP
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27 38
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1993
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# Top-level key binding definition file for telnet 3270 emulation
+#
+#
+#	Copyright (c) 1985 by Paul Milazzo - all rights reserved
+#
+#
+#       3270 function   sequence        key
+#
+bind	pf1		"\e1"		# META-1
+bind	pf2		"\e2"		# META-2
+bind	pf3		"\e3"		# META-3
+bind	pf4		"\e4"		# META-4
+bind	pf5		"\e5"		# META-5
+bind	pf6		"\e6"		# META-6
+bind	pf7		"\e7"		# META-7
+bind	pf8		"\e8"		# META-8
+bind	pf9		"\e9"		# META-9
+bind	pf10		"\e0"		# META-0
+bind	pf11		"\e-"		# META--
+bind	pf12		"\e="		# META-=
+bind	backtab		"\e\t"		# META-TAB
+ 
+#emacs bindings for the defaults
+bind	wordnext	"\ef"
+bind	wordprev	"\eb"
+bind	down		"^N"
+bind	left		"^B"
+bind	right		"^F"
+bind	up		"^P"
+bind	clear		"\e "
+bind    delete          "^D"
+bind    clear           "^L"
+bind	eraseeof	"^K"
+bind    backtab         "^A"
+bind	enter		"^J"
+
+# start ARABIC support
+bind   autoshape   "\ec"
+bind   isolated    "\eo"
+bind   initial     "\ei"
+bind   middle      "\em"
+bind   final       "\ey"
+bind   fieldshape  "\eh"
+bind   fieldbase   "\eb"
+
+bind   autoshape   "\eC"
+bind   isolated    "\eO"
+bind   initial     "\eI"
+bind   middle      "\eM"
+bind   final       "\eY"
+bind   fieldshape  "\eH"
+bind   fieldbase   "\eB"
+
+#Bidi support (IBM3151 & VT100)
+bind    autopush        "\eA"
+bind    scrrev          "\eS"
+bind    endpush         "\eE"
+bind    push            "\eP"
+bind    eng_lang        "\eL"
+bind    nls_lang        "\eN"
+bind    fldrev          "\eF"
+
+bind    autopush        "\ea"
+bind    scrrev          "\es"
+bind    endpush         "\ee"
+bind    push            "\ep"
+bind    eng_lang        "\el"
+bind    nls_lang        "\en"
+bind    fldrev          "\er"
+
+if hft or hft-m or ibm5151 or ibm6153 or ibm5154 or ibm6153-90 or ibm6153-40 or 
+   ibm6154 or ibm6154-90 or ibm6154-40 or ibm6155 or ibm6155-113 or 
+   ibm6155-56 or ibm5081 or ibm5081-113 or ibm5081-56 or 
+   hft.U or ibm5151.U or ibm6153.U or ibm5154.U or ibm6153-90.U or 
+   ibm6153-40.U or ibm6154.U or ibm6154-90.U or ibm6154-40.U or  
+   ibm6155.U or ibm6155-113.U or ibm6155-56.U or ibm5081.U or 
+   aixterm or aixterm-m or jaixterm or jaixterm-m or
+   ibm5081-113.U or ibm5081-56.U or hft-m-old or aixterm-m-old or lft or
+   aixterm-old or hft-nam-old or hft-c-old or hft-old  load /etc/3270keys.hft
+else print NOBINDINGS
+
+

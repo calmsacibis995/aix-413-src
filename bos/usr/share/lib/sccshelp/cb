@@ -1,0 +1,39 @@
+* @(#)22     1.3 4/25/91 19:32:58
+*
+* COMPONENT_NAME: CMDSCCS       source code control system
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1989, 1991
+* All Rights Reserved
+* Licansed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+*
+*	Message for comb SCCS command
+*
+-1
+Cannot use the comb command while there is an outstanding delta
+	to the file.
+	Use the delta command or the unget command; then use the comb command.
+	A p-file exists which shows that someone is in the process of making a
+	delta on the specified SCCS file.  The comb command may only be used when
+	no one else is modifying the specified SCCS file.
+
+-2
+The -p flag and the -c flag are mutually exclusive.
+	The -p flag specifies the SID of the oldest delta for the resulting procedure
+	to preserve. All older deltas are combined in the reconstructed file.
+	The -c flag specifies a list of deltas (SIDs) that the shell procedure will
+	preserve. The procedure combines all other deltas.
+
+-4
+The flags specified on the command line would create no changes
+	to the SCCS file.
+	The comb command as specified cannot do anything to the specified SCCS file.
+

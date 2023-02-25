@@ -1,0 +1,124 @@
+# @(#)11        1.2  src/tcpip/etc/isomacros, isodelib7, tcpip411, GOLD410 3/2/93 09:12:48
+# COMPONENT_NAME: (ISODELIB7) ISODE Libraries, Release 7
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1990, 1993
+# All Rights Reserved
+# Licensed Material - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+# NAME: /etc/isomacros
+#
+
+###############################################################################
+#
+# isomacros - ISODE macro file
+#
+#	Mappings between user-friendly macros and network addresses
+#
+#
+# $Header: /f/osi/support/RCS/macros.prefix,v 7.3 91/02/22 09:46:53 mrose Interim $
+#
+#
+# $Log:	macros.prefix,v $
+# Revision 7.3  91/02/22  09:46:53  mrose
+# Interim 6.8
+# 
+# Revision 7.2  90/09/07  11:15:26  mrose
+# update
+# 
+# Revision 7.1  89/12/12  16:14:35  mrose
+# localHost
+# 
+# Revision 7.0  89/11/23  22:27:41  mrose
+# Release 6.0
+# 
+###############################################################################
+
+
+###############################################################################
+#
+# Syntax:
+#
+#	<macro>  <string>
+#
+#	Each token is separated by LWSP, though double-quotes may be
+#	used to prevent separation
+#
+###############################################################################
+
+
+# standard macros, defined in "A string encoding of Presentation Address"
+
+Int-X25(80)	TELEX+00728722+X.25(80)+01+
+Janet		TELEX+00728722+X.25(80)+02+
+Internet-RFC-1006 TELEX+00728722+RFC-1006+03+
+
+
+# ISODE standard macros
+
+X25(80)		TELEX+00728722+X.25(80)+
+TCP		TELEX+00728722+RFC-1006+
+
+
+# Interim Community Names
+
+realNS		NS+
+Int-X25		X25(80)=01+
+# Janet		X25(80)=02+
+Internet	TCP=03+
+localTCP	TCP=05+
+localHost	localTCP=127.0.0.1+
+IXI		X25(80)=06+
+
+
+###############################################################################
+#
+# $Header: /f/osi/config/RCS/macros.local,v 7.1 91/02/22 09:16:39 mrose Interim $
+#
+#
+# $Log:	macros.local,v $
+# Revision 7.1  91/02/22  09:16:39  mrose
+# Interim 6.8
+# 
+# Revision 7.0  89/11/23  21:26:05  mrose
+# Release 6.0
+# 
+###############################################################################
+
+
+###############################################################################
+# locally defined macros
+#	(this section is usually empty...)
+###############################################################################
+
+
+###############################################################################
+#
+# $Header: /f/osi/support/RCS/macros.db,v 7.1 91/02/22 09:46:52 mrose Interim $
+#
+#
+# $Log:	macros.db,v $
+# Revision 7.1  91/02/22  09:46:52  mrose
+# Interim 6.8
+# 
+# Revision 7.0  89/11/23  22:27:41  mrose
+# Release 6.0
+# 
+###############################################################################
+
+
+# US GOSIP v2 Addresses
+
+us	NS+47000580
+nsfnet  us=ffff00
+psinet	us=fffc00
+
+

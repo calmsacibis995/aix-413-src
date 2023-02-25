@@ -1,0 +1,959 @@
+$ ENGLISH_SOURCE_VERSION= 1.5.1.1
+$ @(#)54	1.3  src/msg/bos/base/druby.msg, bosmsg, msg411, 9439A411a 9/26/94 15:45:24
+$
+$   COMPONENT_NAME: daruby
+$
+$   FUNCTIONS: druby.msg
+$
+$   ORIGINS: 27
+$
+$
+$   (C) COPYRIGHT International Business Machines Corp. 1993
+$   All Rights Reserved
+$   Licensed Materials - Property of IBM
+$   US Government Users Restricted Rights - Use, duplication or
+$   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$
+$
+$ GENERAL NOTES
+$
+$ Do not translate %d, %s, %x, %07X, or \t in any messages.  They
+$   are used for word or number substitution and are noted in the
+$   comments for the individual messages.  The 1$, 2$, 3$, etc,
+$   within the substitutions are used to denote the order of the
+$   substitutions.
+$
+$ These comments concern the TITLE LINES at the top the diagnostic screen.
+$   The title must be in all capital letters. The first line
+$   of the title cannot be longer than 70 characters starting from 
+$   column 1.  If the line is greater than 70, it may be continued on
+$   the next line.  Leave line spacing as shown:  one blank line after
+$   the last title line.  For example:
+$
+$ *****
+$ TESTING PORT 12 OF THE 16-PORT ASYNCHRONOUS ADAPTER IN PLANAR SLOT 2
+$ IN ADVANCED MODE
+$
+$ Please stand by.
+$ *****
+$
+$ END OF GENERAL NOTES
+ 
+$quote "
+$set DRUBY_MSG_SET_1
+$
+
+RUBY_TITLE "TESTING GXT1000 GRAPHICS SUBSYSTEM ADAPTER"
+$
+$ See general notes on length of title.
+
+RUBY_ADV   "TESTING GXT1000 GRAPHICS SUBSYSTEM ADAPTER IN ADVANCED MODE"
+$
+$ See general notes on length of title.
+
+RUBY_STDBY "Please stand by."
+SAY_CONT   " CONTINUE "
+SAY_YES   " YES "
+SAY_NO    " NO"
+
+DRUBY_RGBQ  "This is a test of the monitor attached to the\n\
+display adapter currently being tested.\n\n\
+ENSURE.........that the top section of the monitor is red.\n\
+ENSURE.........that the middle section of the monitor is green.\n\
+ENSURE.........that the bottom section of the monitor is blue.\n\n\
+Is the monitor screen being displayed as described above?\n\n\
+Move cursor to selection, then press Enter."
+$
+DRUBY_HAVEDISP	"\
+Is there a monitor attached to the display adapter currently being tested?\n\n\
+Move cursor to selection, then press Enter."
+$
+$ Leave line spacing as shown.
+
+DRUBY_REDSCREEN	"\
+This is a test of the monitor attached to the\n\
+display adapter currently being tested.\n\n\
+OBSERVE........the color of the text being displayed.\n\n\
+Is the color of this text red?\n\n\
+Move cursor to selection, then press Enter."
+$
+$ Leave line spacing as shown.  See general notes on expanding ACTION lines.
+
+DRUBY_REDCUR "\
+This is a test of the monitor attached to the\n\
+display adapter currently being tested.\n\n\
+OBSERVE........the color of the background being displayed.\n\n\
+Is the color of this background red?"
+$
+$ Leave line spacing as shown.  See general notes on expanding ACTION lines.
+
+DRUBY_GREENSCREEN "\
+This is a test of the monitor attached to the\n\
+display adapter currently being tested.\n\n\
+OBSERVE........the color of the text being displayed.\n\n\
+Is the color of this text green?\n\n\
+Move cursor to selection, then press Enter."
+$
+$ Leave line spacing as shown.  See general notes on expanding ACTION lines.
+
+DRUBY_GREENCUR "\
+This is a test of the monitor attached to the\n\
+display adapter currently being tested.\n\n\
+OBSERVE........the color of the background being displayed.\n\n\
+Is the color of this background green?"
+$
+$ Leave line spacing as shown.  See general notes on expanding ACTION lines.
+
+DRUBY_BLUESCREEN "\
+This is a test of the monitor attached to the\n\
+display adapter currently being tested.\n\n\
+OBSERVE........the color of the text being displayed.\n\n\
+Is the color of this text blue?\n\n\
+Move cursor to selection, then press Enter."
+$
+$ Leave line spacing as shown.  See general notes on expanding ACTION lines.
+
+DRUBY_BLUECUR "\
+This is a test of the monitor attached to the\n\
+display adapter currently being tested.\n\n\
+OBSERVE........the color of the background being displayed.\n\n\
+Is the color of this background blue?"
+$
+$ Leave line spacing as shown.  See general notes on expanding ACTION lines.
+
+DRUBY_PDPQ  "This is a test of the monitor attached to the\n\
+display adapter currently being tested.\n\n\
+WITHOUT exiting diagnostics or powering off the system unit:\n\n\
+RUN............the problem determination procedures that came\n\
+               with the display.\n\
+ANSWER.........the question below.\n\n\
+Did the problem determination procedures reveal a problem?\n\n\
+Move cursor to selection, then press Enter."
+$
+$ Leave line spacing as shown.  See general notes on expanding ACTION lines.
+
+DRUBY_RP	"%1$x \
+%2$s\n\
+FOLLOW.........the procedures for reporting problems with the display."
+$
+$ %1$x is a six digit number that will appear as a menu number.
+$ %2$s is a title message.  Be sure and leave these two substitutions
+$ exactly as they are shown.
+$ Leave line spacing as shown.  See general notes on expanding ACTION lines.
+
+RUBY_PRESENT "\
+Is there a GXT1000 7250 cabled to the system? \n\n"
+$
+$ Leave line spacing as shown.  See general notes on expanding ACTION lines.
+
+RUBY_POWER "\
+Is the GXT1000 powered on? \n\n"
+$
+$ ---------------------------------------------------------------
+$ Reason code set used by device type "ruby"
+$
+$
+$
+$ define board IDs
+$
+DRUBY_MSG_SPAN  "Separate Package AttachmeNt"
+DRUBY_MSG_GPSS  "Graphics Processor SubSystem"
+DRUBY_MSG_RSS   "Rendering SubSystem"
+DRUBY_MSG_VOO   "Video Output Option"
+DRUBY_MSG_V_CAB "VOO cable"
+DRUBY_MSG_V12   "12Mb VRAM SIMM"
+DRUBY_MSG_V16   "16Mb VRAM SIMM"
+DRUBY_MSG_D16   "16Mb DRAM SIMM"
+DRUBY_MSG_CABLE "SPAN-GPSS cable"
+DRUBY_MSG_XOVER "GPSS-RSS connector"
+DRUBY_MSG_MON   "Monitor"
+DRUBY_MSG_RGBCAB "RGB cable"
+$
+$		 misc software errors, etc
+$
+DRUBY_SW_ERR_BKUP   "software error - backup buffer access error"
+DRUBY_SW_MALLOC_ERR "software error - malloc error"
+DRUBY_IOCTL_SRN_01  "Device Driver ioctl error"
+$
+$		 test_pos failures
+$
+DRUBY_POS_SRN_01	"POS test ioctl error"
+DRUBY_POS_SRN_02	"pos reg via I/O check fail"
+DRUBY_POS_SRN_03	"pos reg via MM backup check fail"
+DRUBY_POS_SRN_04	"POS test ioctl fail"
+DRUBY_POS_SRN_05	"POS test ioctl fail"
+DRUBY_POS_SRN_06	"POS3B shows adapter not ready"
+$
+$		 test_vpd failures
+$
+DRUBY_VPD_SRN_01	"McIC get_vpd fail - reading header"
+DRUBY_VPD_SRN_02	"GPSS mask/count bounds fail"
+DRUBY_VPD_SRN_03	"McIC header comp fail(no VPD string)"
+DRUBY_VPD_SRN_04	"GPSS header comp fail(no VPD string)"
+DRUBY_VPD_SRN_05	"RSS header comp fail(no VPD string)"
+DRUBY_VPD_SRN_06	"VOO header comp fail(no VPD string)"
+DRUBY_VPD_SRN_07	"McIC get_vpd fail - reading rest of data"
+DRUBY_VPD_SRN_08	"McIC crc compare fail"
+DRUBY_VPD_SRN_09	"GPSS crc compare fail"
+DRUBY_VPD_SRN_10	"RSS crc compare fail"
+DRUBY_VPD_SRN_11	"VOO crc compare fail"
+$
+$		 test_pio failures
+$
+DRUBY_PIO_SRN_01	"McIC reg fail - CRSR"
+DRUBY_PIO_SRN_02	"McIC reg fail - LOOP1"
+DRUBY_PIO_SRN_03	"McIC reg fail - LOOP2"
+DRUBY_PIO_SRN_04	"BIM reg fail - MC_IMK"
+DRUBY_PIO_SRN_05	"BIM reg fail - MC_MB"
+DRUBY_PIO_SRN_06	"POS 3B reports not ready"
+DRUBY_PIO_SRN_07	"SRAM area PIO compare fail"
+DRUBY_PIO_SRN_08	"streaming write PIO compare fail"
+DRUBY_PIO_SRN_09	"streaming read PIO compare fail"
+$
+$		 test_loop failures
+$
+DRUBY_LOOP_SRN_01 "loopback compare fail"
+DRUBY_LOOP_SRN_02 "test executed w/o cable"
+$
+$		 get_mail failures
+$
+DRUBY_MAIL_SRN_01	"Device Driver ioctl error - POS 3B access"
+DRUBY_MAIL_SRN_02	"get_mail - T/O waiting for adapter available"
+DRUBY_MAIL_SRN_03	"get_mail - T/O waiting for ROS diags to complete"
+DRUBY_MAIL_SRN_04	"get_mail - ROS mailbox header compare error"
+DRUBY_MAIL_SRN_05	"get_mail - error reported via BIM mailbox"
+DRUBY_MAIL_SRN_06	"get_mail -  ROS diags complete w/ error"
+DRUBY_MAIL_SRN_07	"mailbox error set, but error code = 0"
+DRUBY_MAIL_NNN  	"error value read from ROS mailbox"
+DRUBY_MAIL_NO_ERR  	"no errors reported in mailbox data read"
+$
+$		 test_int failures
+$
+DRUBY_INT_SRN_01	"enabled int error"
+DRUBY_INT_SRN_02	"disabled int error"
+DRUBY_INT_SRN_03	"BIM mailbox readback compare error"
+$
+$		 test_dma failures
+$
+DRUBY_DMA_SRN_01	"DMA T/O error - no mail data available"
+DRUBY_DMA_SRN_02	"DMA error - no mail data available"
+DRUBY_DMA_TO_NNN 	"DMA Test T/O. SRN read from ROS mailbox"
+DRUBY_DMA_TO_NO_ERR 	"DMA Test T/O. no SRN reported in mailbox data"
+DRUBY_DMA_TO_NOMAIL 	"DMA Test T/O. no mailbox data available"
+DRUBY_DMA_NNN 		"SRN read from ROS mailbox"
+DRUBY_DMA_NO_ERR 	"no SRN reported in mailbox data read"
+DRUBY_DMA_NOMAIL 	"no mailbox data available"
+$
+$		 test_tube failures
+$
+DRUBY_TUBE_SRN_01 "error closing DD"
+DRUBY_TUBE_SRN_02 "red screen fail"
+DRUBY_TUBE_SRN_03 "green screen fail"
+DRUBY_TUBE_SRN_04 "blue screen fail"
+DRUBY_TUBE_SRN_05 "write fail"
+DRUBY_TUBE_SRN_06 "RGB screen fail"
+$
+$		 test_ros failures
+$
+DRUBY_ROS_200	"GPSS52 CP error "
+DRUBY_ROS_201	"GPSS52 AP error "
+DRUBY_ROS_202	"GPSS52 TN 1 error "
+DRUBY_ROS_203	"GPSS52 BN 1 error "
+DRUBY_ROS_204	"GPSS52 TN 2 error "
+DRUBY_ROS_205	"GPSS52 BN 2 error "
+DRUBY_ROS_206	"GPSS52 TN 3 error "
+DRUBY_ROS_207	"GPSS52 BN 3 error "
+DRUBY_ROS_208	"GPSS52 TN 4 error "
+DRUBY_ROS_209	"GPSS52 BN 4 error "
+DRUBY_ROS_210	"GPSS52 CP External SRAM error "
+DRUBY_ROS_211	"GPSS52 AP External SRAM error "
+DRUBY_ROS_212	"GPSS52 TN 1 External SRAM error "
+DRUBY_ROS_213	"GPSS52 BN 1 External SRAM error "
+DRUBY_ROS_214	"GPSS52 TN 2 External SRAM error "
+DRUBY_ROS_215	"GPSS52 BN 2 External SRAM error "
+DRUBY_ROS_216	"GPSS52 TN 3 External SRAM error "
+DRUBY_ROS_217	"GPSS52 BN 3 External SRAM error "
+DRUBY_ROS_218	"GPSS52 TN 4 External SRAM error "
+DRUBY_ROS_219	"GPSS52 BN 4 External SRAM error "
+DRUBY_ROS_220	"GPSS52 All GPSS ASICs failed Register Test "
+DRUBY_ROS_221	"GPSS52 All GPSS ASICs failed Built In Self Test "
+DRUBY_ROS_222	"GPSS52 BIM Register Test error "
+DRUBY_ROS_223	"GPSS52 BIM Built In Self Test error "
+DRUBY_ROS_224	"GPSS52 SYNC Register Test error "
+DRUBY_ROS_225	"GPSS52 SYNC Built In Self Test error "
+DRUBY_ROS_226	"GPSS52 SYNC/Node 1 data path error "
+DRUBY_ROS_227	"GPSS52 SYNC/Node 2 data path error "
+DRUBY_ROS_228	"GPSS52 SYNC/Node 3 data path error "
+DRUBY_ROS_229	"GPSS52 SYNC/Node 4 data path error "
+DRUBY_ROS_230	"GPSS52 CP-COM2/AP-COM5 error "
+DRUBY_ROS_231	"GPSS52 CP-COM3/AP-COM0 error "
+DRUBY_ROS_232	"GPSS52 AP-COM1/T1-COM3 error "
+DRUBY_ROS_233	"GPSS52 AP-COM2/T2-COM3 error "
+DRUBY_ROS_234	"GPSS52 AP-COM3/T3-COM2 error "
+DRUBY_ROS_235	"GPSS52 AP-COM4/T4-COM2 error "
+DRUBY_ROS_236	"GPSS52 T1-COM2/B1-COM3 error "
+DRUBY_ROS_237	"GPSS52 T2-COM2/B2-COM3 error "
+DRUBY_ROS_238	"GPSS52 T3-COM3/B3-COM2 error "
+DRUBY_ROS_239	"GPSS52 T4-COM3/B4-COM2 error "
+DRUBY_ROS_240	"GPSS52 BP to Both SE Memory Banks error "
+DRUBY_ROS_241	"GPSS52 BP to Odd SE Memory Bank error "
+DRUBY_ROS_242	"GPSS52 BP to Even SE Memory Bank error "
+DRUBY_ROS_243	"GPSS52 AP to Both SE Memory Banks error "
+DRUBY_ROS_244	"GPSS52 AP to Odd SE Memory Bank error "
+DRUBY_ROS_245	"GPSS52 AP to Even SE Memory Bank error "
+DRUBY_ROS_246	"GPSS52 BP/AP Arbitration Test error "
+DRUBY_ROS_247	"GPSS52 BP to SE memory hung "
+DRUBY_ROS_248	"GPSS52 BP to CP SRAM hung "
+DRUBY_ROS_249	"GPSS52 BP to CP SRAM Test error "
+DRUBY_ROS_250	"GPSS52 BIM to CP Interrupt error "
+DRUBY_ROS_251	"GPSS52 SYNC to CP Interrupt error "
+DRUBY_ROS_252	"GPSS52 CP NMI - ATTN Interrupt error "
+DRUBY_ROS_253	"GPSS52 CP NMI - VIGAR1 Interrupt error "
+DRUBY_ROS_254	"GPSS52 CP NMI - VIGAR2 Interrupt error "
+DRUBY_ROS_255	"GPSS52 CP NMI - Bus Time Out Interrupt error "
+DRUBY_ROS_256	"GPSS52 BN1 to AP Interrupt error "
+DRUBY_ROS_257	"GPSS52 BN2 to AP Interrupt error "
+DRUBY_ROS_258	"GPSS52 BN3 to AP Interrupt error "
+DRUBY_ROS_259	"GPSS52 BN4 to AP Interrupt error "
+DRUBY_ROS_260	"GPSS52 T1 ATTN - from CP Interrupt error "
+DRUBY_ROS_261	"GPSS52 T1 ATTN - from B1 Interrupt error "
+DRUBY_ROS_262	"GPSS52 T2 ATTN - from CP Interrupt error "
+DRUBY_ROS_263	"GPSS52 T2 ATTN - from B2 Interrupt error "
+DRUBY_ROS_264	"GPSS52 T3 ATTN - from CP Interrupt error "
+DRUBY_ROS_265	"GPSS52 T3 ATTN - from B3 Interrupt error "
+DRUBY_ROS_266	"GPSS52 T4 ATTN - from CP Interrupt error "
+DRUBY_ROS_267	"GPSS52 T4 ATTN - from B4 Interrupt error "
+DRUBY_ROS_268	"GPSS52 B1 ATTN - from CP Interrupt error "
+DRUBY_ROS_269	"GPSS52 B1 HWM from SYNC Interrupt error "
+DRUBY_ROS_270	"GPSS52 B1 LWM from SYNC Interrupt error "
+DRUBY_ROS_271	"GPSS52 B2 ATTN - from CP Interrupt error "
+DRUBY_ROS_272	"GPSS52 B2 HWM from SYNC Interrupt error "
+DRUBY_ROS_273	"GPSS52 B2 LWM from SYNC Interrupt error "
+DRUBY_ROS_274	"GPSS52 B3 ATTN - from CP Interrupt error "
+DRUBY_ROS_275	"GPSS52 B3 HWM from SYNC Interrupt error "
+DRUBY_ROS_276	"GPSS52 B3 LWM from SYNC Interrupt error "
+DRUBY_ROS_277	"GPSS52 B4 ATTN - from CP Interrupt error "
+DRUBY_ROS_278	"GPSS52 B4 HWM from SYNC Interrupt error "
+DRUBY_ROS_279	"GPSS52 B4 LWM from SYNC Interrupt error "
+DRUBY_ROS_280	"GPSS52 Diagnostic EEPROM Byte 0 error "
+DRUBY_ROS_281	"GPSS52 Diagnostic EEPROM Byte 1 error "
+DRUBY_ROS_282	"GPSS52 Diagnostic EEPROM Byte 2 error "
+DRUBY_ROS_283	"GPSS52 Diagnostic EEPROM Byte 3 error "
+DRUBY_ROS_284	"GPSS52 Diagnostic EEPROM Multi-Byte error "
+DRUBY_ROS_285	"GPSS52 VPD EEPROM error "
+DRUBY_ROS_286	"GPSS52 REEF error "
+DRUBY_ROS_287	"GPSS52 TBC error "
+DRUBY_ROS_290	"GPSS52 CP Hang error "
+DRUBY_ROS_291	"GPSS52 AP Hang error "
+DRUBY_ROS_292	"GPSS52 TN 1 Hang error "
+DRUBY_ROS_293	"GPSS52 BN 1 Hang error "
+DRUBY_ROS_294	"GPSS52 TN 2 Hang error "
+DRUBY_ROS_295	"GPSS52 BN 2 Hang error "
+DRUBY_ROS_296	"GPSS52 TN 3 Hang error "
+DRUBY_ROS_297	"GPSS52 BN 3 Hang error "
+DRUBY_ROS_298	"GPSS52 TN 4 Hang error "
+DRUBY_ROS_299	"GPSS52 BN 4 Hang error "
+DRUBY_ROS_300	"GPSS52 CP VIGAR1&2 error "
+DRUBY_ROS_301	"GPSS52 CP VIGAR1 error "
+DRUBY_ROS_302	"GPSS52 CP VIGAR2 error "
+DRUBY_ROS_303	"GPSS52 CP VRAM Access error "
+DRUBY_ROS_304	"GPSS52 CP VRAM1 Access error "
+DRUBY_ROS_305	"GPSS52 CP VRAM1 ZIMP1 Access error "
+DRUBY_ROS_306	"GPSS52 CP VRAM1 ZIMP2 Access error "
+DRUBY_ROS_307	"GPSS52 CP VRAM2 Access error "
+DRUBY_ROS_308	"GPSS52 CP VRAM2 ZIMP1 Access error "
+DRUBY_ROS_309	"GPSS52 CP VRAM2 ZIMP2 Access error "
+DRUBY_ROS_310	"GPSS52 AP VIGAR1&2 error "
+DRUBY_ROS_311	"GPSS52 AP VIGAR1 error "
+DRUBY_ROS_312	"GPSS52 AP VIGAR2 error "
+DRUBY_ROS_313	"GPSS52 AP VRAM Access error "
+DRUBY_ROS_314	"GPSS52 AP VRAM1 Access error "
+DRUBY_ROS_315	"GPSS52 AP VRAM1 ZIMP1 Access error "
+DRUBY_ROS_316	"GPSS52 AP VRAM1 ZIMP2 Access error "
+DRUBY_ROS_317	"GPSS52 AP VRAM2 Access error "
+DRUBY_ROS_318	"GPSS52 AP VRAM2 ZIMP1 Access error "
+DRUBY_ROS_319	"GPSS52 AP VRAM2 ZIMP2 Access error "
+DRUBY_ROS_320	"GPSS52 T1 VIGAR1&2 error "
+DRUBY_ROS_321	"GPSS52 T1 VIGAR1 error "
+DRUBY_ROS_322	"GPSS52 T1 VIGAR2 error "
+DRUBY_ROS_323	"GPSS52 T1 VRAM Access error "
+DRUBY_ROS_324	"GPSS52 T1 VRAM1 Access error "
+DRUBY_ROS_325	"GPSS52 T1 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_326	"GPSS52 T1 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_327	"GPSS52 T1 VRAM2 Access error "
+DRUBY_ROS_328	"GPSS52 T1 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_329	"GPSS52 T1 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_330	"GPSS52 B1 VIGAR1&2 error "
+DRUBY_ROS_331	"GPSS52 B1 VIGAR1 error "
+DRUBY_ROS_332	"GPSS52 B1 VIGAR2 error "
+DRUBY_ROS_333	"GPSS52 B1 VRAM Access error "
+DRUBY_ROS_334	"GPSS52 B1 VRAM1 Access error "
+DRUBY_ROS_335	"GPSS52 B1 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_336	"GPSS52 B1 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_337	"GPSS52 B1 VRAM2 Access error "
+DRUBY_ROS_338	"GPSS52 B1 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_339	"GPSS52 B1 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_340	"GPSS52 T2 VIGAR1&2 error "
+DRUBY_ROS_341	"GPSS52 T2 VIGAR1 error "
+DRUBY_ROS_342	"GPSS52 T2 VIGAR2 error "
+DRUBY_ROS_343	"GPSS52 T2 VRAM Access error "
+DRUBY_ROS_344	"GPSS52 T2 VRAM1 Access error "
+DRUBY_ROS_345	"GPSS52 T2 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_346	"GPSS52 T2 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_347	"GPSS52 T2 VRAM2 Access error "
+DRUBY_ROS_348	"GPSS52 T2 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_349	"GPSS52 T2 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_350	"GPSS52 B2 VIGAR1&2 error "
+DRUBY_ROS_351	"GPSS52 B2 VIGAR1 error "
+DRUBY_ROS_352	"GPSS52 B1 VIGAR2 error "
+DRUBY_ROS_353	"GPSS52 B2 VRAM Access error "
+DRUBY_ROS_354	"GPSS52 B2 VRAM1 Access error "
+DRUBY_ROS_355	"GPSS52 B2 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_356	"GPSS52 B2 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_357	"GPSS52 B2 VRAM2 Access error "
+DRUBY_ROS_358	"GPSS52 B2 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_359	"GPSS52 B2 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_360	"GPSS52 All TNs VIGAR1&2 error "
+DRUBY_ROS_361	"GPSS52 All TNs VIGAR1 error "
+DRUBY_ROS_362	"GPSS52 All TNs VIGAR2 error "
+DRUBY_ROS_363	"GPSS52 All TNs VRAM Access error "
+DRUBY_ROS_364	"GPSS52 All TNs VRAM1 Access error "
+DRUBY_ROS_365	"GPSS52 All TNs VRAM1 ZIMP1 Access error "
+DRUBY_ROS_366	"GPSS52 All TNs VRAM1 ZIMP2 Access error "
+DRUBY_ROS_367	"GPSS52 All TNs VRAM2 Access error "
+DRUBY_ROS_368	"GPSS52 All TNs VRAM2 ZIMP1 Access error "
+DRUBY_ROS_369	"GPSS52 All TNs VRAM2 ZIMP2 Access error "
+DRUBY_ROS_370	"GPSS52 All BNs VIGAR1&2 error "
+DRUBY_ROS_371	"GPSS52 All BNs VIGAR1 error "
+DRUBY_ROS_372	"GPSS52 All BNs VIGAR2 error "
+DRUBY_ROS_373	"GPSS52 All BNs VRAM Access error "
+DRUBY_ROS_374	"GPSS52 All BNs VRAM1 Access error "
+DRUBY_ROS_375	"GPSS52 All BNs VRAM1 ZIMP1 Access error "
+DRUBY_ROS_376	"GPSS52 All BNs VRAM1 ZIMP2 Access error "
+DRUBY_ROS_377	"GPSS52 All BNs VRAM2 Access error "
+DRUBY_ROS_378	"GPSS52 All BNs VRAM2 ZIMP1 Access error "
+DRUBY_ROS_379	"GPSS52 All BNs VRAM2 ZIMP2 Access error "
+DRUBY_ROS_380	"GPSS52 VRAM1 & VRAM2 CP block access error "
+DRUBY_ROS_381	"GPSS52 VRAM1 CP block access error "
+DRUBY_ROS_382	"GPSS52 VRAM2 CP block access error "
+DRUBY_ROS_383	"GPSS52 VRAM1 & VRAM2 CP block timed test error "
+DRUBY_ROS_384	"GPSS52 VRAM1 CP block timed test error "
+DRUBY_ROS_385	"GPSS52 VRAM2 CP block timed test error "
+DRUBY_ROS_390	"GPSS52 VRAM1 & VRAM2 AP row copy test error "
+DRUBY_ROS_391	"GPSS52 VRAM1 AP row copy test error "
+DRUBY_ROS_392	"GPSS52 VRAM2 AP row copy test error "
+DRUBY_ROS_393	"GPSS52 VRAM1 & VRAM2 AP timed test error "
+DRUBY_ROS_394	"GPSS52 VRAM1 AP timed test error "
+DRUBY_ROS_395	"GPSS52 VRAM2 AP timed test error "
+DRUBY_ROS_396	"GPSS52 VRAM1 & VRAM2 AP row copy out of bounds error "
+DRUBY_ROS_397	"GPSS52 VRAM1 AP row copy out of bounds error "
+DRUBY_ROS_398	"GPSS52 VRAM2 AP row copy out of bounds error "
+DRUBY_ROS_399	"GPSS52 AP Dual VRAM write test error "
+DRUBY_ROS_400	"GPSS54 CP error "
+DRUBY_ROS_401	"GPSS54 AP error "
+DRUBY_ROS_402	"GPSS54 TN 1 error "
+DRUBY_ROS_403	"GPSS54 BN 1 error "
+DRUBY_ROS_404	"GPSS54 TN 2 error "
+DRUBY_ROS_405	"GPSS54 BN 2 error "
+DRUBY_ROS_406	"GPSS54 TN 3 error "
+DRUBY_ROS_407	"GPSS54 BN 3 error "
+DRUBY_ROS_408	"GPSS54 TN 4 error "
+DRUBY_ROS_409	"GPSS54 BN 4 error "
+DRUBY_ROS_410	"GPSS54 CP External SRAM error "
+DRUBY_ROS_411	"GPSS54 AP External SRAM error "
+DRUBY_ROS_412	"GPSS54 TN 1 External SRAM error "
+DRUBY_ROS_413	"GPSS54 BN 1 External SRAM error "
+DRUBY_ROS_414	"GPSS54 TN 2 External SRAM error "
+DRUBY_ROS_415	"GPSS54 BN 2 External SRAM error "
+DRUBY_ROS_416	"GPSS54 TN 3 External SRAM error "
+DRUBY_ROS_417	"GPSS54 BN 3 External SRAM error "
+DRUBY_ROS_418	"GPSS54 TN 4 External SRAM error "
+DRUBY_ROS_419	"GPSS54 BN 4 External SRAM error "
+DRUBY_ROS_420	"GPSS54 All GPSS ASICs failed Register Test "
+DRUBY_ROS_421	"GPSS54 All GPSS ASICs failed Built In Self Test "
+DRUBY_ROS_422	"GPSS54 BIM Register Test error "
+DRUBY_ROS_423	"GPSS54 BIM Built In Self Test error "
+DRUBY_ROS_424	"GPSS54 SYNC Register Test error "
+DRUBY_ROS_425	"GPSS54 SYNC Built In Self Test error "
+DRUBY_ROS_426	"GPSS54 SYNC/Node 1 data path error "
+DRUBY_ROS_427	"GPSS54 SYNC/Node 2 data path error "
+DRUBY_ROS_428	"GPSS54 SYNC/Node 3 data path error "
+DRUBY_ROS_429	"GPSS54 SYNC/Node 4 data path error "
+DRUBY_ROS_430	"GPSS54 CP-COM2/AP-COM5 error "
+DRUBY_ROS_431	"GPSS54 CP-COM3/AP-COM0 error "
+DRUBY_ROS_432	"GPSS54 AP-COM1/T1-COM3 error "
+DRUBY_ROS_433	"GPSS54 AP-COM2/T2-COM3 error "
+DRUBY_ROS_434	"GPSS54 AP-COM3/T3-COM2 error "
+DRUBY_ROS_435	"GPSS54 AP-COM4/T4-COM2 error "
+DRUBY_ROS_436	"GPSS54 T1-COM2/B1-COM3 error "
+DRUBY_ROS_437	"GPSS54 T2-COM2/B2-COM3 error "
+DRUBY_ROS_438	"GPSS54 T3-COM3/B3-COM2 error "
+DRUBY_ROS_439	"GPSS54 T4-COM3/B4-COM2 error "
+DRUBY_ROS_440	"GPSS54 BP to Both SE Memory Banks error "
+DRUBY_ROS_441	"GPSS54 BP to Odd SE Memory Bank error "
+DRUBY_ROS_442	"GPSS54 BP to Even SE Memory Bank error "
+DRUBY_ROS_443	"GPSS54 AP to Both SE Memory Banks error "
+DRUBY_ROS_444	"GPSS54 AP to Odd SE Memory Bank error "
+DRUBY_ROS_445	"GPSS54 AP to Even SE Memory Bank error "
+DRUBY_ROS_446	"GPSS54 BP/AP Arbitration Test error "
+DRUBY_ROS_447	"GPSS54 BP to SE memory hung "
+DRUBY_ROS_448	"GPSS54 BP to CP SRAM hung "
+DRUBY_ROS_449	"GPSS54 BP to CP SRAM Test error "
+DRUBY_ROS_450	"GPSS54 BIM to CP Interrupt error "
+DRUBY_ROS_451	"GPSS54 SYNC to CP Interrupt error "
+DRUBY_ROS_452	"GPSS54 CP NMI - ATTN Interrupt error "
+DRUBY_ROS_453	"GPSS54 CP NMI - VIGAR1 Interrupt error "
+DRUBY_ROS_454	"GPSS54 CP NMI - VIGAR2 Interrupt error "
+DRUBY_ROS_455	"GPSS54 CP NMI - Bus Time Out Interrupt error "
+DRUBY_ROS_456	"GPSS54 BN1 to AP Interrupt error "
+DRUBY_ROS_457	"GPSS54 BN2 to AP Interrupt error "
+DRUBY_ROS_458	"GPSS54 BN3 to AP Interrupt error "
+DRUBY_ROS_459	"GPSS54 BN4 to AP Interrupt error "
+DRUBY_ROS_460	"GPSS54 T1 ATTN - from CP Interrupt error "
+DRUBY_ROS_461	"GPSS54 T1 ATTN - from B1 Interrupt error "
+DRUBY_ROS_462	"GPSS54 T2 ATTN - from CP Interrupt error "
+DRUBY_ROS_463	"GPSS54 T2 ATTN - from B2 Interrupt error "
+DRUBY_ROS_464	"GPSS54 T3 ATTN - from CP Interrupt error "
+DRUBY_ROS_465	"GPSS54 T3 ATTN - from B3 Interrupt error "
+DRUBY_ROS_466	"GPSS54 T4 ATTN - from CP Interrupt error "
+DRUBY_ROS_467	"GPSS54 T4 ATTN - from B4 Interrupt error "
+DRUBY_ROS_468	"GPSS54 B1 ATTN - from CP Interrupt error "
+DRUBY_ROS_469	"GPSS54 B1 HWM from SYNC Interrupt error "
+DRUBY_ROS_470	"GPSS54 B1 LWM from SYNC Interrupt error "
+DRUBY_ROS_471	"GPSS54 B2 ATTN - from CP Interrupt error "
+DRUBY_ROS_472	"GPSS54 B2 HWM from SYNC Interrupt error "
+DRUBY_ROS_473	"GPSS54 B2 LWM from SYNC Interrupt error "
+DRUBY_ROS_474	"GPSS54 B3 ATTN - from CP Interrupt error "
+DRUBY_ROS_475	"GPSS54 B3 HWM from SYNC Interrupt error "
+DRUBY_ROS_476	"GPSS54 B3 LWM from SYNC Interrupt error "
+DRUBY_ROS_477	"GPSS54 B4 ATTN - from CP Interrupt error "
+DRUBY_ROS_478	"GPSS54 B4 HWM from SYNC Interrupt error "
+DRUBY_ROS_479	"GPSS54 B4 LWM from SYNC Interrupt error "
+DRUBY_ROS_480	"GPSS54 Diagnostic EEPROM Byte 0 error "
+DRUBY_ROS_481	"GPSS54 Diagnostic EEPROM Byte 1 error "
+DRUBY_ROS_482	"GPSS54 Diagnostic EEPROM Byte 2 error "
+DRUBY_ROS_483	"GPSS54 Diagnostic EEPROM Byte 3 error "
+DRUBY_ROS_484	"GPSS54 Diagnostic EEPROM Multi-Byte error "
+DRUBY_ROS_485	"GPSS54 VPD EEPROM error "
+DRUBY_ROS_486	"GPSS54 REEF error "
+DRUBY_ROS_487	"GPSS54 TBC error "
+DRUBY_ROS_490	"GPSS54 CP Hang error "
+DRUBY_ROS_491	"GPSS54 AP Hang error "
+DRUBY_ROS_492	"GPSS54 TN 1 Hang error "
+DRUBY_ROS_493	"GPSS54 BN 1 Hang error "
+DRUBY_ROS_494	"GPSS54 TN 2 Hang error "
+DRUBY_ROS_495	"GPSS54 BN 2 Hang error "
+DRUBY_ROS_496	"GPSS54 TN 3 Hang error "
+DRUBY_ROS_497	"GPSS54 BN 3 Hang error "
+DRUBY_ROS_498	"GPSS54 TN 4 Hang error "
+DRUBY_ROS_499	"GPSS54 BN 4 Hang error "
+DRUBY_ROS_500	"GPSS54 CP VIGAR1&2 error "
+DRUBY_ROS_501	"GPSS54 CP VIGAR1 error "
+DRUBY_ROS_502	"GPSS54 CP VIGAR2 error "
+DRUBY_ROS_503	"GPSS54 CP VRAM Access error "
+DRUBY_ROS_504	"GPSS54 CP VRAM1 Access error "
+DRUBY_ROS_505	"GPSS54 CP VRAM1 ZIMP1 Access error "
+DRUBY_ROS_506	"GPSS54 CP VRAM1 ZIMP2 Access error "
+DRUBY_ROS_507	"GPSS54 CP VRAM2 Access error "
+DRUBY_ROS_508	"GPSS54 CP VRAM2 ZIMP1 Access error "
+DRUBY_ROS_509	"GPSS54 CP VRAM2 ZIMP2 Access error "
+DRUBY_ROS_510	"GPSS54 AP VIGAR1&2 error "
+DRUBY_ROS_511	"GPSS54 AP VIGAR1 error "
+DRUBY_ROS_512	"GPSS54 AP VIGAR2 error "
+DRUBY_ROS_513	"GPSS54 AP VRAM Access error "
+DRUBY_ROS_514	"GPSS54 AP VRAM1 Access error "
+DRUBY_ROS_515	"GPSS54 AP VRAM1 ZIMP1 Access error "
+DRUBY_ROS_516	"GPSS54 AP VRAM1 ZIMP2 Access error "
+DRUBY_ROS_517	"GPSS54 AP VRAM2 Access error "
+DRUBY_ROS_518	"GPSS54 AP VRAM2 ZIMP1 Access error "
+DRUBY_ROS_519	"GPSS54 AP VRAM2 ZIMP2 Access error "
+DRUBY_ROS_520	"GPSS54 T1 VIGAR1&2 error "
+DRUBY_ROS_521	"GPSS54 T1 VIGAR1 error "
+DRUBY_ROS_522	"GPSS54 T1 VIGAR2 error "
+DRUBY_ROS_523	"GPSS54 T1 VRAM Access error "
+DRUBY_ROS_524	"GPSS54 T1 VRAM1 Access error "
+DRUBY_ROS_525	"GPSS54 T1 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_526	"GPSS54 T1 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_527	"GPSS54 T1 VRAM2 Access error "
+DRUBY_ROS_528	"GPSS54 T1 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_529	"GPSS54 T1 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_530	"GPSS54 B1 VIGAR1&2 error "
+DRUBY_ROS_531	"GPSS54 B1 VIGAR1 error "
+DRUBY_ROS_532	"GPSS54 B1 VIGAR2 error "
+DRUBY_ROS_533	"GPSS54 B1 VRAM Access error "
+DRUBY_ROS_534	"GPSS54 B1 VRAM1 Access error "
+DRUBY_ROS_535	"GPSS54 B1 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_536	"GPSS54 B1 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_537	"GPSS54 B1 VRAM2 Access error "
+DRUBY_ROS_538	"GPSS54 B1 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_539	"GPSS54 B1 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_540	"GPSS54 T2 VIGAR1&2 error "
+DRUBY_ROS_541	"GPSS54 T2 VIGAR1 error "
+DRUBY_ROS_542	"GPSS54 T2 VIGAR2 error "
+DRUBY_ROS_543	"GPSS54 T2 VRAM Access error "
+DRUBY_ROS_544	"GPSS54 T2 VRAM1 Access error "
+DRUBY_ROS_545	"GPSS54 T2 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_546	"GPSS54 T2 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_547	"GPSS54 T2 VRAM2 Access error "
+DRUBY_ROS_548	"GPSS54 T2 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_549	"GPSS54 T2 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_550	"GPSS54 B2 VIGAR1&2 error "
+DRUBY_ROS_551	"GPSS54 B2 VIGAR1 error "
+DRUBY_ROS_552	"GPSS54 B1 VIGAR2 error "
+DRUBY_ROS_553	"GPSS54 B2 VRAM Access error "
+DRUBY_ROS_554	"GPSS54 B2 VRAM1 Access error "
+DRUBY_ROS_555	"GPSS54 B2 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_556	"GPSS54 B2 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_557	"GPSS54 B2 VRAM2 Access error "
+DRUBY_ROS_558	"GPSS54 B2 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_559	"GPSS54 B2 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_560	"GPSS54 All TNs VIGAR1&2 error "
+DRUBY_ROS_561	"GPSS54 All TNs VIGAR1 error "
+DRUBY_ROS_562	"GPSS54 All TNs VIGAR2 error "
+DRUBY_ROS_563	"GPSS54 All TNs VRAM Access error "
+DRUBY_ROS_564	"GPSS54 All TNs VRAM1 Access error "
+DRUBY_ROS_565	"GPSS54 All TNs VRAM1 ZIMP1 Access error "
+DRUBY_ROS_566	"GPSS54 All TNs VRAM1 ZIMP2 Access error "
+DRUBY_ROS_567	"GPSS54 All TNs VRAM2 Access error "
+DRUBY_ROS_568	"GPSS54 All TNs VRAM2 ZIMP1 Access error "
+DRUBY_ROS_569	"GPSS54 All TNs VRAM2 ZIMP2 Access error "
+DRUBY_ROS_570	"GPSS54 All BNs VIGAR1&2 error "
+DRUBY_ROS_571	"GPSS54 All BNs VIGAR1 error "
+DRUBY_ROS_572	"GPSS54 All BNs VIGAR2 error "
+DRUBY_ROS_573	"GPSS54 All BNs VRAM Access error "
+DRUBY_ROS_574	"GPSS54 All BNs VRAM1 Access error "
+DRUBY_ROS_575	"GPSS54 All BNs VRAM1 ZIMP1 Access error "
+DRUBY_ROS_576	"GPSS54 All BNs VRAM1 ZIMP2 Access error "
+DRUBY_ROS_577	"GPSS54 All BNs VRAM2 Access error "
+DRUBY_ROS_578	"GPSS54 All BNs VRAM2 ZIMP1 Access error "
+DRUBY_ROS_579	"GPSS54 All BNs VRAM2 ZIMP2 Access error "
+DRUBY_ROS_580	"GPSS54 VRAM1 & VRAM2 CP block access error "
+DRUBY_ROS_581	"GPSS54 VRAM1 CP block access error "
+DRUBY_ROS_582	"GPSS54 VRAM2 CP block access error "
+DRUBY_ROS_583	"GPSS54 VRAM1 & VRAM2 CP block timed test error "
+DRUBY_ROS_584	"GPSS54 VRAM1 CP block timed test error "
+DRUBY_ROS_585	"GPSS54 VRAM2 CP block timed test error "
+DRUBY_ROS_590	"GPSS54 VRAM1 & VRAM2 AP row copy test error "
+DRUBY_ROS_591	"GPSS54 VRAM1 AP row copy test error "
+DRUBY_ROS_592	"GPSS54 VRAM2 AP row copy test error "
+DRUBY_ROS_593	"GPSS54 VRAM1 & VRAM2 AP timed test error "
+DRUBY_ROS_594	"GPSS54 VRAM1 AP timed test error "
+DRUBY_ROS_595	"GPSS54 VRAM2 AP timed test error "
+DRUBY_ROS_596	"GPSS54 VRAM1 & VRAM2 AP row copy out of bounds error "
+DRUBY_ROS_597	"GPSS54 VRAM1 AP row copy out of bounds error "
+DRUBY_ROS_598	"GPSS54 VRAM2 AP row copy out of bounds error "
+DRUBY_ROS_599	"GPSS54 AP Dual VRAM write test error "
+DRUBY_ROS_650	"GPSS54 AP NMI - from CP Interrupt error "
+DRUBY_ROS_651	"GPSS54 T1 NMI - from CP Interrupt error "
+DRUBY_ROS_652	"GPSS54 B1 NMI - from CP Interrupt error "
+DRUBY_ROS_653	"GPSS54 T2 NMI - from CP Interrupt error "
+DRUBY_ROS_654	"GPSS54 B2 NMI - from CP Interrupt error "
+DRUBY_ROS_655	"GPSS54 T3 NMI - from CP Interrupt error "
+DRUBY_ROS_656	"GPSS54 B3 NMI - from CP Interrupt error "
+DRUBY_ROS_657	"GPSS54 T4 NMI - from CP Interrupt error "
+DRUBY_ROS_658	"GPSS54 B4 NMI - from CP Interrupt error "
+DRUBY_ROS_660	"GPSS54 T3 VIGAR1&2 error "
+DRUBY_ROS_661	"GPSS54 T3 VIGAR1 error "
+DRUBY_ROS_662	"GPSS54 T3 VIGAR2 error "
+DRUBY_ROS_663	"GPSS54 T3 VRAM Access error "
+DRUBY_ROS_664	"GPSS54 T3 VRAM1 Access error "
+DRUBY_ROS_665	"GPSS54 T3 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_666	"GPSS54 T3 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_667	"GPSS54 T3 VRAM2 Access error "
+DRUBY_ROS_668	"GPSS54 T3 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_669	"GPSS54 T3 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_670	"GPSS54 B3 VIGAR1&2 error "
+DRUBY_ROS_671	"GPSS54 B3 VIGAR1 error "
+DRUBY_ROS_672	"GPSS54 B3 VIGAR2 error "
+DRUBY_ROS_673	"GPSS54 B3 VRAM Access error "
+DRUBY_ROS_674	"GPSS54 B3 VRAM1 Access error "
+DRUBY_ROS_675	"GPSS54 B3 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_676	"GPSS54 B3 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_677	"GPSS54 B3 VRAM2 Access error "
+DRUBY_ROS_678	"GPSS54 B3 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_679	"GPSS54 B3 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_680	"GPSS54 T4 VIGAR1&2 error "
+DRUBY_ROS_681	"GPSS54 T4 VIGAR1 error "
+DRUBY_ROS_682	"GPSS54 T4 VIGAR2 error "
+DRUBY_ROS_683	"GPSS54 T4 VRAM Access error "
+DRUBY_ROS_684	"GPSS54 T4 VRAM1 Access error "
+DRUBY_ROS_685	"GPSS54 T4 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_686	"GPSS54 T2 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_687	"GPSS54 T4 VRAM2 Access error "
+DRUBY_ROS_688	"GPSS54 T4 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_689	"GPSS54 T4 VRAM2 ZIMP2 Access error "
+DRUBY_ROS_690	"GPSS54 B4 VIGAR1&2 error "
+DRUBY_ROS_691	"GPSS54 B4 VIGAR1 error "
+DRUBY_ROS_692	"GPSS54 B4 VIGAR2 error "
+DRUBY_ROS_693	"GPSS54 B4 VRAM Access error "
+DRUBY_ROS_694	"GPSS54 B4 VRAM1 Access error "
+DRUBY_ROS_695	"GPSS54 B4 VRAM1 ZIMP1 Access error "
+DRUBY_ROS_696	"GPSS54 B4 VRAM1 ZIMP2 Access error "
+DRUBY_ROS_697	"GPSS54 B4 VRAM2 Access error "
+DRUBY_ROS_698	"GPSS54 B4 VRAM2 ZIMP1 Access error "
+DRUBY_ROS_699	"GPSS54 All TNs VRAM2 ZIMP2 Access error "
+DRUBY_ROS_001	"INVALID FUNCTION REQUEST OR BAD PARMS PASSED "
+DRUBY_ROS_009	"INVALID COMMAND "
+DRUBY_ROS_010	"INVALED TEST REQUEST PARAMETER "
+DRUBY_ROS_111	"LOADER CHECK SUM ERROR "
+DRUBY_ROS_112	"DMA FAILED TO COMPLETE A TRANSFER "
+DRUBY_ROS_113	"MCIC REGISTER TEST ERROR "
+DRUBY_ROS_114	"TIMEOUT WAITING FOR THE AP TO LOAD "
+DRUBY_ROS_115	"AP IS NOT READY WHEN ATTEMPTING TO LOAD CODE "
+DRUBY_ROS_116	"NO NODES SELECTED IN THE LOAD MASK ARE AVAILABLE "
+DRUBY_ROS_117	"A INSTALLED NODE IS NOT READY "
+DRUBY_ROS_118	"LOAD TIMEOUT WAITING FOR LOAD TO COMPLETE "
+DRUBY_ROS_120	"DATA COMPARE ERROR DURING CP-HOST-CP DATA TRANSFER "
+DRUBY_ROS_121	"DATA COMPARE ERROR DURING SE-HOST-SE DATA TRANSFER "
+DRUBY_ROS_122	"HOST TO VRAM DATA COMPARE ERROR "
+DRUBY_ROS_123	"CP TO HOST DMA FAILED TO COMPLETE "
+DRUBY_ROS_124	"HOST TO CP DMA FAILED TO COMPLETE "
+DRUBY_ROS_125	"SE TO HOST DMA FAILED TO COMPLETE "
+DRUBY_ROS_126	"HOST TO SE DMA FAILED TO COMPLETE "
+DRUBY_ROS_127	"HOST TO VRAM DMA FAILED TO COMPLETE "
+DRUBY_ROS_128	"DUMB CP TO HOST DMA FAILED TO COMPLETE "
+DRUBY_ROS_129	"DUMB SE TO HOST DMA FAILED TO COMPLETE "
+DRUBY_ROS_130	"BAD LENGTH PASSED TO ADAPTER FROM HOST "
+DRUBY_ROS_140	"PCFA TIMEOUT "
+DRUBY_ROS_142	"PCFA DATA COMPARE ERROR "
+DRUBY_ROS_144	"PCFA RECEIVED MORE DATA THEN SPECIFIED IN LENGTH "
+DRUBY_ROS_146	"PCFB TIMEOUT 0x146 "
+DRUBY_ROS_148	"PCFB DATA COMPARE ERROR "
+DRUBY_ROS_150	"PCFB RECEIVED MORE DATA THEN SPECIFIED IN LENGTH "
+DRUBY_ROS_700	"OPCODE WRITTEN TO BLT DOES NOT MATCH WHAT WAS READ "
+DRUBY_ROS_701	"CTX_SAVE DATA WRITTEN TO BLT DOES NOT MATCH WHAT WAS READ "
+DRUBY_ROS_702	"CTX_MAP DATA WRITTEN TO BLT DOES NOT MATCH WHAT WAS READ "
+DRUBY_ROS_703	"BLT STATUS INDICATES EITHER AN ERROR OR PIPELINE NOT READY "
+DRUBY_ROS_704	"DATA PATH ERROR FROM CP TO BLT ADDRESS REGISTER "
+DRUBY_ROS_705	"NO INTERRUPT IN BLT STATUS REG WHEN ONE WAS EXPECTED "
+DRUBY_ROS_706	"BLT INTERRUPT SET, NO INTERRUPT AT THE CP IIF REGISTER "
+DRUBY_ROS_707	"BLT VALID DATA ON EXPECTED OFF "
+DRUBY_ROS_708	"BLT TO CHAPARREL DATA PATH ERROR "
+DRUBY_ROS_709	"BLT TO CHAPARREL ADDRESSING TEST FAILURE "
+DRUBY_ROS_710	"AFTER WRITING BLT OPCODES ADDRESS REGISTER IS NOT AT 0X200 "
+DRUBY_ROS_711	"AFTER WRITING CTX SAVE ADDRESS REGISTER IS NOT AT 0X300 "
+DRUBY_ROS_712	"AFTER WRITING CTX MAP ADDRESS REGISTER IS NOT AT 0X400 "
+DRUBY_ROS_713	"NO INTERRUPT GENERATED IN RSS CTRL REGISTER WHEN EXPECTED "
+DRUBY_ROS_714	"BLT VALID OFF WHEN EXPECTED ON "
+DRUBY_ROS_715	"INPUT VALID BIT IN ERROR DURING SYNC-BLT INTERACTIVE TEST "
+DRUBY_ROS_716	"DATA AT SYNC DOES NOT COMPARE WITH DATA READ AT THE BLT "
+DRUBY_ROS_717	"NO INTERRUPT 0 GENERATED BY COMMAND WITH INT0 BIT SET "
+DRUBY_ROS_718	"NO INTERRUPT 1 GENERATED BY COMMAND WITH INT1 BIT SET "
+DRUBY_ROS_720	"ERROR WRITING AND READING 24BIT RATTLER 1 SIGNATURE DATA "
+DRUBY_ROS_721	"ERROR WRITING AND READING 24BIT RATTLER 2 SIGNATURE DATA "
+DRUBY_ROS_722	"ERROR WRITING AND READING 24BIT RATTLER 3 SIGNATURE DATA "
+DRUBY_ROS_723	"ERROR WRITING AND READING 24BIT RATTLER 4 SIGNATURE DATA "
+DRUBY_ROS_724	"ERROR WRITING AND READING 24BIT RATTLER 5 SIGNATURE DATA "
+DRUBY_ROS_725	"ERROR WRITING AND READING 16BIT RATTLER 1 SIGNATURE DATA "
+DRUBY_ROS_726	"ERROR WRITING AND READING 16BIT RATTLER 2 SIGNATURE DATA "
+DRUBY_ROS_727	"ERROR WRITING AND READING 16BIT RATTLER 3 SIGNATURE DATA "
+DRUBY_ROS_728	"ERROR WRITING AND READING 16BIT RATTLER 4 SIGNATURE DATA "
+DRUBY_ROS_729	"ERROR WRITING AND READING 16BIT RATTLER 5 SIGNATURE DATA "
+DRUBY_ROS_730	"NO SIGNATURE ACCUMULATION FOR 24BIT BUS RATTLER1 "
+DRUBY_ROS_731	"NO SIGNATURE ACCUMULATION FOR 24BIT BUS RATTLER2 "
+DRUBY_ROS_732	"NO SIGNATURE ACCUMULATION FOR 24BIT BUS RATTLER3 "
+DRUBY_ROS_733	"NO SIGNATURE ACCUMULATION FOR 24BIT BUS RATTLER4 "
+DRUBY_ROS_734	"NO SIGNATURE ACCUMULATION FOR 24BIT BUS RATTLER5 "
+DRUBY_ROS_735	"NO SIGNATURE ACCUMULATION FOR 16BIT BUS RATTLER1 "
+DRUBY_ROS_736	"NO SIGNATURE ACCUMULATION FOR 16BIT BUS RATTLER2 "
+DRUBY_ROS_737	"NO SIGNATURE ACCUMULATION FOR 16BIT BUS RATTLER3 "
+DRUBY_ROS_738	"NO SIGNATURE ACCUMULATION FOR 16BIT BUS RATTLER4 "
+DRUBY_ROS_739	"NO SIGNATURE ACCUMULATION FOR 16BIT BUS RATTLER5 "
+DRUBY_ROS_740	"RAMDAC COLOR TABLE WRITE READBACK MISCOMPARE "
+DRUBY_ROS_741	"NO FRAME BUFFER SWAP INTERRUPT IN RSS CONTROL REGISTER "
+DRUBY_ROS_742	"NO FRAME BUFFER SWAP RECEIVED AT THE CP "
+DRUBY_ROS_743	"ASIC REGISTER TEST FAILED ON MORE THAN ONE RSS ASIC "
+DRUBY_ROS_750	"ASIC REGISTER TEST FAILED WRITE/READ TO THE BLT ASIC "
+DRUBY_ROS_760	"ASIC REGISTER FAILED WRITE/READ TEST TO RATTLER0 "
+DRUBY_ROS_761	"ASIC REGISTER FAILED WRITE/READ TEST TO RATTLER1 "
+DRUBY_ROS_762	"ASIC REGISTER FAILED WRITE/READ TEST TO RATTLER2 "
+DRUBY_ROS_763	"ASIC REGISTER FAILED WRITE/READ TEST TO RATTLER3 "
+DRUBY_ROS_764	"ASIC REGISTER FAILED WRITE/READ TEST TO RATTLER4 "
+DRUBY_ROS_765	"RAMDAC REGISTER ERROR "
+DRUBY_ROS_767	"VOO VPD CHECKSUM FAILURE "
+DRUBY_ROS_768	"VOO COLOR TABLE WRITE/READ FAILURE "
+DRUBY_ROS_769	"VOO CONTROL REGISTER WRITE/READ FAILURE "
+DRUBY_ROS_770	"RSS BIST FAILURE "
+DRUBY_ROS_771	"BLT BIST FAILURE "
+DRUBY_ROS_772	"CHAP 0 BIST FAILURE "
+DRUBY_ROS_773	"CHAP 1 BIST FAILURE "
+DRUBY_ROS_774	"CHAP 2 BIST FAILURE "
+DRUBY_ROS_775	"CHAP 3 BIST FAILURE "
+DRUBY_ROS_776	"CHAP 4 BIST FAILURE "
+DRUBY_ROS_777	"ALL CHAPS BIST FAILURE "
+DRUBY_ROS_778	"MULTI RSS ASICS FAILED BIST "
+DRUBY_ROS_782	"RSS TEST BUS CONTROLLER ASIC TEST FAILED "
+DRUBY_ROS_783	"RSS REEF ASIC TEST FAILED "
+DRUBY_ROS_790	"NO VBLANK DETECTED BEFORE TIMER EXPIRED "
+DRUBY_ROS_793	"RSS VPD CHECKSUM FAILURE "
+DRUBY_ROS_794	"RSS OPCODE TABLE CHECKSUM FAILURE "
+DRUBY_ROS_795	"RSS CONTEXT MAP CHECKSUM FAILURE "
+DRUBY_ROS_796	"RSS DISPLAY TABLE CHECKSUM FAILURE "
+DRUBY_ROS_800	"BASE 16MEG CHAP0 SIMM BAD "
+DRUBY_ROS_801	"BASE 12MEG CHAP0 SIMM BAD "
+DRUBY_ROS_802	"AG 16MEG CHAP0 SIMM BAD "
+DRUBY_ROS_803	"AG 12MEG CHAP0 SIMM BAD "
+DRUBY_ROS_804	"TX 16MEG CHAP0 SIMM BAD "
+DRUBY_ROS_805	"BASE 16MEG CHAP1 SIMM BAD "
+DRUBY_ROS_806	"BASE 12MEG CHAP1 SIMM BAD "
+DRUBY_ROS_807	"AG 16MEG CHAP1 SIMM BAD "
+DRUBY_ROS_808	"AG 12MEG CHAP1 SIMM BAD "
+DRUBY_ROS_809	"TX 16MEG CHAP1 SIMM BAD "
+DRUBY_ROS_810	"BASE 16MEG CHAP2 SIMM BAD "
+DRUBY_ROS_811	"BASE 12MEG CHAP2 SIMM BAD "
+DRUBY_ROS_812	"AG 16MEG CHAP2 SIMM BAD "
+DRUBY_ROS_813	"AG 12MEG CHAP2 SIMM BAD "
+DRUBY_ROS_814	"TX 16MEG CHAP2 SIMM BAD "
+DRUBY_ROS_815	"BASE 16MEG CHAP3 SIMM BAD "
+DRUBY_ROS_816	"BASE 12MEG CHAP3 SIMM BAD "
+DRUBY_ROS_817	"AG 16MEG CHAP3 SIMM BAD "
+DRUBY_ROS_818	"AG 12MEG CHAP3 SIMM BAD "
+DRUBY_ROS_819	"TX 16MEG CHAP3 SIMM BAD "
+DRUBY_ROS_820	"BASE 16MEG CHAP4 SIMM BAD "
+DRUBY_ROS_821	"BASE 12MEG CHAP4 SIMM BAD "
+DRUBY_ROS_822	"AG 16MEG CHAP4 SIMM BAD "
+DRUBY_ROS_823	"AG 12MEG CHAP4 SIMM BAD "
+DRUBY_ROS_824	"TX 16MEG CHAP4 SIMM BAD "
+DRUBY_ROS_830	"ALL SIMMS FAILED IN THIS FRAME BUFFER "
+DRUBY_ROS_832	"FAILURE CLEARING FRAME BUFFER B "
+DRUBY_ROS_840	"MULTIPLE SIMMS BAD IN FRAME BUFFER "
+DRUBY_ROS_850	"RATTLER0 WINDOW TABLE0 SIGNATURE ERROR "
+DRUBY_ROS_851	"RATTLER1 WINDOW TABLE0 SIGNATURE ERROR "
+DRUBY_ROS_852	"RATTLER2 WINDOW TABLE0 SIGNATURE ERROR "
+DRUBY_ROS_853	"RATTLER3 WINDOW TABLE0 SIGNATURE ERROR "
+DRUBY_ROS_854	"RATTLER4 WINDOW TABLE0 SIGNATURE ERROR "
+DRUBY_ROS_855	"RATTLER0 WINDOW TABLE1 SIGNATURE ERROR "
+DRUBY_ROS_856	"RATTLER1 WINDOW TABLE1 SIGNATURE ERROR "
+DRUBY_ROS_857	"RATTLER2 WINDOW TABLE1 SIGNATURE ERROR "
+DRUBY_ROS_858	"RATTLER3 WINDOW TABLE1 SIGNATURE ERROR "
+DRUBY_ROS_859	"RATTLER4 WINDOW TABLE1 SIGNATURE ERROR "
+DRUBY_ROS_860	"RATTLER0 OUTPUT SIGNATURE ERROR "
+DRUBY_ROS_861	"RATTLER1 OUTPUT SIGNATURE ERROR "
+DRUBY_ROS_862	"RATTLER2 OUTPUT SIGNATURE ERROR "
+DRUBY_ROS_863	"RATTLER3 OUTPUT SIGNATURE ERROR "
+DRUBY_ROS_864	"RATTLER4 OUTPUT SIGNATURE ERROR "
+DRUBY_ROS_865	"RAMDAC INPUT SIGNATURE REGISTER ERROR FROM RATTLER0 "
+DRUBY_ROS_866	"RAMDAC INPUT SIGNATURE REGISTER ERROR FROM RATTLER1 "
+DRUBY_ROS_867	"RAMDAC INPUT SIGNATURE REGISTER ERROR FROM RATTLER2 "
+DRUBY_ROS_868	"RAMDAC INPUT SIGNATURE REGISTER ERROR FROM RATTLER3 "
+DRUBY_ROS_869	"RAMDAC INPUT SIGNATURE REGISTER ERROR FROM RATTLER4 "
+DRUBY_ROS_870	"RAMDAC OUTPUT SIGNATURE REGISTER ERROR "
+DRUBY_ROS_900	"BIST TESTS FAILED ON BOTH BOARDS GPSS AND RSS "
+DRUBY_ROS_901	"MULTI FRU BIST FAILURES BOARDS GPSS AND RSS "
+DRUBY_ROS_903	"MULTI REGISTER TEST FAILURES ON BOTH GPSS & RSS "
+$
+$	ros_update failures
+$
+DRUBY_ROS_UPDT_SRN_01 "error accessing file"
+$
+$	vpd_update failures
+$
+DRUBY_VPD_UPDT_SRN_01 "error accessing file"
+DRUBY_VPD_UPDT_SRN_02 "ioctl error accessing MCIC VPD"
+DRUBY_VPD_UPDT_SRN_03 "Timeout running downloaded diagnostic program"
+$
+$	test_dload failures
+$
+DRUBY_DLOAD_SRN_01 "error accessing file"
+$
+$	test_load failures
+$
+DRUBY_LOAD_SRN_01 "Timeout running downloaded diagnostic program"
+$
+$		 service aids messages
+$
+DRUBY_ADVDIAGS	 "Execute GXT1000 diagnostic test units"
+DRUBY_SERVAIDS	 "Perform GXT1000 Service Aids capabilities"
+DRUBY_DIAGTYPE	 "Choose the action to perform for GXT1000 Advanced Diagnostics"
+DRUBY_REDCOLOR	 "The red full screen pattern"
+DRUBY_GREENCOLOR "The green full screen pattern"
+DRUBY_BLUECOLOR	 "The blue full screen pattern"
+DRUBY_WHITECOLOR "The white full screen pattern"
+DRUBY_BLACKCOLOR "The black full screen pattern"
+DRUBY_GRID9x9	 "The 9x9 grid pattern"
+DRUBY_GRID9x11	 "The 9x11 grid Pattern"
+DRUBY_COLORBAR	 "The RGB color bar pattern"
+DRUBY_TVBAR	 "The VOO color bar pattern"
+DRUBY_STEREO	 "The stereo image pattern"
+DRUBY_ROSUPDATE	 "The ROS update procedure "
+DRUBY_VPDUPDATE	 "The VPD update procedure "
+DRUBY_SERVTYPE	 "Please select the Service Aid Pattern to display"
+$
+
+
+DRUBY_DISP_TEST		"\
+The pattern you selected will be displayed on the next screen.\n\n\
+When visual inspection is complete, press enter."
+$
+DRUBY_DISP_DONE		"\
+The pattern you selected is displayed on the screen.\n\n\
+When visual inspection is complete, press enter."
+$
+$ Leave line spacing as shown.  See general notes on expanding ACTION lines.
+
+RUBY_LOOP_MSG "TESTING GXT1000 GRAPHICS SUBSYSTEM ADAPTER IN ADVANCED MODE\n\n\
+Testing multiple times. \n\n\
+%1$6d\tpasses completed.\n\
+%2$6d\terrors logged.\n\n\
+To stop the test, use 'Cancel.'"
+$
+$ See general notes on length of title.
+DRUBY_RGB7  "This is a test of the monitor attached to the\n\
+display adapter currently being tested.\n\n\
+A three color pattern will be displayed on the next screen\n\
+for 7 seconds.\n\n\
+ENSURE.........that the top section of the monitor is red.\n\
+ENSURE.........that the middle section of the monitor is green.\n\
+ENSURE.........that the bottom section of the monitor is blue.\n\n\
+To display the pattern, press Enter."
+$
+DRUBY_RGB7_OK  "This is a test of the monitor attached to the\n\
+display adapter currently being tested.\n\n\
+WAS.........the top section of the monitor red.\n\
+WAS.........the middle section of the monitor green.\n\
+WAS.........the bottom section of the monitor blue.\n\n\
+Move the cursor to selection, then press Enter."
+$
+DRUBY_VOO_AID		"\
+You have selected the VOO service aid. In order to successfully show\n\
+this service aid, a TV monitor is required in addition to the normal\n\
+display attached to the GXT1000. If you do not have this monitor, the\n\
+color bar pattern can not be displayed although no error will be reported.\n\
+If you are not prepared to perform this procedure, exit now.\n\n\
+When ready to proceed, press enter."
+$
+DRUBY_STEREO_AID		"\
+You have selected the stereo service aid. In order to successfully show\n\
+this service aid, the stereo options are required. This includes the stereo\n\
+glasses and stereo cable and unit attached to the GXT1000. If you do not the\n\
+proper hardware, the stereo pattern will look fuzzy and the 3-D effect can \n\
+not be seen although no error will be reported. If you are not prepared to \n\
+perform this procedure, exit now.\n\n\
+When ready to proceed, press enter."
+$
+DRUBY_ROSUPDATE_AID		"\
+You have selected the ROS update procedure. In order to successfully\n\
+perform this procedure, the following files MUST be in place with the \n\
+proper contents:\n\
+	/etc/microcode/8fbcimg.00.00	ROS update image\n\
+	/etc/microcode/8fbcpgm.00.00	ROS update support file\n\n\
+If you are not prepared to perform this procedure, exit now!\n\
+Once the ROS update procedure is started, the permanent contents\n\
+of the ROS are modified. Do NOT proceed unless you understand what\n\
+you are doing!\n\n\
+When ready to perform the update procedure, press enter."
+$
+DRUBY_VPDUPDATE_AID		"\
+You have selected the VPD update procedure. In order to successfully\n\
+perform this procedure, one or more of following files MUST be\n\
+in place with the proper contents:\n\
+	/etc/microcode/8fbcvpd_span.00.00	SPAN VPD update image\n\
+	/etc/microcode/8fbcvpd_gpss.00.00	GPSS VPD update image\n\
+	/etc/microcode/8fbcvpd_rss.00.00	RSS VPD update image\n\
+	/etc/microcode/8fbcvpd_voo.00.00	VOO VPD update image\n\
+If you are not prepared to perform this procedure, exit now!\n\
+Once the VPD update procedure is started, the permanent contents\n\
+of the VPD are modified. Do NOT proceed unless you understand what\n\
+you are doing!\n\n\
+When ready to perform the update procedure, press enter."
+$

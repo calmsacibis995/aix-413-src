@@ -1,0 +1,59 @@
+# @(#) 59 1.5 src/bos/usr/sys/inst.data/sys_bundles/Server.def, pkg, bos41B, 412_41B_sync 1/3/95 14:24:53
+################################################################
+# COMPONENT_NAME: PKG Base Operating System Packaging
+#
+# FUNCTIONS: Server.def 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993, 1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# AIX Server  "Bundle" Definition File
+# These product filesets will be installed by the customer selecting the 
+# Server installation bundle from  the Easy or Advanced Installation Tasks.
+#
+# NOTE: ADDITIONAL ENTRIES ARE APPENDED TO THIS FILE DURING THE INSTALLATION
+#       OF AIXwindows
+#
+################################################################
+# Network License Server Support
+bos.ifor_ls.server
+# Info hypertext support
+bos.info.rte
+bos.info.en_US.info_help
+bos.info.en_US.nav
+bos.info.en_US.manage_gds
+bos.info.en_US.probsolv_gds
+# Base System Networking
+bos.net.ncs
+bos.net.nfs
+bos.net.nis
+bos.net.tcp
+bos.net.uucp
+# Base Performance Tools
+bos.perf.diag_tool
+bos.perf.pmr
+# System Management Tools
+bos.sysmgt.trace
+bos.sysmgt.sysbr
+bos.sysmgt.quota
+# Base Terminal Function Support
+bos.terminfo.print.data
+#Printer backend runtime
+printers.rte
+# 10 common Printer definitions
+printers.ibm4019
+printers.ibm4029
+printers.ibm4039
+printers.hplj-3
+printers.hplj-4
+printers.hplj-3si
+printers.ibm4079
+printers.ibm4037
+printers.ibm2380-2
+printers.ibm2390-2

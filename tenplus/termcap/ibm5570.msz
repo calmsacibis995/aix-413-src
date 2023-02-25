@@ -1,0 +1,455 @@
+* File name: ibm5570.map
+
+* @(#)57        1.4  src/tenplus/termcap/ibm5570.msz, tenplus, tenplus411, GOLD410 3/23/93 12:14:03
+
+* COMPONENT_NAME: (INED) INed Editor
+*
+* ORIGINS:  9, 10, 28
+*
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+
+
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 1
+	Flags = 0x1
+
+/*:
+	Type = 1
+	Count = 2
+
+/*/Name:
+	Value = "ibm5570"
+
+/*/Picture:
+	Type = 1
+	Count = 47
+
+/*/Picture/0:
+
+/*/Picture/1:
+	Type = 1
+	Count = 2
+
+/*/Picture/1/cat-msgno:
+	Value = "%+K_IBM5570_1"
+
+/*/Picture/1/cat-deftxt:
+	Value = "\011\011\011      Keyboard - ibm5570"
+
+/*/Picture/2:
+
+/*/Picture/3:
+
+/*/Picture/4:
+	Type = 1
+	Count = 2
+
+/*/Picture/4/cat-msgno:
+	Value = "%+K_IBM5570_4"
+
+/*/Picture/4/cat-deftxt:
+	Value = "\011\011\011       Input Sequences"
+
+/*/Picture/5:
+
+/*/Picture/6:
+	Type = 1
+	Count = 2
+
+/*/Picture/6/cat-msgno:
+	Value = "%+K_IBM5570_6"
+
+/*/Picture/6/cat-deftxt:
+	Value = " Editor Function   Key Name             Editor Function   Key Name"
+
+/*/Picture/7:
+	Value = "\023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004  \023\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\024\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\004"
+
+/*/Picture/8:
+	Type = 1
+	Count = 2
+
+/*/Picture/8/cat-msgno:
+	Value = "%+K_IBM5570_8"
+
+/*/Picture/8/cat-deftxt:
+	Value = "\001BACKSPACE        \001Backspace        \001  \001PAGE UP          \001Shift+PF9        \001"
+
+/*/Picture/9:
+	Type = 1
+	Count = 2
+
+/*/Picture/9/cat-msgno:
+	Value = "%+K_IBM5570_9"
+
+/*/Picture/9/cat-deftxt:
+	Value = "\001BACKTAB          \001CTRL-t           \001  \001PICK COPY        \001Shift+PF7        \001"
+
+/*/Picture/10:
+	Type = 1
+	Count = 2
+
+/*/Picture/10/cat-msgno:
+	Value = "%+K_IBM5570_10"
+
+/*/Picture/10/cat-deftxt:
+	Value = "\001BEGIN LINE       \001CTRL-a left cursr\001  \001PICK UP          \001PF7              \001"
+
+/*/Picture/11:
+	Type = 1
+	Count = 2
+
+/*/Picture/11/cat-msgno:
+	Value = "%+K_IBM5570_11"
+
+/*/Picture/11/cat-deftxt:
+	Value = "\001BOX MARK         \001CTRL-a b         \001  \001PREVIOUS         \001CTRL-a ,         \001"
+
+/*/Picture/12:
+	Type = 1
+	Count = 2
+
+/*/Picture/12/cat-msgno:
+	Value = "%+K_IBM5570_12"
+
+/*/Picture/12/cat-deftxt:
+	Value = "\001BREAK            \001CTRL-C **        \001  \001PRINT            \001CTRL-a p         \001"
+
+/*/Picture/13:
+	Type = 1
+	Count = 2
+
+/*/Picture/13/cat-msgno:
+	Value = "%+K_IBM5570_13"
+
+/*/Picture/13/cat-deftxt:
+	Value = "\001CANCEL           \001End              \001  \001PUT COPY         \001Shift+PF8        \001"
+
+/*/Picture/14:
+	Type = 1
+	Count = 2
+
+/*/Picture/14/cat-msgno:
+	Value = "%+K_IBM5570_14"
+
+/*/Picture/14/cat-deftxt:
+	Value = "\001CENTER           \001CTRL-a c         \001  \001PUT DOWN         \001PF8              \001"
+
+/*/Picture/15:
+	Type = 1
+	Count = 2
+
+/*/Picture/15/cat-msgno:
+	Value = "%+K_IBM5570_15"
+
+/*/Picture/15/cat-deftxt:
+	Value = "\001CURSOR RIGHT     \001Right arrow      \001  \001QUIT             \001CTRL-\\ **        \001"
+
+/*/Picture/16:
+	Type = 1
+	Count = 2
+
+/*/Picture/16/cat-msgno:
+	Value = "%+K_IBM5570_16"
+
+/*/Picture/16/cat-deftxt:
+	Value = "\001CURSOR UP        \001Up arrow         \001  \001QUOTE            \001CTRL-a q         \001"
+
+/*/Picture/17:
+	Type = 1
+	Count = 2
+
+/*/Picture/17/cat-msgno:
+	Value = "%+K_IBM5570_17"
+
+/*/Picture/17/cat-deftxt:
+	Value = "\001DELETE CHAR      \001Delete           \001  \001REFRESH          \001CTRL-a z         \001"
+
+/*/Picture/18:
+	Type = 1
+	Count = 2
+
+/*/Picture/18/cat-msgno:
+	Value = "%+K_IBM5570_18"
+
+/*/Picture/18/cat-deftxt:
+	Value = "\001DELETE LINE      \001CTRL-a delete    \001  \001REPLACE          \001CTRL-a =         \001"
+
+/*/Picture/19:
+	Type = 1
+	Count = 2
+
+/*/Picture/19/cat-msgno:
+	Value = "%+K_IBM5570_19"
+
+/*/Picture/19/cat-deftxt:
+	Value = "\001DO               \001CTRL-a x         \001  \001RESTORE          \001CTRL-a i         \001"
+
+/*/Picture/20:
+	Type = 1
+	Count = 2
+
+/*/Picture/20/cat-msgno:
+	Value = "%+K_IBM5570_20"
+
+/*/Picture/20/cat-deftxt:
+	Value = "\001END LINE         \001Ctrl-a right curs\001  \001RETURN           \001Enter            \001"
+
+/*/Picture/21:
+	Type = 1
+	Count = 2
+
+/*/Picture/21/cat-msgno:
+	Value = "%+K_IBM5570_21"
+
+/*/Picture/21/cat-deftxt:
+	Value = "\001ENTER            \001ENTER            \001  \001RIGHT            \001CTRL-a r         |"
+
+/*/Picture/22:
+	Type = 1
+	Count = 2
+
+/*/Picture/22/cat-msgno:
+	Value = "%+K_IBM5570_22"
+
+/*/Picture/22/cat-deftxt:
+	Value = "\001EXECUTE          \001EXECUTE          \001  \001SAVE             \001CTRL-a s         \001"
+
+/*/Picture/23:
+	Type = 1
+	Count = 2
+
+/*/Picture/23/cat-msgno:
+	Value = "%+K_IBM5570_23"
+
+/*/Picture/23/cat-deftxt:
+	Value = "\001EXIT             \001CTRL-a d         \001  \001SEARCH DOWN      \001CTRL-a down cursr\001"
+
+/*/Picture/24:
+	Type = 1
+	Count = 2
+
+/*/Picture/24/cat-msgno:
+	Value = "%+K_IBM5570_24"
+
+/*/Picture/24/cat-deftxt:
+	Value = "\001FONT             \001CTRL-a f         \001  \001SEARCH UP        \001CTRL-a up cursor \001"
+
+/*/Picture/25:
+	Type = 1
+	Count = 2
+
+/*/Picture/25/cat-msgno:
+	Value = "%+K_IBM5570_25"
+
+/*/Picture/25/cat-deftxt:
+	Value = "\001FORMAT           \001PF5              \001  \001SET TAB          \001CTRL-a v         \001"
+
+/*/Picture/26:
+	Type = 1
+	Count = 2
+
+/*/Picture/26/cat-msgno:
+	Value = "%+K_IBM5570_26"
+
+/*/Picture/26/cat-deftxt:
+	Value = "\001GO TO            \001CTRL-a g         \001  \001TAB              \001Tab              \001"
+
+/*/Picture/27:
+	Type = 1
+	Count = 2
+
+/*/Picture/27/cat-msgno:
+	Value = "%+K_IBM5570_27"
+
+/*/Picture/27/cat-deftxt:
+	Value = "\001HELP             \001PF1              \001  \001TEXT MARK        \001CTRL-a t         \001"
+
+/*/Picture/28:
+	Type = 1
+	Count = 2
+
+/*/Picture/28/cat-msgno:
+	Value = "%+K_IBM5570_28"
+
+/*/Picture/28/cat-deftxt:
+	Value = "\001HOME             \001HOME             \001  \001(1)              \001CTRL-a+PF1       \001"
+
+/*/Picture/29:
+	Type = 1
+	Count = 2
+
+/*/Picture/29/cat-msgno:
+	Value = "%+K_IBM5570_29"
+
+/*/Picture/29/cat-deftxt:
+	Value = "\001INSERT LINE      \001Shift-PF6        \001  \001(2)              \001CTRL-a+PF2       \001"
+
+/*/Picture/30:
+	Type = 1
+	Count = 2
+
+/*/Picture/30/cat-msgno:
+	Value = "%+K_IBM5570_30"
+
+/*/Picture/30/cat-deftxt:
+	Value = "\001INSERT MODE      \001PF6              \001  \001(3)              \001CTRL-a+PF3       \001"
+
+/*/Picture/31:
+	Type = 1
+	Count = 2
+
+/*/Picture/31/cat-msgno:
+	Value = "%+K_IBM5570_31"
+
+/*/Picture/31/cat-deftxt:
+	Value = "\001LAST ARG         \001CTRL-a a         \001  \001(4)              \001CTRL-a+PF4       \001"
+
+/*/Picture/32:
+	Type = 1
+	Count = 2
+
+/*/Picture/32/cat-msgno:
+	Value = "%+K_IBM5570_32"
+
+/*/Picture/32/cat-deftxt:
+	Value = "\001LEFT             \001CTRL-a l         \001  \001(5)              \001CTRL-a+PF5       \001"
+
+/*/Picture/33:
+	Type = 1
+	Count = 2
+
+/*/Picture/33/cat-msgno:
+	Value = "%+K_IBM5570_33"
+
+/*/Picture/33/cat-deftxt:
+	Value = "\001LINES DOWN       \001CTRL-a dn arrow  \001  \001(6)              \001CTRL-a+PF6       \001"
+
+/*/Picture/34:
+	Type = 1
+	Count = 2
+
+/*/Picture/34/cat-msgno:
+	Value = "%+K_IBM5570_34"
+
+/*/Picture/34/cat-deftxt:
+	Value = "\001LINES UP         \001CTRL-a up arrow  \001  \001(7)              \001CTRL-a+PF7       \001"
+
+/*/Picture/35:
+	Type = 1
+	Count = 2
+
+/*/Picture/35/cat-msgno:
+	Value = "%+K_IBM5570_35"
+
+/*/Picture/35/cat-deftxt:
+	Value = "\001MARGIN           \001CTRL-a m         \001  \001(8)              \001CTRL-a+PF8       \001"
+
+/*/Picture/36:
+	Type = 1
+	Count = 2
+
+/*/Picture/36/cat-msgno:
+	Value = "%+K_IBM5570_36"
+
+/*/Picture/36/cat-deftxt:
+	Value = "\001MENU             \001PF3              \001  \001USE              \001CTRL-a u         \001"
+
+/*/Picture/37:
+	Type = 1
+	Count = 2
+
+/*/Picture/37/cat-msgno:
+	Value = "%+K_IBM5570_37"
+
+/*/Picture/37/cat-deftxt:
+	Value = "\001NEXT             \001CTRL-a           \001  \001WINDOW           \001CTRL-a w         \001"
+
+/*/Picture/38:
+	Type = 1
+	Count = 2
+
+/*/Picture/38/cat-msgno:
+	Value = "%+K_IBM5570_38"
+
+/*/Picture/38/cat-deftxt:
+	Value = "\001NEXT WINDOW      \001CTRL-a n         \001  \001ZOOM IN          \001PF11             \001"
+
+/*/Picture/39:
+	Type = 1
+	Count = 2
+
+/*/Picture/39/cat-msgno:
+	Value = "%+K_IBM5570_39"
+
+/*/Picture/39/cat-deftxt:
+	Value = "\001PAGE DOWN        \001PF9              \001  \001ZOOM OUT         \001PF12             \001"
+
+/*/Picture/40:
+	Value = "\006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007  \006\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\022\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\021\007"
+
+/*/Picture/41:
+
+/*/Picture/42:
+	Type = 1
+	Count = 2
+
+/*/Picture/42/cat-msgno:
+	Value = "%+K_IBM5570_42"
+
+/*/Picture/42/cat-deftxt:
+	Value = " ** The BREAK and QUIT characters can be changed using the \"stty\" command"
+
+/*/Picture/43:
+	Type = 1
+	Count = 2
+
+/*/Picture/43/cat-msgno:
+	Value = "%+K_IBM5570_43"
+
+/*/Picture/43/cat-deftxt:
+	Value = "    from the command line.  They can be viewed by typing \"stty -a\" on the"
+
+/*/Picture/44:
+	Type = 1
+	Count = 2
+
+/*/Picture/44/cat-msgno:
+	Value = "%+K_IBM5570_44"
+
+/*/Picture/44/cat-deftxt:
+	Value = "    command line:  the BREAK character is labeled \"intr=\", the QUIT"
+
+/*/Picture/45:
+	Type = 1
+	Count = 2
+
+/*/Picture/45/cat-msgno:
+	Value = "%+K_IBM5570_45"
+
+/*/Picture/45/cat-deftxt:
+	Value = "    character is labeled \"quit=\"."
+
+/*/Picture/46:
+	Type = 1
+	Count = 2
+
+/*/Picture/46/cat-msgno:
+	Value = "%+K_IBM5570_46"
+
+/*/Picture/46/cat-deftxt:
+	Value = ""
+

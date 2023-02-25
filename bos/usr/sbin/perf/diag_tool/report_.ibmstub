@@ -1,0 +1,146 @@
+#!/bin/ksh
+# @(#)00	1.7	src/bos/usr/sbin/perf/diag_tool/report_.sh, pdt, bos411, 9428A410j 4/13/94 16:27:42
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# report_
+#
+# shell script to run the report writer, and generate a report
+#
+#  output
+#     results are directed to file PDT_REPORT (all sev>=$pdt_sev)
+#     prior report is renamed PDT_REPORT.last (as a primitive backup)
+#     report is mailed to user $pdt_notify
+#     errors are directed to $pdt_tmp/.stderr
+#
+# determine notification user and desired severity level
+# 
+if [ -f $pdt_config/.reporting.list -a -s $pdt_config/.reporting.list ]
+then
+   pdt_notify=`(awk '{v=$1}END{print v}' \
+                           <$pdt_config/.reporting.list)`
+   pdt_sev=`(awk '{v=$2}END{print v}' \
+                           <$pdt_config/.reporting.list)`                 
+   #
+   awk '
+     BEGIN {
+     }
+     {
+        if (substr($1,1,1) != "*") 
+        if (NF != 12) log_error($0)
+        else if (($3<0) || ($3>24))  log_error($0)
+        else if (($4<0) || ($4>7))   log_error($0)
+        else if (($5<0) || ($5>53))  log_error($0)
+        else if (($6<1) || ($6>12))  log_error($0)
+        else if (($7<1990) || ($7>2100)) log_error($0)
+        else if (($8<1) || ($8>366)) log_error($0)
+        else if ($11 != 1) log_error($0)
+        else print $0
+     }
+     END {
+     }
+     function log_error(record) {
+       print "SM record error: " record | "cat 1>&2"
+     }' $pdt_SM 2>>$pdt_tmp/.stderr | \
+     report >$pdt_tmp/.SM_RAW_REPORT 2>>$pdt_tmp/.stderr
+
+   mv $pdt_tmp/PDT_REPORT $pdt_tmp/PDT_REPORT.last 2>/dev/null
+
+   awk '
+     BEGIN {
+        # if the user specified severity level is omitted, set to 1
+	sev = "'$pdt_sev'"
+        if (sev == "") sev=1
+     }
+     {
+          rectype = $1
+          severity = $2
+          $1 = "";
+          $2 = "";
+          split ($0, parts, "|")
+          subtype = parts[1] 
+          $0 = parts[2]
+
+          if (severity <= sev) {
+            NRECS[rectype]++
+            RECS[rectype,NRECS[rectype]] = $0
+            SUBTYPE[rectype,NRECS[rectype]] = subtype
+          }
+          else more_detail_avail = "true"
+
+     }
+     END {
+       # print the headers 
+       for (i=1; i<=NRECS["H"]; i++) 
+           print RECS["H",i]
+       printf("\n Notice: To disable/modify/enable collection or reporting\n")
+       printf("         execute the pdt_config script as root\n")
+       # print the alerts 
+       if (NRECS["A"] > 0) {
+         printf ("\n------------------------ Alerts ---------------------\n")
+         prt("A");
+       }
+       # print the upward trends 
+       if (NRECS["U"] > 0) {
+        printf ("\n---------------------- Upward Trends ----------------\n");
+        prt("U");
+       }
+       # print the upward trends
+       if (NRECS["D"] > 0) {
+        printf ("\n---------------------- Downward Trends --------------\n");
+        prt("D");
+       }
+       # print the system health indicator information
+       if (NRECS["S"] > 0) {
+         printf ("\n----------------------- System Health ---------------\n");
+         prt("S");
+       }
+       # print other report lines 
+       if (NRECS["O"] > 0) {
+         printf ("\n-------------------------- Other ---------------------\n");
+         prt("O");
+       }
+       # if no messages printed - at least say something:
+       if (any_message != "true") {
+        printf ("  [NO severity level %d conditions identified]\n",sev)
+       }
+     }
+     END {
+      printf ("\n-------------------- Summary -------------------------\n");
+      printf ("  This is a severity level %d report\n",sev)
+      if (more_detail_avail == "true")
+        printf ("  More details are available at severity levels > %d\n",sev)
+      else
+        printf ("  No further details available at severity levels > %d\n",sev)
+     }
+     function prt(rt) {
+        last = "  ";
+        for (i=1; i<=NRECS[rt]; i++) {
+        if (SUBTYPE[rt,i]=="  ") printf("     %s\n", RECS[rt,i])
+        else if (last==SUBTYPE[rt,i]) printf("   - %s\n", RECS[rt,i])
+        else if (SUBTYPE[rt,i]!="  ") {
+           printf("\n%-s\n   - %s\n", SUBTYPE[rt,i], RECS[rt,i])
+           last = SUBTYPE[rt,i];
+        }
+        any_message = "true"
+        }
+     }' $pdt_tmp/.SM_RAW_REPORT > $pdt_tmp/PDT_REPORT
+
+   if [ "`echo $pdt_notify`" != "" ]
+   then
+      Mail -s "PDT report for: `date`" $pdt_notify <$pdt_tmp/PDT_REPORT
+   fi
+fi

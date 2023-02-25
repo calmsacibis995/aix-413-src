@@ -1,0 +1,218 @@
+# @(#)95        1.4  src/rspc/usr/bin/pmctrl/pmmi_data.add, pwrcmd, rspc41J, 9514A_all 4/4/95 19:44:02
+*
+* COMPONENT_NAME: PWRCMD
+*
+* FUNCTIONS: Power Management Kernel Extension Config
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1995
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+*
+*       PM machine independent data
+*
+*       on -> 1, off -> 0
+*       shutdown    -> 0x00002000
+*       hibernation -> 0x00001000
+*       suspend     -> 0x00000800
+*       standby     -> 0x00000400
+*       enable      -> 0x00000200
+*       full on     -> 0x00000100
+*
+
+
+*---------------------------------------*
+* initial system state                  *
+*           default  (value1) : enable  *
+*           variable (value2) : enable  *
+*---------------------------------------*
+pmmi_data:
+        attribute = "sys_state"        
+        value1 = 0x00000200            
+        value2 = 0x00000200            
+
+*-----------------------------------------------*
+* transition in case system idle timer expired  *
+*           default  (value1) : standby         *
+*           variable (value2) : standby         *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "sys_idle_action"  
+        value1 = 0x00000400            
+        value2 = 0x00000400            
+
+*-----------------------------------------------*
+* transition in case notebook lid is closed     *
+*           default  (value1) : suspend         *
+*           variable (value2) : suspend         *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "lid_action"
+        value1 = 0x00000800
+        value2 = 0x00000800
+
+*--------------------------------------------------*
+* transition in case main power switch is pressed. *
+*           default  (value1) : shutdown           *
+*           variable (value2) : shutdown           *
+*--------------------------------------------------*
+pmmi_data:
+        attribute = "switch_action"
+        value1 = 0x00002000
+        value2 = 0x00002000
+
+*-----------------------------------------------*
+* transition in case optional battery is low.   *
+*           default  (value1) : suspend         *
+*           variable (value2) : suspend         *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "battery_action"
+        value1 = 0x00000800
+        value2 = 0x00000800
+
+*------------------------------------------------------*
+* transition general users can request                 *
+*           default  (value1) : standby|enable|full_on *
+*           variable (value2) : standby|enable|full_on *
+*                                                      *
+* #NOTE this value must be the bitwisely               *
+*       ORed system state.                             *
+*------------------------------------------------------*
+pmmi_data:
+        attribute = "permission"
+        value1 = 0x00000700
+        value2 = 0x00000700
+
+*-----------------------------------------------*
+* beep setting (on/off)                         *
+*           default  (value1) : on              *
+*           variable (value2) : on              *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "pm_beep"
+        value1 = 1
+        value2 = 1
+
+*-----------------------------------------------*
+* password query in resume (on/off)             *
+*           default  (value1) : on              *
+*           variable (value2) : on              *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "resume_passwd"
+        value1 = 1
+        value2 = 1
+
+*-----------------------------------------------*
+* LFT termination flag (on/off)                 *
+*           default  (value1) : off             *
+*           variable (value2) : off             *
+*                                               *
+*   on  --> terminate                           *
+*   off --> continue                            *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "lft_session"
+        value1 = 0
+        value2 = 0
+
+*-----------------------------------------------*
+* TTY termination flag (on/off)                 *
+*           default  (value1) : off             *
+*           variable (value2) : off             *
+*   on  --> terminate                           *
+*   off --> continue                            *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "tty_session"
+        value1 = 0
+        value2 = 0
+
+*-----------------------------------------------*
+* sync daemon termination flag (on/off)         *
+*           default  (value1) : off              *
+*           variable (value2) : off              *
+*   on  --> terminate                           *
+*   off --> continue                            *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "kill_syncd"
+        value1 = 0
+        value2 = 0
+
+*-----------------------------------------------*
+* ringing resume (on/off)                       *
+*           default  (value1) : off             *
+*           variable (value2) : off             *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "ringing_resume"
+        value1 = 0
+        value2 = 0
+
+*------------------------------------------------*
+* specified time for entering power saving state *
+*           default  (value1) : disabled         *
+*           variable (value2) : disabled         *
+*------------------------------------------------*
+pmmi_data:
+        attribute = "specified_time"
+        value1 = 0
+        value2 = 0
+
+*-----------------------------------------------*
+* transition in case specified timer expired    *
+*           default  (value1) : hibernation     *
+*           variable (value2) : hibernation     *
+*                                               *
+* #NOTE this value must be one of the following *
+*       states.                                 *
+*          suspend state.                       *
+*          hibernation state.                   *
+*          shutdown state.                      *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "specified_act"
+        value1 = 0x00001000
+        value2 = 0x00001000
+
+*---------------------------------------------------*
+* specified time for resume from power saving state *
+*           default  (value1) : disable             *
+*           variable (value2) : disable             *
+*---------------------------------------------------*
+pmmi_data:
+        attribute = "resume_time"
+        value1 = 0
+        value2 = 0
+
+*-----------------------------------------------*
+* system idle time in seconds                   *
+*           default  (value1) : 20 minutes      *
+*           variable (value2) : 20 minutes      *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "sys_idle_time"
+        value1 = 1200
+        value2 = 1200
+
+*-----------------------------------------------*
+* duration of suspend to hibernation in seconds.*
+*           default  (value1) : 20 minutes      *
+*           variable (value2) : 20 minutes      *
+*-----------------------------------------------*
+pmmi_data:
+        attribute = "sus_to_hiber"
+        value1 = 1200
+        value2 = 1200
+
+*-------------- End Of Data ------------------------*
+
+

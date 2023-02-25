@@ -1,0 +1,16 @@
+# @(#)11	1.2  src/packages/X11/msg/No_NO/apps/aixterm/usr/X11.msg.No_NO.apps.aixterm.namelist.S, pkgx, pkg411, GOLD410 2/7/94 16:40:03
+#
+#   COMPONENT_NAME: pkgx
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1993
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+X11mNo_NO.msg

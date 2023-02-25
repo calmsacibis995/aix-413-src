@@ -1,0 +1,321 @@
+# @(#)01	1.1  src/rspc/kernext/pci/ncr810/ncr8xxi.xrf, pciscsi, rspc41J, 9507A 1/25/95 14:58:10
+   1                             ; @(#)01	1.1  src/rspc/kernext/pci/ncr810/ncr8xxi.xrf, pciscsi, rspc41J, 9507A 1/25/95 14:58:10
+   2                             ;
+   3                             ; COMPONENT_NAME: (PCISCSI) IBM SCSI Adapter Iowait SCRIPT(tm) File
+   4                             ;
+   5                             ; FUNCTIONS: NONE
+   6                             ;
+   7                             ; ORIGINS: 27
+   8                             ;
+   9                             ; (C) COPYRIGHT International Business Machines Corp. 1989, 1995
+  10                             ; All Rights Reserved
+  11                             ; Licensed Materials - Property of IBM
+  12                             ;
+  13                             ; US Government Users Restricted Rights - Use, duplication or
+  14                             ; disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+  15                             ;
+  16                             
+  17                             ; SCRIPT
+  18                             ; This SCRIPT contains the iowait script used to handle reselections from
+  19                             ; all targets.
+  20                             
+  21                             ; References to objects that are are resolved (``patched'') by the device
+  22                             ; driver.  Note that some of these objects reside in system memory or I/O
+  23                             ; memory (chip registers) while others are within the SCRIPTS themselves (but
+  24                             ; must be relocated) and still others are used to link the target SCRIPTS with
+  25                             ; iowait SCRIPTS.
+  26                             
+  27                             ; These are relocated
+  28                             EXTERNAL lun_msg_addr
+  29                             
+  30                             ; Target to iowait SCRIPTS linking:
+  31                             EXTERNAL scsi_0_lun, scsi_1_lun, scsi_2_lun, scsi_3_lun
+  32                             EXTERNAL scsi_4_lun, scsi_5_lun, scsi_6_lun, scsi_7_lun
+  33                             EXTERNAL scsi_8_lun, scsi_9_lun, scsi_A_lun, scsi_B_lun
+  34                             EXTERNAL scsi_C_lun, scsi_D_lun, scsi_E_lun, scsi_F_lun
+  35                             
+  36                             ; These are the entry points at which we may start SCRIPTS
+  37                             ; processing
+  38                             ENTRY iowait_entry_point
+  39                             
+  40                             ; Buffers
+  41                             ENTRY lun_msg_buf
+  42                             
+  43                             ; Patch points
+  44                             ENTRY scsi_id_patch
+  45                             
+  46                             ABSOLUTE unknown_reselect_id    = 0x0001D
+  47                             ABSOLUTE uninitialized_reselect = 0X0001E
+  48                             ABSOLUTE suspended              = 0X00020
+  49                             
+  50                             
+  51                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  52                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  53 00000000:                   iowait_entry_point:
+  54 00000000: 50000000 000005A0         wait reselect suspend_chip
+  55                             
+  56 00000008:                   reselect_router:
+  57                                     ;examine bits 7 (VAL) and 3-0 (the reselecting device's SCSI id)
+  58 00000008: 740A8F00 00000000         move SSID & 0x8F to SFBR
+  59 00000010: 6C5C0F00 00000000         move SFBR & 0x0F to SCRATCHB0
+  60 00000018:                   scsi_id_patch:
+  61 00000018: 800C0080 000000A0         jump scsi_id_0 if 0x80
+  62 00000020: 800C0081 000000F0         jump scsi_id_1 if 0x81
+  63 00000028: 800C0082 00000140         jump scsi_id_2 if 0x82
+  64 00000030: 800C0083 00000190         jump scsi_id_3 if 0x83
+  65 00000038: 800C0084 000001E0         jump scsi_id_4 if 0x84
+  66 00000040: 800C0085 00000230         jump scsi_id_5 if 0x85
+  67 00000048: 800C0086 00000280         jump scsi_id_6 if 0x86
+  68 00000050: 800C0087 000002D0         jump scsi_id_7 if 0x87
+  69 00000058: 800C0088 00000320         jump scsi_id_8 if 0x88
+  70 00000060: 800C0089 00000370         jump scsi_id_9 if 0x89
+  71 00000068: 800C008A 000003C0         jump scsi_id_A if 0x8A
+  72 00000070: 800C008B 00000410         jump scsi_id_B if 0x8B
+  73 00000078: 800C008C 00000460         jump scsi_id_C if 0x8C
+  74 00000080: 800C008D 000004B0         jump scsi_id_D if 0x8D
+  75 00000088: 800C008E 00000500         jump scsi_id_E if 0x8E
+  76 00000090: 800C008F 00000550         jump scsi_id_F if 0x8F
+  77                                     ;interrupt if not VAL or bits 3-0 indicate our SCSI id
+  78 00000098: 98080000 0000001D         int unknown_reselect_id
+  79                             
+  80                             
+  81                             ; Reselection routing...jump depending upon what target has reselected
+  82                             ; us.
+  83 000000A0:                   scsi_id_0:
+  84 000000A0: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+  85 000000A8: 800C0080 00000000         jump scsi_0_lun if 0x80
+  86 000000B0: 800C0081 00000000         jump scsi_0_lun if 0x81
+  87 000000B8: 800C0082 00000000         jump scsi_0_lun if 0x82
+  88 000000C0: 800C0083 00000000         jump scsi_0_lun if 0x83
+  89 000000C8: 800C0084 00000000         jump scsi_0_lun if 0x84
+  90 000000D0: 800C0085 00000000         jump scsi_0_lun if 0x85
+  91 000000D8: 800C0086 00000000         jump scsi_0_lun if 0x86
+  92 000000E0: 800C0087 00000000         jump scsi_0_lun if 0x87
+  93 000000E8: 98080000 0000001E         int uninitialized_reselect
+  94 000000F0:                   scsi_id_1:
+  95 000000F0: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+  96 000000F8: 800C0080 00000000         jump scsi_1_lun if 0x80
+  97 00000100: 800C0081 00000000         jump scsi_1_lun if 0x81
+  98 00000108: 800C0082 00000000         jump scsi_1_lun if 0x82
+  99 00000110: 800C0083 00000000         jump scsi_1_lun if 0x83
+ 100 00000118: 800C0084 00000000         jump scsi_1_lun if 0x84
+ 101 00000120: 800C0085 00000000         jump scsi_1_lun if 0x85
+ 102 00000128: 800C0086 00000000         jump scsi_1_lun if 0x86
+ 103 00000130: 800C0087 00000000         jump scsi_1_lun if 0x87
+ 104 00000138: 98080000 0000001E         int uninitialized_reselect
+ 105 00000140:                   scsi_id_2:
+ 106 00000140: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 107 00000148: 800C0080 00000000         jump scsi_2_lun if 0x80
+ 108 00000150: 800C0081 00000000         jump scsi_2_lun if 0x81
+ 109 00000158: 800C0082 00000000         jump scsi_2_lun if 0x82
+ 110 00000160: 800C0083 00000000         jump scsi_2_lun if 0x83
+ 111 00000168: 800C0084 00000000         jump scsi_2_lun if 0x84
+ 112 00000170: 800C0085 00000000         jump scsi_2_lun if 0x85
+ 113 00000178: 800C0086 00000000         jump scsi_2_lun if 0x86
+ 114 00000180: 800C0087 00000000         jump scsi_2_lun if 0x87
+ 115 00000188: 98080000 0000001E         int uninitialized_reselect
+ 116 00000190:                   scsi_id_3:
+ 117 00000190: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 118 00000198: 800C0080 00000000         jump scsi_3_lun if 0x80
+ 119 000001A0: 800C0081 00000000         jump scsi_3_lun if 0x81
+ 120 000001A8: 800C0082 00000000         jump scsi_3_lun if 0x82
+ 121 000001B0: 800C0083 00000000         jump scsi_3_lun if 0x83
+ 122 000001B8: 800C0084 00000000         jump scsi_3_lun if 0x84
+ 123 000001C0: 800C0085 00000000         jump scsi_3_lun if 0x85
+ 124 000001C8: 800C0086 00000000         jump scsi_3_lun if 0x86
+ 125 000001D0: 800C0087 00000000         jump scsi_3_lun if 0x87
+ 126 000001D8: 98080000 0000001E         int uninitialized_reselect
+ 127 000001E0:                   scsi_id_4:
+ 128 000001E0: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 129 000001E8: 800C0080 00000000         jump scsi_4_lun if 0x80
+ 130 000001F0: 800C0081 00000000         jump scsi_4_lun if 0x81
+ 131 000001F8: 800C0082 00000000         jump scsi_4_lun if 0x82
+ 132 00000200: 800C0083 00000000         jump scsi_4_lun if 0x83
+ 133 00000208: 800C0084 00000000         jump scsi_4_lun if 0x84
+ 134 00000210: 800C0085 00000000         jump scsi_4_lun if 0x85
+ 135 00000218: 800C0086 00000000         jump scsi_4_lun if 0x86
+ 136 00000220: 800C0087 00000000         jump scsi_4_lun if 0x87
+ 137 00000228: 98080000 0000001E         int uninitialized_reselect
+ 138 00000230:                   scsi_id_5:
+ 139 00000230: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 140 00000238: 800C0080 00000000         jump scsi_5_lun if 0x80
+ 141 00000240: 800C0081 00000000         jump scsi_5_lun if 0x81
+ 142 00000248: 800C0082 00000000         jump scsi_5_lun if 0x82
+ 143 00000250: 800C0083 00000000         jump scsi_5_lun if 0x83
+ 144 00000258: 800C0084 00000000         jump scsi_5_lun if 0x84
+ 145 00000260: 800C0085 00000000         jump scsi_5_lun if 0x85
+ 146 00000268: 800C0086 00000000         jump scsi_5_lun if 0x86
+ 147 00000270: 800C0087 00000000         jump scsi_5_lun if 0x87
+ 148 00000278: 98080000 0000001E         int uninitialized_reselect
+ 149 00000280:                   scsi_id_6:
+ 150 00000280: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 151 00000288: 800C0080 00000000         jump scsi_6_lun if 0x80
+ 152 00000290: 800C0081 00000000         jump scsi_6_lun if 0x81
+ 153 00000298: 800C0082 00000000         jump scsi_6_lun if 0x82
+ 154 000002A0: 800C0083 00000000         jump scsi_6_lun if 0x83
+ 155 000002A8: 800C0084 00000000         jump scsi_6_lun if 0x84
+ 156 000002B0: 800C0085 00000000         jump scsi_6_lun if 0x85
+ 157 000002B8: 800C0086 00000000         jump scsi_6_lun if 0x86
+ 158 000002C0: 800C0087 00000000         jump scsi_6_lun if 0x87
+ 159 000002C8: 98080000 0000001E         int uninitialized_reselect
+ 160 000002D0:                   scsi_id_7:
+ 161 000002D0: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 162 000002D8: 800C0080 00000000         jump scsi_7_lun if 0x80
+ 163 000002E0: 800C0081 00000000         jump scsi_7_lun if 0x81
+ 164 000002E8: 800C0082 00000000         jump scsi_7_lun if 0x82
+ 165 000002F0: 800C0083 00000000         jump scsi_7_lun if 0x83
+ 166 000002F8: 800C0084 00000000         jump scsi_7_lun if 0x84
+ 167 00000300: 800C0085 00000000         jump scsi_7_lun if 0x85
+ 168 00000308: 800C0086 00000000         jump scsi_7_lun if 0x86
+ 169 00000310: 800C0087 00000000         jump scsi_7_lun if 0x87
+ 170                             ; If we have reached this point, that means a device that we know nothing about
+ 171                             ; has reselected us, so we have jumped here.  it could mean we forgot to
+ 172                             ; write in the patch address to a device we do recognize, and we jumped here
+ 173                             ; as part of the "safety net".  Or, that the device has done an illegal
+ 174                             ; reselection after an ABORT or BDR has been issued to it.
+ 175 00000318: 98080000 0000001E         int uninitialized_reselect
+ 176 00000320:                   scsi_id_8:
+ 177 00000320: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 178 00000328: 800C0080 00000000         jump scsi_8_lun if 0x80
+ 179 00000330: 800C0081 00000000         jump scsi_8_lun if 0x81
+ 180 00000338: 800C0082 00000000         jump scsi_8_lun if 0x82
+ 181 00000340: 800C0083 00000000         jump scsi_8_lun if 0x83
+ 182 00000348: 800C0084 00000000         jump scsi_8_lun if 0x84
+ 183 00000350: 800C0085 00000000         jump scsi_8_lun if 0x85
+ 184 00000358: 800C0086 00000000         jump scsi_8_lun if 0x86
+ 185 00000360: 800C0087 00000000         jump scsi_8_lun if 0x87
+ 186 00000368: 98080000 0000001E         int uninitialized_reselect
+ 187 00000370:                   scsi_id_9:
+ 188 00000370: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 189 00000378: 800C0080 00000000         jump scsi_9_lun if 0x80
+ 190 00000380: 800C0081 00000000         jump scsi_9_lun if 0x81
+ 191 00000388: 800C0082 00000000         jump scsi_9_lun if 0x82
+ 192 00000390: 800C0083 00000000         jump scsi_9_lun if 0x83
+ 193 00000398: 800C0084 00000000         jump scsi_9_lun if 0x84
+ 194 000003A0: 800C0085 00000000         jump scsi_9_lun if 0x85
+ 195 000003A8: 800C0086 00000000         jump scsi_9_lun if 0x86
+ 196 000003B0: 800C0087 00000000         jump scsi_9_lun if 0x87
+ 197 000003B8: 98080000 0000001E         int uninitialized_reselect
+ 198 000003C0:                   scsi_id_A:
+ 199 000003C0: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 200 000003C8: 800C0080 00000000         jump scsi_A_lun if 0x80
+ 201 000003D0: 800C0081 00000000         jump scsi_A_lun if 0x81
+ 202 000003D8: 800C0082 00000000         jump scsi_A_lun if 0x82
+ 203 000003E0: 800C0083 00000000         jump scsi_A_lun if 0x83
+ 204 000003E8: 800C0084 00000000         jump scsi_A_lun if 0x84
+ 205 000003F0: 800C0085 00000000         jump scsi_A_lun if 0x85
+ 206 000003F8: 800C0086 00000000         jump scsi_A_lun if 0x86
+ 207 00000400: 800C0087 00000000         jump scsi_A_lun if 0x87
+ 208 00000408: 98080000 0000001E         int uninitialized_reselect
+ 209 00000410:                   scsi_id_B:
+ 210 00000410: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 211 00000418: 800C0080 00000000         jump scsi_B_lun if 0x80
+ 212 00000420: 800C0081 00000000         jump scsi_B_lun if 0x81
+ 213 00000428: 800C0082 00000000         jump scsi_B_lun if 0x82
+ 214 00000430: 800C0083 00000000         jump scsi_B_lun if 0x83
+ 215 00000438: 800C0084 00000000         jump scsi_B_lun if 0x84
+ 216 00000440: 800C0085 00000000         jump scsi_B_lun if 0x85
+ 217 00000448: 800C0086 00000000         jump scsi_B_lun if 0x86
+ 218 00000450: 800C0087 00000000         jump scsi_B_lun if 0x87
+ 219 00000458: 98080000 0000001E         int uninitialized_reselect
+ 220 00000460:                   scsi_id_C:
+ 221 00000460: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 222 00000468: 800C0080 00000000         jump scsi_C_lun if 0x80
+ 223 00000470: 800C0081 00000000         jump scsi_C_lun if 0x81
+ 224 00000478: 800C0082 00000000         jump scsi_C_lun if 0x82
+ 225 00000480: 800C0083 00000000         jump scsi_C_lun if 0x83
+ 226 00000488: 800C0084 00000000         jump scsi_C_lun if 0x84
+ 227 00000490: 800C0085 00000000         jump scsi_C_lun if 0x85
+ 228 00000498: 800C0086 00000000         jump scsi_C_lun if 0x86
+ 229 000004A0: 800C0087 00000000         jump scsi_C_lun if 0x87
+ 230 000004A8: 98080000 0000001E         int uninitialized_reselect
+ 231 000004B0:                   scsi_id_D:
+ 232 000004B0: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 233 000004B8: 800C0080 00000000         jump scsi_D_lun if 0x80
+ 234 000004C0: 800C0081 00000000         jump scsi_D_lun if 0x81
+ 235 000004C8: 800C0082 00000000         jump scsi_D_lun if 0x82
+ 236 000004D0: 800C0083 00000000         jump scsi_D_lun if 0x83
+ 237 000004D8: 800C0084 00000000         jump scsi_D_lun if 0x84
+ 238 000004E0: 800C0085 00000000         jump scsi_D_lun if 0x85
+ 239 000004E8: 800C0086 00000000         jump scsi_D_lun if 0x86
+ 240 000004F0: 800C0087 00000000         jump scsi_D_lun if 0x87
+ 241 000004F8: 98080000 0000001E         int uninitialized_reselect
+ 242 00000500:                   scsi_id_E:
+ 243 00000500: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 244 00000508: 800C0080 00000000         jump scsi_E_lun if 0x80
+ 245 00000510: 800C0081 00000000         jump scsi_E_lun if 0x81
+ 246 00000518: 800C0082 00000000         jump scsi_E_lun if 0x82
+ 247 00000520: 800C0083 00000000         jump scsi_E_lun if 0x83
+ 248 00000528: 800C0084 00000000         jump scsi_E_lun if 0x84
+ 249 00000530: 800C0085 00000000         jump scsi_E_lun if 0x85
+ 250 00000538: 800C0086 00000000         jump scsi_E_lun if 0x86
+ 251 00000540: 800C0087 00000000         jump scsi_E_lun if 0x87
+ 252 00000548: 98080000 0000001E         int uninitialized_reselect
+ 253 00000550:                   scsi_id_F:
+ 254 00000550: 0F000001 00000000         move 1, lun_msg_addr, when MSG_IN
+ 255 00000558: 800C0080 00000000         jump scsi_F_lun if 0x80
+ 256 00000560: 800C0081 00000000         jump scsi_F_lun if 0x81
+ 257 00000568: 800C0082 00000000         jump scsi_F_lun if 0x82
+ 258 00000570: 800C0083 00000000         jump scsi_F_lun if 0x83
+ 259 00000578: 800C0084 00000000         jump scsi_F_lun if 0x84
+ 260 00000580: 800C0085 00000000         jump scsi_F_lun if 0x85
+ 261 00000588: 800C0086 00000000         jump scsi_F_lun if 0x86
+ 262 00000590: 800C0087 00000000         jump scsi_F_lun if 0x87
+ 263 00000598: 98080000 0000001E         int uninitialized_reselect
+ 264                             
+ 265                             ; We get here if the SIGP flag has been set by the processor whilst we
+ 266                             ; were in the wait reselect instruction.  This is done to stop the chip
+ 267                             ; so that a new I/O operation can be initiated.
+ 268 000005A0:                   suspend_chip:
+ 269 000005A0: 721A0000 00000000         move CTEST2 to SFBR     ; clears sigp
+ 270 000005A8: 98080000 00000020         int suspended
+ 271                             
+ 272                             ;;;;;;;;;;;;;
+ 273 000005B0:                   lun_msg_buf:
+ 274 000005B0: 80000000 000005B0         nop lun_msg_buf
+ 275                             
+ 276                             
+
+--SYMBOL---------------------------VALUE------TYPE-------
+suspended                         00000020  ABSOLUTE              
+uninitialized_reselect            0000001E  ABSOLUTE              
+unknown_reselect_id               0000001D  ABSOLUTE              
+SCRIPT                            00000000  CODE SEGMENT          
+iowait_entry_point                00000000  ENTRY                 
+lun_msg_buf                       000005B0  ENTRY                 
+scsi_id_patch                     00000018  ENTRY                 
+lun_msg_addr                      00000000  EXTERNAL              
+scsi_0_lun                        00000000  EXTERNAL              
+scsi_1_lun                        00000000  EXTERNAL              
+scsi_2_lun                        00000000  EXTERNAL              
+scsi_3_lun                        00000000  EXTERNAL              
+scsi_4_lun                        00000000  EXTERNAL              
+scsi_5_lun                        00000000  EXTERNAL              
+scsi_6_lun                        00000000  EXTERNAL              
+scsi_7_lun                        00000000  EXTERNAL              
+scsi_8_lun                        00000000  EXTERNAL              
+scsi_9_lun                        00000000  EXTERNAL              
+scsi_A_lun                        00000000  EXTERNAL              
+scsi_B_lun                        00000000  EXTERNAL              
+scsi_C_lun                        00000000  EXTERNAL              
+scsi_D_lun                        00000000  EXTERNAL              
+scsi_E_lun                        00000000  EXTERNAL              
+scsi_F_lun                        00000000  EXTERNAL              
+reselect_router                   00000008  LABEL                 
+scsi_id_0                         000000A0  LABEL                 
+scsi_id_1                         000000F0  LABEL                 
+scsi_id_2                         00000140  LABEL                 
+scsi_id_3                         00000190  LABEL                 
+scsi_id_4                         000001E0  LABEL                 
+scsi_id_5                         00000230  LABEL                 
+scsi_id_6                         00000280  LABEL                 
+scsi_id_7                         000002D0  LABEL                 
+scsi_id_8                         00000320  LABEL                 
+scsi_id_9                         00000370  LABEL                 
+scsi_id_A                         000003C0  LABEL                 
+scsi_id_B                         00000410  LABEL                 
+scsi_id_C                         00000460  LABEL                 
+scsi_id_D                         000004B0  LABEL                 
+scsi_id_E                         00000500  LABEL                 
+scsi_id_F                         00000550  LABEL                 
+suspend_chip                      000005A0  LABEL                 

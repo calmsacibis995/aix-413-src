@@ -1,0 +1,534 @@
+# @(#)25  1.6  src/rspc/objclass/pcigga.add, pcigga, rspc41J, 9516B_all 4/18/95 10:37:50
+# pcigga.add
+#
+# COMPONENT_NAME: (PCIGGA) Weitek PCI Graphics Adapter Device Driver
+#
+# FUNCTIONS: None
+#
+# ORIGINS: 27
+#
+# IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+# combined with the aggregated modules for this product)
+#                  SOURCE MATERIALS
+# (C) COPYRIGHT International Business Machines Corp. 1994
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+
+#
+# Stanzas for populating the entry level color display predefined values
+#
+PdDv:
+        type       = "gga"
+        class      = "adapter"
+        subclass   = "pci"
+        prefix     = "gga"
+        devid      = "0x0e100091"
+        base       = 0
+        has_vpd    = 0
+        detectable = 1
+        chgstatus  = 0
+        bus_ext    = 0
+        fru        = 1
+        led        = 0x82c
+        setno      = 45
+        msgno      = 0
+        catalog    = "devices.cat"
+        DvDr       = "pci/ggadd"
+        Define     = "/usr/lib/methods/define_rspc"
+        Configure  = "/usr/lib/methods/cfg_gga"
+        Change     = "/usr/lib/methods/chggen"
+        Unconfigure = "/usr/lib/methods/ucfgdevice"
+        Undefine   = "/usr/lib/methods/undefine"
+        Start      = ""
+        Stop       = ""
+        uniquetype = "adapter/pci/gga"
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "_subtype"
+        deflt = "74"
+        values = "74,75,78"
+        width = ""
+        type = "T"
+        generic = ""
+        rep = "nl"
+        nls_index = 0
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute  = "bus_mem_start"
+        deflt      = "0x01000000"
+        values     = "0-0xff000000,0x1000000"
+        width      = "0x1000000"
+        type       = "M"
+        generic    = ""
+        rep        = "nr"
+        nls_index  = 0
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "scrn_width_mm"
+        deflt = "330"
+        values = "1-10000,1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 2
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "scrn_height_mm"
+        deflt = "250"
+        values = "1-10000,1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 3
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute  = "display_mode"
+        deflt      = "0x0201"
+        values     = "0-0xffffffff,1"
+        width      = ""
+        type       = "R"
+        generic    = ""
+        rep        = "nr"
+        nls_index  = 0
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute  = "display_id"
+        deflt      = "0x043c0000"
+        values     = "0"
+        width      = ""
+        type       = "R"
+        generic    = "D"
+        rep        = "nl"
+        nls_index  = 4
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute  = "dsp_name"
+        deflt      = "S15"
+        values     = "0"
+        width      = ""
+        type       = "R"
+        generic    = "D"
+        rep        = "s"
+        nls_index  = 5
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "dsp_desc"
+        deflt = "Graphics Adapter"
+        values = "0"
+        width = ""
+        type = "R"
+        generic = "D"
+        rep = "s"
+        nls_index = 6
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color1"
+        deflt = "0x00404040"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 7
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color2"
+        deflt = "0x00FF0000"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 8
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color3"
+        deflt = "0x0000FF00"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 9
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color4"
+        deflt = "0x00FFFF00"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 10
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color5"
+        deflt = "0x000000FF"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 11
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color6"
+        deflt = "0x00FF00FF"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 12
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color7"
+        deflt = "0x0000FFFF"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 13
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color8"
+        deflt = "0x00B0B0B0"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 14
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color9"
+        deflt = "0x00808080"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 15
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color10"
+        deflt = "0x00FF8080"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 16
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color11"
+        deflt = "0x0080FF80"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 17
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color12"
+        deflt = "0x00C08020"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 18
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color13"
+        deflt = "0x008080FF"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 19
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color14"
+        deflt = "0x00FF80FF"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 20
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color15"
+        deflt = "0x0080FFFF"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 21
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "ksr_color16"
+        deflt = "0x00FFFFFF"
+        values = "0x0-0xFFFFFF,0x1"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "nr"
+        nls_index = 22
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "belongs_to"
+        deflt = "graphics"
+        values = "0"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "s"
+        nls_index = 23
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "cfg_method_load"
+        deflt = "/usr/lib/methods/cfg_gga"
+        values = "/usr/lib/methods/cfg_gga"
+        width = ""
+        type = "R"
+        generic = "D"
+        rep = "s"
+        nls_index = 29
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "custom_font"
+        deflt = ""
+        values = ""
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "n"
+        nls_index = 0
+
+
+#
+# Stanzas for selecting the display resolution and refresh rate via smit
+#
+
+PdAt:
+	uniquetype = "adapter/pci/gga"
+        attribute = "chg_monitortype"
+        deflt = "y"
+        values = "n,y"
+        width = ""
+        type = "R"
+        generic = "D"
+        rep = "sl"
+        nls_index = 66
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "chg_res_refrate"
+        deflt = "y"
+        values = "n,y"
+        width = ""
+        type = "R"
+        generic = "D"
+        rep = "sl"
+        nls_index = 68
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "monitor_type"
+        deflt = "IBM6325_15V"
+        values ="IBM6324_14V,IBM6325_15V,IBM6327_17V,IBM9524_14P,IBM9525_15P,IBM9527_17P,IBM9521_21P,POWERDisplay17,POWERDisplay20,Other_VESA_Compliant_Multisync_Display"
+        width =""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 67
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "IBM6324_14V"
+	deflt = "1024x768@76Hz_ISO"
+        values ="1024x768@76Hz_ISO,1024x768@75Hz,1024x768@72Hz,1024x768@70Hz,1024x768@60Hz, 800x600@75Hz_ISO, 800x600@72Hz, 800x600@60Hz, 640x480@75Hz_ISO, 640x480@72Hz, 640x480@60Hz"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 69
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "IBM6325_15V"
+	deflt = "1024x768@76Hz_ISO"
+	values ="1024x768@76Hz_ISO,1024x768@75Hz,1024x768@72Hz,1024x768@70Hz,1024x768@60Hz, 800x600@75Hz_ISO, 800x600@72Hz, 800x600@60Hz, 640x480@75Hz_ISO, 640x480@72Hz, 640x480@60Hz"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 69
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "IBM6327_17V"
+	deflt = "1024x768@76Hz_ISO"
+	values ="1280x1024@60Hz, 1024x768@76Hz_ISO, 1024x768@75Hz, 1024x768@72Hz, 1024x768@70Hz, 1024x768@60Hz,  800x600@75Hz_ISO,  800x600@72Hz,  800x600@60Hz,  640x480@75Hz_ISO,  640x480@72Hz,  640x480@60Hz"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 69
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "IBM9524_14P"
+	deflt = "1024x768@76Hz_ISO"
+        values ="1024x768@76Hz_ISO,1024x768@75Hz,1024x768@72Hz,1024x768@70Hz,1024x768@60Hz, 800x600@75Hz_ISO, 800x600@72Hz, 800x600@60Hz, 640x480@75Hz_ISO, 640x480@72Hz, 640x480@60Hz"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 69
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "IBM9525_15P"
+	deflt = "1024x768@76Hz_ISO"
+	values ="1024x768@76Hz_ISO,1024x768@75Hz,1024x768@72Hz,1024x768@70Hz,1024x768@60Hz, 800x600@75Hz_ISO, 800x600@72Hz, 800x600@60Hz, 640x480@75Hz_ISO, 640x480@72Hz, 640x480@60Hz"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 69
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "IBM9527_17P"
+	deflt = "1280x1024@77Hz_ISO"
+	values ="1360x1024@77Hz_ISO,1280x1024@77Hz_ISO,1280x1024@75Hz,1280x1024@60Hz, 1024x768@76Hz_ISO, 1024x768@75Hz, 1024x768@72Hz, 1024x768@70Hz, 1024x768@60Hz,  800x600@75Hz_ISO,  800x600@72Hz,  800x600@60Hz,  640x480@75Hz_ISO,  640x480@72Hz,  640x480@60Hz"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 69
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "IBM9521_21P"
+	deflt = "1280x1024@77Hz_ISO"
+	values ="1600x1280@60Hz,1360x1024@77Hz_ISO,1280x1024@77Hz_ISO,1280x1024@75Hz,1280x1024@60Hz, 1024x768@76Hz_ISO, 1024x768@75Hz, 1024x768@72Hz, 1024x768@70Hz, 1024x768@60Hz,  800x600@75Hz,  800x600@72Hz,  800x600@60Hz,  640x480@75Hz,  640x480@72Hz,  640x480@60Hz"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 69
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "POWERDisplay17"
+	deflt = "1280x1024@77Hz_ISO"
+	values ="1600x1280@60Hz,1360x1024@77Hz_ISO,1280x1024@77Hz_ISO,1280x1024@75Hz,1280x1024@60Hz, 1024x768@76Hz_ISO, 1024x768@75Hz, 1024x768@72Hz, 1024x768@70Hz, 1024x768@60Hz,  800x600@75Hz,  800x600@72Hz,  800x600@60Hz,  640x480@75Hz,  640x480@72Hz,  640x480@60Hz"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 69
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "POWERDisplay20"
+	deflt = "1280x1024@77Hz_ISO"
+	values ="1600x1280@60Hz,1360x1024@77Hz_ISO,1280x1024@77Hz_ISO,1280x1024@75Hz,1280x1024@60Hz, 1024x768@76Hz_ISO, 1024x768@75Hz, 1024x768@72Hz, 1024x768@70Hz, 1024x768@60Hz,  800x600@75Hz,  800x600@72Hz,  800x600@60Hz,  640x480@75Hz,  640x480@72Hz,  640x480@60Hz"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 69
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "Other_VESA_Comp"
+	deflt = "1024x768@75Hz"
+	values ="1600x1280@60Hz,1360x1024@77Hz,1280x1024@77Hz,1280x1024@75Hz,1280x1024@60Hz, 1024x768@76Hz, 1024x768@75Hz, 1024x768@72Hz, 1024x768@70Hz, 1024x768@60Hz,  800x600@75Hz,  800x600@72Hz,  800x600@60Hz,  640x480@75Hz,  640x480@72Hz,  640x480@60Hz"
+        width = ""
+        type = "R"
+        generic = "DU"
+        rep = "sl"
+        nls_index = 69
+
+PdCn:
+        uniquetype = "adapter/pci/gga"
+        connkey = "display"
+        connwhere = ""
+
+#
+# For AIX Power Management - Pony 9100 on Polo only
+#
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "pm_dev_itime"
+        deflt = "300"
+        values = "0-7200,1"
+        width = ""
+        type = "R"
+        generic = ""
+        rep = "nr"
+        nls_index = 0
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "pm_dev_stime"
+        deflt = "120"
+        values = "0-7200,1"
+        width = ""
+        type = "R"
+        generic = ""
+        rep = "nr"
+        nls_index = 0
+
+PdAt:
+        uniquetype = "adapter/pci/gga"
+        attribute = "cfg_first_time"
+        deflt = "1"
+        values = "0,1"
+        width = ""
+        type = "R"
+        generic = ""
+        rep = "ni"
+        nls_index = 0
+

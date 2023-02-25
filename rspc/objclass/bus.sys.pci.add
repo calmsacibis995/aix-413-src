@@ -1,0 +1,73 @@
+* @(#)60 1.11 src/rspc/objclass/bus.sys.pci.add, rspccfg, rspc41J, 9520B_all 5/18/95 13:47:36
+*
+* COMPONENT_NAME: rspccfg   bus.sys.pci.add
+*
+* FUNCTIONS: Predefine data for the pci bus
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*
+* led of 78a displays as 78c
+
+PdDv:
+	class = "bus"
+	subclass = "sys"
+	type = "pci"
+	uniquetype = "bus/sys/pci"
+	prefix = "bus"
+	devid =	"PNP0A03"
+	base = 1
+	has_vpd = 0
+	detectable = 1
+	chgstatus = 0
+	bus_ext = 0
+	fru = 2
+	led = 0x78a
+	setno = 3
+	msgno = 2
+	catalog = "devices.cat"
+	DvDr = ""
+	Define = "/usr/lib/methods/define_rspc"
+	Configure = "/usr/lib/methods/cfgbus_pci"
+	Change = ""
+	Unconfigure = "/usr/lib/methods/ucfgdevice"
+	Undefine = "/usr/lib/methods/undefine"
+	Start = ""
+	Stop = ""
+
+PdAt:
+        uniquetype = "bus/sys/pci"
+        attribute = "bus_id"
+        deflt = "0xc0"
+        values ="0xc0"
+        width = ""
+        type = "R"
+        generic = ""
+        rep = "n"
+        nls_index = 0
+
+PdAt:
+        uniquetype = "bus/sys/pci"
+        attribute = "bus_number"
+        deflt = "0x0"
+        values ="0x0-0xFF"
+        width = ""
+        type = "R"
+        generic = ""
+        rep = "nl"
+        nls_index = 0
+
+PdCn:
+        uniquetype = "bus/sys/pci"
+        connkey = "pci"
+        connwhere = ""
+
+
+

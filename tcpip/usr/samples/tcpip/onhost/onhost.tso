@@ -1,0 +1,1748 @@
+/* REXX */
+/*static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/onhost.tso, tcpip, tcpip411, GOLD410 8/14/90 16:27:11";
+ *
+ * COMPONENT_NAME: TCPIP onhost.tso 
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1986, 1988, 1989
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ * RISC System/6000 is a trademark of International Business Machines
+   Corporation.
+*/
+/*
+    AIXwhat is @(#) onhost.tso 1.6 PASC 1.6
+ */ version='onhost - version 1.1 - MVS/TSO'
+/*
+ * onhost simulates some AIX commands on MVS/TSO
+ * onhost ? for information
+ * uses scratch file allocated by onhostld to save onhost cwd level
+ */
+                          /*-----------------------------------------*/
+   zone = "P"             /* U S E R   S U P O R T E D   C O D E     */
+   begsavings = 0402      /* installation site time zone where:      */
+   endsavings = 1024      /*                   zone = "P" (pacific)  */
+   /*----------------------*                          "M" (mountain) */
+   /*  begsavings = mmdd of first daylight saving     "C" (central)  */
+   /*  endsavings = mmdd of last daylight savings     "E" (eastern)  */
+   /*----------------------------------------------------------------*/
+   default = "SPACE(360, 50) BLOCK(3116)"; defaultdir = "DIR(20)"
+ 
+   parse source $sys $rest
+   if $sys <> 'TSO' then do
+      say "TSO version not valid for " $sys; call onhoste 1065
+   end
+   signal on syntax; signal on halt
+   parse arg cmd lcargs
+   arglist = ""; options = "-"
+   do while lcargs ^= ""
+     parse var lcargs argwork lcargs
+     if substr(argwork,1,1) = "-" then
+       options = options || substr(argwork,2)
+     else
+       arglist = arglist argwork
+   end
+   if options = "-" then options = ""
+   parse upper var options options
+   parse upper var cmd cmd
+   if cmd = "?" then cmd = "MAN"
+   lcargs = options arglist
+   retcode = 0
+   select
+/******************************************************************
+ *    man - print manual page(s)                                  *
+ ******************************************************************/
+      when cmd = "MAN" then do
+        parse source . . . execdd .
+        x = outtrap(list.)         /* find file for ONHOSTMN */
+        "LISTA STATUS"
+        x = outtrap(off)
+        y = 0
+        do x = 1 to list.0         /* should be in same pds as cmd */
+          if substr(list.x,5,1) = " " then
+            list.x = substr(list.x,1,4) || "*" || substr(list.x,6)
+          parse var list.x var1 var2
+          if var2 = "" then dsname = var1
+          else do
+            if var1 ^= "*" then ddname = var1
+            if ddname = execdd then do
+              y = y + 1; allocdsn.y = dsname
+            end
+          end
+        end /* allocate list */
+        mandsn = ""
+        do x = 1 to y              /* now find which dsn */
+          z = outtrap(list.)       /* check list of members */
+          "LISTDS '"allocdsn.x"' MEMBERS"
+          z = outtrap(off)
+          memlist = ""
+          do z = 1 to list.0
+            parse var list.z member .
+            if memlist = "Y" then do
+              if member = "ONHOSTMN" then do
+                mandsn = allocdsn.x
+                leave
+              end
+            end
+            if member = "--MEMBERS--" then memlist = "Y"
+            if mandsn ^= "" then leave
+          end
+          if mandsn ^= "" then leave
+        end /* member search */
+        if mandsn = "" then do           /* not found , error       */
+          say "manual member 'ONHOSTMN' not found";  call onhoste 0010
+        end
+        "ALLOC DA('"mandsn"(ONHOSTMN)') F(MANFILE) SHR"
+        parse upper var arglist command .
+        if command = "" then command = "?"
+        header = ""
+        do while header ^= command             /* find command */
+          EXECIO '1' DISKR "MANFILE"
+          retcode = rc
+          if retcode ^= 0 then leave
+          parse pull a
+          if substr(a,1,1) = "<" then parse value a with "<" header ">"
+        end
+        if header ^= command then do           /* not found  ? */
+          EXECIO '0' DISKR "MANFILE (FINI"
+          "FREE F(MANFILE)"
+          say "command not found"; call onhoste 0010
+        end
+        if command = "?" then say version
+        do while header = command              /* list manual */
+          EXECIO '1' DISKR "MANFILE"
+          retcode = rc
+          if retcode ^= 0 then leave
+          parse pull a
+          if substr(a,1,1) = "<" then parse value a with "<" header ">"
+          if header = command then say strip(a,t)
+        end
+        EXECIO '0' DISKR "MANFILE (FINI"
+        "FREE F(MANFILE)"
+        retcode = 0
+      end /* MAN */
+/******************************************************************
+ *    pwd - print current directory (tso prefix)                  *
+ ******************************************************************/
+      when cmd = "PWD" then do
+        call Getprofile
+        call Getlevel2
+        if level2 = "" then say "/" || prefix
+        else say "/" || prefix || "/" || level2
+      end /* PWD */
+/******************************************************************
+ *    write - send a message to tso user                          *
+ ******************************************************************/
+      when cmd = "WRITE" | cmd = "MSG" then do
+        parse var lcargs user lcargs
+        lcargs = strip(lcargs)
+        user = strip(user)
+        if user ^= "OPERATOR" then do
+          "SEND '" || lcargs || "' USER(" || user || ")"
+          retcode = rc
+        end
+        else do
+          "SEND '" || lcargs || "'"
+          retcode = rc
+        end
+      end /* WRITE */
+/******************************************************************
+ *    mkdir - make a directory(pds)                               *
+ ******************************************************************/
+      when cmd = "MKDIR" then do
+         Call Getfn
+         ftype = reverse(fn); parse value ftype with ftype "." .
+         ftype = reverse(ftype); ftype = substr(ftype,1,3)
+         if ftype = "ASM" | ftype = "COB" | ftype = "FOR" then
+              attrib = "LRECL(80) BLKSIZE(800) RECFM(F B)"
+         else attrib = "LRECL(254) BLKSIZE(3116) RECFM(V B)"
+         if mn ^= "" then do      /* we are in another subdirectory */
+           parse value fn with pref "." .   /* and user wasnt exact */
+           fn = "'" || pref || "." || mn || "'"
+         end
+        "ATTR OH" attrib "DSORG(PO)"
+        "ALLOC F(ONHOSTXY) DA('"fn"') USING(OH) NEW CATALOG REUSE",
+           default defaultdir
+         retcode = rc
+         if retcode = 0 then do
+           "FREE F(ONHOSTXY)"
+           "FREE ATTR(OH)"
+         end
+      end /* CD */
+/******************************************************************
+ *    cd - change directory (tso prefix)                          *
+ ******************************************************************/
+      when cmd = "CD" then do
+        if arglist = "" then fn = userid()
+        else Call Getfn
+        parse value fn with pref "." l2
+        if l2 ^= "" then do          /* prefix change */
+          Call Checkfile             /* no, test for pds */
+          if retcode ^= 0 then do
+            say "file not found"; call onhoste 0010
+          end
+          if org ^= "PO" then do
+            say "cd must specify 'Prefix' or 'PDS'"; call onhoste 0010
+          end
+        end
+        push l2
+        EXECIO '1' DISKW "ONHOSTXX"
+        retcode = rc
+        EXECIO '0' DISKW "ONHOSTXX (FINI"
+        if retcode = 0 then do
+          "PROFILE PREFIX(" || pref || ")"
+        end
+      end /* CD */
+/******************************************************************
+ *    cat - console list file (subset of AIX cat)                 *
+ ******************************************************************/
+       when cmd = "CAT" then do
+        Call Getfn; Call Checkfile
+        if retcode = 0 then do
+          select
+            when org = "PO" then do
+              Call Checkmember
+              Call Membernotfound
+              "ALLOC F(INFILE) DA('"fn"("mn")') REUSE SHR"
+            end
+            when org = "PS" | org = "GDG BASE" then
+              "ALLOC F(INFILE) DA('"fn"') REUSE SHR"
+            when org = "VSAM CLUSTER COMPONENT" | ,
+                 org = "VSAM PATH COMPONENT" | ,
+                 org = "VSAM DATA COMPONENT" | ,
+                 org = "VSAM INDEX COMPONENT" | ,
+                 org = "VSAM AIX COMPONENT" then do
+              x = outtrap(dummy_list.,0)
+              "FREE ATTR(OH)"
+              "ATTR OH BLKSIZE(5004) LRECL(4095) RECFM(V B) DSORG(PS)"
+              "ALLOC F(INFILE) USING(OH) NEW DELETE REUSE" default
+              retcode = rc
+              if retcode = 0 then do
+                "REPRO INDATASET('"fn"') OUTFILE(INFILE)"
+                retcode = rc
+              end
+              x = outtrap(off)
+            end
+            otherwise do
+              say "cannot 'cat' a" org
+              retcode = 16
+              return
+            end
+          end
+          do forever
+            EXECIO '1' DISKR "INFILE"
+            retcode = rc
+            if retcode ^= 0 then leave
+            parse pull a
+            say strip(a,t)
+          end
+          EXECIO '0' DISKR "INFILE (FINI"
+          if retcode = 2 then retcode = 0
+          "FREE F(INFILE)"
+        end
+      end /* CAT */
+/******************************************************************
+ *    cpy - copy a file (could be between tso host and AIX)       *
+ ******************************************************************/
+      when cmd = "CPY" | cmd = "CP" then do
+        if substr(arglist,1,2) = " (" then
+          parse value arglist with noaix "(" aixargs ")" arglist
+        parse var arglist aixfn1 .
+        Call Getfn
+        fn1 = fn; mn1 = mn; env1 = env
+        parse var arglist aixfn2 .
+        Call Getfn
+        fn2 = fn; mn2 = mn; env2 = env;
+ 
+        if env1 ^= "TSO" & env2 ^= "TSO" then do  /* don't assume TSO-to-TSO */
+          say "no TSO file specified - use a local copy command"
+          call onhoste 1
+        end
+        if env1 ^= "TSO" & env2 = "TSO" then do
+          if mn2 = "" then tmp = ""
+          else do
+             tmp = "("mn2")"
+             Call Checkfile  /* FTP will not create PDS */
+             if retcode ^= 0 then do
+                say fn "- not found (use onhost mkdir)"
+                call onhoste retcode
+                end
+             end
+          "onhostcp get" options "("aixargs")" aixfn1 fn2||tmp
+          call onhoste rc
+        end
+        if env1 = "TSO" & env2 ^= "TSO" then do
+          fn = fn1; mn = mn1; env = env1           /* source exist ? */
+          Call Checkfile
+          if retcode ^= 0 then do
+            say "file not found"; call onhoste retcode
+          end
+          if org = "PO" then do
+            if mn = "" then do
+              say 'need member name for pds download'; call onhoste 15
+            end
+            Call Checkmember
+            Call Membernotfound
+          end
+          if mn1 = "" then tmp = "" ;else tmp = "("mn1")"
+          "onhostcp put" options "("aixargs")" aixfn2 fn1||tmp
+          retcode = rc; call onhoste retcode
+        end
+        fn = fn1; mn = mn1; env = env1             /* source exist ? */
+        Call Checkfile
+        if retcode ^= 0 then do
+          say "file not found";  call onhoste retcode
+        end
+        org1 = org
+        select                                      /* movable org ? */
+          when org = "PO" then do   /* entire pds is ok */
+            if mn ^= "" then do
+              Call Checkmember
+              Call Membernotfound
+            end
+          end
+          when substr(org,1,4) = "VSAM" then nop
+          when org = "PS" then nop
+          when org = "GDG BASE" then nop
+          otherwise do
+            say "cannot 'cp' a" org; call onhoste 14
+          end
+        end
+        fn = fn2; mn = mn2; env = env2        /* destination exist ? */
+        org = "UNKNOWN"
+        Call Checkfile
+        org2 = org
+        if mn1 = "" then infile = "'"fn1"'"
+        else infile = "'"fn1"("mn1")'"
+        if mn2 = "" then outfile = "'"fn2"'"
+        else outfile = "'"fn2"("mn2")'"
+        if retcode = 0 then do                /* if it does, what now */
+          if org = "PS" | org = "UNKNOWN" then do /* get rid of file */
+            "ALLOC F(OUTDD) DA("outfile") SHR DELETE"
+            "FREE F(OUTDD)"
+          end
+        end
+        if retcode ^= 0 & substr(org1,1,4) = "VSAM" then do
+          "ALLOC F(OUTDD) DA("outfile") NEW CATALOG",
+          "DSORG(PS) RECFM(V B) LRECL(4095) BLKSIZE(5004)"
+          "FREE F(OUTDD)"
+        end
+        if substr(org1,1,4) = "VSAM" then do
+          if org2 = "PS" | org2 = "UNKNOWN" then do
+            "ALLOC F(OUTDD) DA("outfile") NEW CATALOG",
+            "DSORG(PS) RECFM(V B) LRECL(4095) BLKSIZE(5004)"
+            "FREE F(OUTDD)"
+          end
+        end
+        if org1 = "GDG BASE" then do
+          if org2 = "PS" | org2 = "UNKNOWN" then do
+            "ALLOC F(OUTDD) DA("outfile") NEW CATALOG",
+            "DSORG(PS)"
+            "FREE F(OUTDD)"
+          end
+        end
+        if substr(org1,1,4) = "VSAM" | substr(org2,1,4) = "VSAM" then do
+          x = outtrap(dummy_list.,0)
+          "REPRO INDATASET("infile") OUTDATASET("outfile") REPLACE"
+          retcode  = rc
+          x = outtrap(off)
+        end
+        else do
+          if org1 = "GDG BASE" then do
+            x = outtrap(dummy_list.,0)
+            "ALLOC F(SYSUT1) DA("infile") SHR REUSE"
+            "ALLOC F(SYSUT2) DA("outfile") SHR REUSE"
+            "ALLOC F(SYSPRINT) DUMMY REUSE"
+            "ALLOC F(SYSIN) DUMMY REUSE"
+            "IEBGENER"
+            retcode  = rc
+            "ALLOC F(SYSIN) DA(*) REUSE"
+            "ALLOC F(SYSPRINT) DA(*) REUSE"
+            "FREE F(SYSUT1)"
+            "FREE F(SYSUT2)"
+            x = outtrap(off)
+          end
+          else do
+            "COPY" infile outfile "NONUM"
+            retcode  = rc
+          end
+        end
+      end /* CPY */
+/******************************************************************
+ *    date - display system date and time                         *
+ ******************************************************************/
+      when cmd = "DATE" then do
+         mmdd = substr( date(s), 5)
+         tz = zone || "ST"
+         if mmdd >= begsavings & mmdd <= endsavings then
+             tz = zone || "DT"
+         parse value date(u) with mm "/" dd "/" yr
+         day = substr( date(w), 1, 3)
+         year = substr( date(s), 1, 4)
+         month = substr( date(m), 1, 3)
+         say day month dd time() tz year
+      end /* DATE */
+/******************************************************************
+ *    df - display file system status                             *
+ ******************************************************************/
+      when cmd = "DF" then do
+ 
+         Call Getfn          /* get filename wildcard, if any */
+         Call Getfilelist    /* get filename list to stack */
+         if queued() = 0 then call onhoste 255
+         k1=12;l1=8;k2=32;l2=44  /* default volume/filename sequence */
+         call sortd
+         Call Typef          /* format the file system listing */
+ 
+      end /* DF */
+/******************************************************************
+ *    head - list the first "n" records from a file               *
+ ******************************************************************/
+      when cmd = "HEAD" then do
+        if options = "" then n = "10"
+        else n = substr(options,2)
+        Call Getfn; Call Checkfile
+        if retcode = 0 then do
+          if datatype(n) ^= 'NUM' then do
+            say "Invalid option (number of lines)"; call onhoste 20
+          end
+          select
+            when org = "PO" then do
+              Call Checkmember
+              Call Membernotfound
+              "ALLOC F(INFILE) DA('"fn"("mn")') REUSE SHR"
+            end
+            when org = "PS" | org = "GDG BASE" then
+              "ALLOC F(INFILE) DA('"fn"') REUSE SHR"
+            when org = "VSAM CLUSTER COMPONENT" | ,
+                 org = "VSAM PATH COMPONENT" | ,
+                 org = "VSAM DATA COMPONENT" | ,
+                 org = "VSAM INDEX COMPONENT" | ,
+                 org = "VSAM AIX COMPONENT" then do
+              x = outtrap(dummy_list.,0)
+              "FREE ATTR(OH)"
+              "ATTR OH BLKSIZE(5004) LRECL(4095) RECFM(V B) DSORG(PS)"
+              "ALLOC F(INFILE) USING(OH) NEW DELETE REUSE" default
+              retcode = rc
+              if retcode = 0 then do
+                "REPRO INDATASET('"fn"') OUTFILE(INFILE) COUNT("n")"
+                retcode = rc
+              end
+              x = outtrap(off)
+            end
+            otherwise do
+              say "cannot 'head' a" org; call onhoste retcode
+            end
+          end
+          do c = 1 to n
+            EXECIO '1' DISKR "INFILE"
+            retcode = rc
+            if retcode ^= 0 then leave
+            parse pull a; say strip(a,'T')
+          end
+          EXECIO '0' DISKR "INFILE (FINI"
+          if retcode = 2 then retcode = 0
+          "FREE F(INFILE)"
+        end
+      end /* HEAD */
+/******************************************************************
+ *    ls - list a directory                                       *
+ ******************************************************************/
+      when cmd = "LS" then do
+        order = ""                /* default ascending sequence  */
+        k1=32;l1=44;k2=77;l2=8    /* default filename sequence   */
+        opts = strip(options)
+        longfmt = "N"; onecol = "N" ; phonebook = "Y"
+        do while opts ^= ""
+          a = substr(opts,1,1); opts = substr(opts,2)
+          if a = "1" then onecol = "Y"
+          if a = "L" then longfmt = "Y"
+          if a = "R" then order = "REVERSE"
+          if a = "X" then phonebook = "N"
+          if a = "T" then do
+            k1=3;l1=8;k2=32;l2=44;k3=77;l3=8;
+          end
+        end
+        if k1 = 3 then do           /* if time sort order is really */
+          if order = "REVERSE" then order = ""  /* backward */
+          else order = "REVERSE"
+        end
+        Call Getfn          /* get filename wildcard, if any     */
+        Call Getfilelist    /* get list of files/members on stack*/
+        if queued() = 0 then call Getmemberlist
+        if queued() = 0 then call onhoste 8
+        Call Sortd          /* Order the stack         */
+        Call Typed          /* format the file listing */
+      end /* ls */
+/******************************************************************
+ *    mv - move a file (or rename it)                             *
+ ******************************************************************/
+      when cmd = "MV" then do
+        Call Getfn
+        fn1 = fn; mn1 = mn; env1 = env
+        parse var arglist rq2 .
+        Call Getfn
+        fn2 = fn; mn2 = mn; env2 = env        /* right environment ? */
+        if env1 ^= "TSO" & env2 = "TSO" then do
+          say "use 'onhost cp' to upload a file"; call onhoste 14
+        end
+        if env1 = "TSO" & env2 ^= "TSO" then do
+          say "use 'onhost cp' to download a file"; call onhoste 14
+        end
+        fn = fn1; mn = mn1; env = env1             /* source exist ? */
+        Call Checkfile
+        if retcode ^= 0 then do
+          say "file not found"; call onhoste retcode
+        end
+        select                                      /* movable org ? */
+          when org = "PO" then do   /* entire pds is ok */
+            if mn ^= "" then do
+              Call Checkmember
+              Call Membernotfound
+            end
+          end
+          when org = "PS" then nop
+          otherwise do
+            say "cannot 'mv' a" org; call onhoste 14
+          end
+        end
+        fn = fn2; mn = mn2; env = env2        /* destination exist ? */
+        Call Checkfile
+        if retcode = 0 then do                  /* delete existing ? */
+          if org = "PS" then do
+            "ALLOC DA('"fn2"') F(DELFILE) SHR DELETE"
+            "FREE F(DELFILE)"
+          end
+          if org = "PO" & mn ^= "" then do
+            Call Checkmember
+            if retcode = 0 then do
+              x = outtrap(dummy_list.,0)
+              "DELETE '"fn2"("mn2")'"
+              x = outtrap(off)
+            end
+          end
+        end
+        select                                    /* rename faster ? */
+          when mn2 ^= "" & mn1 ^= "" then do /* renaming members */
+            "RENAME '"fn1"("mn1")'" "'"fn2"("mn2")'"
+            retcode  = rc
+          end
+          when mn2 = "" & mn1 = "" then do  /* renaming datasets */
+            "RENAME '"fn1"'" "'"fn2"'"
+            retcode  = rc
+          end                              /* no, then move safely ? */
+          when mn2 = "" & mn1 ^= "" then do /* member to dataset */
+            "COPY '"fn1"("mn1")'" "'"fn2"' NONUM"
+            retcode  = rc
+            if retcode = 0 then do
+              "DELETE '"fn1"("mn1")'"
+              retcode  = rc
+            end
+          end
+          when mn2 ^= "" & mn1 = "" then do /* dataset to member */
+            "COPY '"fn1"'" "'"fn2"("mn2")' NONUM"
+            retcode  = rc
+            if retcode = 0 then do
+              "DELETE '"fn1"'"
+              retcode  = rc
+            end
+          end
+          otherwise
+            nop
+        end
+      end /* MV */
+/******************************************************************
+ *    rm - remove a file from disk                                *
+ ******************************************************************/
+      when cmd = "RM" then do
+        Call Getfn; Call Checkfile
+        if retcode ^= 0 then do
+          say "file not found"; call onhoste retcode
+        end
+        if org = "GDG BASE" |,
+           org = "VSAM DATA COMPONENT" |,
+           org = "VSAM INDEX COMPONENT" then do
+           say "cannot 'rm' a" org; call onhoste 16
+        end
+        if retcode = 0 then do
+          if mn = "" then do
+            "delete '" || fn || "'"
+            retcode   = rc
+          end
+          else do
+            Call Checkmember
+            Call Membernotfound
+            if retcode = 0 then do
+              "delete '" || fn || "(" || mn || ")'"
+              retcode   = rc
+            end
+          end
+        end
+      end /* RM */
+/******************************************************************
+ *    tail - type last 'n' records of a file                      *
+ ******************************************************************/
+      when cmd = "TAIL" then do
+        if options = "" then n = "10"
+        else n = substr(options,2)
+        Call Getfn; Call Checkfile
+        if retcode = 0 then do
+          if datatype(n) ^= 'NUM' then do
+            say "Invalid option (number of lines)"; call onhoste 20
+          end
+          select
+            when org = "PO" then do
+              Call Checkmember
+              Call Membernotfound
+              "ALLOC F(INFILE) DA('"fn"("mn")') REUSE SHR"
+            end
+            when org = "PS" | org = "GDG BASE" then
+              "ALLOC F(INFILE) DA('"fn"') REUSE SHR"
+            when org = "VSAM CLUSTER COMPONENT" | ,
+                 org = "VSAM PATH COMPONENT" | ,
+                 org = "VSAM DATA COMPONENT" | ,
+                 org = "VSAM INDEX COMPONENT" | ,
+                 org = "VSAM AIX COMPONENT" then do
+              x = outtrap(dummy_list.,0)
+              "FREE ATTR(OH)"
+              "ATTR OH BLKSIZE(5004) LRECL(4095) RECFM(V B) DSORG(PS)"
+              "ALLOC F(INFILE) USING(OH) NEW DELETE REUSE" default
+              retcode = rc
+              if retcode = 0 then do
+                "REPRO INDATASET('"fn"') OUTFILE(INFILE)"
+                retcode = rc
+              end
+              x = outtrap(off)
+            end
+            otherwise do
+              say "cannot 'tail' a" org; call onhoste 16
+            end
+          end
+          do c = 1 to n
+            EXECIO '1' DISKR "INFILE"
+            retcode = rc
+            if retcode ^= 0 then leave
+          end
+          if retcode = 0 then do forever
+            EXECIO '1' DISKR "INFILE"
+            retcode = rc
+            if retcode ^= 0 then leave
+            pull a
+          end
+          do while queued() ^= 0
+            parse pull a
+            say strip(a,'T')
+          end
+          EXECIO '0' DISKR "INFILE (FINI"
+          if retcode = 2 then retcode = 0
+          "FREE F(INFILE)"
+        end
+      end /* TAIL */
+/******************************************************************
+ *    who - who are users signed on                               *
+ *          who am i                                              *
+ ******************************************************************/
+      when cmd = "WHO" then do
+         if lcargs = "am i" then do
+           searchname = userid()
+           our_tcb = c2x(storage(10, 4))
+           qcb = c2x(storage(d2x(x2d(our_tcb) + x2d('22c')),4))
+           entry = d2x(x2d(qcb) + x2d('210'))
+           entries = c2d(storage(d2x(x2d(qcb) + x2d('204')),4))
+           do x = 1 to entries
+             ascbptr = c2x(storage(entry,4))
+             if substr(ascbptr,1,1) < "8" then do
+               tsb = c2x(storage(d2x(x2d(ascbptr) + x2d('03C')),4))
+               if tsb ^= 0 then do   /* tso task ? */
+                 nameptr = c2x(storage(d2x(x2d(ascbptr)+x2d('0B0')),4))
+                 name = storage(nameptr,7)
+                 if name = searchname then leave
+               end
+             end
+             entry = d2x(x2d(entry) + 4)
+           end
+           numeric digits 25
+           clock = c2d(storage(d2x(x2d(ascbptr)+x2d('130')),8))
+           call clockconvert
+           dd = right(dd,2,' '); hh = right(hh,2,'0')
+           min = right(min,2,'0')
+           logon = month dd hh":"min
+           idle = "     "
+           numeric digits
+           jbrec = storage(nameptr,74)
+           name = substr(jbrec,1,8)
+           name = translate(name,,
+             "abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+           proc = substr(jbrec,9,8)
+           proc = translate(proc,,
+             "abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+           asid = right(c2d(substr(jbrec,23,2)),4,'0')
+           say name "   " proc "   " logon idle asid
+         end
+         else do
+           numeric digits 25
+           hi = 0; lo = 999999999999999999999999
+           hi1 = 0; lo1 = 999999999999999999999999
+           hi2 = 0; lo2 = 999999999999999999999999
+           numeric digits
+           parse value time() with curhh ":" curmin ":" .
+           our_tcb = c2x(storage(10, 4))
+           qcb = c2x(storage(d2x(x2d(our_tcb) + x2d('22c')),4))
+           entry = d2x(x2d(qcb) + x2d('210'))
+           entries = c2d(storage(d2x(x2d(qcb) + x2d('204')),4))
+           do x = 1 to entries
+             ascbptr = c2x(storage(entry,4))
+             if substr(ascbptr,1,1) < "8" then do
+               tsb = c2x(storage(d2x(x2d(ascbptr) + x2d('03C')),4))
+               if tsb ^= 0 then do   /* tso task ? */
+                 nameptr = c2x(storage(d2x(x2d(ascbptr)+x2d('0B0')),4))
+                 if nameptr ^= 0 then do
+                   numeric digits 25
+                   clock = c2d(storage(d2x(x2d(ascbptr)+x2d('130')),8))
+                   call clockconvert
+                   dd = right(dd,2,' '); hh = right(hh,2,'0')
+                   min = right(min,2,'0')
+                   logon = month dd hh":"min
+                   clock = c2d(storage(d2x(x2d(ascbptr)+x2d('048')),8))
+                   call clockconvert
+                   min = curmin - min
+                   if min < 0 then do
+                     min = min + 60
+                     hh = hh + 1
+                   end
+                   hh = curhh - hh
+                   hh = right(hh,2,'0'); min = right(min,2,'0')
+                   if hh = "00" then hh = "  "
+                   idle = hh":"min
+                   if idle = "  :00" then idle = "     "
+                   numeric digits
+                   jbrec = storage(nameptr,74)
+                   name = substr(jbrec,1,8)
+                   if name = userid() then gmt = hh
+                   name = translate(name,,
+             "abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+                   proc = substr(jbrec,9,8)
+                   proc = translate(proc,,
+             "abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+                   asid = right(c2d(substr(jbrec,23,2)),4,'0')
+                   push " "name "   " proc "   " logon idle asid
+                 end
+               end
+             end
+             entry = d2x(x2d(entry) + 4)
+           end
+           if queued() = 0 then call onhoste 255
+           cnt = substr(queued(),1,3,' ')
+           say "users =" cnt " procedure    login -----   idle  pid"
+           k1=2;l1=8; call sortd; c = 1; users = ""
+           do x = 1 to queued()
+             if (length(name)+length(users)) > 79 then do
+               say strip(users); users = ""; c = 1
+             end
+             parse pull name
+             if gmt ^= "  " then do
+               na = substr(name,1,31)
+               nb = substr(name,32,2)     /* logon day */
+               nc = substr(name,34,1)
+               nd = substr(name,35,2)     /* logon hour */
+               ne = substr(name,37,4)
+               nf = substr(name,41,2)     /* idle hours */
+               ng = substr(name,43)       /* surplus */
+               if nf = "  " then nf = 0
+               if nd = "  " then nd = 0
+               if nb = "  " then nb = 0
+               nf = nf - gmt
+               nd = nd + gmt
+               if nd < 0 then do
+                 nd = nd + 24
+                 nb = nb - 1
+               end
+               if nd > 24 then do
+                 nd = nd - 24
+                 nb = nb + 1
+               end
+               nf = right(nf,2,'0')
+               nd = right(nd,2,'0')
+               nb = right(nb,2,' ')
+               if nf = "00" then nf = "  "
+               name = na || nb || nc || nd || ne || nf || ng
+             end
+             users = users || name; c = c + 1
+           end
+           if users ^= "" then say strip(users)
+         end
+      end /* WHO */
+/******************************************************************
+ *    pass through unidentified command                           *
+ ******************************************************************/
+      otherwise  /* execute an arbitrary command */
+      if cmd = '' then retcode = 0
+      else do
+        parse arg cmdline
+        trace off
+        cmdline
+        retcode = rc
+      end
+   end /* select */
+   call onhoste retcode
+/******************************************************************
+ *  onhoste - exit procedure                                      *
+ ******************************************************************/
+  onhoste: procedure
+   arg r .
+   'onhoste' r
+    exit rc  /* let onhoste set the return code */
+/******************************************************************
+ *  type the file system listing                                  *
+ ******************************************************************/
+Typef: procedure Expose arglist fn flvl fwcd debug stripl cmd,
+                 Options
+  a = "Filesystem  Mounted as                 "
+  a = a || "          bytes     used     free used"
+  say a
+  do records = queued() to 1 by -1
+    parse pull type created volumes dsorg entryname member avail,
+            used shr
+    if type = "D" & created ^= "CREATED" then do
+      /*====================================================*
+       * process dataset entries from the stack             *
+       *====================================================*/
+      if dsorg = "partitioned" then do
+        free = avail - used
+        pct = (used * 100) % avail
+        parse value entryname with a "." b
+        entryname = "/" || a || "/" || b
+        entryname = substr(entryname,1,34,' ')
+        avail = right(avail, 8)
+        used = right(used, 8)
+        free = right(free, 8)
+        pct = right(pct, 3)
+        say volumes "   " entryname avail used free pct"%"
+      end
+    end
+    if type = "M" then do
+      /*====================================================*
+       * process member entries from the stack (maybe later)*
+       *====================================================*/
+       nop
+    end
+  end
+  return
+/******************************************************************
+ *  getprofile: get the tso profile information                   *
+ ******************************************************************/
+getprofile: procedure expose prefix prompt wtpmsg
+  x = OUTTRAP(profile_output.)
+  ADDRESS TSO "PROFILE LIST"
+  x = OUTTRAP(off)
+ 
+  parse var profile_output.1 char line prompt intercom pause msgid,
+        mode wtpmsg recover prefix
+  parse value prefix with . "(" prefix ")"
+  return
+/******************************************************************
+ *  getlevel2: get the tso profile level 2 "onhost" info          *
+ ******************************************************************/
+getlevel2: procedure expose level2
+  EXECIO '1' DISKR "ONHOSTXX 1"    /* get record 1 */
+  retcode = rc
+  level2 = ""
+  if retcode = 0 then do
+    parse pull level2 .
+    level2 = strip(level2)
+  end
+  EXECIO '0' DISKR "ONHOSTXX (FINI"    /* get record 1 */
+  return
+/******************************************************************
+ *  getfn parses file name from the command line                  *
+ *  env = environment name                                        *
+ *  fn = fully qualified filename                                 *
+ *  flvl = filename with wildcarded nodes truncated               *
+ *  mn = member name if appropriate                               *
+ ******************************************************************/
+getfn: procedure  Expose arglist env fn flvl mn prefix level2
+ 
+   parse value arglist with fn arglist
+   upper fn
+ 
+   x = index(fn,":")
+   env = ""
+   if x ^= 0 then do
+     parse value fn with env ":" fn
+     if env ^= "TSO" then do
+        say "wrong environment in filename"
+        call onhoste 1030
+     end
+   end
+ 
+   call Getprofile
+   call Getlevel2
+ 
+   req = ""
+   if substr(fn,1,6) = "../../" then do
+     req = "../../"; fn = substr(fn, 7); end
+   else
+     if substr(fn,1,3) = "../" then do
+       req = "../"; fn = substr(fn, 4); end
+     else
+       if substr(fn,1,2) = "./" then do
+         req = "./"; fn = substr(fn, 3); end
+       else
+         if substr(fn,1,2) = ".." then do
+           req = ".."; fn = substr(fn, 3); end
+         else
+           if substr(fn,1,1) = "/" then do
+             req = "/"; fn = substr(fn, 2); end
+           else
+             if substr(fn,1,1) = "." then do
+               req = "."; fn = substr(fn, 2); end
+ 
+   select
+     when req = "/" | req = "../../" then do    /* use root, user fn */
+       if fn = "" then fn = userid()            /* s/b specific      */
+     end
+     when req = "../" then do           /* back up one level         */
+       if level2 = "" then do           /* to prefix level           */
+         if fn = "" then fn = prefix          /* must use prefix     */
+       end
+       else do                          /* to file level             */
+         if fn = "" then fn = prefix          /* all 'prefix' files  */
+         else fn = prefix || "." || fn        /* specific files      */
+       end
+     end
+     when req = "./" then do            /* start at current level    */
+       if level2 = "" then do           /* at file level             */
+         if fn = "" then fn = prefix          /* must use prefix     */
+         else fn = prefix || "." || fn        /* specific files      */
+       end
+       else do                          /* at pds member level       */
+         if fn = "" then fn = prefix || "." || level2 || "(*)"
+         else fn = prefix || "." || level2 || "(" || fn || ")"
+       end
+     end
+     when req = "." then do             /* use current prefix/level2 */
+       if level2 = "" then do
+         if fn = "" then fn = prefix          /* request prefix level*/
+         else fn = prefix || "." || fn        /* specific files      */
+       end
+       else do
+         if fn = "" then fn = prefix || "." || level2 /* pds scan    */
+         else fn = prefix || "." || level2 || "(" || fn || ")"
+       end
+     end
+     when req = ".." then do             /* use higher prefix/level2 */
+       if level2 = "" then do
+         if fn = "" then fn = prefix          /* request prefix level*/
+         else fn = prefix || "." || fn        /* specific files      */
+       end
+       else do
+         if fn = "" then fn = prefix          /* request prefix level*/
+         else fn = prefix || "." || fn        /* specific files      */
+       end
+     end
+     otherwise do
+       if level2 = "" then do
+         if fn = "" then fn = prefix          /* request prefix level*/
+         else fn = prefix || "." || fn        /* specific files      */
+       end
+       else do
+         if fn = "" then fn = prefix || "." || level2 /* pds scan    */
+         else fn = prefix || "." || level2 || "(" || fn || ")"
+       end
+     end
+   end
+ 
+   fn = translate( fn, '.', '/')          /* remove AIX delimiters    */
+   parse value fn with fn "(" mn ")" .    /* and separate member name */
+ 
+   parse value fn with flvl '*' .     /* set up flvl without wildcards*/
+   parse value flvl with flvl '?' .
+   if flvl ^= fn then do                      /* if wildcards found  */
+     flvl = reverse(flvl)                     /* check for period    */
+     parse value flvl with . "." flvl         /* by truncating to it */
+     flvl = reverse(flvl)
+   end
+   if flvl = "" then do                    /* if wildcards in prefix */
+       flvl = prefix                           /* use current prefix */
+   end
+   return
+/******************************************************************
+ *  Checkfile - verify Specific TSO file exists                   *
+ ******************************************************************/
+Checkfile: procedure  Expose fn mn org retcode
+  if SYSDSN("'"fn"'") ^= "OK" then do
+    retcode = 16; return
+  end
+  x = OUTTRAP(listc_output.)
+  ADDRESS TSO "listc en('" || fn || "')"
+  x = OUTTRAP(off)
+  retcode = 0
+  parse value listc_output.1 with org "-" .
+  org = strip(org)
+  select
+    when org = "NONVSAM" then do
+      x = OUTTRAP(list_output.)
+      ADDRESS TSO "listd '" || fn || "'"
+      x = OUTTRAP(off)
+      parse var list_output.3 . . . org .
+      if org = '**' then org = "UNKNOWN"
+    end
+    when org = "GDG BASE" then do
+      x = OUTTRAP(list_output.)
+      ADDRESS TSO "listd '" || fn || "' LEVEL"
+      x = OUTTRAP(off)
+      parse var list_output.3 . . . torg .
+      if torg ^= "PS" then do
+        retcode = 8
+      end
+    end
+    when substr(org,1,6) = "ENTRY " then do
+      retcode = 16
+    end
+    otherwise do
+      org = "VSAM" org "COMPONENT"
+    end
+  end
+  return
+/******************************************************************
+ *  Checkmember - verify Specific PDS MEMBER exists               *
+ ******************************************************************/
+Checkmember: procedure  Expose fn mn retcode
+ 
+  if length(mn) > 8 | length(mn) < 1 then do
+    say "Invalid or Missing member name"
+    retcode = 16
+    return
+  end
+  if datatype(substr(mn,1,1),'M') ^= 1 then do
+    say "Invalid member name"
+    retcode = 16
+    return
+  end
+ 
+  x = OUTTRAP(list_output.)
+  ADDRESS TSO "listd '" || fn || "(" || mn || ")'"
+  x = OUTTRAP(off)
+  parse var list_output.6 msg .
+  if msg = "DIRECTORY" then do
+    retcode = 8
+  end
+  return
+ 
+Membernotfound: procedure expose retcode fn mn
+  if retcode = 0 then return
+  say "member '"mn"' not found in pds '"fn"'"
+  call onhoste retcode
+  return
+ 
+/******************************************************************
+ *  Getfilelist - produce a list of filenames on stack            *
+ *  NOTE: because this is a procedure and because list_output     *
+ *        (below) is not 'Exposed' the memory required for the    *
+ *        trapped output is freed upon return to calling module   *
+ ******************************************************************/
+Getfilelist: procedure  Expose arglist fn flvl fwcd entrysize
+ 
+  x = OUTTRAP(list_output.)
+  ADDRESS TSO "listc lvl('" || fn || "') ALL"
+  x = OUTTRAP(off)
+ 
+  call Formatc            /* format records from listc output */
+ 
+  x = OUTTRAP(list_output.) /* perform listd on available nonvsam */
+  n = queued()
+  do y = 1 for n
+    parse pull rec
+    parse var rec t d v dsorg entryname m avail u shr
+    if dsorg = "NONVSAM" & datatype(avail,'N') = 1 then do
+      ADDRESS TSO "listd '" || entryname || "' HISTORY STATUS LABEL"
+    end
+    else do
+      queue rec
+    end
+  end
+  x = OUTTRAP(off)
+ 
+  call Formatd            /* format records from listd output */
+  return
+/******************************************************************
+ *  Getmemberlist - produce a list of pds members on the stack    *
+ *  NOTE: see note for Getfilelist above                          *
+ ******************************************************************/
+Getmemberlist: procedure  Expose arglist fn flvl fwcd entrysize
+ 
+  x = OUTTRAP(list_output.)
+  ADDRESS TSO "listd '" || fn || "' MEMBERS HISTORY STATUS LABEL"
+  x = OUTTRAP(off)
+ 
+  call Formatd
+  return
+/******************************************************************
+ *  formatd - produces a sortable file of datasets from listd     *
+ ******************************************************************/
+formatd: procedure  Expose arglist fn flvl fwcd entrysize list_output.
+  tracks = 0; ln1 = 0; ln3 = 0
+  member = "--------"
+  do ptr = 1 for list_output.0
+    line = list_output.ptr
+    if substr(line, 1, 2) ^= "--" then do
+      /*====================================================*/
+      /* process non "header" lines from listd report       */
+      /*====================================================*/
+      prevline = line
+      select
+        when a1 = "VOLUMES" then do
+          line = strip(line)
+          parse var line volumes line
+          if volumes = "**" then volumes = "------"
+          a1 = ""
+        end
+        when a1 = "MEMBERS" then do
+          call Stackm                          /* post member record */
+          if substr(line,1,2) = "  " & substr(line,3,1) ^= " " then do
+            parse var line member x1 x2 .       /* eliminate loose   */
+            if member ^= "THE" & x1 ^= "FOLLOWING" & x2 ^= "ALIAS" then
+              nop                               /* alias listing     */
+            else do
+              a1 = ""; member = "--------"
+            end
+          end
+          else  member = "--------"
+        end
+        when a1 = "FORMAT-1-DSCB" then do
+          ln1 = ln1 + 1
+          if blksize = "**" then blksize = 0
+          if ln1 = 2 then do
+            ttrk = substr(line,57,4);
+            ttrr = substr(line,61,2);
+            used = x2d(ttrk, 5) * 47476
+            recs = x2d(ttrr, 5) * blksize
+            if recs > 47476 then recs = 47476
+            used = used + recs
+          end
+          if ln1 = 3 then do
+            ext = substr(line,1,20);
+            call Calcext; tracks = tracks + trks
+            ext = substr(line,22,20);
+            call Calcext; tracks = tracks + trks
+            ext = substr(line,43,20);
+            call Calcext; tracks = tracks + trks
+          end
+        end
+        when a1 = "FORMAT-3-DSCB" then do
+          ln3 = ln3 + 1
+          if ln3 = 1 then do
+            ext = substr(line,10,20);
+            call Calcext; tracks = tracks + trks
+            ext = substr(line,31,20);
+            call Calcext; tracks = tracks + trks
+            ext = substr(line,52,20);
+            call Calcext; tracks = tracks + trks
+          end
+          if ln3 = 2 then do
+            ext = substr(line,1,20);
+            call Calcext; tracks = tracks + trks
+            ext = substr(line,25,20);
+            call Calcext; tracks = tracks + trks
+            ext = substr(line,46,20);
+            call Calcext; tracks = tracks + trks
+          end
+          if ln3 > 2 then do
+            ext = substr(line,1,20);
+            call Calcext; tracks = tracks + trks
+            ext = substr(line,22,20);
+            call Calcext; tracks = tracks + trks
+            ext = substr(line,43,20);
+            call Calcext; tracks = tracks + trks
+          end
+        end
+        when a1 = "RECFM" then do     /* mark any blanked out values */
+          if substr(line,3,2) = "  " then
+            line = substr(line,1,2)||"**"||substr(line,5)
+          if substr(line,9,1) = " " then
+            line = substr(line,1,8)||"*"||substr(line,10)
+          if substr(line,15,1) = " " then
+            line = substr(line,1,14)||"*"||substr(line,16)
+          if substr(line,23,1) = " " then
+            line = substr(line,1,22)||"*"||substr(line,24)
+          if substr(line,32,1) = " " then
+            line = substr(line,1,31)||"*"||substr(line,33)
+          if substr(line,42,1) = " " then
+            line = substr(line,1,41)||"*"||substr(line,43)
+          if substr(line,49,1) = " " then
+            line = substr(line,1,48)||"*"||substr(line,50)
+          if substr(line,59,1) = " " then
+            line = substr(line,1,58)||"*"||substr(line,60)
+          if substr(line,68,1) = " " then
+            line = substr(line,1,67)||"*"||substr(line,69)
+          line = strip(line)
+          parse var line recfm lrecl blksize dsorg created,
+                    exp sec ddname disp
+          a1 = ""
+        end
+        when a1 = "LRECL" then do
+          if substr(line,3,2) = "  " then
+            line = substr(line,1,2)||"**"||substr(line,5)
+          if substr(line,10,1) = " " then
+            line = substr(line,1,9)||"*"||substr(line,11)
+          if substr(line,19,1) = " " then
+            line = substr(line,1,18)||"*"||substr(line,20)
+          if substr(line,29,1) = " " then
+            line = substr(line,1,28)||"*"||substr(line,30)
+          if substr(line,36,1) = " " then
+            line = substr(line,1,35)||"*"||substr(line,37)
+          if substr(line,45,1) = " " then
+            line = substr(line,1,44)||"*"||substr(line,46)
+          line = strip(line)
+          recfm = ""; blksize = ""; sec = "";
+          parse var line lrecl dsorg created exp ddname disp
+          a1 = ""
+        end
+        otherwise do
+          nop
+        end
+      end
+    end
+    else
+      do
+      /*====================================================*
+       * process "header" lines from listd report           *
+       *====================================================*/
+      line = translate(line, ' -', '- ')
+      parse var line a1 a2 a3 a4 a5 a6
+      select
+        when a1 = "RECFM" | a1 = "LRECL" then do
+          call Stackm                 /* post member record, if any */
+          call Stackd                 /* dataset record             */
+          created = "        "
+          volumes = "      "
+          dsorg   = "    "
+          ln3 = 0; ln1 = 0; tracks = 0
+          entryname = prevline
+        end
+        otherwise do
+          nop
+        end
+      end
+    end
+  end
+  call Stackm                 /* post last member record, if any */
+  call stackd                 /* post last dataset record,if any */
+  return
+/******************************************************************
+ *  formatc - produces a sortable file of datasets from listc     *
+ ******************************************************************/
+formatc: procedure  Expose arglist fn flvl fwcd entrysize list_output.
+  entryname = ""; dsorg = ""; shr = ""
+  recsize = 0; recno = 0; tracks = 0;
+  created = ""; device = ""; volumes = ""
+  ptr = 1
+  line = list_output.ptr
+  line = translate(line, ' ', '-')
+  list = "n"
+  do while ptr < list_output.0
+    if substr(line, 1, 2) = "  " then do
+      /*====================================================*/
+      /* process non "header" lines from listc report       */
+      /*====================================================*/
+      parse var line keyword work
+      do forever
+      if list = "y" then say "-->" line
+        do while work ^= ""
+          keyword = curword
+          parse var work curword work
+          if keyword = "CREATION" then created = curword
+          if keyword = "VOLSER" then volumes = curword
+          if keyword = "DEVTYPE" then device = curword
+          if keyword = "AVGLRECL" then recsize = curword
+          if keyword = "MAXLRECL" & recsize = 0 then recsize = curword
+          if keyword = "TOTAL" then recno = curword
+          if keyword = "LIMIT" then recno = curword
+          if keyword = "TRACKS" then tracks = curword
+          if substr(keyword,1,8) = "SHROPTNS" then do
+            parse value keyword with . "(" a "," b ")" .
+            shr = a || b
+          end
+        end
+        ptr = ptr + 1
+        line = list_output.ptr
+        line = translate(line, ' ', '-')
+        parse var line keyword work
+        curword = keyword
+        if ptr >= list_output.0 then leave
+        if substr(line, 1, 2) ^= "  " then leave
+      end
+    end
+    else do
+      /*====================================================*
+       * process "header" lines from listd report           *
+       *====================================================*/
+      if substr(line,1,2) ^= "EN" & substr(line,1,2) ^= "**" then do
+        if device ^= "" then do
+          device = substr(device,3,8)
+        end
+        used = recsize * recno      /* how much used space   */
+        call Stackd                 /* create dataset record */
+        parse var line dsorg .
+        if list = "y" then say line
+        if dsorg = "GDG" then do
+          parse var line . . entryname .
+          dsorg = "GDG BASE"
+        end
+        else parse var line . entryname .
+        shr = ""
+        created = ""; device = ""; volumes = ""
+        recsize = 0; recno = 0; tracks = 0;
+        ptr = ptr + 1
+        line = list_output.ptr
+        line = translate(line, ' ', '-')
+      end
+      else do
+        if list = "y" then "X<--" say line
+        ptr = ptr + 1
+        line = list_output.ptr
+        line = translate(line, ' ', '-')
+      end
+    end
+  end
+  if device ^= "" then do
+      device = substr(device,3,8)
+  end
+  used = recsize * recno      /* how much used space   */
+  call Stackd                 /* create dataset record */
+  return
+/******************************************************************
+ *  calc ext is based upon 3380                                   *
+ ******************************************************************/
+Calcext: procedure expose ext trks bytes entryname
+  ext = strip(ext)
+  if length(ext) ^= 20,
+    | ext = "00000000000000000000",
+    | datatype(ext,'X') ^= 1 then do
+    trks = 0; bytes = 0; return
+  end
+  fcyl = substr(ext, 5, 4)
+  ftrk = substr(ext, 9, 4)
+  tcyl = substr(ext,13, 4)
+  ttrk = substr(ext,17, 4)
+  fcyl = x2d(fcyl, 5)
+  ftrk = x2d(ftrk, 5)
+  tcyl = x2d(tcyl, 5)
+  ttrk = x2d(ttrk, 5)
+  cyls = tcyl - fcyl
+  trk1 = 16 - ftrk
+  trk2 = 15 - ttrk
+  trks = cyls * 15
+  trks = trks + trk1 - trk2
+  bytes = 47476 * trks
+  return
+/******************************************************************
+ *  stackm - queue a member record on the stack                   *
+ ******************************************************************/
+  stackm: procedure Expose member created volumes entryname,
+          entrysize fn
+  if member ^= "--------" & member ^= "MEMBER" then do
+    entryname = strip(entryname)
+    entryname = translate(entryname,,
+      "abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    member = translate(member,,
+      "abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    call wildcard
+    if match = "Y" then do
+      x = index(entryname, '.')              /* get level length */
+      y = length(entryname)                  /* and entry length */
+      y1 = length(member)                    /* and member length */
+      z = y + y1 + 2 - x
+      if z > entrysize then entrysize = z
+      entryname = substr(entryname, 1, 44, ' ')
+      member = substr(member,1,8,' ')
+      queue "M" created volumes "partitioned " entryname member 0
+    end
+  end
+  return
+/******************************************************************
+ *  stackd - queue a dataset record on the stack                  *
+ ******************************************************************/
+  stackd: procedure Expose created volumes dsorg entryname tracks,
+            device used entrysize fn shr
+  if entryname = "" then return
+  entryname = strip(entryname)
+  entryname = translate(entryname,,
+    "abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+  member = translate(member,,
+    "abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+  call wildcard
+  if match ^= "Y" then return
+  select; when dsorg = "PO";          then dsorg = "partitioned "
+          when dsorg = "PS";          then dsorg = "sequential  "
+          when dsorg = "ISAM";        then dsorg = "indexed-seq "
+          when dsorg = "DA";          then dsorg = "randm-access"
+          when dsorg = "**";          then dsorg = "unspecified "
+          when dsorg = "VSAM";        then return
+          when dsorg = "AIX";         then dsorg = "VSAM-alt-idx"
+          when dsorg = "PATH";        then dsorg = "VSAM-path   "
+          when dsorg = "INDEX";       then dsorg = "VSAM-index  "
+          when dsorg = "DATA";        then dsorg = "VSAM-data   "
+          when dsorg = "CLUSTER";     then dsorg = "VSAM-cluster"
+          when dsorg = "SPACE";       then dsorg = "VSAM-space  "
+          when dsorg = "PAGESPACE";   then dsorg = "paging-space"
+          when dsorg = "GDG BASE";    then dsorg = "GDG-base    "
+          when dsorg = "NONVSAM";     then dsorg = "NONVSAM     "
+          when dsorg = "USERCATALOG"; then dsorg = "VSAM-catalog"
+          otherwise do
+            dsorg = "unknown-org "
+          end
+  end /* select */
+  parse value entryname with . '.' x       /* get entry length */
+  z = length(x)
+  if z > entrysize then entrysize = z
+  entryname = substr(entryname, 1, 44, ' ')
+  volumes = substr(volumes, 1, 6, '-')
+  avail = tracks * 47476
+  if device = "DEVICE" then device = ""
+  if device ^= "" then do
+    x = substr(device,5,1)
+    if x >= 8 | x <= "F" then avail = "offline"
+  end
+  if volumes = "MIGRAT" then avail = "archived"
+  if created = "" then created = "unknown "
+  queue "D" created volumes dsorg entryname "--------" avail used shr
+  return
+/******************************************************************
+ *  wildcard - perform wildcard match on entryname                *
+ ******************************************************************/
+wildcard: procedure Expose entryname fn match
+  fname = strip(entryname)     /* get our own copy of file name */
+  sname = strip(fn)            /* and search name with wildcards */
+  sname = strip(sname,,"'")    /* in the same character case     */
+  sname = translate(sname,,
+    "abcdefghijklmnopqrstuvwxyz/","ABCDEFGHIJKLMNOPQRSTUVWXYZ.")
+  fname = translate(fname,,
+    "abcdefghijklmnopqrstuvwxyz/","ABCDEFGHIJKLMNOPQRSTUVWXYZ.")
+  match = "N"              /* default to fail */
+  do forever
+    parse value sname with s1 "/" sname /* strip left node from each */
+    parse value fname with f1 "/" fname
+    x = index(s1, '?')
+    do while x ^= 0    /* replace any '?' in search with '.' in both */
+      if x > 1 then do
+        s1 = substr(s1,1,x-1)||"."||substr(s1,x+1)
+        if x <= length(s1) then do
+          f1 = substr(f1,1,x-1)||"."||substr(f1,x+1)
+        end
+      end
+      if x = 1 then do
+        s1 = "."||substr(s1,x+1)
+        f1 = "."||substr(f1,x+1)
+      end
+      x = index(s1, '?')
+    end
+    x = index(s1, '*') /* if '*' truncate both before '*' position */
+    if x ^= 0 then do
+      s1 = substr(s1,1,x-1)
+      f1 = substr(f1,1,x-1)
+    end
+    if s1 ^= f1 then leave                 /* no match */
+    if fname = "" & sname = "" then do     /* end of both strings */
+      match = "Y"                          /* then match */
+      leave
+    end
+    if fname = "" then do                  /* filename shorter */
+      leave                                /* go no further */
+    end
+    if sname = "" then do                  /* searchname shorter */
+      match = "Y"                          /* implied match */
+      leave                                /* go no further */
+    end
+  end
+  return
+/******************************************************************
+ *  Sortd - Sort the records on the stack                         *
+ ******************************************************************/
+Sortd: procedure Expose k1 l1 k2 l2 k3 l3 k4 l4 order
+  entries = queued()
+  limit = entries - 1               /* relative 0 indexing        */
+  do i = 0 for entries              /* extract records from queue */
+    parse pull entry
+    rec.i = entry                   /* establish entry, order ptr */
+    ptr.i = i                       /* and key */
+    if k1 > 1 then key.i = substr(entry, k1, l1)
+    if k2 > 1 then key.i = key.i || substr(entry, k2, l2)
+    if k3 > 1 then key.i = key.i || substr(entry, k3, l3)
+    if k4 > 1 then key.i = key.i || substr(entry, k4, l4)
+  end
+  gap = 1
+  do while gap <= limit             /* set hashing gap */
+    gap = 3 * gap + 1
+  end
+  gap = gap % 3
+  do while gap > 0                  /* perform actual sort */
+    do i = gap by 1
+      if i > limit then leave
+      j = i - gap
+      do while j >= 0
+        p1 = ptr.j; tp = j + gap; p2 = ptr.tp
+        if key.p1 <= key.p2 then leave    /* is key.p1 > key.p2 ? */
+        ptr.j = p2; ptr.tp = p1; j = j - gap
+      end                          /* yes, then swap pointers */
+    end
+  gap = gap % 3
+  end
+  do i = 0 for entries              /* put records back on stack */
+    p = ptr.i                       /* pointers should be ordered */
+    if order = "REVERSE" then push rec.p
+    else queue rec.p
+  end
+  return
+/******************************************************************
+ *  type the directory listing                                    *
+ ******************************************************************/
+Typed: procedure Expose arglist fn flvl fwcd debug cmd,
+                 Options onecol longfmt entrysize phonebook
+  /*========================*/
+  /* perform long formating */
+  /*========================*/
+  if longfmt = "Y" then do
+    mno = 0
+    m1 = ""; m2 = ""; m3 = ""; m4 = ""
+    m5 = ""; m6 = ""; m7 = ""; m8 = ""
+    do records = queued() to 1 by -1
+      parse pull type created volumes dsorg entryname member avail,
+              used shr
+      /*----------------------------------------------------*/
+      /* process dataset entries from the stack             */
+      /*----------------------------------------------------*/
+      if type = "D" & created ^= "CREATED" then do
+        if mno ^= 0 then do          /* print any saved member names */
+           say "   " m1 m2 m3 m4 m5 m6 m7 m8
+           m1 = ""; m2 = ""; m3 = ""; m4 = ""
+           m5 = ""; m6 = ""; m7 = ""; m8 = ""
+           mno = 0
+        end
+        if dsorg = "partitioned" then do
+          dir = 'd'; ex = 'x';
+        end
+        else do
+          dir = '-'; ex = '-';
+        end
+        region = substr(shr,1,1)
+        system = substr(shr,2,1)
+        select
+          when region = "1" then region_access = "rw"ex"--"ex
+          when region = "2" then region_access = "rw"ex"r-"ex
+          when region = "3" then region_access = "rw"ex"rw"ex
+          when region = "4" then region_access = "rw"ex"rw"ex
+          otherwise region_access = "rw"ex"rw"ex
+        end
+        select
+          when system = "1" then system_access = "--"ex
+          when system = "2" then system_access = "--"ex
+          when system = "3" then system_access = "r-"ex
+          when system = "4" then system_access = "rw"ex
+          otherwise system_access = "rw"ex
+        end
+        switches = dir || region_access || system_access
+        julian = created
+        call Jul2greg
+        if dsorg = "NONVSAM" then do
+          dsorg = substr(".." || avail || "..",1,12,' ')
+        end
+        dsorg = substr(dsorg, 1, 12, ' ')
+        used = right(used, 9)
+        dd = right(dd, 2, '0')
+        parse value entryname with . "." entryname
+        say switches volumes dsorg || used month dd year entryname
+      end
+      /*----------------------------------------------------*/
+      /* process member entries from the stack              */
+      /*----------------------------------------------------*/
+      if type = "M" then do
+        if mno = 8 then do
+          say "   " m1 m2 m3 m4 m5 m6 m7 m8
+          m1 = ""; m2 = ""; m3 = ""; m4 = ""
+          m5 = ""; m6 = ""; m7 = ""; m8 = ""
+          mno = 0
+        end
+        mno = mno + 1
+        member = substr(member, 1, 8, ' ')
+        select; when mno = 8; then m8 = member
+                when mno = 7; then m7 = member
+                when mno = 6; then m6 = member
+                when mno = 5; then m5 = member
+                when mno = 4; then m4 = member
+                when mno = 3; then m3 = member
+                when mno = 2; then m2 = member
+                when mno = 1; then m1 = member
+        end
+      end
+    end
+    if mno ^= 0 then do          /* print any saved member names */
+      say "   " m1 m2 m3 m4 m5 m6 m7 m8
+    end
+    return
+  end
+  else do
+  /*==============================*/
+  /* perform one column formating */
+  /*==============================*/
+    if onecol = "Y" then do
+      do records = queued() to 1 by -1
+        parse pull type . . . entryname member .
+        parse value entryname with . "." entryname
+        if type = "M" then do
+          entryname = entryname || "(" || member || ")"
+        end
+        say entryname
+      end
+    end
+    else do
+  /*===========================================================*/
+  /* perform telephone book formating (variable no of columns) */
+  /*===========================================================*/
+      if phonebook = "Y" then do
+        ptr = 0
+        list. = ""
+        do records = queued() to 1 by -1
+          parse pull type . . . entryname member .
+          parse value entryname with . "." entryname
+          if type = "M" then do
+            entryname = entryname || "(" || member || ")"
+          end
+          if entryname ^= "" then do
+            ptr = ptr + 1
+            list.ptr = substr(entryname,1,entrysize,' ')
+          end
+        end
+        if entrysize = "ENTRYSIZE" then return
+        if entrysize ^= 0 then columns = 80 % (entrysize + 2)
+        if columns > 6 then columns = 6
+        if columns < 1 then columns = 1
+        incr = ptr % columns
+        incr = incr + 1       /* make sure extras are in left cols */
+        line = ""
+        do i = 1 to incr
+          do x = i to ptr by incr
+             line = line || list.x " "
+          end
+          line = strip(line)
+          say line
+          line = ""
+        end
+      end
+      else do
+  /*===========================================================*/
+  /* perform horizontal formating (variable no of columns)     */
+  /*===========================================================*/
+        ptr = 0
+        list. = ""
+        if entrysize = "ENTRYSIZE" then return
+        if entrysize ^= 0 then columns = 80 % (entrysize + 2)
+        if columns > 6 then columns = 6
+        if columns < 1 then columns = 1
+        line = ""
+        do records = queued() to 1 by -1
+          parse pull type . . . entryname member .
+          parse value entryname with . "." entryname
+          if type = "M" then do
+            entryname = entryname || "(" || member || ")"
+          end
+          if entryname ^= "" then do
+            if (ptr // columns) = 0 then do
+              say strip(line); line = "";
+            end
+            ptr = ptr + 1
+            line = line" "substr(entryname,1,entrysize)" "
+          end
+        end
+        if line ^= "" then say strip(line)
+      end
+    end
+  end
+  return
+/******************************************************************
+ *  jul2greg - system julian date to gregorian conversion         *
+ ******************************************************************/
+jul2greg: procedure expose julian mm dd year month
+  if julian = "unknown" then do
+    month = "---"; mm = "--"; dd = "--"; year = "----"
+    return
+  end
+  parse value julian with year "." ddd
+  if ddd = '' then do
+    parse value julian with mm '/' dd '/' year
+    year = year + 1900
+  end
+  else do
+    if ddd > 59 then
+      if (year // 4) = 0 then do
+        ddd = ddd + 1
+        if (year // 100) = 0 then do
+            ddd = ddd - 1
+            if (year // 400) ^= 0 then ddd = ddd + 1
+        end
+      end
+    days = 1
+    do mm = 1 for 12
+      n = word('31 29 31 30 31 30 31 31 30 31 30 31',mm)
+      days = days + n
+      if days >= ddd then do
+        days = days - n; leave
+      end
+    end
+    dd = ddd - days
+  end
+  month = WORD('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec',mm)
+  return
+/******************************************************************
+ *  clockconvert - convert decimal clock stamp to date and time   *
+ ******************************************************************/
+clockconvert: procedure expose julian mm dd year month clock hh min
+  numeric digits 25
+  microseconds = clock % 4096
+  seconds = microseconds % 1000000
+  minutes = seconds % 60
+  seconds = seconds - (minutes * 60)
+  hours = minutes % 60
+  min = minutes - (hours * 60)
+  days = hours % 24
+  hh = hours - (days * 24)
+  years = days % 365
+  days = days - (years % 4) + 1
+  days = days - (years * 365) + 1
+  numeric digits
+  julian = years"."days
+  call jul2greg
+  return
+/******************************************************************
+ *  syntax  error exit                                            *
+ ******************************************************************/
+halt: say cmd "Halted at line" sigl
+do i = 1 for queued(); pull a; end
+call onhoste 65
+return
+/******************************************************************
+ *  syntax  error exit                                            *
+ ******************************************************************/
+syntax: say "Rexx syntax error in onhost exec at line" sigl
+do i = 1 for queued(); pull a; end
+call onhoste 9999
+return

@@ -1,0 +1,198 @@
+#! /usr/bin/ksh
+# @(#)91	1.11	src/bos/usr/sbin/perf/diag_tool/pdt_report.sh, pdt, bos411, 9428A410j 5/2/94 13:44:28
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# pdt_report
+#
+# Generates a pdt report using the most recent data in the
+# .SM database
+#
+# Input parameter is the desired severity level for the report.
+# 
+export pdt_tmp=/var/perf/tmp
+export pdt_config=/var/perf/cfg/diag_tool
+export pdt_code=/usr/sbin/perf/diag_tool
+export pdt_SM=$pdt_tmp/.SM
+
+#
+# Check if any parameters are passed in
+# If no value is provided on the call, then sev=1 is assumed.
+# (This means only the most severe indications are reported.)
+case "$1" in
+      1|2|3)
+	    user_severity=$1
+	    break;;
+      "")
+	    # User did not specify severity so default to 1
+	    user_severity=1
+	    break;;
+      *)
+	print -u2 "Invalid severity level $1"
+	print -u2 "syntax: $0 [<severity level>]"
+	print -u2 "        where <severity level> is between 1-3"
+	exit 1;;
+esac
+
+#
+# First awk script to prepare the .SM database for reading by
+# the reports.c program.
+#
+#
+# 1. All lines beginning with * are removed.
+# 2. All lines with suspicious format are sent to stderr,
+#    and not passed to the report writer.
+#
+# Second awk script to post process the output of reports.c.
+# Post processing is necessary to reformat the report and to
+# perform the appropriate filtering based on the user's
+# criteria.
+#
+# Assumes that each record in the report has the following format:
+#
+#   <rectype> <severity> <subtype> | <report line .............>
+#
+#   <rectype = A : alert
+#              U : upward trend
+#              D : downward trend
+#              H : heading
+#              S : system health indicator
+#              O : other
+#
+#   <severity> = integer from 1..N; 1 is highest level.
+#   <subtype>  = string describing subtype of report
+#                line (could be blank)
+#   | = a vertical bar (must be present)
+#   <report line> = the actual report line
+#
+# Report lines are sorted by rectype, and the report  has
+# the following format:
+#      heading report lines
+#      alert report lines
+#      upward trend report lines
+#      downward trend report lines
+#      system health indicator report lines
+#      other report lines
+#
+# Report lines are reported if their severity level is
+# numerically less than or equal to the user-provided
+# threshold (parameter 'sev').c
+# If no value is provided on the call, then sev=1 is assumed.
+# (This means only the most severe indications are reported.)
+#
+
+# now run the report
+#
+awk '
+     BEGIN {
+     }
+     {
+        if (substr($1,1,1) != "*") 
+        if (NF != 12) log_error($0)
+        else if (($3<0) || ($3>24))  log_error($0)
+        else if (($4<0) || ($4>7))   log_error($0)
+        else if (($5<0) || ($5>53))  log_error($0)
+        else if (($6<1) || ($6>12))  log_error($0)
+        else if (($7<1990) || ($7>2100)) log_error($0)
+        else if (($8<1) || ($8>366)) log_error($0)
+        else if ($11 != 1) log_error($0)
+        else print $0
+    }
+    END {
+    }
+    function log_error(record) {
+         print "SM record error: " record | "cat 1>&2"
+    }' $pdt_SM | $pdt_code/report | \
+
+awk '
+     BEGIN {
+	sev = "'$user_severity'"
+     }
+     {
+        rectype = $1
+        severity = $2
+        $1 = "";
+        $2 = "";
+        split ($0, parts, "|")
+        subtype = parts[1] 
+        $0 = parts[2]
+
+        if (severity <= sev) {
+          NRECS[rectype]++
+          RECS[rectype,NRECS[rectype]] = $0
+          SUBTYPE[rectype,NRECS[rectype]] = subtype
+        }
+        else more_detail_avail = "true"
+
+    }
+    END {
+      # print the headers 
+      for (i=1; i<=NRECS["H"]; i++) 
+           print RECS["H",i]
+      printf("\n Notice: To disable/modify/enable collection or reporting\n")
+      printf("         execute the pdt_config script as root\n")
+      # print the alerts 
+      if (NRECS["A"] > 0) {
+         printf ("\n------------------------ Alerts ---------------------\n")
+         prt("A");
+      }
+      # print the upward trends 
+      if (NRECS["U"] > 0) {
+        printf ("\n---------------------- Upward Trends ----------------\n");
+        prt("U");
+      }
+      # print the upward trends
+      if (NRECS["D"] > 0) {
+        printf ("\n---------------------- Downward Trends --------------\n");
+        prt("D");
+      }
+      # print the system health indicator information
+      if (NRECS["S"] > 0) {
+        printf ("\n----------------------- System Health ---------------\n");
+        prt("S");
+      }
+      # print other report lines 
+      if (NRECS["O"] > 0) {
+        printf ("\n-------------------------- Other ---------------------\n");
+        prt("O");
+      }
+      # if no messages printed - at least say something:
+      if (any_message != "true") {
+        printf ("  [NO severity level %d conditions identified]\n",sev)
+      }
+    }
+
+    END {
+      printf ("\n-------------------- Summary -------------------------\n");
+      printf ("  This is a severity level %d report\n",sev)
+      if (more_detail_avail == "true")
+        printf ("  More details are available at severity levels > %d\n",sev)
+      else
+        printf ("  No further details available at severity levels > %d\n",sev)
+    }
+
+    function prt(rt) {
+        last = "  ";
+        for (i=1; i<=NRECS[rt]; i++) {
+        if (SUBTYPE[rt,i]=="  ") printf("     %s\n", RECS[rt,i])
+        else if (last==SUBTYPE[rt,i]) printf("   - %s\n", RECS[rt,i])
+        else if (SUBTYPE[rt,i]!="  ") {
+           printf("\n%-s\n   - %s\n", SUBTYPE[rt,i], RECS[rt,i])
+           last = SUBTYPE[rt,i];
+        }
+        any_message = "true"
+        }
+    }'

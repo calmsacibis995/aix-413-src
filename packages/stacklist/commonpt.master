@@ -1,0 +1,23 @@
+/* @(#)83        1.2  essl.master, pkg, pkg41J 4/19/95 15:51:20                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for CommonPoint LPP
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+#if defined(COMMONPTCLS)
+CommonPoint.cls
+CommonPoint.html.en_US.cls
+#endif /* COMMONPTCLS */
+#if defined(COMMONPTADT)
+CommonPoint.adt
+CommonPoint.html.en_US.adt
+#endif /* COMMONPTADT */

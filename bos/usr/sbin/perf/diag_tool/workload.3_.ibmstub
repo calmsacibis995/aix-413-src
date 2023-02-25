@@ -1,0 +1,31 @@
+#!/bin/ksh
+# @(#)27	1.5	src/bos/usr/sbin/perf/diag_tool/workload.3_.sh, pdt, bos411, 9428A410j 4/13/94 16:32:33
+#
+#   COMPONENT_NAME: pdt
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# workload.3.sh 
+#   workload.3: copy a large file (40K) 10 times.  
+#
+timex cp $pdt_dat/.40kFile $pdt_tmp 2>&1
+timex cp $pdt_dat/.40kFile $pdt_tmp 2>&1
+timex cp $pdt_dat/.40kFile $pdt_tmp 2>&1
+timex cp $pdt_dat/.40kFile $pdt_tmp 2>&1
+timex cp $pdt_dat/.40kFile $pdt_tmp 2>&1
+timex cp $pdt_dat/.40kFile $pdt_tmp 2>&1
+timex cp $pdt_dat/.40kFile $pdt_tmp 2>&1
+timex cp $pdt_dat/.40kFile $pdt_tmp 2>&1
+timex cp $pdt_dat/.40kFile $pdt_tmp 2>&1
+timex cp $pdt_dat/.40kFile $pdt_tmp 2>&1

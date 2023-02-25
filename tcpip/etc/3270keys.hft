@@ -1,0 +1,144 @@
+# @(#)40	1.4  src/tcpip/etc/3270keys.hft, tcpip, tcpip411, GOLD410 11/4/93 08:51:55
+# 
+# COMPONENT_NAME: TCPIP 3270keys.hft
+# 
+# FUNCTIONS: Enter 
+#
+# ORIGINS: 27  38 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#       Copyright (c) 1985 by Paul Milazzo - all rights reserved
+#
+#
+#	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+#
+# INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+# EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+# WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+# LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+# PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+# OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+# IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+# DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+# DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+# CORRECTION.
+#
+#  RISC System/6000 is a trademark of International Business Machines
+#   Corporation.
+#
+#
+# 3270 key bindings and color initialization for IBM HFT 
+#
+#           some possible 3270 enter keys are:
+#                  \n - enter (normal)
+#                  ^M - enter (keypad)
+#             \e[114q - action
+#
+#
+#       The following may be used in sequence fields:
+#           \b - backspace
+#           \s - space
+#           \t - tab
+#           \n - newline
+#           \r - return
+#
+#           \e - esc (\033,0x1b)
+#            ^ - mask next character with \037 (e.q. ^M)
+#            ~ - set highorder bit on for next character
+#
+#
+#       3270 function   HFT sequence      HFT key
+#
+bind    backspace       "\b"             # Backspace
+bind    backtab         "\e[Z"           # s_Tab
+bind    clear           "\e[217q"        # Pause
+bind    delete          "\e[P"           # Delete
+bind    down            "\e[B"           # down arrow
+bind    dup             "\e[149q"        # a_End
+bind    enter           "\e[114q"        # Action
+bind    eraseeof        "\e[148q"        # c_End
+bind    eraseinput      "\e[142q"        # c_Delete
+bind    fieldmark       "\e[143q"        # s_home
+bind    home            "\e[H"           # Home
+bind    insertmode      "\e[139q"        # Insert
+bind    left            "\e[D"           # left arrow
+bind    pa1             "\e[025q"        # c_f1
+bind    pa2             "\e[026q"        # c_f2
+bind    pa3             "\e[027q"        # c_f3
+bind    penselect       "\e[209q"        # Print Screen
+bind    reset           "\e[121q"        # c_Esc
+bind    return          "\n"             # Enter (inboard)
+bind    right           "\e[C"           # right arrow
+bind    sysreq          "\e[212q"        # a_Print Screen
+bind    tab             "\t"             # Tab
+bind    up              "\e[A"           # up arrow
+bind    wordnext        "\e[168q"        # c_right arrow
+bind    wordprev        "\e[159q"        # c_left arrow
+bind    attention       "\e[036q"        # attention key c_f12
+
+bind    pf1             "\e[001q"        # f1
+bind    pf2             "\e[002q"        # f2
+bind    pf3             "\e[003q"        # f3
+bind    pf4             "\e[004q"        # f4
+bind    pf5             "\e[005q"        # f5
+bind    pf6             "\e[006q"        # f6
+bind    pf7             "\e[007q"        # f7
+bind    pf7             "\e[150q"        # Page Up
+bind    pf8             "\e[008q"        # f8
+bind    pf8             "\e[154q"        # Page Down
+bind    pf9             "\e[009q"        # f9
+bind    pf10            "\e[010q"        # f10
+bind    pf11            "\e[011q"        # f11
+bind    pf12            "\e[012q"        # f12
+
+bind    pf13            "\e[013q"        # s_f1
+bind    pf14            "\e[014q"        # s_f2
+bind    pf15            "\e[015q"        # s_f3
+bind    pf16            "\e[016q"        # s_f4
+bind    pf17            "\e[017q"        # s_f5
+bind    pf18            "\e[018q"        # s_f6
+bind    pf19            "\e[019q"        # s_f7
+bind    pf20            "\e[020q"        # s_f8
+bind    pf21            "\e[021q"        # s_f9
+bind    pf22            "\e[022q"        # s_f10
+bind    pf23            "\e[023q"        # s_f11
+bind    pf24            "\e[024q"        # s_f12
+
+
+# bidi support keys (HFT)
+bind    autopush        "^[[087q"
+bind    scrrev          "^[[088q"
+bind    endpush         "^[[076q"
+bind    push            "^[[083q"
+bind    eng_lang        "^[[095q"
+bind    nls_lang        "^[[106q"
+bind    fldrev          "^[[077q"
+
+# start ARABIC support (HFT)
+bind   autoshape   "^[[103q"
+bind   isolated    "^[[082q"
+bind   initial     "^[[081q"
+bind   middle      "^[[107q"
+bind   final       "^[[079q"
+bind   fieldshape  "^[[092q"
+bind   fieldbase   "^[[105q"
+# end ARABIC support
+
+
+#       Edit the default colors below to the desired colors for
+#       your color terminal.
+#       Valid colors are :  black, blue, red, green, white, magenta
+#                           and cyan
+#
+#       3270 attribute  display color
+bind    low_prot        cyan             # low intensity protected
+bind    low_unprot      green            # low intensity unprotected
+bind    high_prot       white            # high intensity protected
+bind    high_unprot     blue             # high intensity unprotected
+

@@ -1,0 +1,30 @@
+# @(#)39	1.2  src/tcpip/usr/lbin/tftpd/Makefile, tcpfilexfr, tcpip411, GOLD410 1/18/93 11:47:19
+# 
+# COMPONENT_NAME: TCPIP Makefile
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 10  26  27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+PROGRAMS                = tftpd
+MSGHDRS                 = tftpd_msg.h
+CATFILES                = tftpd.cat
+
+IDIR                    = /usr/sbin/
+ILIST                   = tftpd
+
+CCTYPE                  = writable_strings
+CFLAGS                  = -DS5 -D_BSD=44 -DINET  -DSDB -DMANYGROUPS
+HFILES                  = ${MSGHDRS}
+OFILES                  = tftpd.o tftpsubs.o
+LIBS                    = -lbsd
+
+.include <${RULES_MK}>

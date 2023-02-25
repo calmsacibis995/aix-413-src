@@ -1,0 +1,2932 @@
+# @(#)63        1.9  src/tcpip/usr/lpp/tcpip/sm_tcpip1.add, tcpip, tcpip411, 9440G411a 10/13/94 14:42:40
+#
+# COMPONENT_NAME: (TCPIP)  Configuration Stanza File
+#
+#   FUNCTIONS: none
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1989,1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+
+###############################################################################
+# This, the first part of this file, is the "general" SMIT TCP/IP menu tree   #
+# which is accessed via the following menu path:			      #
+#    Communications Applications and Services -> TCP/IP 		      #
+###############################################################################
+
+sm_menu_opt:
+	id			= "commo"
+	id_seq_num		= "010"
+	next_id 		= "tcpip"
+	text			= "TCP/IP"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 1
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822001
+
+
+sm_menu_opt:
+	id			= "tcpip"
+	id_seq_num		= "010"
+	next_id 		= "mktcpip"
+	text			= "Minimum Configuration & Startup"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 345
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822345
+
+
+sm_menu_opt:
+	id			= "tcpip"
+	id_seq_num		= "020"
+	next_id 		= "configtcp"
+	text			= "Further Configuration"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 346
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822346
+
+
+sm_menu_opt:
+	id			= "configtcp"
+	id_seq_num		= "010"
+	next_id 		= "hostname"
+	text			= "Hostname"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 2
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822002
+
+
+sm_menu_opt:
+	id			= "to_hostname"
+	id_seq_num		= ""
+	next_id 		= "hostname"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "hostname"
+	id_seq_num		= "010"
+	next_id 		= "mkhostname"
+	text			= "Set the Hostname"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 3
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822003
+
+
+sm_menu_opt:
+	id			= "hostname"
+	id_seq_num		= "020"
+	next_id 		= "lshostname"
+	text			= "Show the Hostname"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 4
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822004
+
+
+sm_menu_opt:
+	id			= "configtcp"
+	id_seq_num		= "020"
+	next_id 		= "route"
+	text			= "Static Routes"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 5
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822005
+
+
+sm_menu_opt:
+	id			= "netstat"
+	id_seq_num		= ""
+	next_id 		= "route"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "NetStat"
+	id_seq_num		= ""
+	next_id 		= "route"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "route"
+	id_seq_num		= "010"
+	next_id 		= "lsroute"
+	text			= "List All Routes"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 6
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822006
+
+
+sm_menu_opt:
+	id			= "route"
+	id_seq_num		= "020"
+	next_id 		= "mkroute"
+	text			= "Add a Static Route"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 7
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822007
+
+
+sm_menu_opt:
+	id			= "route"
+	id_seq_num		= "030"
+	next_id 		= "rmroute"
+	text			= "Remove a Static Route"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 8
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822008
+
+
+sm_menu_opt:
+	id			= "route"
+	id_seq_num		= "030"
+	next_id 		= "fshrttbl"
+	text			= "Flush Routing Table"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 110
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822110
+
+
+sm_menu_opt:
+	id			= "configtcp"
+	id_seq_num		= "030"
+	next_id 		= "netinterface"
+	text			= "Network Interfaces"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 9
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822009
+
+
+sm_menu_opt:
+	id			= "netinterface"
+	id_seq_num		= "010"
+	next_id 		= "chif"
+	text			= "Network Interface Drivers"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 10
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822010
+
+
+sm_menu_opt:
+	id			= "lsif"
+	id_seq_num		= ""
+	next_id 		= "chif"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "if"
+	id_seq_num		= ""
+	next_id 		= "chif"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "netinterface"
+	id_seq_num		= "005"
+	next_id 		= "inet"
+	text			= "Network Interface Selection"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 12
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822012
+
+
+sm_menu_opt:
+	id			= "inet"
+	id_seq_num		= "010"
+	next_id 		= "lsinet"
+	text			= "List All Network Interfaces"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 13
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822013
+
+
+sm_menu_opt:
+	id			= "inet"
+	id_seq_num		= "020"
+	next_id 		= "mkinet"
+	text			= "Add a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 14
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822014
+
+
+sm_menu_opt:
+	id			= "mkinet"
+	id_seq_num		= "010"
+	next_id 		= "mkinet1en"
+	text			= "Add a Standard Ethernet Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 15
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822015
+
+
+sm_menu_opt:
+	id			= "mkinet"
+	id_seq_num		= "020"
+	next_id 		= "mkinet1et"
+	text			= "Add an IEEE 802.3 Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 16
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822016
+
+
+sm_menu_opt:
+	id			= "mkinet"
+	id_seq_num		= "030"
+	next_id 		= "mkinet1tr"
+	text			= "Add a Token-Ring Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 17
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822017
+
+
+sm_menu_opt:
+	id			= "mkinet"
+	id_seq_num		= "050"
+	next_id 		= "mkinet1sl"
+	text			= "Add a Serial Line INTERNET Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 19
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822019
+ 
+
+sm_menu_opt:
+	id			= "mkinet"
+	id_seq_num		= "060"
+	next_id 		= "mkinet1so"
+	text			= "Add a Serial Optical Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 454
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822454
+
+
+sm_menu_opt:
+	id			= "mkinet"
+	id_seq_num		= "070"
+	next_id 		= "mkinet1ca"
+	text			= "Add a 370 Channel Attach Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 470
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822470
+
+
+sm_menu_opt:
+	id			= "inet"
+	id_seq_num		= "030"
+	next_id 		= "chinet"
+	text			= "Change / Show Characteristics of a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 20
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822020
+
+
+sm_menu_opt:
+	id			= "shinet"
+	id_seq_num		= ""
+	next_id 		= "chinet"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "n"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "inet"
+	id_seq_num		= "040"
+	next_id 		= "rminet"
+	text			= "Remove a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 21
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822021
+
+
+sm_menu_opt:
+	id			= "configtcp"
+	id_seq_num		= "040"
+	next_id 		= "clientnet"
+	text			= "Client Network Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 30
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822030
+
+
+sm_menu_opt:
+	id			= "to_clientnet"
+	id_seq_num		= ""
+	next_id 		= "clientnet"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "configtcp"
+	id_seq_num		= "035"
+	next_id 		= "namerslv"
+	text			= "Name Resolution"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 31
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822031
+
+
+sm_menu_opt:
+	id			= "namerslv"
+	id_seq_num		= "010"
+	next_id 		= "resolv.conf"
+	text			= "Domain Nameserver (/etc/resolv.conf)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 32
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822032
+
+
+sm_menu_opt:
+	id			= "to_namerslv"
+	id_seq_num		= ""
+	next_id 		= "namerslv"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "resolvconf"
+	id_seq_num		= ""
+	next_id 		= "resolv.conf"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "resolv.conf"
+	id_seq_num		= "010"
+	next_id 		= "stnamerslv"
+	text			= "Start Using the Nameserver"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 290
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822290
+
+
+sm_menu_opt:
+	id			= "stnamerslv"
+	id_seq_num		= "010"
+	next_id 		= "stnamerslv1"
+	text			= "Restore a Copy of /etc/resolv.conf File"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 322
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822322
+
+
+sm_menu_opt:
+	id			= "stnamerslv"
+	id_seq_num		= "020"
+	next_id 		= "stnamerslv2"
+	text			= "Create a New /etc/resolv.conf File"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 323
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822323
+
+
+sm_menu_opt:
+	id			= "resolv.conf"
+	id_seq_num		= "020"
+	next_id 		= "lsnamerslv"
+	text			= "List All Nameservers"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 34
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822034
+
+
+sm_menu_opt:
+	id			= "resolv.conf"
+	id_seq_num		= "030"
+	next_id 		= "mknamerslv"
+	text			= "Add a Nameserver"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 35
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822035
+
+
+sm_menu_opt:
+	id			= "resolv.conf"
+	id_seq_num		= "040"
+	next_id 		= "rmnamerslv"
+	text			= "Remove a Nameserver"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 36
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822036
+
+
+sm_menu_opt:
+	id			= "resolv.conf"
+	id_seq_num		= "050"
+	next_id 		= "spnamerslv"
+	text			= "Stop Using a Nameserver\n-------------------------------"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 37
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822037
+
+
+sm_menu_opt:
+	id			= "resolv.conf"
+	id_seq_num		= "060"
+	next_id 		= "mkdomain"
+	text			= "Set / Show the Domain"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 38
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822038
+
+
+sm_menu_opt:
+	id			= "resolv.conf"
+	id_seq_num		= "080"
+	next_id 		= "rmdomain"
+	text			= "Remove the Domain"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 39
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822039
+
+
+sm_menu_opt:
+	id			= "namerslv"
+	id_seq_num		= "020"
+	next_id 		= "hostent"
+	text			= "Hosts Table (/etc/hosts)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 40
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822040
+
+
+sm_menu_opt:
+	id			= "hosts"
+	id_seq_num		= ""
+	next_id 		= "hostent"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "hostent"
+	id_seq_num		= "010"
+	next_id 		= "lshostent"
+	text			= "List All Hosts"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 41
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822041
+
+
+sm_menu_opt:
+	id			= "hostent"
+	id_seq_num		= "020"
+	next_id 		= "mkhostent"
+	text			= "Add a Host"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 42
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822042
+
+
+sm_menu_opt:
+	id			= "shhostent"
+	id_seq_num		= ""
+	next_id 		= "chhostent"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "hostent"
+	id_seq_num		= "030"
+	next_id 		= "chhostent"
+	text			= "Change / Show Characteristics of a Host"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 43
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822043
+
+
+sm_menu_opt:
+	id			= "hostent"
+	id_seq_num		= "050"
+	next_id 		= "rmhostent"
+	text			= "Remove a Host"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 44
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822044
+
+
+sm_menu_opt:
+	id			= "clientnet"
+	id_seq_num		= "030"
+	next_id 		= "inetserv"
+	text			= "Services (/etc/services)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 46
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822046
+
+
+sm_menu_opt:
+	id			= "inetserv"
+	id_seq_num		= "010"
+	next_id 		= "lsservices"
+	text			= "List All Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 47
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822047
+
+
+sm_menu_opt:
+	id			= "inetserv"
+	id_seq_num		= "020"
+	next_id 		= "mkservices"
+	text			= "Add a Service"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 48
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822048
+
+
+sm_menu_opt:
+	id			= "shservices"
+	id_seq_num		= ""
+	next_id 		= "chservices"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "n"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "inetserv"
+	id_seq_num		= "030"
+	next_id 		= "chservices"
+	text			= "Change / Show Characteristics of a Service"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 49
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822049
+
+
+sm_menu_opt:
+	id			= "inetserv"
+	id_seq_num		= "050"
+	next_id 		= "rmservices"
+	text			= "Remove a Service"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 50
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822050
+
+
+sm_menu_opt:
+	id			= "clientnet"
+	id_seq_num		= "040"
+	next_id 		= ""
+	text			= "Syslog (information only)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 51
+	next_type		= "i"
+	alias			= "n"
+	help_msg_id		= 0822400
+
+
+sm_menu_opt:
+	id			= "clientnet"
+	id_seq_num		= "050"
+	next_id 		= ""
+	text			= "Protocols (information only)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 52
+	next_type		= "i"
+	alias			= "n"
+	help_msg_id		= 0822052
+
+
+sm_menu_opt:
+	id			= "servernet"
+	id_seq_num		= ""
+	next_id 		= "ruser"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "configtcp"
+	id_seq_num		= "050"
+	next_id			= "ruser"
+	text			= "Server Network Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 53
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822053
+
+
+sm_menu_opt:
+	id			= "ruser"
+	id_seq_num		= "010"
+	next_id 		= "rmtaccess"
+	text			= "Remote Access"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 54
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822054
+
+
+sm_menu_opt:
+	id			= "rmtaccess"
+	id_seq_num		= "010"
+	next_id 		= "hostsequiv"
+	text			= "Host Access (/etc/host.equiv)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 55
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822055
+
+
+sm_menu_opt:
+	id			= "hosts.equiv"
+	id_seq_num		= ""
+	next_id 		= "hostsequiv"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "hostsequiv"
+	id_seq_num		= "010"
+	next_id 		= "lshostsequiv"
+	text			= "List All Remote Hosts"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 56
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822056
+
+
+sm_menu_opt:
+	id			= "hostsequiv"
+	id_seq_num		= "020"
+	next_id 		= "mkhostsequiv"
+	text			= "Add a Remote Host"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 57
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822057
+
+
+sm_menu_opt:
+	id			= "hostsequiv"
+	id_seq_num		= "030"
+	next_id 		= "rmhostsequiv"
+	text			= "Remove a Remote Host"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 58
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822058
+
+
+sm_menu_opt:
+	id			= "rmtaccess"
+	id_seq_num		= "020"
+	next_id 		= "ftpusers"
+	text			= "Restrict File Transfer Program Users (/etc/ftpusers)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 59
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822059
+
+
+sm_menu_opt:
+	id			= "ftpusers"
+	id_seq_num		= "010"
+	next_id 		= "lsftpusers"
+	text			= "Show All Restricted Users"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 60
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822060
+
+
+sm_menu_opt:
+	id			= "ftpusers"
+	id_seq_num		= "020"
+	next_id 		= "mkftpusers"
+	text			= "Add a Restricted User"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 61
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822061
+
+
+sm_menu_opt:
+	id			= "ftpusers"
+	id_seq_num		= "030"
+	next_id 		= "rmftpusers"
+	text			= "Remove a Restricted User"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 62
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822062
+
+
+sm_menu_opt:
+	id			= "ruser"
+	id_seq_num		= "030"
+	next_id 		= "otherserv"
+	text			= "Other Available Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 78
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822078
+
+
+sm_menu_opt:
+	id			= "otherserv"
+	id_seq_num		= "010"
+	next_id 		= "inetd"
+	text			= "Super Daemon (inetd)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 79
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822079
+
+
+sm_menu_opt:
+	id			= "inetd"
+	id_seq_num		= "010"
+	next_id 		= "inetdsubsys"
+	text			= "inetd Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 80
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822080
+
+
+sm_menu_opt:
+	id			= "inetdsubsys"
+	id_seq_num		= "010"
+	next_id 		= "mkinetd"
+	text			= "Start Using the inetd Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 81
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822081
+
+
+sm_menu_opt:
+	id			= "mkinetd"
+	id_seq_num		= "010"
+	next_id 		= "mkinetd_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 70
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822070
+
+
+sm_menu_opt:
+	id			= "mkinetd"
+	id_seq_num		= "020"
+	next_id 		= "mkinetd_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 71
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822071
+
+
+sm_menu_opt:
+	id			= "mkinetd"
+	id_seq_num		= "030"
+	next_id 		= "mkinetd_both"
+	text			= "BOTH Now and at System Restart"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 72
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822077
+
+
+sm_menu_opt:
+	id			= "lsinetd"
+	id_seq_num		= ""
+	next_id 		= "chinetd"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "d"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "inetdsubsys"
+	id_seq_num		= "020"
+	next_id 		= "chinetd"
+	text			= "Change / Show Restart Characteristics of inetd Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 85
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822085
+
+
+sm_menu_opt:
+	id			= "inetdsubsys"
+	id_seq_num		= "040"
+	next_id 		= "rminetd"
+	text			= "Stop Using the inetd Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 86
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822086
+
+
+sm_menu_opt:
+	id			= "rminetd"
+	id_seq_num		= "010"
+	next_id 		= "rminetd_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 70
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822070
+
+
+sm_menu_opt:
+	id			= "rminetd"
+	id_seq_num		= "020"
+	next_id 		= "rminetd_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 71
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822371
+
+
+sm_menu_opt:
+	id			= "rminetd"
+	id_seq_num		= "030"
+	next_id 		= "rminetd_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 77
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822377
+
+
+sm_menu_opt:
+	id			= "inetd"
+	id_seq_num		= "020"
+	next_id 		= "inetdconf"
+	text			= "inetd Subservers"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 87
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822087
+
+
+
+sm_menu_opt:
+	id			= "inetd.conf"
+	id_seq_num		= ""
+	next_id 		= "inetdconf"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+
+sm_menu_opt:
+	id			= "inetdconf"
+	id_seq_num		= "010"
+	next_id 		= "lsinetdconf"
+	text			= "List All inetd Subservers"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 88
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822088
+
+
+sm_menu_opt:
+	id			= "inetdconf"
+	id_seq_num		= "020"
+	next_id 		= "mkinetdconf"
+	text			= "Add an inetd Subserver"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 89
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822089
+
+
+sm_menu_opt:
+	id			= "inetdconf"
+	id_seq_num		= "030"
+	next_id 		= "chinetdconf"
+	text			= "Change / Show Characteristics of an inetd Subserver"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 90
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822090
+
+
+sm_menu_opt:
+	id			= "shinetdconf"
+	id_seq_num		= ""
+	next_id 		= "chinetdconf"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "n"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "inetdconf"
+	id_seq_num		= "050"
+	next_id 		= "rminetdconf"
+	text			= "Remove an inetd Subserver"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 91
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822091
+
+
+sm_menu_opt:
+	id			= "otherserv"
+	id_seq_num		= "020"
+	next_id 		= "syslogd"
+	text			= "syslogd Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 400
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822400
+
+
+sm_menu_opt:
+	id			= "syslogd"
+	id_seq_num		= "010"
+	next_id 		= "stsyslogd"
+	text			= "Start Using the syslogd Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 401
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822401
+
+
+sm_menu_opt:
+	id			= "stsyslogd"
+	id_seq_num		= "010"
+	next_id 		= "stsyslogd_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 70
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822070
+
+
+sm_menu_opt:
+	id			= "stsyslogd"
+	id_seq_num		= "020"
+	next_id 		= "stsyslogd_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 71
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822071
+
+
+sm_menu_opt:
+	id			= "stsyslogd"
+	id_seq_num		= "030"
+	next_id 		= "stsyslogd_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 77
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822077
+
+
+sm_menu_opt:
+	id			= "lssyslogd"
+	id_seq_num		= ""
+	next_id 		= "chsyslogd"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "d"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "syslogd"
+	id_seq_num		= "020"
+	next_id 		= "chsyslogd"
+	text			= "Change / Show Restart Characteristics of syslogd Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 402
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822402
+
+
+sm_menu_opt:
+	id			= "syslogd"
+	id_seq_num		= "030"
+	next_id 		= "spsyslogd"
+	text			= "Stop Using the syslogd Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 403
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822403
+
+
+sm_menu_opt:
+	id			= "spsyslogd"
+	id_seq_num		= "010"
+	next_id 		= "spsyslogd_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 370
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822370
+
+
+sm_menu_opt:
+	id			= "spsyslogd"
+	id_seq_num		= "020"
+	next_id 		= "spsyslogd_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 371
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822371
+
+
+sm_menu_opt:
+	id			= "spsyslogd"
+	id_seq_num		= "030"
+	next_id 		= "spsyslogd_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 377
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822377
+
+
+sm_menu_opt:
+	id			= "otherserv"
+	id_seq_num		= "030"
+	next_id 		= "routed"
+	text			= "routed Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 404
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822404
+
+
+sm_menu_opt:
+	id			= "routed"
+	id_seq_num		= "010"
+	next_id 		= "strouted"
+	text			= "Start Using the routed Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 405
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822405
+
+
+sm_menu_opt:
+	id			= "strouted"
+	id_seq_num		= "010"
+	next_id 		= "strouted_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 70
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822070
+
+
+sm_menu_opt:
+	id			= "strouted"
+	id_seq_num		= "020"
+	next_id 		= "strouted_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 71
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822071
+
+
+sm_menu_opt:
+	id			= "strouted"
+	id_seq_num		= "030"
+	next_id 		= "strouted_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 77
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822077
+
+
+sm_menu_opt:
+	id			= "lsrouted"
+	id_seq_num		= ""
+	next_id 		= "chrouted"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "d"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "routed"
+	id_seq_num		= "020"
+	next_id 		= "chrouted"
+	text			= "Change / Show Restart Characteristics of routed Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 406
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822406
+
+
+sm_menu_opt:
+	id			= "routed"
+	id_seq_num		= "030"
+	next_id 		= "sprouted"
+	text			= "Stop Using the routed Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 407
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822407
+
+
+sm_menu_opt:
+	id			= "sprouted"
+	id_seq_num		= "010"
+	next_id 		= "sprouted_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 370
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822370
+
+
+sm_menu_opt:
+	id			= "sprouted"
+	id_seq_num		= "020"
+	next_id 		= "sprouted_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 371
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822371
+
+
+sm_menu_opt:
+	id			= "sprouted"
+	id_seq_num		= "030"
+	next_id 		= "sprouted_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 377
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822377
+
+
+sm_menu_opt:
+	id			= "otherserv"
+	id_seq_num		= "040"
+	next_id 		= "gated"
+	text			= "gated Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 408
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822408
+
+
+sm_menu_opt:
+	id			= "gated"
+	id_seq_num		= "010"
+	next_id 		= "stgated"
+	text			= "Start Using the gated Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 409
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822409
+
+
+sm_menu_opt:
+	id			= "stgated"
+	id_seq_num		= "010"
+	next_id 		= "stgated_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 70
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822070
+
+
+sm_menu_opt:
+	id			= "stgated"
+	id_seq_num		= "020"
+	next_id 		= "stgated_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 71
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822071
+
+
+sm_menu_opt:
+	id			= "stgated"
+	id_seq_num		= "030"
+	next_id 		= "stgated_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 77
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822077
+
+
+sm_menu_opt:
+	id			= "lsgated"
+	id_seq_num		= ""
+	next_id 		= "chgated"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "d"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "gated"
+	id_seq_num		= "020"
+	next_id 		= "chgated"
+	text			= "Change / Show Restart Characteristics of gated Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 410
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822410
+
+
+sm_menu_opt:
+	id			= "gated"
+	id_seq_num		= "030"
+	next_id 		= "spgated"
+	text			= "Stop Using the gated Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 411
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822411
+
+
+sm_menu_opt:
+	id			= "spgated"
+	id_seq_num		= "010"
+	next_id 		= "spgated_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 370
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822370
+
+
+sm_menu_opt:
+	id			= "spgated"
+	id_seq_num		= "020"
+	next_id 		= "spgated_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 371
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822371
+
+
+sm_menu_opt:
+	id			= "spgated"
+	id_seq_num		= "030"
+	next_id 		= "spgated_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 377
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822377
+
+
+sm_menu_opt:
+	id			= "otherserv"
+	id_seq_num		= "050"
+	next_id 		= "named"
+	text			= "named Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 412
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822412
+
+
+sm_menu_opt:
+	id			= "named"
+	id_seq_num		= "010"
+	next_id 		= "stnamed"
+	text			= "Start Using the named Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 413
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822413
+
+
+sm_menu_opt:
+	id			= "stnamed"
+	id_seq_num		= "010"
+	next_id 		= "stnamed_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 70
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822070
+
+
+sm_menu_opt:
+	id			= "stnamed"
+	id_seq_num		= "020"
+	next_id 		= "stnamed_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 71
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822071
+
+
+sm_menu_opt:
+	id			= "stnamed"
+	id_seq_num		= "030"
+	next_id 		= "stnamed_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 77
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822077
+
+
+sm_menu_opt:
+	id			= "lsnamed"
+	id_seq_num		= ""
+	next_id 		= "chnamed"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "d"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "named"
+	id_seq_num		= "020"
+	next_id 		= "chnamed"
+	text			= "Change / Show Restart Characteristics of named Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 414
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822414
+
+
+sm_menu_opt:
+	id			= "named"
+	id_seq_num		= "030"
+	next_id 		= "spnamed"
+	text			= "Stop Using the named Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 415
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822415
+
+
+sm_menu_opt:
+	id			= "spnamed"
+	id_seq_num		= "010"
+	next_id 		= "spnamed_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 370
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822370
+
+
+sm_menu_opt:
+	id			= "spnamed"
+	id_seq_num		= "020"
+	next_id 		= "spnamed_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 371
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822371
+
+
+sm_menu_opt:
+	id			= "spnamed"
+	id_seq_num		= "030"
+	next_id 		= "spnamed_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 377
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822377
+
+
+sm_menu_opt:
+	id			= "otherserv"
+	id_seq_num		= "060"
+	next_id 		= "rwhod"
+	text			= "rwhod Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 416
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822416
+
+
+sm_menu_opt:
+	id			= "rwhod"
+	id_seq_num		= "010"
+	next_id 		= "strwhod"
+	text			= "Start Using the rwhod Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 417
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822417
+
+
+sm_menu_opt:
+	id			= "strwhod"
+	id_seq_num		= "010"
+	next_id 		= "strwhod_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 70
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822070
+
+
+sm_menu_opt:
+	id			= "strwhod"
+	id_seq_num		= "020"
+	next_id 		= "strwhod_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 71
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822071
+
+
+sm_menu_opt:
+	id			= "strwhod"
+	id_seq_num		= "030"
+	next_id 		= "strwhod_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 77
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822077
+
+
+sm_menu_opt:
+	id			= "rwhod"
+	id_seq_num		= "030"
+	next_id 		= "sprwhod"
+	text			= "Stop Using the rwhod Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 418
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822418
+
+
+sm_menu_opt:
+	id			= "sprwhod"
+	id_seq_num		= "010"
+	next_id 		= "sprwhod_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 370
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822370
+
+
+sm_menu_opt:
+	id			= "sprwhod"
+	id_seq_num		= "020"
+	next_id 		= "sprwhod_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 371
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822371
+
+
+sm_menu_opt:
+	id			= "sprwhod"
+	id_seq_num		= "030"
+	next_id 		= "sprwhod_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 377
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822377
+
+
+sm_menu_opt:
+	id			= "otherserv"
+	id_seq_num		= "070"
+	next_id 		= "timed"
+	text			= "timed Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 419
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822419
+
+
+sm_menu_opt:
+	id			= "timed"
+	id_seq_num		= "010"
+	next_id 		= "sttimed"
+	text			= "Start Using the timed Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 420
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822420
+
+
+sm_menu_opt:
+	id			= "sttimed"
+	id_seq_num		= "010"
+	next_id 		= "sttimed_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 70
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822070
+
+
+sm_menu_opt:
+	id			= "sttimed"
+	id_seq_num		= "020"
+	next_id 		= "sttimed_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 71
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822071
+
+
+sm_menu_opt:
+	id			= "sttimed"
+	id_seq_num		= "030"
+	next_id 		= "sttimed_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 77
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822077
+
+
+sm_menu_opt:
+	id			= "lstimed"
+	id_seq_num		= ""
+	next_id 		= "chtimed"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "d"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "timed"
+	id_seq_num		= "020"
+	next_id 		= "chtimed"
+	text			= "Change / Show Restart Characteristics of timed Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 421
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822421
+
+
+sm_menu_opt:
+	id			= "timed"
+	id_seq_num		= "030"
+	next_id 		= "sptimed"
+	text			= "Stop Using the timed Subsystem"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 422
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822422
+
+
+sm_menu_opt:
+	id			= "sptimed"
+	id_seq_num		= "010"
+	next_id 		= "sptimed_now"
+	text			= "NOW"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 370
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822370
+
+
+sm_menu_opt:
+	id			= "sptimed"
+	id_seq_num		= "020"
+	next_id 		= "sptimed_boot"
+	text			= "Next System RESTART"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 371
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822371
+
+
+sm_menu_opt:
+	id			= "sptimed"
+	id_seq_num		= "030"
+	next_id 		= "sptimed_both"
+	text			= "BOTH"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 377
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822377
+
+
+sm_menu_opt:
+	id			= "otherserv"
+	id_seq_num		= "080"
+	next_id 		= ""
+	text			= "portmap Subsystem (information only)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 93
+	next_type		= "i"
+	alias			= "n"
+	help_msg_id		= 0822093
+
+
+sm_menu_opt:
+	id			= "ruser"
+	id_seq_num		= "040"
+	next_id 		= "ruser_pty"
+	text			= "PTYs"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 95
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822095
+
+
+sm_menu_opt:
+	id                  = "ruser_pty"
+	id_seq_num          = ""
+	next_id             = "pty"
+	text                = ""
+	text_msg_file 	    = ""
+	text_msg_set 	    = 0
+	text_msg_id 	    = 0
+	next_type           = "m"
+	alias		    = "y"
+	help_msg_id	    = ""
+	help_msg_loc        = ""
+
+sm_menu_opt:
+	id			= "ruser"
+	id_seq_num		= "050"
+	next_id 		= ""
+	text			= "Routing (information only)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 96
+	next_type		= "i"
+	alias			= "n"
+	help_msg_id		= 0822096
+
+
+sm_menu_opt:
+	id			= "ruser"
+	id_seq_num		= "060"
+	next_id 		= "nameserver"
+	text			= "Nameserver (information only)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 97
+	next_type		= "i"
+	alias			= "n"
+	help_msg_id		= 0822097
+
+
+sm_menu_opt:
+	id			= "ruser"
+	id_seq_num		= "070"
+	next_id 		= "arp"
+	text			= "Arp Tables (information only)"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 98
+	next_type		= "i"
+	alias			= "n"
+	help_msg_id		= 0822098
+
+
+sm_menu_opt:
+	id			= "configtcp"
+	id_seq_num		= "060"
+	next_id 		= "print_server"
+	text			= "Manage Print Server"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 25
+	text_msg_id		= 629
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= "1810066"
+
+
+sm_menu_opt:
+	id			= "print_server"
+	id_seq_num		= ""
+	next_id 		= "server"
+	text			= ""
+	text_msg_file		= ""
+	text_msg_set		= 0
+	text_msg_id		= 0
+	next_type		= "m"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+
+###############################################################################
+# This section is called via the following menu path:			      #
+#    Devices -> Communications -> Ethernet Adapter -> User Applications       #
+#									      #
+# Most of the branches ultimately point to some location in the general tree  #
+# above.								      #
+###############################################################################
+
+sm_menu_opt:
+	id			= "enapps"
+	id_seq_num		= "010"
+	next_id 		= "tcpipen"
+	text			= "TCP/IP"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 1
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822001
+
+
+sm_menu_opt:
+	id			= "tcpipen"
+	id_seq_num		= "010"
+	next_id 		= "to_hostname"
+	text			= "Hostname"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 2
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822002
+
+
+sm_menu_opt:
+	id			= "tcpipen"
+	id_seq_num		= "020"
+	next_id 		= "NetStat"
+	text			= "Static Routes"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 5
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822005
+
+
+sm_menu_opt:
+	id			= "tcpipen"
+	id_seq_num		= "030"
+	next_id 		= "ineten"
+	text			= "Network Interfaces"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 9
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822009
+
+
+sm_menu_opt:
+	id			= "ineten"
+	id_seq_num		= "010"
+	next_id 		= "chifen"
+	text			= "Network Interface Drivers"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 10
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822010
+
+
+sm_menu_opt:
+	id			= "ineten"
+	id_seq_num		= "020"
+	next_id 		= "ifselecten"
+	text			= "Network Interface Selection"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 12
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822012
+
+
+sm_menu_opt:
+	id			= "ifselecten"
+	id_seq_num		= "010"
+	next_id 		= "lsineten"
+	text			= "List All Network Interfaces"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 13
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822013
+
+
+sm_menu_opt:
+	id			= "ifselecten"
+	id_seq_num		= "020"
+	next_id 		= "mkineten"
+	text			= "Add a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 14
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822014
+
+
+sm_menu_opt:
+	id			= "ifselecten"
+	id_seq_num		= "030"
+	next_id 		= "chen"
+	text			= "Change / Show Characteristics of a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 20
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822020
+
+
+sm_menu_opt:
+	id			= "ifselecten"
+	id_seq_num		= "040"
+	next_id 		= "rmen"
+	text			= "Remove a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 21
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822021
+
+
+sm_menu_opt:
+	id			= "tcpipen"
+	id_seq_num		= "040"
+	next_id 		= "to_clientnet"
+	text			= "Client Network Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 30
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822030
+
+
+sm_menu_opt:
+	id			= "tcpipen"
+	id_seq_num		= "050"
+	next_id			= "ruser"
+	text			= "Server Network Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 53
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822053
+
+
+sm_menu_opt:
+        id                      = "tcpipen"
+        id_seq_num              = "060"
+        next_id                 = "print_server"
+        text                    = "Manage Print Server"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 25
+        text_msg_id             = 629
+        next_type               = "m"
+        alias                   = "n"
+        help_msg_id             = "1810066"
+
+###############################################################################
+# This section is called via the following menu path:			      #
+#    Devices -> Communications -> Token-Ring Adapter -> User Applications     #
+#									      #
+# Most of the branches ultimately point to some location in the general tree  #
+# above.								      #
+###############################################################################
+
+sm_menu_opt:
+	id			= "trapps"
+	id_seq_num		= "010"
+	next_id 		= "tcpiptr"
+	text			= "TCP/IP"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 1
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822001
+
+
+sm_menu_opt:
+	id			= "tcpiptr"
+	id_seq_num		= "010"
+	next_id 		= "to_hostname"
+	text			= "Hostname"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 2
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822002
+
+
+sm_menu_opt:
+	id			= "tcpiptr"
+	id_seq_num		= "020"
+	next_id 		= "NetStat"
+	text			= "Static Routes"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 5
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822005
+
+
+sm_menu_opt:
+	id			= "tcpiptr"
+	id_seq_num		= "030"
+	next_id 		= "inettr"
+	text			= "Network Interfaces"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 9
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822009
+
+
+sm_menu_opt:
+	id			= "inettr"
+	id_seq_num		= "010"
+	next_id 		= "chiftr"
+	text			= "Network Interface Drivers"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 10
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822010
+
+
+sm_menu_opt:
+	id			= "inettr"
+	id_seq_num		= "020"
+	next_id 		= "ifselecttr"
+	text			= "Network Interface Selection"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 12
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822012
+
+
+sm_menu_opt:
+	id			= "ifselecttr"
+	id_seq_num		= "010"
+	next_id 		= "lsinettr"
+	text			= "List All Network Interfaces"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 13
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822013
+
+
+sm_menu_opt:
+	id			= "ifselecttr"
+	id_seq_num		= "020"
+	next_id 		= "mkinettr"
+	text			= "Add a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 14
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822014
+
+
+sm_menu_opt:
+	id			= "ifselecttr"
+	id_seq_num		= "030"
+	next_id 		= "chtr"
+	text			= "Change / Show Characteristics of a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 20
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822020
+
+
+sm_menu_opt:
+	id			= "ifselecttr"
+	id_seq_num		= "040"
+	next_id 		= "rmtr"
+	text			= "Remove a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 21
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822021
+
+
+sm_menu_opt:
+	id			= "tcpiptr"
+	id_seq_num		= "040"
+	next_id 		= "to_clientnet"
+	text			= "Client Network Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 30
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822030
+
+
+sm_menu_opt:
+	id			= "tcpiptr"
+	id_seq_num		= "050"
+	next_id			= "ruser"
+	text			= "Server Network Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 53
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822053
+
+
+sm_menu_opt:
+        id                      = "tcpiptr"
+        id_seq_num              = "060"
+        next_id                 = "print_server"
+        text                    = "Manage Print Server"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 25
+        text_msg_id             = 629
+        next_type               = "m"
+        alias                   = "n"
+        help_msg_id             = "1810066"
+
+
+###############################################################################
+# This section is called via the following menu path:			      #
+#    Devices -> Communications -> Serial Optical Adapter -> 		      #
+#						      User Applications       #
+#									      #
+# Most of the branches ultimately point to some location in the general tree  #
+# above.								      #
+###############################################################################
+
+sm_menu_opt:
+	id			= "soapps"
+	id_seq_num		= "010"
+	next_id 		= "tcpipso"
+	text			= "TCP/IP"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 1
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822001
+
+
+sm_menu_opt:
+	id			= "tcpipso"
+	id_seq_num		= "010"
+	next_id 		= "to_hostname"
+	text			= "Hostname"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 2
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822002
+
+
+sm_menu_opt:
+	id			= "tcpipso"
+	id_seq_num		= "020"
+	next_id 		= "NetStat"
+	text			= "Static Routes"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 5
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822005
+
+
+sm_menu_opt:
+	id			= "tcpipso"
+	id_seq_num		= "030"
+	next_id 		= "inetso"
+	text			= "Network Interfaces"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 9
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822009
+
+
+sm_menu_opt:
+	id			= "inetso"
+	id_seq_num		= "010"
+	next_id 		= "chifso"
+	text			= "Network Interface Drivers"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 10
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822010
+
+
+sm_menu_opt:
+	id			= "inetso"
+	id_seq_num		= "020"
+	next_id 		= "ifselectso"
+	text			= "Network Interface Selection"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 12
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822012
+
+
+sm_menu_opt:
+	id			= "ifselectso"
+	id_seq_num		= "010"
+	next_id 		= "lsinetso"
+	text			= "List All Network Interfaces"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 13
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822013
+
+
+sm_menu_opt:
+	id			= "ifselectso"
+	id_seq_num		= "020"
+	next_id 		= "mkinetso"
+	text			= "Add a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 14
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822014
+
+
+sm_menu_opt:
+	id			= "ifselectso"
+	id_seq_num		= "030"
+	next_id 		= "chso"
+	text			= "Change / Show Characteristics of a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 20
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822020
+
+
+sm_menu_opt:
+	id			= "ifselectso"
+	id_seq_num		= "040"
+	next_id 		= "rmso"
+	text			= "Remove a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 21
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822021
+
+
+sm_menu_opt:
+	id			= "tcpipso"
+	id_seq_num		= "040"
+	next_id 		= "to_clientnet"
+	text			= "Client Network Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 30
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822030
+
+
+sm_menu_opt:
+	id			= "tcpipso"
+	id_seq_num		= "050"
+	next_id			= "ruser"
+	text			= "Server Network Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 53
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822053
+
+
+sm_menu_opt:
+        id                      = "tcpipso"
+        id_seq_num              = "060"
+        next_id                 = "print_server"
+        text                    = "Manage Print Server"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 25
+        text_msg_id             = 629
+        next_type               = "m"
+        alias                   = "n"
+        help_msg_id             = "1810066"
+
+sm_menu_opt:
+	id			= "chifen"
+	id_seq_num		= ""
+	next_id 		= "chifen"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "d"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "chiftr"
+	id_seq_num		= ""
+	next_id 		= "chiftr"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "d"
+	alias			= "y"
+	help_msg_id		= 0
+
+
+sm_menu_opt:
+	id			= "chifx25"
+	id_seq_num		= ""
+	next_id 		= "chifx25"
+	text			= ""
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 0
+	next_type		= "d"
+	alias			= "y"
+	help_msg_id		= 0
+ 
+
+sm_menu_opt:
+ 	id			= "configtcp"
+ 	id_seq_num		= "080"
+ 	next_id 		= "setbootup_option"
+ 	text			= "Select BSD style rc Configuration"
+ 	text_msg_file		= "smit.cat"
+ 	text_msg_set		= 4
+ 	text_msg_id		= 450
+ 	next_type		= "d"
+ 	alias			= "n"
+ 	help_msg_id		= 0822450
+
+###############################################################################
+# FDDI MENUS ADDED HERE...
+###############################################################################
+
+sm_menu_opt:
+	id			= "mkinet"
+	id_seq_num		= "070"
+	next_id 		= "mkinet1fi"
+	text			= "Add a FDDI Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 458
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822458
+
+
+###############################################################################
+# This section is called via the following menu path:			      #
+#    Devices -> Communications -> FDDI Adapter -> User Applications           #
+#									      #
+# Most of the branches ultimately point to some location in the general tree  #
+# above.								      #
+###############################################################################
+
+sm_menu_opt:
+	id			= "fiapps"
+	id_seq_num		= "010"
+	next_id 		= "tcpipfi"
+	text			= "TCP/IP"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 1
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822001
+
+
+sm_menu_opt:
+	id			= "tcpipfi"
+	id_seq_num		= "010"
+	next_id 		= "to_hostname"
+	text			= "Hostname"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 2
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822002
+
+
+sm_menu_opt:
+	id			= "tcpipfi"
+	id_seq_num		= "020"
+	next_id 		= "NetStat"
+	text			= "Static Routes"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 5
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822005
+
+
+sm_menu_opt:
+	id			= "tcpipfi"
+	id_seq_num		= "030"
+	next_id 		= "inetfi"
+	text			= "Network Interfaces"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 9
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822009
+
+
+sm_menu_opt:
+	id			= "inetfi"
+	id_seq_num		= "010"
+	next_id 		= "chiffi"
+	text			= "Network Interface Drivers"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 10
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822010
+
+
+sm_menu_opt:
+	id			= "inetfi"
+	id_seq_num		= "020"
+	next_id 		= "ifselectfi"
+	text			= "Network Interface Selection"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 12
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822012
+
+
+sm_menu_opt:
+	id			= "ifselectfi"
+	id_seq_num		= "010"
+	next_id 		= "lsinetfi"
+	text			= "List All Network Interfaces"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 13
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822013
+
+
+sm_menu_opt:
+	id			= "ifselectfi"
+	id_seq_num		= "020"
+	next_id 		= "mkinetfi"
+	text			= "Add a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 14
+	next_type		= "d"
+	alias			= "n"
+	help_msg_id		= 0822014
+
+
+sm_menu_opt:
+	id			= "ifselectfi"
+	id_seq_num		= "030"
+	next_id 		= "chfi"
+	text			= "Change / Show Characteristics of a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 20
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822020
+
+
+sm_menu_opt:
+	id			= "ifselectfi"
+	id_seq_num		= "040"
+	next_id 		= "rmfi"
+	text			= "Remove a Network Interface"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 21
+	next_type		= "n"
+	alias			= "n"
+	help_msg_id		= 0822021
+
+
+sm_menu_opt:
+	id			= "tcpipfi"
+	id_seq_num		= "040"
+	next_id 		= "to_clientnet"
+	text			= "Client Network Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 30
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822030
+
+
+sm_menu_opt:
+	id			= "tcpipfi"
+	id_seq_num		= "050"
+	next_id			= "ruser"
+	text			= "Server Network Services"
+	text_msg_file		= "smit.cat"
+	text_msg_set		= 4
+	text_msg_id		= 53
+	next_type		= "m"
+	alias			= "n"
+	help_msg_id		= 0822053
+
+
+sm_menu_opt:
+        id                      = "tcpipfi"
+        id_seq_num              = "060"
+        next_id                 = "print_server"
+        text                    = "Manage Print Server"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 25
+        text_msg_id             = 629
+        next_type               = "m"
+        alias                   = "n"
+        help_msg_id             = "1810066"
+

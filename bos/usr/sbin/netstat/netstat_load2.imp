@@ -1,0 +1,24 @@
+#!/unix
+* @(#)84        1.1  src/bos/usr/sbin/netstat/netstat_load2.imp, cmdnet, bos411, 9428A410j 3/29/94 13:22:55
+*
+* COMPONENT_NAME: (CMDNET) Network commands.
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)
+*                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1994
+* All Rights Reserved
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+* This is a list of the NFS/RPC subroutines exported to /unix that are
+* to be handled via deferred resolution.
+*
+nfs_cntl	syscall

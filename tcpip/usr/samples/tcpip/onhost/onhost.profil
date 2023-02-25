@@ -1,0 +1,72 @@
+#	Version 1.1	onhost special command and automatic login tables.
+# Do not alter the previous line - hostconnect checks for Version and number.
+# Also, be careful not to replace tabs by blanks in the tables below.
+#
+# static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/onhost.profil, tcpip, tcpip411, GOLD410 8/14/90 16:25:53";
+#
+# COMPONENT_NAME:  TCPIP onhost.profil
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+#
+# INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+# EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+# WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+# LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+# PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+# OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+# IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+# DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+# DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+# CORRECTION.
+#
+#  RISC System/6000 is a trademark of International Business Machines
+#   Corporation.
+#
+#
+#	AIXwhat is @(#) onhost.profil 1.8 PASC 1.8
+#
+# The following special command section controls the rewriting of lines
+#  sent to the host system by onhost when in special command mode.
+# The syntax of each entry is strict, as follows, 'keyword,tab,keyline'.
+# If the first word of a line matches one of the keywords in the entries
+#  below, that word is simply replaced by keyline and the result is sent
+#  to the host.  Otherwise the line is prefaced by the word onhost and
+#  the result is sent to the host.
+# The token $FTPAUPW, evident below, is replaced by the Internet address
+#  of the onhost command, the userid and passwd from the first line
+#  of the onhost.alias file if present, and the working file directory of
+#  the onhost command.  This information is used by the FTP client at
+#  the host to transfer files to and from the onhost environment.
+# The special command section must immediately follow this line.
+cp	onhost cpy ($FTPAUPW)
+logout	logoff
+write	onhost msg
+{|}	onhost
+# The preceding line must mark the end of the special command section.
+#
+# The following keyword table controls some of the automatic login code
+#  found in hostconnect.  The syntax of each line is strict, as follows,
+#  'keyword,tab,[good words,comma],minus,[comma,bad words],semicolon'.
+#  The groups in brackets repeat zero or more times.
+# During automatic login, host responses are compared; good words signal
+#  success of the step while bad words signal a login failure.  Upper
+#  and lower case (bit 0x20) is ignored so 'a' compares with 'A' or 'a'.
+# For example, after sending a login command (SentLogin), 'ENTER PASS'
+#  is a good reply but 'DMKLO' or 'HCPLOG' are bad replies.
+# After SentPassword, 'RECONNECTED AT' is a good reply, but so also is
+#  'CP READ' or 'VM READ' in the screen status area of VM.  These tests
+#  of the screen status area are coded into hostconnect.
+# The keyword table must immediately follow this line.
+SentLogin	PASSWORD,-,DMKLO,HCPLOG,HCPLG,NOT AUTHORIZED;
+SentPassword	RECONNECT,-,DMKLO,HCPLOG,HCPLG,EXPIRED,INCORRECT,PASSWORD NOT,USERID NOT;
+SentIpl	CMS,READY,HCPCLS447E,-,DMKLO,HCPLOG;
+SentExec	OnHost End of Command Flag,-,UNKNOWN;

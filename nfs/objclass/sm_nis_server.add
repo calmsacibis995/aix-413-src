@@ -1,0 +1,1289 @@
+# @(#)85	1.10  src/nfs/objclass/sm_nis_server.add, nfsinst, nfs411, 9438A411a 9/16/94 14:44:23
+# COMPONENT_NAME: (NFSINST) Network File System Install
+#
+# FUNCTIONS:
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+
+#################  menu_opt for NIS  #################################
+
+sm_menu_opt:
+	id		= "yp"
+	id_seq_num	= "050"
+	next_id		= "ypmaps"
+	text            = "Manage NIS Maps"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 108
+	next_type	= "m"
+	alias		= "n"
+	help_msg_id	= 1831540
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypconfigure"
+	id_seq_num	= "010"
+	next_id		= "mkmaster"
+	text            = "Configure this Host as a NIS Master Server"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 109
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831545
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypconfigure"
+	id_seq_num	= "020"
+	next_id		= "mkslave"
+	text            = "Configure this Host as a NIS Slave Server"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 110
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831550
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypconfigure"
+	id_seq_num	= "040"
+	next_id		= "chmaster"
+	text            = "Change / Show Characteristics of Master Server Configuration"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 112
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831560
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypconfigure"
+	id_seq_num	= "050"
+	next_id		= "chslave"
+	text            = "Change / Show Characteristics of Slave Server Configuration"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 113
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831565
+	help_msg_loc	= ""
+
+sm_menu_opt:
+        id              = "ypconfigure"
+        id_seq_num      = "060"
+        next_id         = "rmypserv"
+        text            = "Remove NIS Server Configuration from this Host"
+        text_msg_file   = "smit.cat"
+        text_msg_set    = 39
+        text_msg_id     = 114
+        next_type       = "d"
+        alias           = "n"
+        help_msg_id     = 1831845
+        help_msg_loc    = ""
+
+sm_menu_opt:
+	id		= "ypmaps"
+	id_seq_num	= "010"
+	next_id		= "yppush"
+	text            = "Transfer Maps to Slave Servers"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 116
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831580
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypmaps"
+	id_seq_num	= "020"
+	next_id		= "ypxfr"
+	text            = "Retrieve Maps from Master Server for this Slave"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 117
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831585
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypmaps"
+	id_seq_num	= "030"
+	next_id		= "mkmaps"
+	text            = "Build / Rebuild Maps for this Master Server"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 118
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831590
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypstartstop"
+	id_seq_num	= "010"
+	next_id		= "ypstartserver"
+	text            = "Start the Server Daemon, ypserv"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 119
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831595
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypstartstop"
+	id_seq_num	= "030"
+	next_id		= "ypstartpasswdd"
+	text            = "Start the yppasswdd Daemon"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 121
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831755
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypstartstop"
+	id_seq_num	= "040"
+	next_id		= "ypstartupdated"
+	text            = "Start the ypupdated Daemon"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 122
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831760
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypstartstop"
+	id_seq_num	= "050"
+	next_id		= "ypstopserver"
+	text            = "Stop the Server Daemon, ypserv"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 123
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831595
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypstartstop"
+	id_seq_num	= "070"
+	next_id		= "ypstoppasswdd"
+	text            = "Stop the yppasswdd Daemon"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 125
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831755
+	help_msg_loc	= ""
+
+sm_menu_opt:
+	id		= "ypstartstop"
+	id_seq_num	= "080"
+	next_id		= "ypstopupdated"
+	text            = "Stop the ypupdated Daemon"
+	text_msg_file	= "smit.cat"
+	text_msg_set	= 39
+	text_msg_id	= 126
+	next_type	= "d"
+	alias		= "n"
+	help_msg_id	= 1831760
+	help_msg_loc	= ""
+
+############  yp_cmd_hdr  - dialog header definitions for NIS ######
+
+sm_cmd_hdr:
+	id		= "mkmaster"
+	option_id	= "_yp.mkmaster"
+	has_name_select	= ""
+	name		= "Configure this Host as a NIS Master Server"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 128
+	cmd_to_exec	= "/usr/sbin/mkmaster"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831545
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "mkslave"
+	option_id	= "_yp.mkslave"
+	has_name_select	= ""
+	name		= "Configure this Host as a NIS Slave Server"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 129
+	cmd_to_exec	= "/usr/sbin/mkslave"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831550
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "chmaster"
+	option_id	= "_yp.chmaster"
+	has_name_select	= ""
+	name		= "Change / Show Characteristics of Master Server"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 133
+	cmd_to_exec	= "/usr/sbin/chmaster"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= "/usr/sbin/lsmaster"
+	cmd_to_discover_postfix	= "-c"
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831560
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "chslave"
+	option_id	= "_yp.chslave"
+	has_name_select	= ""
+	name		= "Change / Show Characteristics of Slave Server"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 134
+	cmd_to_exec	= "/usr/sbin/chslave"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831565
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "yppush"
+	option_id	= "_yp.transmaps"
+	has_name_select	= ""
+	name		= "Transfer Maps to Slave Servers"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 135
+	cmd_to_exec	= "/usr/sbin/yppush"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831580
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "ypxfr"
+	option_id	= "_yp.getmaps"
+	has_name_select	= ""
+	name		= "Retrieve Maps from Master Server for this Slave"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 136
+	cmd_to_exec	= "/usr/sbin/ypxfr"
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831585
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "mkmaps"
+	option_id	= "_yp.mkmaps"
+	has_name_select	= ""
+	name		= "Build / Rebuild NIS Maps for this Master Server"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 137
+	cmd_to_exec	= "cd /var/yp ; make "
+	ask		= ""
+	exec_mode	= ""
+	ghost		= ""
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831590
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "ypstartserver"
+	option_id	= ""
+	has_name_select	= ""
+	name		= "Start the Server Daemon, ypserv"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 138
+	cmd_to_exec	= "startsrc -s ypserv"
+	ask		= "y"
+	exec_mode	= ""
+	ghost		= "y"
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831595
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "ypstartpasswdd"
+	option_id	= ""
+	has_name_select	= ""
+	name		= "Start the yppasswdd Daemon"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 140
+	cmd_to_exec	= "startsrc -s yppasswdd"
+	ask		= "y"
+	exec_mode	= ""
+	ghost		= "y"
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831755
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "ypstartupdated"
+	option_id	= ""
+	has_name_select	= ""
+	name		= "Start the ypupdated Daemon"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 141
+	cmd_to_exec	= "startsrc -s ypupdated"
+	ask		= "y"
+	exec_mode	= ""
+	ghost		= "y"
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831760
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "ypstopserver"
+	option_id	= ""
+	has_name_select	= ""
+	name		= "Stop the Server Daemon, ypserv"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 142
+	cmd_to_exec	= "stopsrc -s ypserv"
+	ask		= "y"
+	exec_mode	= ""
+	ghost		= "y"
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831595
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "ypstoppasswdd"
+	option_id	= ""
+	has_name_select	= ""
+	name		= "Stop the yppasswdd Daemon"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 144
+	cmd_to_exec	= "stopsrc -s yppasswdd"
+	ask		= "y"
+	exec_mode	= ""
+	ghost		= "y"
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831755
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+	id		= "ypstopupdated"
+	option_id	= ""
+	has_name_select	= ""
+	name		= "Stop the ypupdated Daemon"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 145
+	cmd_to_exec	= "stopsrc -s ypupdated"
+	ask		= "y"
+	exec_mode	= ""
+	ghost		= "y"
+	cmd_to_discover	= ""
+	cmd_to_discover_postfix	= ""
+	name_size	= 0
+	value_size	= 0
+	help_msg_id	= 1831760
+	help_msg_loc	= ""
+#####		NIS SMIT dialog definitions				#####
+#####	chypdom - change the domain name of this machine                #####
+
+sm_cmd_opt:
+	id		= "_yp.mkmaster"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "HOSTS that will be slave servers"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 148
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-s "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "y"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831740
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkmaster"
+	id_seq_num	= "02"
+	disc_field_name	= ""
+	name		= "Can existing MAPS for the domain be overwritten?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 149
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-O,-o"
+	help_msg_id	= 1831745
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkmaster"
+	id_seq_num	= "03"
+	disc_field_name	= ""
+	name		= "EXIT on errors, when creating master server?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 150
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-E,-e"
+	help_msg_id	= 1831750
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkmaster"
+	id_seq_num	= "04"
+	disc_field_name	= ""
+	name		= "START the yppasswdd daemon?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 151
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 1
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-P,-p"
+	help_msg_id	= 1831755
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkmaster"
+	id_seq_num	= "05"
+	disc_field_name	= ""
+	name		= "START the ypupdated daemon?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 152
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 1
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-U,-u"
+	help_msg_id	= 1831760
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkmaster"
+	id_seq_num	= "06"
+	disc_field_name	= ""
+	name		= "START the ypbind daemon?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 153
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-C,-c"
+	help_msg_id	= 1831765
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkmaster"
+	id_seq_num	= "07"
+	disc_field_name	= ""
+	name		= "START the master server now,\n at system restart, or both?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 154
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkslave"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "HOSTNAME of the master server"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 155
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "--"
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831775
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkslave"
+	id_seq_num	= "02"
+	disc_field_name	= ""
+	name		= "Can existing MAPS for the domain be overwritten?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 156
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-O,-o"
+	help_msg_id	= 1831745
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkslave"
+	id_seq_num	= "03"
+	disc_field_name	= ""
+	name		= "START the slave server now,\n at system restart, or both?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 157
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkslave"
+	id_seq_num	= "04"
+	disc_field_name	= ""
+	name		= "Quit if errors are encountered?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 290
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-c,-C"
+	help_msg_id	= 0
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chmaster"
+	id_seq_num	= "01"
+	disc_field_name	= "slaves"
+	name		= "HOSTS that are slave servers"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 159
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-s "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "y"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831740
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chmaster"
+	id_seq_num	= "02"
+	disc_field_name	= "currentdomain"
+	name		= "Current domain name of this host"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 160
+	op_type		= ""
+	entry_type	= "n"
+	entry_size	= 0
+	required	= "n"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831741
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chmaster"
+	id_seq_num	= "03"
+	disc_field_name	= "domains"
+	name		= "Domains being served by this master"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 161
+	op_type		= ""
+	entry_type	= "n"
+	entry_size	= 0
+	required	= "n"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831742
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chmaster"
+	id_seq_num	= "04"
+	disc_field_name	= "yppasswddrunning"
+	name		= "START the yppasswdd daemon?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 162
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 1
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-P,-p"
+	help_msg_id	= 1831755
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chmaster"
+	id_seq_num	= "05"
+	disc_field_name	= "ypupdatedrunning"
+	name		= "START the ypupdated daemon?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 163
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 1
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-U,-u"
+	help_msg_id	= 1831760
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chmaster"
+	id_seq_num	= "06"
+	disc_field_name	= "ypbindrunning"
+	name		= "START the ypbind daemon?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 164
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-C,-c"
+	help_msg_id	= 1831765
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chmaster"
+	id_seq_num	= "07"
+	disc_field_name	= ""
+	name		= "CHANGE server now, at system restart or both?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 165
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chslave"
+	id_seq_num	= "01"
+	disc_field_name	= "domainname"
+	name		= "Domain Name that this slave is serving"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 166
+	op_type		= "l"
+	entry_type	= "n"
+	entry_size	= 0
+	required	= ""
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= "domainname"
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831744
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chslave"
+	id_seq_num	= "02"
+	disc_field_name	= ""
+	name		= "Hostname of master server for this slave server"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 167
+	op_type		= "l"
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "--"
+	cmd_to_list_mode= ""
+	cmd_to_list	= "/usr/sbin/makedbm -u /var/yp/`domainname`/ypservers | /usr/bin/awk '/YP_MASTER_NAME/ {print $2}'"
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831835
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chslave"
+	id_seq_num	= "03"
+	disc_field_name	= ""
+	name		= "Can existing MAPS for the domain be overwritten?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 168
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-O,-o"
+	help_msg_id	= 1831745
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chslave"
+	id_seq_num	= "04"
+	disc_field_name	= ""
+	name		= "CHANGE server now, at system restart or both?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 165
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "both,restart,now"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 278
+	aix_values	= "-B,-I,-N"
+	help_msg_id	= 1831225
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.chslave"
+	id_seq_num	= "05"
+	disc_field_name	= ""
+	name		= "Quit if errors are encountered?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 290
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "yes,no"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 283
+	aix_values	= "-c,-C"
+	help_msg_id	= 0
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.transmaps"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "Domain name for these maps"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 171
+	op_type		= "l"
+	entry_type	= "t"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-d "
+	cmd_to_list_mode= ""
+	cmd_to_list	= "domainname"
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831855
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.transmaps"
+	id_seq_num	= "02"
+	disc_field_name	= ""
+	name		= "Maps to be transfered to slaves"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 172
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= ""
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= ""
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831860
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.getmaps"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "Name of the MAP to be transfered"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 173
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= "--"
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831865
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.getmaps"
+	id_seq_num	= "02"
+	disc_field_name	= ""
+	name		= "DOMAIN name of the maps"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 174
+	op_type		= "l"
+	entry_type	= "t"
+	entry_size	= 0
+	required	= ""
+	prefix		= "-d "
+	cmd_to_list_mode= ""
+	cmd_to_list	= "domainname"
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831870
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.getmaps"
+	id_seq_num	= "03"
+	disc_field_name	= ""
+	name		= "HOSTNAME of the master server"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 175
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "n"
+	prefix		= "-h "
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= ""
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831875
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.getmaps"
+	id_seq_num	= "04"
+	disc_field_name	= ""
+	name		= "FORCE the transfer?"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 176
+	op_type		= "r"
+	entry_type	= ""
+	entry_size	= 0
+	required	= "n"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "n"
+	value_index	= 0
+	disp_values	= "no,yes"
+	values_msg_file	= "smit.cat"
+	values_msg_set	= 39
+	values_msg_id	= 277
+	aix_values	= ",-f"
+	help_msg_id	= 1831880
+	help_msg_loc	= ""
+
+sm_cmd_opt:
+	id		= "_yp.mkmaps"
+	id_seq_num	= "01"
+	disc_field_name	= ""
+	name		= "MAPS that are to be built"
+	name_msg_file	= "smit.cat"
+	name_msg_set	= 39
+	name_msg_id	= 177
+	op_type		= ""
+	entry_type	= "t"
+	entry_size	= 0
+	required	= "+"
+	prefix		= ""
+	cmd_to_list_mode= ""
+	cmd_to_list	= ""
+	cmd_to_list_postfix	= ""
+	multi_select	= "y"
+	value_index	= 0
+	disp_values	= "all"
+	values_msg_file	= ""
+	values_msg_set	= 0
+	values_msg_id	= 0
+	aix_values	= ""
+	help_msg_id	= 1831885
+	help_msg_loc	= ""
+
+sm_cmd_hdr:
+        id              = "rmypserv"
+        option_id       = "_yp.rmypserv"
+        has_name_select = ""
+        name            = "Remove NIS Server Configuration from this Host"
+        name_msg_file   = "smit.cat"
+        name_msg_set    = 39
+        name_msg_id     = 131
+        cmd_to_exec     = "/usr/sbin/rmyp -s"
+        ask             = "y"
+        exec_mode       = ""
+        ghost           = ""
+        cmd_to_discover = ""
+        cmd_to_discover_postfix = ""
+        name_size       = 0
+        value_size      = 0
+        help_msg_id     = 1831845
+        help_msg_loc    = ""
+
+sm_cmd_opt:
+        id              = "_yp.rmypserv"
+        id_seq_num      = "01"
+        disc_field_name = ""
+        name            = "The NIS server configuration will be removed\n from this host now & for every system restart"
+        name_msg_file   = "smit.cat"
+        name_msg_set    = 39
+        name_msg_id     = 169
+        op_type         = ""
+        entry_type      = "n"
+        entry_size      = 0
+        required        = ""
+        prefix          = ""
+        cmd_to_list_mode= ""
+        cmd_to_list     = ""
+        cmd_to_list_postfix     = ""
+        multi_select    = ""
+        value_index     = 0
+        disp_values     = ""
+        values_msg_file = ""
+        values_msg_set  = 0
+        values_msg_id   = 0
+        aix_values      = ""
+        help_msg_id     = 1831845
+        help_msg_loc    = ""
+

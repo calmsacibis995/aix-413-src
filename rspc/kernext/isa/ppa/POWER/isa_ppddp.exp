@@ -1,0 +1,39 @@
+#!/etc/drivers/isa/isa_ppddp
+* @(#)04        1.2  src/rspc/kernext/isa/ppa/POWER/isa_ppddp.exp, isappa, rspc41J, 9510A 3/6/95 23:23:17
+*
+* COMPONENT_NAME: (ISAPPA)  Parallel Port Device Driver
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1989,1995
+*   All Rights Reserved
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+ppddpin
+ppglobal_lock
+ppheader
+pptail
+pppulst
+ppready
+ppreadchar
+ppreadctrl
+ppreaddata
+ppreadstat
+ppsendchar
+ppwritechar
+ppwritedata
+ppwritestat
+ppwritectrl
+pp_timer_pop
+ppdelay
+ppstart_tmr
+pp_proc_timeout
+* following are for PM_PHASE2 
+pppm_handler

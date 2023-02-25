@@ -1,0 +1,58 @@
+* @(#)30 1.2 src/rspc/objclass/adapter.isa_sio.IBM001C.add, rspccfg, rspc41J, 9522A_a 5/30/95 16:17:41
+* 
+*  COMPONENT_NAME: ISAPPA
+* 
+*  FUNCTIONS: Parallel port adapter predefined data - IBM001C - EPP
+* 
+*  ORIGINS: 27
+* 
+*  (C) COPYRIGHT International Business Machines Corp. 1995
+*  All Rights Reserved
+*  Licensed Materials - Property of IBM
+* 
+*  US Government Users Restricted Rights - Use, duplication or
+*  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+PdDv:   
+	type = epp
+        class = adapter 
+	subclass = isa_sio
+        prefix = ppa 
+        devid = "IBM001C"
+        base = 0 
+        has_vpd = 0 
+	detectable = 1
+        chgstatus = 0 
+        bus_ext = 0 
+        led = 0x827 
+	fru = 2
+        setno = 41 
+        msgno = 1 
+        catalog = "devices.cat" 
+	DvDr = "isa/isa_ppdd"
+        Define = /usr/lib/methods/define_rspc 
+	Configure = /usr/lib/methods/cfgppa_isa
+        Change = ""
+        Unconfigure = /usr/lib/methods/ucfgdevice
+        Undefine = /usr/lib/methods/undefine
+        Start = ""
+        Stop = ""
+	uniquetype = "adapter/isa_sio/epp"
+
+PdCn:
+	uniquetype = "adapter/isa_sio/epp"
+        connkey = parallel 
+        connwhere = p
+
+PdAt:
+	uniquetype = "adapter/isa_sio/epp"
+        attribute = "bus_io_addr" 
+        deflt = 0x3BC
+        values = 0x3BC
+        width = 0x03 
+        type = O10 
+        generic = D
+        rep = n
+        nls_index = 2
+

@@ -1,0 +1,675 @@
+# @(#)41        1.9  src/rspc/objclass/sm_isatok.add, isatok, rspc41J, 9524G_all 6/12/95 12:08:12
+#
+#  COMPONENT_NAME: (ISATOK)
+#
+#  FUNCTIONS: Token Ring ISA Device User Interface (SMIT)
+#
+#  ORIGINS: 27
+#
+#  IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+#  combined with the aggregated modules for this product)
+#                   SOURCE MATERIALS
+#  (C) COPYRIGHT International Business Machines Corp. 1994
+#  All Rights Reserved
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+#
+#       SMIT Menu objects
+#
+
+#-----------------------------------------------------------------------------
+# Add a Token Ring ISA Adapter
+#-----------------------------------------------------------------------------
+# This is a name select to map the ISA name select created id to an
+# existing Token Ring Dialog Panel
+#
+sm_name_hdr:
+    id                        = "mkdevisa_hdr_tokenring_isa"
+    next_id                   = "mktok_hdr_tokenring_isa"
+    option_id                 = "mkdevtok_name_opt"
+    has_name_select           = "y"
+    name                      = "Add a Token Ring ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 10
+    name_msg_id               = 1
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = ""
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+# Name selector command option for mapping ISA name select to Token Ring
+# dialog panels.
+sm_cmd_opt:
+    id                        = "mkdevtok_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Add a Token Ring ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 10
+    name_msg_id               = 1
+    op_type                   = "n"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+# The dialogue headers follow.  There is one for each unique Predefined
+# Token Ring adapter instance.  Their Id's are built as follows:
+#       "mktok_hdr_xxx_yyy"
+# where xxx is the type and yyy is the subclass.
+sm_cmd_hdr:
+    id                        = "mktok_hdr_tokenring_isa"
+    option_id                 = "mktok_isa"
+    has_name_select           = "y"
+    name                      = "Add a Token Ring ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 10
+    name_msg_id               = 1
+    cmd_to_exec               = "x()
+{
+mkdev -c adapter -s isa -t tokenring $*
+rc=$?
+if [ rc = 0 ]
+then
+     cfgmgr
+else
+     return $rc
+fi
+}
+x"
+    ask                       = "n"
+    exec_mode                 = "P"
+    ghost                     = "n"
+    cmd_to_discover           = "lsattr -c adapter "
+    cmd_to_discover_postfix   = "-s subclass -t type -D -O"
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "180080"
+    help_msg_loc              = ""
+
+
+# Dialog header command options.
+
+#Display logical name.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "010"
+    disc_field_name           = "parent"
+    name                      = "Parent Device"
+    name_msg_file             = ""
+    name_msg_set              = ""
+    name_msg_id               = ""
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-p "
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+# Displays device's description.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "004"
+    disc_field_name           = "desc"
+    name                      = "Description"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 7
+    op_type                   = ""
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420901"
+    help_msg_loc              = ""
+
+# Displays ring speed.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "050"
+    disc_field_name           = "ring_speed"
+    name                      = "RING speed"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 28
+    name_msg_id               = 12
+    op_type                   = "l"
+    entry_type                = "#"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a ring_speed="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a ring_speed -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = "" 
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420914"
+    help_msg_loc              = ""
+
+# Displays "receive attention mac frames" attribute.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "060"
+    disc_field_name           = "attn_mac"
+    name                      = "Receive ATTENTION MAC frames"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 28
+    name_msg_id               = 10
+    op_type                   = "r
+    entry_type                = "n
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a attn_mac="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = "yes,no"
+    help_msg_id               = "0420915"
+    help_msg_loc              = ""
+
+# Displays "receive beacon mac frames" attribute.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "070"
+    disc_field_name           = "beacon_mac"
+    name                      = "Receive BEACON MAC frames"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 28
+    name_msg_id               = 15
+    op_type                   = "r
+    entry_type                = "n
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a beacon_mac="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = "yes,no"
+    help_msg_id               = "0420916"
+    help_msg_loc              = ""
+
+# Displays "enable alternate token ring address" attribute.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "080"
+    disc_field_name           = "use_alt_addr"
+    name                      = "Enable ALTERNATE TOKEN RING address"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 28
+    name_msg_id               = 13
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a use_alt_addr="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 1
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = "yes,no"
+    help_msg_id               = "0420917"
+    help_msg_loc              = ""
+
+# Displays alternate token ring address.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "090"
+    disc_field_name           = "alt_addr"
+    name                      = "ALTERNATE TOKEN RING address"
+    name_msg_file             = "devices.cat"
+    name_msg_set              = 28
+    name_msg_id               = 14
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a alt_addr="
+    cmd_to_list_mode          = "r"
+    cmd_to_list               = "echo \"Read help information.\" "
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420918"
+    help_msg_loc              = ""
+
+# Display database only question.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "100"
+    disc_field_name           = ""
+    name                      = "Apply change to DATABASE only"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 27
+    name_msg_id               = 11
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 27
+    values_msg_id             = 12
+    aix_values                = "-P ,"
+    help_msg_id               = "0420919"
+    help_msg_loc              = ""
+
+#Display "interrupt level" selection.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "010"
+    disc_field_name           = "intr_level"
+    name                      = "Bus interrupt level"
+    name_msg_file             = "devices_tok.cat"
+    name_msg_set              = 28
+    name_msg_id               = 4
+    op_type                   = "l"
+    entry_type                = "#"
+    entry_size                = 1
+    required                  = "n"
+    prefix                    = "-a intr_level="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a intr_level -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = "" 
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420846"
+    help_msg_loc              = ""
+
+#Display "bios address" selection.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "012"
+    disc_field_name           = "bios_addr"
+    name                      = "Address of bus memory used for BIOS"
+    name_msg_file             = "devices_tok.cat"
+    name_msg_set              = 28
+    name_msg_id               = 31
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bios_addr="
+    cmd_to_list_mode          = "r"
+    cmd_to_list               = "lsattr -c adapter -a bios_addr -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = "" 
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420847"
+    help_msg_loc              = ""
+
+#Display "bus I/O address" selection.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "014"
+    disc_field_name           = "bus_io_addr"
+    name                      = "Bus I/O address"
+    name_msg_file             = "devices_tok.cat"
+    name_msg_set              = 28
+    name_msg_id               = 3
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a bus_io_addr="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a bus_io_addr -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420848"
+    help_msg_loc              = ""
+
+#Display "shared memory address" selection.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "016"
+    disc_field_name           = "shared_mem_addr"
+    name                      = "Bus memory address"
+    name_msg_file             = "devices_tok.cat"
+    name_msg_set              = 28
+    name_msg_id               = 21
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a shared_mem_addr="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a shared_mem_addr -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = "" 
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420849"
+    help_msg_loc              = ""
+
+#Display "shared memory length" selection.
+sm_cmd_opt:
+    id                        = "mktok_isa"
+    id_seq_num                = "017"
+    disc_field_name           = "shared_mem_leng"
+    name                      = "Width of shared bus memory"
+    name_msg_file             = "devices_tok.cat"
+    name_msg_set              = 28
+    name_msg_id               = 32
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a shared_mem_leng="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = "" 
+    disp_values               = "8k,16k,32k,64k"
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = "0x2000,0x4000,0x8000,0x10000"
+    help_msg_id               = "0420850"
+    help_msg_loc              = ""
+
+
+#-----------------------------------------------------------------------------
+# Change / Show Characteristics of a Token Ring ISA Adapter
+#-----------------------------------------------------------------------------
+# This is a name select to map the ISA name select created id to an
+# existing Token Ring Dialog Panel
+#
+sm_name_hdr:
+    id                        = "chdevisa_hdr_tokenring_isa"
+    next_id                   = "chgtok_hdr_tokenring_isa"
+    option_id                 = "chdevtok_name_opt"
+    has_name_select           = "y"
+    name                      = "Change/Show Characteristics of a Token Ring ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 10
+    name_msg_id               = 2
+    type                      = ""
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = ""
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+# Name selector command option for mapping ISA name select to Token Ring
+# dialog panels.
+sm_cmd_opt:
+    id                        = "chdevtok_name_opt"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "Change/Show Characteristics of a Token Ring ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 10
+    name_msg_id               = 2
+    op_type                   = "n"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "04202"
+    help_msg_loc              = ""
+
+# The dialogue headers follow.  There is one for each unique Predefined
+# Token Ring adapter instance.  Their Id's are built as follows:
+#       "chgtok_hdr_xxx_yyy"
+# where xxx is the type and yyy is the subclass.
+sm_cmd_hdr:
+    id                        = "chgtok_hdr_tokenring_isa"
+    option_id                 = "tok_chg,tok_chg_rs,tok_chg_isa"
+    has_name_select           = "y"
+    name                      = "Change/Show Characteristics of a Token Ring ISA Adapter"
+    name_msg_file             = "isa.cat"
+    name_msg_set              = 10
+    name_msg_id               = 2
+    cmd_to_exec               = "chdev "
+    ask                       = ""
+    exec_mode                 = "P"
+    ghost                     = "n"
+    cmd_to_discover           = "lsattr "
+    cmd_to_discover_postfix   = "-l logicname -E -O"
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "1800197"
+    help_msg_loc              = ""
+
+#Display "interrupt level" selection.
+sm_cmd_opt:
+    id                        = "tok_chg_isa"
+    id_seq_num                = "010"
+    disc_field_name           = "intr_level"
+    name                      = "Bus interrupt level"
+    name_msg_file             = "devices_tok.cat"
+    name_msg_set              = 28
+    name_msg_id               = 4
+    op_type                   = "l"
+    entry_type                = "n"
+    entry_size                = 1
+    required                  = ""
+    prefix                    = "-a intr_level="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a intr_level -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420846"
+    help_msg_loc              = ""
+
+#Display "bios address" selection.
+sm_cmd_opt:
+    id                        = "tok_chg_isa"
+    id_seq_num                = "012"
+    disc_field_name           = "bios_addr"
+    name                      = "Address of bus memory used for BIOS"
+    name_msg_file             = "devices_tok.cat"
+    name_msg_set              = 28
+    name_msg_id               = 31
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a bios_addr="
+    cmd_to_list_mode          = "r"
+    cmd_to_list               = "lsattr -c adapter -a bios_addr -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420847"
+    help_msg_loc              = ""
+
+#Display "bus I/O address" selection.
+sm_cmd_opt:
+    id                        = "tok_chg_isa"
+    id_seq_num                = "014"
+    disc_field_name           = "bus_io_addr"
+    name                      = "Bus I/O address"
+    name_msg_file             = "devices_tok.cat"
+    name_msg_set              = 28
+    name_msg_id               = 3
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a bus_io_addr="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a bus_io_addr -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420848"
+    help_msg_loc              = ""
+
+#Display "shared memory address" selection.
+sm_cmd_opt:
+    id                        = "tok_chg_isa"
+    id_seq_num                = "016"
+    disc_field_name           = "shared_mem_addr"
+    name                      = "Bus memory address"
+    name_msg_file             = "devices_tok.cat"
+    name_msg_set              = 28
+    name_msg_id               = 21
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-a shared_mem_addr="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = "lsattr -c adapter -a shared_mem_addr -R "
+    cmd_to_list_postfix       = "-s subclass -t type"
+    multi_select              = ""
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0420849"
+    help_msg_loc              = ""
+
+#Display "shared memory length" selection.
+sm_cmd_opt:
+    id                        = "tok_chg_isa"
+    id_seq_num                = "017"
+    disc_field_name           = "shared_mem_leng"
+    name                      = "Width of shared bus memory"
+    name_msg_file             = "devices_tok.cat"
+    name_msg_set              = 28
+    name_msg_id               = 32
+    op_type                   = "r"
+    entry_type                = "n"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-a shared_mem_leng="
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = ""
+    value_index               = ""
+    disp_values               = "8k,16k,32k,64k"
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = "0x2000,0x4000,0x8000,0x10000"
+    help_msg_id               = "0420850"
+    help_msg_loc              = ""
+

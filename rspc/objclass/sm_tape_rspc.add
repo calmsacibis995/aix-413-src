@@ -1,0 +1,132 @@
+# @(#)33        1.1  src/rspc/objclass/sm_tape_rspc.add, cfgmethods, rspc411, 9440A411c 10/4/94 16:57:59
+*
+*  COMPONENT_NAME: (CFGMETHODS) Devices User Interface (SMIT)
+*
+*  FUNCTIONS: Tape Drive Interfaces
+*
+*  ORIGINS: 27
+*
+*  IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*  combined with the aggregated modules for this product)
+*                   SOURCE MATERIALS
+*  (C) COPYRIGHT International Business Machines Corp. 1994
+*  All Rights Reserved
+*
+*  US Government Users Restricted Rights - Use, duplication or
+*  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+*SCSI 4mm2gb2 tape drive
+sm_name_hdr:
+        id                      = "maktpe_4mm2gb2_scsi"
+        next_id                 = "maktpe_4mm2gb2_scsi_hdr"
+        option_id               = "maktpe_parent_opt"
+        has_name_select         = "y"
+        name                    = "Add a Tape Drive"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 25
+        name_msg_id             = 120
+        type                    = ""
+        ghost                   = "y"
+        cmd_to_classify         = ""
+        cmd_to_classify_postfix = ""
+        raw_field_name          = "parent"
+        cooked_field_name       = ""
+        next_type               = "d"
+        help_msg_id             = "1800102"
+        help_msg_loc            = ""
+
+* SCSI 4mm2gb2 tape drive
+sm_cmd_hdr:
+        id                      = "maktpe_4mm2gb2_scsi_hdr"
+        option_id               = "tape_add,tape_common,tape_4mm2gb2"
+        has_name_select         = "y"
+        name                    = "Add a Tape Drive"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 25
+        name_msg_id             = 120
+        cmd_to_exec             = "mkdev -c tape "
+        ask                     = ""
+        exec_mode               = ""
+        ghost                   = "n"
+        cmd_to_discover         = "lsattr -c tape"
+        cmd_to_discover_postfix = "-s subclass -t type -D -O"
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "1800134"
+        help_msg_loc            = ""
+
+* SCSI 4mm2gb2 tape drive
+sm_cmd_hdr:
+        id                      = "chgtpe_4mm2gb2_scsi"
+        option_id               = "tape_chg,tape_common,tape_4mm2gb2"
+        name                    = "Change/Show Characteristics of a Tape Drive"
+        has_name_select         = "y"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 25
+        name_msg_id             = 121
+        cmd_to_exec             = "chdev "
+        ask                     = ""
+        exec_mode               = "P"
+        ghost                   = "n"
+        cmd_to_discover         = "lsattr "
+        cmd_to_discover_postfix = "-l logicname -E -O"
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "1800197"
+        help_msg_loc            = ""
+
+* Specific to  4mm2gb2 SCSI tape drive
+sm_cmd_opt:
+        id                      = "tape_4mm2gb2"
+        id_seq_num              = "010"
+        disc_field_name         = "block_size"
+        name                    = "BLOCK size (0=variable length)"
+        name_msg_file           = "devices.cat"
+        name_msg_set            = 54
+        name_msg_id             = 6
+        op_type                 = "l"
+        entry_type              = "#"
+        entry_size              = 0
+        required                = ""
+        prefix                  = "-a block_size="
+        cmd_to_list_mode        = "r"
+        cmd_to_list             = "lsattr -c tape -a block_size -R"
+        cmd_to_list_postfix     = "-s subclass -t type"
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "0420711"
+        help_msg_loc            = ""
+
+* Specific to 4mm2gb2 SCSI tape drive.
+* Compression mode
+sm_cmd_opt:
+        id                      = "tape_4mm2gb2"
+        id_seq_num              = "050"
+        disc_field_name         = "compress"
+        name                    = "Use data COMPRESSION"
+        name_msg_file           = "devices.cat"
+        name_msg_set            = 54
+        name_msg_id             = 15
+        op_type                 = "r"
+        entry_type              = "n"
+        entry_size              = 0
+        required                = ""
+        prefix                  = "-a compress="
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "yes,no"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 27
+        values_msg_id           = 12
+        aix_values              = "yes,no"
+        help_msg_id             = "0420722"
+        help_msg_loc            = ""

@@ -1,0 +1,2612 @@
+* File name: ed.keys
+
+* @(#)08	1.8  src/tenplus/keys/keys.stz, tenplus, tenplus411, GOLD410 4/7/93 16:39:30
+
+* COMPONENT_NAME: (INED) INed Editor
+* 
+* ORIGINS:  9, 10
+* 
+* This module contains IBM CONFIDENTIAL code. -- (IBM
+* Confidential Restricted when combined with the aggregated
+* modules for this product)                  SOURCE MATERIALS
+* (C) COPYRIGHT International Business Machines Corp. 1985, 1993
+* All Rights Reserved
+* 
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+
+* WARNING: The header file names.h is created when "tosf" is run on
+* "keys.stz" creating "ed.keys" which becomes input to the tool "keys".
+* Any changes made to this file (keys.stz) must also reflect in  names.h file 
+* used to build the tool "tdigest" in the build environment. Else 
+* a fix made to this file will not show in the "names.h" file in 
+* the build environment and hence the build may result in a break.
+
+default:
+	Type = 3
+	Flags = 0
+	Value = ""
+
+Record_array:
+	Type = 2
+	Count = 113
+	Flags = 0x1
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Type = 1
+	Count = 3
+
+/*/keyname/0:
+	Value = "(1)"
+
+/*/keyname/1:
+	Value = "LOCAL-1"
+
+/*/keyname/2:
+	Value = "U1"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "U1"
+
+/*/editorname/1:
+	Value = "LOCAL_1"
+
+/*/functionname:
+	Value = "fbutton"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/noargs:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Type = 1
+	Count = 3
+
+/*/keyname/0:
+	Value = "(2)"
+
+/*/keyname/1:
+	Value = "LOCAL-2"
+
+/*/keyname/2:
+	Value = "U2"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "U2"
+
+/*/editorname/1:
+	Value = "LOCAL_2"
+
+/*/functionname:
+	Value = "fbutton"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Type = 1
+	Count = 3
+
+/*/keyname/0:
+	Value = "(3)"
+
+/*/keyname/1:
+	Value = "LOCAL-3"
+
+/*/keyname/2:
+	Value = "U3"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "U3"
+
+/*/editorname/1:
+	Value = "LOCAL_3"
+
+/*/functionname:
+	Value = "fbutton"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Type = 1
+	Count = 3
+
+/*/keyname/0:
+	Value = "(4)"
+
+/*/keyname/1:
+	Value = "LOCAL-4"
+
+/*/keyname/2:
+	Value = "U4"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "U4"
+
+/*/editorname/1:
+	Value = "LOCAL_4"
+
+/*/functionname:
+	Value = "fbutton"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Type = 1
+	Count = 3
+
+/*/keyname/0:
+	Value = "(5)"
+
+/*/keyname/1:
+	Value = "LOCAL-5"
+
+/*/keyname/2:
+	Value = "U5"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "U5"
+
+/*/editorname/1:
+	Value = "LOCAL_5"
+
+/*/functionname:
+	Value = "fbutton"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Type = 1
+	Count = 3
+
+/*/keyname/0:
+	Value = "(6)"
+
+/*/keyname/1:
+	Value = "LOCAL-6"
+
+/*/keyname/2:
+	Value = "U6"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "U6"
+
+/*/editorname/1:
+	Value = "LOCAL_6"
+
+/*/functionname:
+	Value = "fbutton"
+
+/*/textregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/noargs:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Type = 1
+	Count = 3
+
+/*/keyname/0:
+	Value = "(7)"
+
+/*/keyname/1:
+	Value = "LOCAL-7"
+
+/*/keyname/2:
+	Value = "U7"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "U7"
+
+/*/editorname/1:
+	Value = "LOCAL_7"
+
+/*/functionname:
+	Value = "fbutton"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Type = 1
+	Count = 3
+
+/*/keyname/0:
+	Value = "(8)"
+
+/*/keyname/1:
+	Value = "LOCAL-8"
+
+/*/keyname/2:
+	Value = "U8"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "U8"
+
+/*/editorname/1:
+	Value = "LOCAL_8"
+
+/*/functionname:
+	Value = "fbutton"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Value = "LOCAL-MENU"
+
+/*/editorname:
+	Value = "LOCAL_MENU"
+
+/*/functionname:
+	Value = "nospecials"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Value = "INSERT"
+
+/*/editorname:
+	Value = "INSERT"
+
+/*/functionname:
+	Value = "e2open"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 11
+
+/*/keyname:
+	Value = "PICK-UP"
+
+/*/editorname:
+	Value = "PICK_UP"
+
+/*/functionname:
+	Value = "e2close"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 9
+
+/*/keyname:
+	Value = "PICK-COPY"
+
+/*/editorname:
+	Value = "PICK_COPY"
+
+/*/functionname:
+	Value = "pick"
+
+/*/noargs:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "PUT-COPY"
+
+/*/editorname:
+	Value = "PUT_COPY"
+
+/*/functionname:
+	Value = "putback"
+
+/*/noargs:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "PUT-DOWN"
+
+/*/editorname:
+	Value = "PUT_DOWN"
+
+/*/functionname:
+	Value = "putback"
+
+/*/noargs:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "ZOOM-IN"
+
+/*/editorname:
+	Value = "ZOOM_IN"
+
+/*/functionname:
+	Value = "zoomin"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "ZOOM-OUT"
+
+/*/editorname:
+	Value = "ZOOM_OUT"
+
+/*/functionname:
+	Value = "zoomout"
+
+/*/noargs:
+	Value = "x"
+
+/*/invtxtflg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "NEXT"
+
+/*/editorname:
+	Value = "NEXT"
+
+/*/functionname:
+	Value = "nextitem"
+
+/*/noargs:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "BACKSPACE"
+
+/*/editorname:
+	Value = "BACKSPACE"
+
+/*/functionname:
+	Value = "backspace"
+
+/*/noargs:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "-TAB"
+
+/*/editorname:
+	Value = "MINUS_TAB"
+
+/*/functionname:
+	Value = "backtab"
+
+/*/noargs:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/cursordef:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "CANCEL"
+
+/*/editorname:
+	Value = "CANCEL"
+
+/*/functionname:
+	Value = "noop"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/canflag:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 10
+
+/*/keyname:
+	Value = "CENTER"
+
+/*/editorname:
+	Value = "CENTER"
+
+/*/functionname:
+	Value = "center"
+
+/*/noargs:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "NEXT-WINDOW"
+
+/*/editorname:
+	Value = "NEXT_WINDOW"
+
+/*/functionname:
+	Value = "chwin"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "DELETE-CHARACTER"
+
+/*/editorname:
+	Value = "DELETE_CHARACTER"
+
+/*/functionname:
+	Value = "delch"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*/delstack:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "EXECUTE"
+
+/*/editorname:
+	Value = "EXECUTE"
+
+/*/functionname:
+	Value = "noop"
+
+/*/noargs:
+	Value = "x"
+
+/*/execflag:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "DOWN-ARROW"
+
+/*/editorname:
+	Value = "DOWN_ARROW"
+
+/*/functionname:
+	Value = "cursor"
+
+/*/cursordef:
+	Value = "x"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "ENTER"
+
+/*/editorname:
+	Value = "ENTER"
+
+/*/functionname:
+	Value = "enter"
+
+/*/noargs:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "LMOUSE"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 10
+
+/*/keyname:
+	Value = "EXIT"
+
+/*/editorname:
+	Value = "EXIT"
+
+/*/functionname:
+	Value = "e2exit"
+
+/*/noargs:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/invtxtflg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "FONT"
+
+/*/editorname:
+	Value = "FONT"
+
+/*/functionname:
+	Value = "chfont"
+
+/*/noargs:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "FORMAT"
+
+/*/editorname:
+	Value = "FORMAT"
+
+/*/functionname:
+	Value = "format"
+
+/*/noargs:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*/delstack:
+	Value = "x"
+
+/*/6:
+	Type = 0
+
+/*:
+	Type = 1
+	Count = 8
+
+/*/keyname:
+	Value = "GO-TO"
+
+/*/editorname:
+	Value = "GO_TO"
+
+/*/functionname:
+	Value = "go"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "MENU"
+
+/*/editorname:
+	Value = "MENU"
+
+/*/functionname:
+	Value = "task"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "HOME"
+
+/*/editorname:
+	Value = "HOME"
+
+/*/functionname:
+	Value = "cursor"
+
+/*/noargs:
+	Value = "x"
+
+/*/cursordef:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 8
+
+/*/keyname:
+	Value = "HELP"
+
+/*/editorname:
+	Value = "HELP"
+
+/*/functionname:
+	Value = "help"
+
+/*/noargs:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "INSERT-MODE"
+
+/*/editorname:
+	Value = "INSERT_MODE"
+
+/*/functionname:
+	Value = "insert"
+
+/*/noargs:
+	Value = "x"
+
+/*/4:
+	Type = 0
+
+/*/emptyarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 8
+
+/*/keyname:
+	Value = "LEFT"
+
+/*/editorname:
+	Value = "LEFT"
+
+/*/functionname:
+	Value = "left"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "LEFT-ARROW"
+
+/*/editorname:
+	Value = "LEFT_ARROW"
+
+/*/functionname:
+	Value = "cursor"
+
+/*/noargs:
+	Value = "x"
+
+/*/cursordef:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "LINE-FEED"
+
+/*/editorname:
+	Value = "LINE_FEED"
+
+/*/functionname:
+	Value = "linefeed"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "MARGIN"
+
+/*/editorname:
+	Value = "MARGIN"
+
+/*/functionname:
+	Value = "margin"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 8
+
+/*/keyname:
+	Type = 1
+	Count = 2
+
+/*/keyname/0:
+	Value = "-LINE"
+
+/*/keyname/1:
+	Value = "MINUS-LINE"
+
+/*/editorname:
+	Value = "MINUS_LINE"
+
+/*/functionname:
+	Value = "mnline"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 8
+
+/*/keyname:
+	Type = 1
+	Count = 2
+
+/*/keyname/0:
+	Value = "-PAGE"
+
+/*/keyname/1:
+	Value = "MINUS-PAGE"
+
+/*/editorname:
+	Value = "MINUS_PAGE"
+
+/*/functionname:
+	Value = "mnpage"
+
+/*/noargs:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/cursordef:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Type = 1
+	Count = 2
+
+/*/keyname/0:
+	Value = "-SEARCH"
+
+/*/keyname/1:
+	Value = "MINUS-SEARCH"
+
+/*/editorname:
+	Value = "MINUS_SEARCH"
+
+/*/functionname:
+	Value = "keysearch"
+
+/*/noargs:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 8
+
+/*/keyname:
+	Type = 1
+	Count = 2
+
+/*/keyname/0:
+	Value = "+LINE"
+
+/*/keyname/1:
+	Value = "PLUS-LINE"
+
+/*/editorname:
+	Value = "PLUS_LINE"
+
+/*/functionname:
+	Value = "plline"
+
+/*/regionarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/noargs:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 8
+
+/*/keyname:
+	Type = 1
+	Count = 2
+
+/*/keyname/0:
+	Value = "+PAGE"
+
+/*/keyname/1:
+	Value = "PLUS-PAGE"
+
+/*/editorname:
+	Value = "PLUS_PAGE"
+
+/*/functionname:
+	Value = "plpage"
+
+/*/noargs:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/cursordef:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Type = 1
+	Count = 2
+
+/*/keyname/0:
+	Value = "+SEARCH"
+
+/*/keyname/1:
+	Value = "PLUS-SEARCH"
+
+/*/editorname:
+	Value = "PLUS_SEARCH"
+
+/*/functionname:
+	Value = "keysearch"
+
+/*/noargs:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "PRINT"
+
+/*/editorname:
+	Value = "PRINT"
+
+/*/functionname:
+	Value = "print"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "QUOTE"
+
+/*/editorname:
+	Value = "QUOTE"
+
+/*/functionname:
+	Value = "quote"
+
+/*/noargs:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 10
+
+/*/keyname:
+	Value = "REFRESH"
+
+/*/editorname:
+	Value = "REFRESH"
+
+/*/functionname:
+	Value = "Refresh"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "REPLACE"
+
+/*/editorname:
+	Value = "REPLACE"
+
+/*/functionname:
+	Value = "keyreplace"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "RETURN"
+
+/*/editorname:
+	Value = "RETURN"
+
+/*/functionname:
+	Value = "e2return"
+
+/*/noargs:
+	Value = "x"
+
+/*/cursordef:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 8
+
+/*/keyname:
+	Value = "RIGHT"
+
+/*/editorname:
+	Value = "RIGHT"
+
+/*/functionname:
+	Value = "right"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "RIGHT-ARROW"
+
+/*/editorname:
+	Value = "RIGHT_ARROW"
+
+/*/functionname:
+	Value = "cursor"
+
+/*/noargs:
+	Value = "x"
+
+/*/cursordef:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "SAVE"
+
+/*/editorname:
+	Value = "SAVE"
+
+/*/functionname:
+	Value = "save"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/invtxtflg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "TAB"
+
+/*/editorname:
+	Value = "TAB"
+
+/*/functionname:
+	Value = "tab"
+
+/*/noargs:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/cursordef:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "SET-TAB"
+
+/*/editorname:
+	Value = "SET_TAB"
+
+/*/functionname:
+	Value = "tabset"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "TEXT-KEY"
+
+/*/editorname:
+	Value = "TEXT_KEY"
+
+/*/functionname:
+	Value = "text"
+
+/*/modifier:
+	Value = "x"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "UP-ARROW"
+
+/*/editorname:
+	Value = "UP_ARROW"
+
+/*/functionname:
+	Value = "cursor"
+
+/*/cursordef:
+	Value = "x"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "USE"
+
+/*/editorname:
+	Value = "USE"
+
+/*/functionname:
+	Value = "use"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "WINDOW"
+
+/*/editorname:
+	Value = "WINDOW"
+
+/*/functionname:
+	Value = "window"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "UNUSED"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 5
+
+/*/keyname:
+	Value = "WRAPKEY"
+
+/*/editorname:
+	Value = "WRAPKEY"
+
+/*/functionname:
+	Value = "wrap"
+
+/*/ifdefs:
+	Value = "IN"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "SETCURSOR"
+
+/*/editorname:
+	Value = "SETCURSOR"
+
+/*/functionname:
+	Value = "setcursor"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "BEGIN-LINE"
+
+/*/editorname:
+	Value = "BEGIN_LINE"
+
+/*/functionname:
+	Value = "bol"
+
+/*/noargs:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/cursordef:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "END-LINE"
+
+/*/editorname:
+	Value = "END_LINE"
+
+/*/functionname:
+	Value = "eol"
+
+/*/noargs:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/cursordef:
+	Value = "x"
+
+/*/regionhandle:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "BADKEY"
+
+/*/editorname:
+	Value = "BADKEY"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "UMOD"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "UMOD"
+
+/*/editorname/1:
+	Value = "HMOD"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "UINS"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "UINS"
+
+/*/editorname/1:
+	Value = "HINS"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "UDEL"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "UDEL"
+
+/*/editorname/1:
+	Value = "HDEL"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "CHANGEFILE"
+
+/*/editorname:
+	Value = "CHANGEFILE"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "ROFILE"
+
+/*/editorname:
+	Value = "ROFILE"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "ROFIELD"
+
+/*/editorname:
+	Value = "ROFIELD"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "BOX-MARK"
+
+/*/editorname:
+	Value = "BOX_MARK"
+
+/*/functionname:
+	Value = "boxregion"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "TEXT-MARK"
+
+/*/editorname:
+	Value = "TEXT_MARK"
+
+/*/functionname:
+	Value = "textregion"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 12
+
+/*/keyname:
+	Value = "DELETE"
+
+/*/editorname:
+	Value = "DELETE"
+
+/*/functionname:
+	Value = "e2close"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/regionarg:
+	Value = "x"
+
+/*/lineregion:
+	Value = "x"
+
+/*/boxregion:
+	Value = "x"
+
+/*/textregion:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*/delstack:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "DEL_COPY"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 7
+
+/*/keyname:
+	Value = "RESTORE"
+
+/*/editorname:
+	Value = "RESTORE"
+
+/*/functionname:
+	Value = "putback"
+
+/*/noargs:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*/delstack:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "RESTORE_COPY"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "LAST-ARG"
+
+/*/editorname:
+	Value = "LAST_ARG"
+
+/*/functionname:
+	Value = "enter"
+
+/*/noargs:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "PREVIOUS"
+
+/*/editorname:
+	Value = "PREVIOUS"
+
+/*/functionname:
+	Value = "nextitem"
+
+/*/noargs:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/numberarg:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 8
+
+/*/keyname:
+	Value = "DO"
+
+/*/editorname:
+	Value = "DO"
+
+/*/functionname:
+	Value = "e2do"
+
+/*/noargs:
+	Value = "x"
+
+/*/emptyarg:
+	Value = "x"
+
+/*/stringarg:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*/delstack:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "RMOUSE"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "MACRO"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "ALT_MENU"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "BIND"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "EXPAND"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "GLOSSARY"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "LEARN"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 6
+
+/*/keyname:
+	Value = "UNREPLACE"
+
+/*/editorname:
+	Value = "UNREPLACE"
+
+/*/functionname:
+	Value = "unreplace"
+
+/*/ifdefs:
+	Value = "UNDO_REPLACE"
+
+/*/noargs:
+	Value = "x"
+
+/*/modifier:
+	Value = "x"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "CMOUSE"
+
+/*/editorname:
+	Value = "UNUSED"
+
+/*/functionname:
+	Value = "NULL"
+
+/*/ifdefs:
+	Value = "PLACE_HOLDER"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "PAUSE"
+
+/*/editorname:
+	Value = "PAUSE"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "REQUIRE"
+
+/*/editorname:
+	Value = "REQUIRE"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/functionname:
+	Value = "NULL"
+
+/*/keyname:
+	Value = "DISPLAY"
+
+/*/editorname:
+	Value = "DISPLAY"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "END-DISPLAY"
+
+/*/editorname:
+	Type = 1
+	Count = 2
+
+/*/editorname/0:
+	Value = "END_DISPLAY"
+
+/*/editorname/1:
+	Value = "END"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "CLEAR"
+
+/*/editorname:
+	Value = "CLEAR"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "CHFORM"
+
+/*/editorname:
+	Value = "CHFORM"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "CHFILE"
+
+/*/editorname:
+	Value = "CHFILE"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "SHOWMOVIE"
+
+/*/editorname:
+	Value = "SHOWMOVIE"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "MENU-LOAD"
+
+/*/editorname:
+	Value = "MENU_LOAD"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "MENU-ENTRY"
+
+/*/editorname:
+	Value = "MENU_ENTRY"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "MENU-HELP"
+
+/*/editorname:
+	Value = "MENU_HELP"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "CONCEPT"
+
+/*/editorname:
+	Value = "CONCEPT"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/functionname:
+	Value = "NULL"
+
+/*/keyname:
+	Value = "REPEAT"
+
+/*/editorname:
+	Value = "REPEAT"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "HELP-LOAD"
+
+/*/editorname:
+	Value = "HELP_LOAD"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "SKIP"
+
+/*/editorname:
+	Value = "SKIP"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "PREV-MENU"
+
+/*/editorname:
+	Value = "PREV_MENU"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "BACK-UP"
+
+/*/editorname:
+	Value = "BACK_UP"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "WRONG"
+
+/*/editorname:
+	Value = "WRONG"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "TOO-MANY"
+
+/*/editorname:
+	Value = "TOO_MANY"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "TUT-HELP"
+
+/*/editorname:
+	Value = "TUT_HELP"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "START-SCREEN"
+
+/*/editorname:
+	Value = "START_SCREEN"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "MOVIE-MENU"
+
+/*/editorname:
+	Value = "MOVIE_MENU"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 3
+
+/*/keyname:
+	Value = "CORRECT"
+
+/*/editorname:
+	Value = "CORRECT"
+
+/*/functionname:
+	Value = "NULL"
+
+/*:
+	Type = 1
+	Count = 4
+
+/*/keyname:
+	Value = "XFUNCTIONS"
+
+/*/editorname:
+	Value = "XFUNCTIONS"
+
+/*/functionname:
+	Value = "xfunctions"
+
+/*/ifdefs:
+	Value = "XWIN"
+

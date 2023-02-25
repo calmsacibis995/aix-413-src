@@ -1,0 +1,888 @@
+# @(#)06 1.3 src/bos/usr/sbin/trace/trace.add, cmdtrace, bos411, 9428A410j 4/27/94 10:46:17
+#
+# COMPONENT_NAME: CMDTRACE smit data
+# 
+# FUNCTIONS: datafile for trace smit ODM population
+# 
+# ORIGINS: 27 83 
+# 
+# (C) COPYRIGHT International Business Machines Corp. 1989,1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# LEVEL 1, 5 Years Bull Confidential Information
+#
+
+# trace:
+#   Start trace
+#   Stop trace
+#   Generate trace report
+#
+
+sm_menu_opt:
+        id                  = "problem"
+        id_seq_num          = "020"
+        next_id             = "trace"
+        text                = "Trace"
+        text_msg_file       = "smit.cat"
+        text_msg_set        = 25
+        text_msg_id         = 46
+        next_type           = "m"
+        alias               = ""
+        help_msg_id         = "180042"
+        help_msg_loc        = ""
+
+
+sm_menu_opt:
+        id                  = "trace"
+        id_seq_num          = "010"
+        next_id             = "trcstart"
+        text                = "Start Trace"
+        text_msg_file       = "smit.cat"
+        text_msg_set        = 9
+        text_msg_id         = 1
+        next_type           = "d"
+        alias               = ""
+        help_msg_id         = "1800322"
+        help_msg_loc        = ""
+
+sm_menu_opt:
+        id                  = "trace"
+        id_seq_num          = "020"
+        next_id             = "trcstop"
+        text                = "Stop Trace"
+        text_msg_file       = "smit.cat"
+        text_msg_set        = 9
+        text_msg_id         = 2
+        next_type           = "d"
+        alias               = ""
+        help_msg_id         = "1800323"
+        help_msg_loc        = ""
+
+sm_menu_opt:
+        id                  = "trace"
+        id_seq_num          = "030"
+        next_id             = "trcrpt"
+        text                = "Generate a Trace Report"
+        text_msg_file       = "smit.cat"
+        text_msg_set        = 9
+        text_msg_id         = 3
+        next_type           = "n"
+        alias               = ""
+        help_msg_id         = "1800324"
+        help_msg_loc        = ""
+
+sm_name_hdr:
+    id                        = "trcrpt"
+    next_id                   = "trcrpt_"
+    option_id                 = "trcrpt_sel"
+    name                      = ""
+    name_msg_file       = ""
+    name_msg_set        = 0 
+    name_msg_id         = 0
+    type                      = "r"
+    ghost                     = "y"
+    cmd_to_classify           = ""
+    cmd_to_classify_postfix   = ""
+    raw_field_name            = ""
+    cooked_field_name         = ""
+    next_type                 = "d"
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt_sel"
+    id_seq_num                = "0"
+    disc_field_name           = ""
+    name                      = "FILENAME for Trace Report"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 25
+    op_type                   = "l"
+    entry_type                = ""
+    entry_size                = 0
+    required                  = ""
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "\
+echo $(dspmsg smit.cat -s 9 26 '1 filename (defaults to stdout)')\n\
+echo $(dspmsg smit.cat -s 9 27 '2 printer')"
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = ""
+    help_msg_loc              = ""
+
+sm_cmd_hdr:
+#				1 = filename
+    id                        = "trcrpt_1"
+    option_id                 = "trcrpt,trcrpt_filename"
+    has_name_select           = ""
+    name                      = "Generate a Trace Report"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 3
+    cmd_to_exec               = "trcrpt"
+    ask                       = "n"
+    exec_mode                 = ""
+    ghost                     = "n"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "0454001"
+    help_msg_loc              = ""
+
+#				2 = filename
+sm_cmd_hdr:
+    id                        = "trcrpt_2"
+    option_id                 = "trcrpt,trcrpt_printer"
+    has_name_select           = ""
+    name                      = "Generate a Trace Report"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 3
+    cmd_to_exec               = "trcrpt"
+    ask                       = "n"
+    exec_mode                 = ""
+    ghost                     = "n"
+    cmd_to_discover           = "\
+# Get default lpq entry, skip past bsh entry if it is first. \n\
+COUNT=`expr 0`\n DFLT=\"\" \n\
+enq -q | \n\
+while read A1 STUFF \n\
+	do \n\
+	COUNT=`expr $COUNT + 1` \n\
+	if [ $COUNT -ge 3 -a $A1 != \"bsh\" ] \n\
+	then \n\
+		DFLT=$A1 \n\
+	fi \n\
+done \n\
+print '#trcrpt_printer'\n\
+print $DFLT"
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "0454001"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt"
+    id_seq_num                = "010"
+    disc_field_name           = "execnames"
+    name                      = "Show exec PATHNAMES for each event?"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 4
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-O"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 24
+    aix_values                = "exec=y,exec=n"
+    help_msg_id               = "0454002"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt"
+    id_seq_num                = "020"
+    disc_field_name           = "pids"
+    name                      = "Show PROCESS IDs for each event?"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 5
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-O"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 24
+    aix_values                = "pid=y,pid=n"
+    help_msg_id               = "0454003"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt"
+    id_seq_num                = "025"
+    disc_field_name           = "tids"
+    name                      = "Show THREAD IDs for each event?"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 34
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-O"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 24
+    aix_values                = "tid=y,tid=n"
+    help_msg_id               = "0454029"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt"
+    id_seq_num                = "030"
+    disc_field_name           = "svc"
+    name                      = "Show CURRENT SYSTEM CALL for each event?"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 6
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-O"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 24
+    aix_values                = "svc=y,svc=n"
+    help_msg_id               = "0454004"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt"
+    id_seq_num                = "040"
+    disc_field_name           = "execnames"
+    name                      = "Time INCREMENTS for report"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 7
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = "-O"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "complete,microseconds,no timestamp"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 29
+    aix_values                = "timestamp=0,timestamp=1,timestamp=3"
+    help_msg_id               = "0454005"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt"
+    id_seq_num                = "050"
+    disc_field_name           = "events"
+    name                      = "IDs of events to INCLUDE in report"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 8
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-d"
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "trcrpt -j"
+    cmd_to_list_postfix       = ""
+    multi_select              = "y"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454006"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt"
+    id_seq_num                = "060"
+    disc_field_name           = "events"
+    name                      = "IDs of events to EXCLUDE from report"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 9
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-k"
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "trcrpt -j"
+    cmd_to_list_postfix       = ""
+    multi_select              = "y"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454007"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt"
+    id_seq_num                = "070"
+    disc_field_name           = "type"
+    name                      = "STARTING time"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 10
+    op_type                   = ""
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-s"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454008"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt"
+    id_seq_num                = "080"
+    disc_field_name           = "type"
+    name                      = "ENDING time"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 11
+    op_type                   = ""
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-e"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454009"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt"
+    id_seq_num                = "090"
+    disc_field_name           = "logfile"
+    name                      = "LOG FILE to create report from"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 30
+    op_type                   = ""
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "/var/adm/ras/trcfile"
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454026"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt_filename"
+    id_seq_num                = "1000"
+    disc_field_name           = ""
+    name                    = "FILE NAME for trace report (default is stdout)"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 12
+    op_type                   = ""
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = " | /usr/lib/ras/trace_smutil cat Z"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454010"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcrpt_printer"
+    id_seq_num                = "1001"
+    disc_field_name           = "trcrpt_printer"
+    name                    = "PRINTER to send trace report to"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 13
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "+"
+    prefix                    = " | /usr/lib/ras/trace_smutil catpr Z"
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "lsdev -C -c printer"
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454011"
+    help_msg_loc              = ""
+
+# sm_name_hdr:
+#   id                  = "trcstop"
+#   next_id             = "trcstop"
+#   option_id           = "trcstop.N"
+#   name                = "Name Select: Select Trace Channel"
+#   name_msg_file       = "smit.cat"
+#   name_msg_set        = 9
+#   name_msg_id         = 0
+#   type                = "r"
+#   ghost               = "n"
+#   cmd_to_classify          = ""
+#   cmd_to_classify_postfix  = ""
+#   raw_field_name           = "_rawname"
+#   cooked_field_name        = "_cookedname"
+#   next_type                = "d"
+#   help_msg_id              = "0454012"
+#   help_msg_loc             = ""
+
+# sm_cmd_opt:
+#     id                  = "trcstop.N"
+#     id_seq_num          = "0"
+#     disc_field_name     = ""
+#     name                = "CHANNEL number"
+#     name_msg_file       = "smit.cat"
+#     name_msg_set        = 9 
+#     name_msg_id         = 0
+#     op_type             = "l"
+#     entry_type          = "#"
+#     entry_size          = 0
+#     required            = "y"
+#     prefix              = ""
+#     cmd_to_list_mode    = "1"
+#     cmd_to_list         = "echo 1\n2\n3"
+#     cmd_to_list_postfix = ""
+#     multi_select        = "n"
+#     value_index         = 0
+#     disp_values         = ""
+#     values_msg_file     = ""
+#     values_msg_set      = 0
+#     values_msg_id       = 0
+#     aix_values          = ""
+#     help_msg_id         = "0454013"
+#     help_msg_loc        = ""
+
+
+sm_cmd_hdr:
+    id                        = "trcstop"
+    option_id                 = ""
+    has_name_select           = ""
+    name                      = "STOP Trace"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 2
+    cmd_to_exec               = "trcstop"
+    ask                       = "n"
+    exec_mode                 = "p"
+    ghost                     = "y"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "0454014"
+    help_msg_loc              = ""
+
+sm_cmd_hdr:
+    id                        = "trcstart"
+    option_id                 = "trcstart"
+    has_name_select           = ""
+    name                      = "START Trace"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 1
+    cmd_to_exec               = "/usr/lib/ras/trace_smutil trace"
+    ask                       = "n"
+    exec_mode                 = ""
+    ghost                     = "n"
+    cmd_to_discover           = ""
+    cmd_to_discover_postfix   = ""
+    name_size                 = 0
+    value_size                = 0
+    help_msg_id               = "0454015"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "005"
+    disc_field_name           = "events"
+    name              = "EVENT GROUPS to trace (default is kernel trace)"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 14
+    op_type                   = "l"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = ""
+    prefix                    = "-J"
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "/usr/lib/ras/trace_smutil trclist"
+    cmd_to_list_postfix       = ""
+    multi_select              = "y"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454016"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "010"
+    disc_field_name           = "events"
+    name                      = "ADDITIONAL event IDs to trace"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 15
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-j"
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "trcrpt -j"
+    cmd_to_list_postfix       = ""
+    multi_select              = "y"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454017"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "020"
+    disc_field_name           = "events_excl"
+    name                      = "Event IDs to EXCLUDE from trace"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 16
+    op_type                   = "l"
+    entry_type                = "x"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-k"
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = "trcrpt -j"
+    cmd_to_list_postfix       = ""
+    multi_select              = "y"
+    value_index               = 0
+    disp_values               = ""
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454018"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "030"
+    disc_field_name           = "mode"
+    name                      = "Trace MODE"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 17
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = "alternate,single,circular"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 28
+    aix_values                = " ,-f,-l"
+    help_msg_id               = "0454019"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "040"
+    disc_field_name           = "logmode"
+    name                      = "STOP When Logfile full?"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 18
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 24
+    aix_values                = "-s, "
+    help_msg_id               = "0454020"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "050"
+    disc_field_name           = "logfile"
+    name                      = "LOG FILE"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 19
+    op_type                   = ""
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-o"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "/var/adm/ras/trcfile"
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454021"
+    help_msg_loc              = ""
+
+# new trace -c option
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "055"
+    disc_field_name           = "save_logfile"
+    name                      = "SAVE PREVIOUS logfile?"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 9
+    name_msg_id               = 32
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "yes,no"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 24
+    aix_values                = "-c,"
+    help_msg_id               = "0454027"
+    help_msg_loc              = ""
+
+# new trace -n option
+# -q passed to trace_smutil shell script which translate it
+# into -n trace option (to avoid interpretation of -n
+# by the echo command in the shell script
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "058"
+    disc_field_name           = "nm_info"
+    name                      = "Omit PS/NM/LOCK HEADER to log file?"
+    name_msg_file             = "smit.cat"
+    name_msg_set              = 9
+    name_msg_id               = 33
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "no,yes"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 31
+    aix_values                = "-q,"
+    help_msg_id               = "0454028"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "060"
+    disc_field_name           = "suppress_hdr"
+    name                      = "Omit DATE-SYSTEM HEADER to log file?"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 20
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = "no,yes"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 31
+    aix_values                = " ,-h"
+    help_msg_id               = "0454022"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "065"
+    disc_field_name           = "interactive"
+    name                      = "Run in INTERACTIVE mode?"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 23
+    op_type                   = "r"
+    entry_type                = "t"
+    entry_size                = 0
+    required                  = "y"
+    prefix                    = ""
+    cmd_to_list_mode          = "1"
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 0
+    disp_values               = "no,yes"
+    values_msg_file           = "smit.cat"
+    values_msg_set            = 9
+    values_msg_id             = 31
+    aix_values                = "-a,"
+    help_msg_id               = "0454023"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "070"
+    disc_field_name           = "tbufsize"
+    name                      = "Trace BUFFER SIZE in bytes"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 21
+    op_type                   = ""
+    entry_type                = "#"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-T"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "131072"
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454024"
+    help_msg_loc              = ""
+
+sm_cmd_opt:
+    id                        = "trcstart"
+    id_seq_num                = "080"
+    disc_field_name           = "lbufsize"
+    name                      = "LOG FILE SIZE in bytes"
+    name_msg_file       = "smit.cat"
+    name_msg_set        = 9
+    name_msg_id         = 22
+    op_type                   = ""
+    entry_type                = "#"
+    entry_size                = 0
+    required                  = "n"
+    prefix                    = "-L"
+    cmd_to_list_mode          = ""
+    cmd_to_list               = ""
+    cmd_to_list_postfix       = ""
+    multi_select              = "n"
+    value_index               = 1
+    disp_values               = "1310720"
+    values_msg_file           = ""
+    values_msg_set            = 0
+    values_msg_id             = 0
+    aix_values                = ""
+    help_msg_id               = "0454025"
+    help_msg_loc              = ""
+

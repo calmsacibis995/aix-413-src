@@ -1,0 +1,109 @@
+#!/bin/ksh
+# @(#)63	1.2  src/bos/usr/sbin/netstart/rc.net.serial, cmdnet, bos411, 9428A410j 7/12/94 15:07:46
+# 
+# COMPONENT_NAME: CMDNET	(/etc/rc.net.serial)
+# 
+# ORIGINS: 27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1993
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+##################################################################
+# rc.net.serial - called by cfgmgr during 2nd boot phase.
+# 		- called by rc.net during 1st boot phase.
+#
+# Configures and starts Serial Media Access interfaces.  (SLIP interfaces)
+# Sets hostname, default gateway and static routes.
+#
+# Note: all the stdout should be redirected to a file (e.g. /dev/null), 
+#	because stdout is used to pass logical name(s) back to the cfgmgr 
+#	to be configured.  The LOGFILE variable specifies the output file.
+#
+# rc.net.serial requires that the network interface and protocol information
+#	be entered into the ODM database with either SMIT or the
+#	high level configuration commands (mkdev, chdev).  This requirement
+#	exists because rc.net.serial depends on the /usr/lib/methods/defif
+#	and /usr/lib/methods/cfgif commands to have configured the interfaces
+#	prior to its invocation.  The config methods take their information
+#	from the ODM database.  The /usr/lib/methods/{defif,cfgif} methods
+#	are invoked automatically by rc.net prior its calling rc.net.serial.
+#	The config methods can also be invoked by using the mkdev and chdev
+#	commands.  This routine would then be invoked after the mkdev or chdev
+#	procedure.  This routine is safe to call at anytime, it will do nothing
+#	if there are no configured Available devices that do not have slattach
+#	processes already running.
+#
+##################################################################
+#
+# Close file descriptor 1 and 2 because the parent may be waiting
+# for the file desc. 1 and 2 to be closed.  The reason is that this shell
+# script may spawn a child which inherit all the file descriptor from the parent
+# and the child process may still be running after this process is terminated.
+# The file desc. 1 and 2 are not closed and leave the parent hanging
+# waiting for those desc. to be finished.
+#LOGFILE=/dev/null		# LOGFILE is where all stdout goes.
+LOGFILE=/tmp/rc.net.serial.out	# LOGFILE is where all stdout goes.
+exec 1<&-			# close descriptor 1
+exec 2<&-			# close descriptor 2
+exec 1< /dev/null		# open descriptor 1
+exec 2>	/dev/null		# open descriptor 2
+
+##################################################################
+#  Special SLIP handling
+##################################################################
+# In addition to configuring the network interface,  SLIP interfaces
+# require a special command (slattach) to complete the configuration.
+# The slattach command changes the tty line discipline handling for
+# the tty port used by the the SLIP interface.   A separate slattach
+# command is execute for every tty port used by configured SLIP
+# interfaces.
+
+SLIPTTYS=`ps -ef | grep slattach | awk '{ print $9 }`
+SLIPHOST=`lsdev -C -c if -s SL -t sl -S available | awk '{ print $1 }'`
+for i in $SLIPHOST
+do
+	echo $i 			>>$LOGFILE 2>&1
+	TTYPORT=`lsattr -E -l $i -F "value" -a ttyport`
+	TTYSTATE=`lsattr -E -l $i -F "value" -a state`
+
+	# If the ttyport is Available, and slattch is not running,
+	# start slattach.
+	# In addition configure the interface for basic parameters
+	# with ifconfig.
+	#
+	lsdev -Cc tty | grep "$TTYPORT " | grep "Available" > /dev/null 2>&1
+	avail=$?
+	echo "$SLIPTTYS" | grep "$TTYPORT$" > /dev/null 2>&1
+	isrunning=$?
+	if [ $avail = 0 ] && [ $isrunning = 1 ]  # Is available, is not running
+	then
+		TTYBAUD=`lsattr -E -l $i -F "value" -a baudrate`
+		TTYDIALSTRING=`lsattr -E -l $i -F "value" -a dialstring`
+		rm -f /etc/locks/LCK..$TTYPORT
+		FromHOST=`lsattr -E -l $i -F "value" -a netaddr`
+		DestHOST=`lsattr -E -l $i -F "value" -a dest`
+		SLIPMASK=`lsattr -E -l $i -F "value" -a netmask`
+		if [ -z "$SLIPMASK" ]
+		then
+			ifconfig $i inet $FromHOST $DestHOST up
+		else
+			ifconfig $i inet $FromHOST $DestHOST netmask $SLIPMASK up
+		fi
+		strinfo -m | grep "\'slip\'" > /dev/null || \
+				strload -m /usr/lib/drivers/slip
+		if [ "$TTYSTATE" = "up" ]
+		then
+			if [ -z "$TTYBAUD" -a  -z "$TTYDIALSTRING" ]
+			then
+				( slattach $TTYPORT )	>>$LOGFILE 2>&1
+			else
+				eval DST=\'$TTYDIALSTRING\'	>>$LOGFILE 2>&1
+				( eval slattach $TTYPORT $TTYBAUD \'$DST\' ) >>$LOGFILE 2>>$LOGFILE
+			fi
+		fi
+	fi
+done

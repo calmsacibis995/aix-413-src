@@ -1,0 +1,51 @@
+#!/bin/ksh
+# @(#)78	1.4	src/bos/usr/sbin/perf/pmr/filemon_.sh, perfpmr, bos411, 9428A410j 4/14/94 10:08:01
+#
+# COMPONENT_NAME: perfpmr
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# filemon_
+#
+# invoke RISC System/6000 filemon command and generate file system activity report 
+#
+
+if [ $# -ne 1 ]
+then
+ echo "filemon_: usage: filemon_ time"
+ echo "       time is total time in seconds to be traced."
+ exit -1
+fi
+
+# move to proper directory
+cd /var/perf/tmp
+
+echo "\n\n\n        F  I  L  E  M  O  N    O  U  T  P  U  T    R  E  P  O  R  T\n" > filemon.sum
+echo "\n\nHostname:  "  `hostname -s` >> filemon.sum
+echo "\n\nTime before run:  " `date` >> filemon.sum
+
+echo "\n     FILEMON_: Starting filesystem monitor for $1 seconds...."
+filemon -T 64000 -O all -vo filemon.tmp
+trap 'kill -9 $!' 1 2 3 24
+sleep $1 &
+wait
+trcstop
+
+echo "     FILEMON_: Generating report...."
+/bin/sleep 3 &
+wait
+
+echo "     FILEMON_: Finalizing report...."
+echo "\n\nTime after run :  " `date` "\n\n\n" >> filemon.sum
+
+cat filemon.tmp >> filemon.sum
+rm filemon.tmp
+echo "     FILEMON_: Report is in filemon.sum"

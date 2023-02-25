@@ -1,0 +1,6 @@
+infp_trace: ${MAKETOP}../../export/power/usr/ccs/lib/libc.a(_uitrunc.o)
+infp_trace: ${MAKETOP}../../export/power/usr/ccs/lib/libc.a(ptrgl.o)
+infp_trace: ${MAKETOP}../../export/power/usr/ccs/lib/libc.a(strcat.o)
+infp_trace: ${MAKETOP}../../export/power/usr/ccs/lib/libc.a(strcpy.o)
+infp_trace: ${MAKETOP}../../export/power/usr/ccs/lib/libc.a(strcmp.o)
+infp_trace: ${MAKETOP}../../export/power/usr/ccs/lib/libc.a(strncpy.o)

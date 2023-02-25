@@ -1,0 +1,180 @@
+* @(#)71        1.2  src/rspc/objclass/POWER/kent.add, pcient, rspc41J, 9520B_all 5/18/95 12:46:23
+*********************************************************************
+*
+*   COMPONENT_NAME: PCIENT
+*
+*   FUNCTIONS: kent.add : device object file for PCI Ethernet Adapter
+*
+*   ORIGINS: 27
+*
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1994
+*   All Rights Reserved
+*   Licensed Materials - Property of IBM
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*********************************************************************
+
+***********************************************************************
+*       Predefine data for the PCI Ethernet Device Driver
+***********************************************************************
+
+PdDv:
+        type            = "22100020"
+        class           = "adapter"
+        subclass        = "pci"
+        prefix          = "ent"
+        devid           = "0x22100020"
+        base            = "0"
+        has_vpd         = "1"
+        detectable      = "1"
+        chgstatus       = "0"
+        bus_ext         = "0"
+        fru             = "1"
+        led             = "0x0742"
+        setno           = "27"
+        msgno           = "46"
+        catalog         = "devices_ent.cat"
+        DvDr            = "pci/kentdd"
+        Define          = "/usr/lib/methods/define_rspc"
+        Configure       = "/usr/lib/methods/cfgkent"
+        Change          = "/usr/lib/methods/chgent"
+        Unconfigure     = "/usr/lib/methods/ucfgcommo"
+        Undefine        = "/usr/lib/methods/undefine"
+        Start           = ""
+        Stop            = ""
+        uniquetype      = "adapter/pci/22100020"
+
+PdCn:
+        uniquetype      = "adapter/pci/22100020"
+        connkey         = "ent"
+        connwhere       = "0"
+
+* "busio" - Hardware attribute
+* Value set by system and not modifiable by user.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+        uniquetype      = "adapter/pci/22100020"
+        attribute       = "busio"
+        deflt           = "0x0"
+        values          = "0x0-0x3fffffe0,0x20"
+        width           = "0x20"
+        type            = "O"
+        generic         = "D"
+        rep             = "nr"
+        nls_index       = "3"
+
+* "busintr" - Hardware attribute
+* Value set by system and not modifiable by user.
+* The interrupt level for this device is shareable with other devices.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+        uniquetype      = "adapter/pci/22100020"
+        attribute       = "busintr"
+        deflt           = ""
+        values          = ""
+        width           = ""
+        type            = "I"
+        generic         = "D"
+        rep             = "nl"
+        nls_index       = "4"
+
+
+* "intr_priority" - Hardware attribute
+* Value set by system and not modifiable by user.
+* Displayable with "lsattr" command.
+* No help text.
+* Do NOT change this value "3", the device driver is using the value PL_IMP
+*       from net/spl.h
+
+PdAt:
+        uniquetype = "adapter/pci/22100020"
+        attribute = "intr_priority"
+        deflt = "3"
+        values = "3"
+        width = ""
+        type = "P"
+        generic = "D"
+        rep = "nl"
+        nls_index = 5
+
+* "tx_que_size" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/22100020"
+        attribute       = "tx_que_size"
+        deflt           = "64"
+        values          = "16,32,64,128,256"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "nl"
+        nls_index       = "10"
+
+* "rx_que_size" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/22100020"
+        attribute       = "rx_que_size"
+        deflt           = "32"
+        values          = "16,32,64,128,256"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "nl"
+        nls_index       = "11"
+
+* "use_alt_addr" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/22100020"
+        attribute       = "use_alt_addr"
+        deflt           = "no"
+        values          = "yes,no"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "sl"
+        nls_index       = "13"
+
+* "alt_addr" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/pci/22100020"
+        attribute       = "alt_addr"
+        deflt           = "0x000000000000"
+	values          = ""
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+	rep             = "s"
+        nls_index       = "8"
+
+* "addl_dvdr" - Configurable attribute
+* Value modifiable through command line only.
+* Not displayable with "lsattr" command.
+* No help text.
+* This attribute is the name of the method to be executed to configure or
+* unconfigure an additional driver in the kernel for this device.
+PdAt:
+        uniquetype      = "adapter/pci/22100020"
+        attribute       = "addl_dvdr"
+        deflt           = "/usr/lib/methods/cfgdmxeth"
+        values          = ""
+        width           = ""
+        type            = "R"
+        generic         = "U"
+        rep             = "s"
+        nls_index       = "0"
+

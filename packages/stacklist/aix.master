@@ -1,0 +1,350 @@
+/* @(#)74        1.14  src/packages/stacklist/aix.master, pkg, pkg41J, 9525G_all 6/20/95 17:07:40                       */
+/*
+ *   COMPONENT_NAME: PKG
+ *
+ *  FUNCTIONS: Stack List for AIX Distribution Media
+ *
+ *  ORIGINS: 27
+ *
+ *
+ *  (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+ *  All Rights Reserved
+ *  Licensed Materials - Property of IBM
+ *  US Government Users Restricted Rights - Use, duplication or
+ *  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+#if defined(CLIENT) || defined(SERVER) || defined(PERSONAL)  
+bos
+#endif /* CLIENT || SERVER || PERSONAL  */
+/**/
+#if defined(SERVER) 
+bos.compat
+bos.net
+bos.sysmgt
+bos.pci
+bos.info.en_US
+devices.mca.8f70
+devices.mca.8f78
+devices.mca.edd3
+devices.mca.edd6
+devices.mca.eff0
+/* removed by defect 180913
+   devices.isa.cxia128     */
+devices.scsi.scarray
+X11.x_st_mgr
+#endif /* SERVER */
+#if defined(CLIENT) || defined(SERVER) 
+/** RS6K ONLY PACKAGES **/
+/** Graphics Device Support **/
+devices.buc.00004002
+devices.buc.00004006
+devices.buc.00004007
+devices.buc.00004005
+devices.mca.8ee5
+devices.mca.8f9a
+devices.mca.8ee4
+devices.mca.8ee3
+devices.mca.8fbc
+devices.mca.8ffd
+devices.mca.f6f8
+devices.sys.sgabus
+devices.sys.wga
+devices.sys.sga
+/** Commo Devices Support **/
+devices.mca.8787
+devices.mca.8ef4
+devices.mca.8ef2
+devices.mca.8ef3
+devices.mca.8fa2
+devices.mca.8f98
+devices.mca.deff
+devices.mca.e1ff
+/** Serial Devices Support **/
+devices.mca.edd1
+devices.mca.edd2
+/** Standard I/O Device Support **/
+devices.mca.df5f
+devices.mca.dee6
+devices.mca.f6fe
+devices.mca.fed9
+/** SCSI Support and Direct Attached Disk Support **/
+devices.mca.8d77
+devices.mca.8efc
+devices.mca.8fba
+devices.mca.8ff4
+devices.mca.8f97
+/** Base Device Support **/
+devices.rs6ksmp.base
+devices.sys.mca
+devices.sys.slc
+#endif /* CLIENT || SERVER */
+#if defined(CLIENT) || defined(PERSONAL) 
+bos.compat.client
+bos.net.client
+bos.sysmgt.client
+bos.info.en_US.client
+devices.mca.8f70.client
+#endif /* CLIENT || PERSONAL */
+#if defined(CLIENT) || defined(SERVER) || defined(PERSONAL)  
+bos.rte.mp
+bos.rte.up
+bos.diag
+bos.loc.com
+bos.terminfo
+bos.iconv
+bos.info.rte
+bos.loc.iso
+bos.ifor_ls
+bos.loc.adt
+bos.loc.fnt
+bos.loc.utf
+bos.loc.pc
+bos.loc.pc_compat
+bos.sysmgt.smit.softlic
+bos.terminfo.data
+bos.som
+bos.adt
+bos.powermgt
+bos.perf
+bos.txt.data
+bos.txt
+bos.dlc
+bos.acct
+bos.adt.data
+bos.compat.data
+bos.data
+bos.mh
+bos.msg.en_US
+bos.msg.de_DE
+bos.msg.es_ES
+bos.msg.fr_FR
+bos.msg.it_IT
+bos.msg.Ja_JP
+bos.msg.ja_JP
+bos.msg.ko_KR
+bos.msg.nl_BE
+bos.msg.no_NO
+bos.msg.sv_SE
+bos.msg.zh_TW
+bos.msg.De_DE
+bos.msg.En_US
+bos.msg.Es_ES
+bos.msg.Fr_FR
+bos.msg.It_IT
+bos.msg.Nl_BE
+bos.msg.No_NO
+bos.msg.Sv_SE
+bos.dosutil
+bos.games
+bos.rcs
+bos.INed
+bos.lrn
+bos.lrn.data
+xlC.cpp
+xlC.rte
+xlC.msg.de_DE
+xlC.msg.en_US
+xlC.msg.ja_JP
+xlC.msg.De_DE
+xlC.msg.Ja_JP
+devices.msg.en_US
+devices.msg.de_DE
+devices.msg.es_ES
+devices.msg.fr_FR
+devices.msg.it_IT
+devices.msg.ja_JP
+devices.msg.ko_KR
+devices.msg.nl_BE
+devices.msg.no_NO
+devices.msg.sv_SE
+devices.msg.zh_TW
+devices.msg.De_DE
+devices.msg.En_US
+devices.msg.Es_ES
+devices.msg.Fr_FR
+devices.msg.It_IT
+devices.msg.Ja_JP
+devices.msg.Nl_BE
+devices.msg.No_NO
+devices.msg.Sv_SE
+/** DEVICE SUPPORT COMMON TO RSPC AND RS6K  **/
+/** Base Device Support **/
+devices.base
+devices.tty
+devices.graphics
+/** Graphics Device Support **/
+devices.buc.00004001
+devices.mca.edd5
+/** Serial Devices Support **/
+devices.mca.8ef5
+devices.mca.edd0
+devices.mca.ffe1
+devices.serial.sb1
+devices.serial.tablet1
+devices.serial.gio
+/** Standard I/O Device Support **/
+devices.sio.fda
+devices.sio.ktma
+devices.sio.ppa
+devices.sio.sa
+/** SCSI Support and Direct Attached Disk Support **/
+devices.ide.cdrom
+devices.ide.disk
+devices.scsi.disk
+devices.scsi.tape
+devices.scsi.tm
+devices.mca.8fc8
+devices.mca.df9f
+/** RSPC System and Device Support **/
+devices.rspc.base
+devices.sys.pci
+devices.sys.PNP0A03
+devices.isa.IBM0010
+devices.isa.PNP80CC
+devices.isa.cxia
+devices.isa.c1x
+devices.isa.ethernet
+devices.isa.pcmcia
+devices.isa.sio
+devices.isa.tokenring
+#ifndef PERSONAL
+/* Part of UMS LPP, so if Personal do not include */
+devices.isa_sio.baud.NA
+devices.isa_sio.IBM000E.NA
+devices.isa_sio.IBM0017.NA
+#endif /* PERSONAL */
+devices.isa_sio.IBM0012.NA
+devices.isa_sio.IBM0013.NA
+devices.isa_sio.IBM001D.NA
+devices.isa_sio.IBM001C
+devices.isa_sio.IBM0005.IBM8301
+devices.isa_sio.PNP0303
+devices.isa_sio.PNP0400
+devices.isa_sio.PNP0401
+devices.isa_sio.PNP0501
+devices.isa_sio.PNP0600
+devices.isa_sio.PNP0700
+devices.isa_sio.PNP0E00
+devices.isa_sio.PNP0F03
+devices.isa_sio.fda
+devices.isa_sio.km
+devices.isa_sio.ppa
+devices.isa_sio.sa
+devices.pci.00100100
+devices.pci.00100300
+devices.pci.0e100091
+devices.pci.14101300
+devices.pci.14101800
+devices.pci.14101b00
+devices.pci.14101c00
+devices.pci.1c104ac2
+devices.pci.22100020
+devices.pci.3353b088
+devices.pci.3353c088
+devices.pci.3353c188
+devices.pci.3353c288
+devices.pci.3353c388
+devices.pci.86808404
+devices.pci.ed101073
+devices.pci.PNP0A00
+devices.pci.PNP0A03
+devices.pcmcia.a4000200
+devices.pcmcia.a4001d00
+devices.pcmcia.a4001e00
+devices.pcmcia.ethernet
+devices.pcmcia.serial
+devices.pcmcia.tokenring
+/** Printer Support **/
+printers.rte
+printers.bull
+printers.can
+printers.dp
+printers.epson
+printers.hp
+printers.ibm_1
+printers.ibm_2
+printers.ibm_asian
+printers.ibm_plot
+printers.oki
+printers.lex
+printers.pt
+printers.qms
+printers.star
+printers.ti
+printers.msg.en_US
+printers.msg.de_DE
+printers.msg.es_ES
+printers.msg.fr_FR
+printers.msg.it_IT
+printers.msg.Ja_JP
+printers.msg.ja_JP
+printers.msg.ko_KR
+printers.msg.nl_BE
+printers.msg.no_NO
+printers.msg.sv_SE
+printers.msg.zh_TW
+printers.msg.De_DE
+printers.msg.En_US
+printers.msg.Es_ES
+printers.msg.Fr_FR
+printers.msg.It_IT
+printers.msg.Nl_BE
+printers.msg.No_NO
+printers.msg.Sv_SE
+/** AIXWindows 2-D Packages **/
+X11.base
+X11.motif
+X11.apps
+X11.info
+X11.vsm
+X11.loc
+X11.fnt
+X11.compat
+X11.Dt
+X11.adt
+X11.samples
+X11.man.en_US
+X11.info.en_US
+X11.msg.en_US
+X11.msg.de_DE
+X11.msg.es_ES
+X11.msg.fr_FR
+X11.msg.it_IT
+X11.msg.Ja_JP
+X11.msg.ja_JP
+X11.msg.ko_KR
+X11.msg.nl_BE
+X11.msg.no_NO
+X11.msg.sv_SE
+X11.msg.zh_TW
+X11.msg.De_DE
+X11.msg.En_US
+X11.msg.Es_ES
+X11.msg.Fr_FR
+X11.msg.It_IT
+X11.msg.Nl_BE
+X11.msg.No_NO
+X11.msg.Sv_SE
+/* SDE images added for CDE 1.0 fix */
+sde.Dt
+sde.tools
+sde.loc.ja_JP
+sde.loc.Ja_JP
+sde.msg.ja_JP
+sde.msg.Ja_JP
+#ifndef DEV
+#include <dce.master>
+#endif /* if not DEV */
+#endif /* CLIENT || SERVER || PERSONAL  */
+/**/
+#if defined(CLIENT) || defined(SERVER) || defined(PERSONAL) || defined(LPP) 
+pkg_gd
+#endif /* CLIENT || SERVER || PERSONAL || LPP */
+/**/
+#if defined(PERSONAL) 
+#ifndef DEV
+#include <ums.master>
+#endif /* Not DEV */
+SoftWindows
+#endif /* PERSONAL */
+/**/

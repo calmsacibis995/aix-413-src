@@ -1,0 +1,17 @@
+#!/etc/drivers/idedisk
+* @(#)64        1.2  src/rspc/kernext/idedisk/idedisk.exp, idedisk, rspc41J, 9510A 2/16/95 15:01:44
+*
+* COMPONENT_NAME: (IDEDISK)   IDE Disk Device Driver
+*			      Top Half Export List
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1995
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*

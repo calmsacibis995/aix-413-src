@@ -1,0 +1,1370 @@
+# @(#)97        1.9  src/rspc/objclass/pwrcmd.add, pwrcmd, rspc41C 5/18/95 12:41:32
+
+################################################################################
+#                                                                              #
+# COMPONENT_NAME:  PWRCMD                                                      #
+#                                                                              #
+# FUNCTIONS:  None.                                                            #
+#                                                                              #
+# ORIGINS:  27                                                                 #
+#                                                                              #
+# IBM CONFIDENTIAL -- (IBM Confidential Restricted when                        #
+# combined with the aggregated modules for this product)                       #
+#                  SOURCE MATERIALS                                            #
+# (C) COPYRIGHT International Business Machines Corp. 1994, 1995               #
+# All Rights Reserved                                                          #
+#                                                                              #
+# US Government Users Restricted Rights - Use, duplication or                  #
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.            #
+#                                                                              #
+################################################################################
+
+################################################################################
+#                                                                              #
+#   COMMANDS:  pwrcmd (Power Management)                                       #
+#                                                                              #
+################################################################################
+
+sm_menu_opt:
+        id                      = "performance"
+        id_seq_num              = "050"
+        next_id                 = "pm"
+        text                    = "Power Management"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 1
+        next_type               = "m"
+        alias                   = ""
+        help_msg_id             = "9600000"
+        help_msg_loc            = ""
+
+################################################################################
+#                                                                              #
+#                          SMIT Dialogue Definition                            #
+#                                                                              #
+# MENU PATH(S):  Performance & Resource Scheduling                             #
+#                    Power Management                                          #
+#                        Enable/Disable Power Management                       #
+#                                                                              #
+# FAST KEY:  pm                                                                #
+#                                                                              #
+# UNIX COMMAND(S):  pmctrl                                                     #
+#                                                                              #
+# DESIGN:  1 dialogue headers                                                  #
+#          1 dialogue objects                                                  #
+#                                                                              #
+# HEADER:  Enable/Disable Power Management                                     #
+#                                                                              #
+# OBJECTS:  1.  Enable/Disable Power Management                                #
+#                                                                              #
+################################################################################
+
+sm_menu_opt:
+        id                      = "pm"
+        id_seq_num              = "010"
+        next_id                 = "pmEnable"
+        text                    = "Enable / Disable Power Management State Transition"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 56
+        next_type               = "d"
+        alias                   = ""
+        help_msg_id             = "9600001"
+        help_msg_loc            = ""
+
+sm_cmd_hdr:
+        id                      = "pmEnable"
+        option_id               = "pmEnableOpts"
+        has_name_select         = ""
+        name                    = "Enable / Disable Power Management State Transition"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 56
+        cmd_to_exec             = \
+ "x()
+  {
+    current_state=`pmctrl -a`
+    if [ "$current_state" != "enable" -a "$current_state" != "full_on" ]
+    then
+      pmctrl -e -a enable
+      current_state=enable
+    fi
+    if [ "$1" = "enable" -o "$1" = "full_on" ]
+    then
+      pmctrl -e -a $1
+    fi
+  }
+  export PMCTRL_SMIT=pmctrl_smit
+  x "
+        ask                     = ""
+        exec_mode               = ""
+        ghost                   = ""
+        cmd_to_discover         = \
+ "export PMCTRL_SMIT=pmctrl_smit
+  current_state=`pmctrl -a`
+  if [ "$current_state" != "enable" -a "$current_state" != "full_on" ]
+  then
+    current_state=enable
+  fi
+  echo '#current_state'
+  echo $current_state"
+        cmd_to_discover_postfix = ""
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "9600001"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmEnableOpts"
+        id_seq_num              = "010"
+        disc_field_name         = "current_state"
+        name                    = "Enable / Disable Power Management State Transition"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 56
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "enable,disable"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 30
+        aix_values              = "enable,full_on"
+        help_msg_id             = "9600001"
+        help_msg_loc            = ""
+
+################################################################################
+#                                                                              #
+#                          SMIT Dialogue Definition                            #
+#                                                                              #
+# MENU PATH(S):  Performance & Resource Scheduling                             #
+#                    Power Management                                          #
+#                        Configure / Unconfigure Power Management              #
+#                            Configure Power Management                        #
+#                            Unconfigure Power Management                       #
+#                                                                              #
+# FAST KEY:  pm                                                                #
+#                                                                              #
+# UNIX COMMAND(S):  mkdev, rmdev, pmd                                          #
+#                                                                              #
+# DESIGN:  2 dialogue headers                                                  #
+#          2 dialogue objects                                                  #
+#                                                                              #
+# HEADER:  Configure / Unconfigure Power Management                            #
+#                                                                              #
+# OBJECTS:  1.  Configure Power Management                                     #
+#           2.  Unconfigure Power Management                                   #
+#                                                                              #
+################################################################################
+
+sm_menu_opt:
+        id                      = "pm"
+        id_seq_num              = "020"
+        next_id                 = "pmConfig"
+        text                    = "Configure / Unconfigure Power Management"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 35
+        next_type               = "m"
+        alias                   = ""
+        help_msg_id             = "9600002"
+        help_msg_loc            = ""
+
+sm_menu_opt:
+        id                      = "pmConfig"
+        id_seq_num              = "010"
+        next_id                 = "pmConfigConfigure"
+        text                    = "Configure Power Management"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 57
+        next_type               = "d"
+        alias                   = ""
+        help_msg_id             = "9600030"
+        help_msg_loc            = ""
+
+sm_menu_opt:
+        id                      = "pmConfig"
+        id_seq_num              = "020"
+        next_id                 = "pmConfigUnconfigure"
+        text                    = "Unconfigure Power Management"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 58
+        next_type               = "d"
+        alias                   = ""
+        help_msg_id             = "9600031"
+        help_msg_loc            = ""
+
+sm_cmd_hdr:
+        id                      = "pmConfigConfigure"
+        option_id               = ""
+        has_name_select         = ""
+        name                    = "Configure Power Management"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 57
+        name_msg_id             = 35
+        cmd_to_exec             = "/usr/sbin/mkdev -l pmc0; /usr/bin/pmd"
+        ask                     = ""
+        exec_mode               = ""
+        ghost                   = "y"
+        cmd_to_discover         = ""
+        cmd_to_discover_postfix = ""
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "9600030"
+        help_msg_loc            = ""
+
+sm_cmd_hdr:
+        id                      = "pmConfigUnconfigure"
+        option_id               = ""
+        has_name_select         = ""
+        name                    = "Unconfigure Power Management"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 58
+        name_msg_id             = 35
+        cmd_to_exec             = "/usr/sbin/rmdev -l pmc0"
+        ask                     = "y"
+        exec_mode               = ""
+        ghost                   = "y"
+        cmd_to_discover         = ""
+        cmd_to_discover_postfix = ""
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "9600031"
+        help_msg_loc            = ""
+
+################################################################################
+#                                                                              #
+#                          SMIT Dialogue Definition                            #
+#                                                                              #
+# MENU PATH(S):  Performance & Resource Scheduling                             #
+#                    Power Management                                          #
+#                        System State Transition from Enable State             #
+#                                                                              #
+# FAST KEY:  pm                                                                #
+#                                                                              #
+# UNIX COMMAND(S):  pmctrl                                                     #
+#                                                                              #
+# DESIGN:  1 dialogue headers                                                  #
+#          1 dialogue objects                                                  #
+#                                                                              #
+# HEADER:  System State Transition from Enable State                           #
+#                                                                              #
+# OBJECTS:  1.  System State Transition from Enable State                      #
+#                                                                              #
+################################################################################
+
+sm_menu_opt:
+        id                      = "pm"
+        id_seq_num              = "030"
+        next_id                 = "pmState"
+        text                    = "System State Transition from Enable State"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 36
+        next_type               = "d"
+        alias                   = ""
+        help_msg_id             = "9600003"
+        help_msg_loc            = ""
+
+sm_cmd_hdr:
+        id                      = "pmState"
+        option_id               = "pmStateOpts"
+        has_name_select         = ""
+        name                    = "System State Transition from Enable State"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 36
+        cmd_to_exec             = "pmctrl -e -a "
+        ask                     = ""
+        exec_mode               = ""
+        ghost                   = ""
+        cmd_to_discover         = ""
+        cmd_to_discover_postfix = ""
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "9600003"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmStateOpts"
+        id_seq_num              = "010"
+        disc_field_name         = ""
+        name                    = "System State Transition from Enable State"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 36
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "standby,suspend,hibernation,shutdown"
+        values_msg_file         = "smit.msg"
+        values_msg_set          = 55
+        values_msg_id           = 51
+        aix_values              = "standby,suspend,hibernation,shutdown"
+        help_msg_id             = "9600004"
+        help_msg_loc            = ""
+
+################################################################################
+#                                                                              #
+#                          SMIT Dialogue Definition                            #
+#                                                                              #
+# MENU PATH(S):  Performance & Resource Scheduling                             #
+#                    Power Management                                          #
+#                        Change / Show Characteristics of Power Management     #
+#                                                                              #
+# FAST KEY:  pm                                                                #
+#                                                                              #
+# UNIX COMMAND(S):  pmctrl                                                     #
+#                                                                              #
+# DESIGN:  1 dialogue headers                                                  #
+#          12 dialogue objects                                                 #
+#                                                                              #
+# HEADER:  Change / Show Characteristics of Power Management                   #
+#                                                                              #
+# OBJECTS:  1.  System Idle Time (in minutes)                                  #
+#           2.  Duration of Suspend to Hibernation (in minutes)                #
+#           3.  Action When System Idle Timer Expires                          #
+#           4.  Action If Notebook Lid is Closed                               #
+#           5.  Action When Main Power Switched Off                            #
+#           6.  Action If Optional Battery is Low                              #
+#           7.  Limitation of State Transition for General User                #
+#           8.  Enable or Disable Beep for Power Management                    #
+#           9.  Enable or Disable Resume Password                              #
+#          10.  Enable or Disable Ringing Resume                               #
+#          11.  LFT session handling for Suspend/Hibernation                   #
+#          12.  TTY session handling for Suspend/Hibernation                   #
+#          13.  Sync Daemon (syncd) Termination at Standby                     #
+#                                                                              #
+################################################################################
+
+sm_menu_opt:
+        id                      = "pm"
+        id_seq_num              = "040"
+        next_id                 = "pmData"
+        text                    = "Change / Show Characteristics of Power Management"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 37
+        next_type               = "d"
+        alias                   = ""
+        help_msg_id             = "9600005"
+        help_msg_loc            = ""
+
+sm_cmd_hdr:
+        id                      = "pmData"
+        option_id               = "pmDataOpts"
+        has_name_select         = ""
+        name                    = "Change / Show Characteristics of Power Management"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 37
+        cmd_to_exec             = \
+ "x()
+  {
+    pmctrl -t $1 -g $2
+    rc1=$?
+    pmctrl -x -a $3
+    rc2=$?
+    pmctrl -c -a $4
+    rc3=$?
+    pmctrl -p -a $5
+    rc4=$?
+    pmctrl -l -a $6
+    rc5=$?
+    pmctrl -u -a $7
+    rc6=$?
+    shift 7
+    pmctrl -b $1 -w $2 -r $3 -k $4 -y $5 -s $6
+    rc7=$?
+    if [ $rc1 -ne 0 -a $rc2 -ne 0 -a $rc3 -ne 0 -a $rc4 -ne 0 -a \
+         $rc5 -ne 0 -a $rc6 -ne 0 -a $rc7 -ne 0 ]; then
+        exit 1
+    fi
+  }
+  x "
+        ask                     = ""
+        exec_mode               = ""
+        ghost                   = ""
+        cmd_to_discover         = \
+  "export PMCTRL_SMIT=pmctrl_smit
+   sys_time=`pmctrl -t`
+   duration=`pmctrl -g`
+   sys_action=`pmctrl -x`
+   lid_action=`pmctrl -c`
+   sw_action=`pmctrl -p`
+   bat_action=`pmctrl -l`
+   permission=`pmctrl -u`
+   beep=`pmctrl -b`
+   passwd=`pmctrl -w`
+   ringing=`pmctrl -r`
+   lft=`pmctrl -k`
+   tty=`pmctrl -y`
+   syncd_kill=`pmctrl -s`
+   echo '#sys_time:duration:sys_action:lid_action:sw_action:bat_action:permission:beep:passwd:ringing:lft:tty:syncd_kill'
+   echo \"$sys_time:$duration:$sys_action:$lid_action:$sw_action:$bat_action:$permission:$beep:$passwd:$ringing:$lft:$tty:$syncd_kill\" "
+        cmd_to_discover_postfix = ""
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "9600005"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "010"
+        disc_field_name         = "sys_time"
+        name                    = "System Idle Time (in minutes)"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 40
+        op_type                 = ""
+        entry_type              = "#"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600006"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "020"
+        disc_field_name         = "duration"
+        name                    = "Duration of Suspend to Hibernation (in minutes)"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 41
+        op_type                 = ""
+        entry_type              = "#"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600007"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "030"
+        disc_field_name         = "sys_action"
+        name                    = "Action When System Idle Timer Expires"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 12
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "ignore,standby,suspend,hibernation,shutdown"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 52
+        aix_values              = "ignore,standby,suspend,hibernation,shutdown"
+        help_msg_id             = "9600008"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "040"
+        disc_field_name         = "lid_action"
+        name                    = "Action If Notebook Lid is Closed"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 13
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "ignore,standby,suspend,hibernation,shutdown"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 52
+        aix_values              = "ignore,standby,suspend,hibernation,shutdown"
+        help_msg_id             = "9600009"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "050"
+        disc_field_name         = "sw_action"
+        name                    = "Action When Main Power Switched Off"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 14
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "ignore,standby,suspend,hibernation,shutdown"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 52
+        aix_values              = "ignore,standby,suspend,hibernation,shutdown"
+        help_msg_id             = "9600010"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "060"
+        disc_field_name         = "bat_action"
+        name                    = "Action If Optional Battery is Low"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 15
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "ignore,standby,suspend,hibernation,shutdown"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 53
+        aix_values              = "ignore,standby,suspend,hibernation,shutdown"
+        help_msg_id             = "9600011"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "070"
+        disc_field_name         = "permission"
+        name                    = "Limitation of State Transition for General User"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 42
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "none,standby,suspend,hibernation,shutdown"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 54
+        aix_values              = "ignore,standby,suspend,hibernation,shutdown"
+        help_msg_id             = "9600012"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "080"
+        disc_field_name         = "beep"
+        name                    = "Enable or Disable Beep for Power Management"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 16
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "enable,disable"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 30
+        aix_values              = "on,off"
+        help_msg_id             = "9600013"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "090"
+        disc_field_name         = "passwd"
+        name                    = "Enable or Disable Resume Password"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 17
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "enable,disable"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 30
+        aix_values              = "on,off"
+        help_msg_id             = "9600014"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "100"
+        disc_field_name         = "ringing"
+        name                    = "Enable or Disable Ringing Resume"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 43
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 1
+        disp_values             = "enable,disable"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 30
+        aix_values              = "on,off"
+        help_msg_id             = "9600015"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "110"
+        disc_field_name         = "lft"
+        name                    = "LFT session handling for Suspend/Hibernation"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 18
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "continue,terminate"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 34
+        aix_values              = "off,on"
+        help_msg_id             = "9600016"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "120"
+        disc_field_name         = "tty"
+        name                    = "TTY session handling for Suspend/Hibernation"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 44
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "continue,terminate"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 34
+        aix_values              = "off,on"
+        help_msg_id             = "9600017"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDataOpts"
+        id_seq_num              = "130"
+        disc_field_name         = "syncd_kill"
+        name                    = "Sync Daemon (syncd) Termination at Standby"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 45
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "continue,terminate"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 34
+        aix_values              = "off,on"
+        help_msg_id             = "9600018"
+        help_msg_loc            = ""
+
+################################################################################
+#                                                                              #
+#                          SMIT Dialogue Definition                            #
+#                                                                              #
+# MENU PATH(S):  Performance & Resource Scheduling                             #
+#                    Power Management                                          #
+#                        Power Management Timer                                #
+#                                                                              #
+# FAST KEY:  pm                                                                #
+#                                                                              #
+# UNIX COMMAND(S):  pmctrl                                                     #
+#                                                                              #
+# DESIGN:  1 dialogue headers                                                  #
+#          3 dialogue objects                                                  #
+#                                                                              #
+# HEADER:  Power Management Timer                                              #
+#                                                                              #
+# OBJECTS:  1.  Select Power Saving State for Timer                            #
+#           2.  Time for Entering Power Saving State                           #
+#           3.  Time for Resuming                                              #
+#                                                                              #
+################################################################################
+
+sm_menu_opt:
+        id                      = "pm"
+        id_seq_num              = "050"
+        next_id                 = "pmTimer"
+        text                    = "Power Management Timer"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 38
+        next_type               = "d"
+        alias                   = ""
+        help_msg_id             = "9600019"
+        help_msg_loc            = ""
+
+sm_cmd_hdr:
+        id                      = "pmTimer"
+        option_id               = "pmTimerOpts"
+        has_name_select         = ""
+        name                    = "Power Management Timer"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 38
+        cmd_to_exec             = \
+ "x()
+  {
+    pmctrl -S $2 $1 -R $3
+  }
+  x "
+        ask                     = ""
+        exec_mode               = ""
+        ghost                   = ""
+        cmd_to_discover         = \
+ "export PMCTRL_SMIT=pmctrl_smit
+  t_act=`pmctrl -S  | awk '{print $1}'`
+  t_enter=`pmctrl -S | awk '{print $2}'`
+  t_resume=`pmctrl -R | awk '{print $2}'`
+  echo '#t_act:t_enter:t_resume'
+  echo \"$t_act:$t_enter:$t_resume\" "
+        cmd_to_discover_postfix = ""
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "9600019"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmTimerOpts"
+        id_seq_num              = "010"
+        disc_field_name         = "t_act"
+        name                    = "Select Power Saving State for Timer"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 46
+        op_type                 = "r"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = "suspend,hibernation,shutdown"
+        values_msg_file         = "smit.cat"
+        values_msg_set          = 55
+        values_msg_id           = 55
+        aix_values              = "suspend,hibernation,shutdown"
+        help_msg_id             = "9600020"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmTimerOpts"
+        id_seq_num              = "020"
+        disc_field_name         = "t_enter"
+        name                    = "Time for Entering Power Saving State"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 47
+        op_type                 = ""
+        entry_type              = "#"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600021"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmTimerOpts"
+        id_seq_num              = "030"
+        disc_field_name         = "t_resume"
+        name                    = "Time for Resuming"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 48
+        op_type                 = ""
+        entry_type              = "#"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600022"
+        help_msg_loc            = ""
+
+################################################################################
+#                                                                              #
+#                          SMIT Dialogue Definition                            #
+#                                                                              #
+# MENU PATH(S):  Performance & Resource Scheduling                             #
+#                    Power Management                                          #
+#                        Display Power Management                              #
+#                                                                              #
+# FAST KEY:  pm                                                                #
+#                                                                              #
+# UNIX COMMAND(S):  pmctrl                                                     #
+#                                                                              #
+# DESIGN:  1 dialogue headers                                                  #
+#          4 dialogue objects                                                  #
+#                                                                              #
+# HEADER:  Display Power Management                                            #
+#                                                                              #
+# OBJECTS:  1.  Time before display dimmed                                     #
+#           2.  Time before display power suspended                            #
+#           3.  Time before display power turned off                           #
+#           4.  (note)                                                         #
+#                                                                              #
+################################################################################
+
+sm_menu_opt:
+        id                      = "pm"
+        id_seq_num              = "060"
+        next_id                 = "pmDisplay"
+        text                    = "Display Power Management"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 7
+        text_msg_id             = 135
+        next_type               = "d"
+        alias                   = ""
+        help_msg_id             = "9600023"
+        help_msg_loc            = ""
+
+sm_cmd_hdr:
+        id                      = "pmDisplay"
+        option_id               = "pmDisplayOpts"
+        has_name_select         = ""
+        name                    = "Display Power Management"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 7
+        name_msg_id             = 135
+        cmd_to_exec             = \
+ "x()
+  {
+    pmctrl -d lft0 -t $1 $2 $3
+  }
+  x "
+        ask                     = ""
+        exec_mode               = ""
+        ghost                   = ""
+        cmd_to_discover         = \
+ "export PMCTRL_SMIT=pmctrl_smit
+  pwr_mgr_t1=`pmctrl -d lft0 | awk '{print $1}'`
+  pwr_mgr_t2=`pmctrl -d lft0 | awk '{print $2}'`
+  pwr_mgr_t3=`pmctrl -d lft0 | awk '{print $3}'`
+  echo '#pwr_mgr_t1:pwr_mgr_t2:pwr_mgr_t3'
+  echo \"$pwr_mgr_t1:$pwr_mgr_t2:$pwr_mgr_t3\" "
+        cmd_to_discover_postfix = ""
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "9600023"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDisplayOpts"
+        id_seq_num              = "010"
+        disc_field_name         = "pwr_mgr_t1"
+        name                    = "Time before display dimmed (in minutes)"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 7
+        name_msg_id             = 136
+        op_type                 = ""
+        entry_type              = "#"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600023"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDisplayOpts"
+        id_seq_num              = "020"
+        disc_field_name         = "pwr_mgr_t2"
+        name                    = "Time before display power suspended (in minutes)"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 7
+        name_msg_id             = 137
+        op_type                 = ""
+        entry_type              = "#"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600023"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDisplayOpts"
+        id_seq_num              = "030"
+        disc_field_name         = "pwr_mgr_t3"
+        name                    = "Time before display power turned off (in minutes)"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 7
+        name_msg_id             = 139
+        op_type                 = ""
+        entry_type              = "#"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600023"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id = "pmDisplayOpts"
+        id_seq_num              = "040"
+        disc_field_name         = ""
+        name                    = "\n\n\n\
+ To disable Display Power Managemt,\
+ set the dimmed time to zero."
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 7
+        name_msg_id             = 138
+        op_type                 = ""
+        entry_type              = ""
+        entry_size              = 0
+        required                = ""
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600023"
+        help_msg_loc            = ""
+
+################################################################################
+#                                                                              #
+#                          SMIT Dialogue Definition                            #
+#                                                                              #
+# MENU PATH(S):  Performance & Resource Scheduling                             #
+#                    Power Management                                          #
+#                        Power Management Characteristics of Each Device       #
+#                                                                              #
+# FAST KEY:  pm                                                                #
+#                                                                              #
+# UNIX COMMAND(S):  pmctrl                                                     #
+#                                                                              #
+# DESIGN:  1 dialogue headers                                                  #
+#          2 dialogue objects                                                  #
+#                                                                              #
+# HEADER:  Power Management Characteristics of Each Device                     #
+#                                                                              #
+# OBJECTS:  1.  Device Name                                                    #
+#           2.  Device Idle Time                                               #
+#                                                                              #
+################################################################################
+
+sm_menu_opt:
+        id                      = "pm"
+        id_seq_num              = "070"
+        next_id                 = "pmDevice"
+        text                    = "Power Management Characteristics of Each Device"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 39
+        next_type               = "n"
+        alias                   = ""
+        help_msg_id             = "9600024"
+        help_msg_loc            = ""
+
+sm_name_hdr:
+        id                      = "pmDevice"
+        next_id                 = "pmDevice.hdr"
+        option_id               = "pmDevice.name_select"
+        name                    = "Power Management Characteristics of Each Device"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 39
+        type                    = "j"
+        ghost                   = "y"
+        cmd_to_classify         = ""
+        cmd_to_classify_postfix = ""
+        raw_field_name          = "_rawname"
+        cooked_field_name       = ""
+        next_type               = "d"
+        help_msg_id             = "9600024"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDevice.name_select"
+        id_seq_num              = "0"
+        disc_field_name         = ""
+        name                    = "Device Name"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 49
+        op_type                 = "l"
+        entry_type              = "t"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = "pmctrl -d | tail +2 | grep -v lft0"
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600025"
+        help_msg_loc            = ""
+
+sm_cmd_hdr:
+        id                      = "pmDevice.hdr"
+        option_id               = "pmDeviceOpts"
+        has_name_select         = "y"
+        name                    = "Power Management Characteristics of Each Device"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 39
+        cmd_to_exec             = \
+ "x()
+  {
+    pmctrl -d $1 -t $2 $3
+  }
+  x "
+        ask                     = ""
+        exec_mode               = ""
+        ghost                   = ""
+        cmd_to_discover         = \
+ "x()
+  {
+    dev_itime=`pmctrl -d $1 | awk '{print $1}'`
+    dev_stime=`pmctrl -d $1 | awk '{print $2}'`
+    echo '#device:dev_itime:dev_stime'
+    echo \"$1:$dev_itime:$dev_stime\"
+  }
+  export PMCTRL_SMIT=pmctrl_smit
+  x "
+        cmd_to_discover_postfix = "_rawname"
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "9600024"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDeviceOpts"
+        id_seq_num              = "010"
+        disc_field_name         = "_rawname"
+        name                    = "Device Name"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 49
+        op_type                 = ""
+        entry_type              = ""
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600025"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDeviceOpts"
+        id_seq_num              = "020"
+        disc_field_name         = "dev_itime"
+        name                    = "Device Idle Time (in minutes)"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 50
+        op_type                 = ""
+        entry_type              = "#"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600026"
+        help_msg_loc            = ""
+
+sm_cmd_opt:
+        id                      = "pmDeviceOpts"
+        id_seq_num              = "030"
+        disc_field_name         = "dev_stime"
+        name                    = "Device Standby Time (in minutes)"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 59
+        op_type                 = ""
+        entry_type              = "#"
+        entry_size              = 0
+        required                = "+"
+        prefix                  = ""
+        cmd_to_list_mode        = ""
+        cmd_to_list             = ""
+        cmd_to_list_postfix     = ""
+        multi_select            = ""
+        value_index             = 0
+        disp_values             = ""
+        values_msg_file         = ""
+        values_msg_set          = 0
+        values_msg_id           = 0
+        aix_values              = ""
+        help_msg_id             = "9600026"
+        help_msg_loc            = ""
+
+################################################################################
+#                                                                              #
+#                          SMIT Dialogue Definition                            #
+#                                                                              #
+# MENU PATH(S):  Performance & Resource Scheduling                             #
+#                    Power Management                                          #
+#                        Battery                                               #
+#                                                                              #
+# FAST KEY:  pm                                                                #
+#                                                                              #
+# UNIX COMMAND(S):  battery                                                    #
+#                                                                              #
+# DESIGN:  2 dialogue headers                                                  #
+#          2 dialogue objects                                                  #
+#                                                                              #
+# HEADER:  Battery                                                             #
+#                                                                              #
+# OBJECTS:  1.  Show Battery Information                                       #
+#           2.  Start Battery Discharge                                        #
+#                                                                              #
+################################################################################
+
+sm_menu_opt:
+        id                      = "pm"
+        id_seq_num              = "080"
+        next_id                 = "pmBattery"
+        text                    = "Battery"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 25
+        next_type               = "m"
+        alias                   = ""
+        help_msg_id             = "9600027"
+        help_msg_loc            = ""
+
+sm_menu_opt:
+        id                      = "pmBattery"
+        id_seq_num              = "010"
+        next_id                 = "pmBatteryInfo"
+        text                    = "Show Battery Information"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 26
+        next_type               = "d"
+        alias                   = ""
+        help_msg_id             = "9600028"
+        help_msg_loc            = ""
+
+sm_menu_opt:
+        id                      = "pmBattery"
+        id_seq_num              = "020"
+        next_id                 = "pmBatteryDischarge"
+        text                    = "Start Battery Discharge"
+        text_msg_file           = "smit.cat"
+        text_msg_set            = 55
+        text_msg_id             = 27
+        next_type               = "d"
+        alias                   = ""
+        help_msg_id             = "9600029"
+        help_msg_loc            = ""
+
+sm_cmd_hdr:
+        id                      = "pmBatteryInfo"
+        option_id               = ""
+        has_name_select         = ""
+        name                    = "Show Battery Information"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 28
+        cmd_to_exec             = "battery"
+        ask                     = ""
+        exec_mode               = ""
+        ghost                   = "y"
+        cmd_to_discover         = ""
+        cmd_to_discover_postfix = ""
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "9600028"
+        help_msg_loc            = ""
+
+sm_cmd_hdr:
+        id                      = "pmBatteryDischarge"
+        option_id               = ""
+        has_name_select         = ""
+        name                    = "Start Battery Discharge"
+        name_msg_file           = "smit.cat"
+        name_msg_set            = 55
+        name_msg_id             = 29
+        cmd_to_exec             = "battery -d"
+        ask                     = "y"
+        exec_mode               = ""
+        ghost                   = "y"
+        cmd_to_discover         = ""
+        cmd_to_discover_postfix = ""
+        name_size               = 0
+        value_size              = 0
+        help_msg_id             = "9600029"
+        help_msg_loc            = ""
+

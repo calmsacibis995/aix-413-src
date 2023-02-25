@@ -1,0 +1,256 @@
+# @(#)02        1.13  src/rspc/objclass/isatok.add, isatok, rspc41J, 9524A_all 6/1/95 12:43:18
+*********************************************************************
+*
+*   COMPONENT_NAME: ISATOK
+*
+*   FUNCTIONS: isatok.add : device object file for 16/4 IBM Tokenring Adapter
+*
+*   ORIGINS: 27
+*
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1994,1995
+*   All Rights Reserved
+*   Licensed Materials - Property of IBM
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*********************************************************************
+
+* LED registered as 74c, using 74a to get correct display.
+PdDv:
+        type = "tokenring"
+        class = "adapter"
+        subclass = "isa"
+	prefix = "tok"
+        devid = "PNP80CC"
+        base = 1
+        has_vpd = 1
+        detectable = 1
+        chgstatus = 0
+        bus_ext = 0
+        fru = 1
+	led = 0x74a
+        setno = 28
+	msgno = 30
+        catalog = "devices_tok.cat"
+	DvDr = "isa/itokdd"
+	Define = "/usr/lib/methods/define_rspc"
+	Configure = "/usr/lib/methods/cfgisatok"
+	Change = "/usr/lib/methods/chgisatok"
+	Unconfigure = "/usr/lib/methods/ucfgcommo"
+	Undefine = "/usr/lib/methods/undefine"
+        Start = ""
+        Stop = ""
+        uniquetype = "adapter/isa/tokenring"
+
+PdCn:
+        uniquetype = "adapter/isa/tokenring"
+        connkey = "tok"
+        connwhere = ""
+
+* "intr_level" - Hardware attribute
+* Value needs to match the dip switch setup on the device.
+* Value modifiable by user through SMIT or command line.
+* The interrupt level for this device is not shareable with other devices.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "intr_level"
+        deflt           = 9
+        values          = "3,6,7,9,10,11"
+        width           = ""
+        type            = "N"
+        generic         = "DU"
+        rep             = "nl"
+        nls_index       = 4
+
+* "intr_priority" - Hardware attribute
+* Value set by system and not modifiable by user.
+* Displayable with "lsattr" command.
+* No help text.
+* Do NOT change this value "3", the device driver is using the value PL_IMP
+*	from net/spl.h
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "intr_priority"
+        deflt           = 3
+        values          = 3
+        width           = ""
+        type            = "P"
+        generic         = "D"
+        rep             = "nl"
+        nls_index       = 5
+
+* "bios_addr" - Hardware attribute
+* Value needs to match the dip switch setup on the device.
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "bios_addr"
+        deflt           = 0xcc000
+        values          = "0xc0000-0xde000,0x2000"
+        width           = "0x2000"
+        type            = "M.2"
+        generic         = "DU"
+        rep             = "nr"
+	nls_index       = 31
+
+
+* "xmt_que_size" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "xmt_que_size"
+        deflt           = 96
+        values          = "96-160,1"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "nr"
+        nls_index       = 7
+
+* "bus_io_addr" - Hardware attribute
+* Value needs to match the dip switch setup on the device.
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "bus_io_addr"
+        deflt           = 0xa20
+        values          = "0xa20,0xa24"
+        width           = 4
+        type            = "O"
+        generic         = "DU"
+	rep             = "nl"
+        nls_index       = 3
+
+* bus memory attributes with configurable lengths
+*       - shared_mem_addr : shared_mem_length
+
+* "shared_mem_addr" - Hardware attribute
+* Value needs to match the dip switch setup on the device.
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* No help text.
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "shared_mem_addr"
+        deflt           = 0xd0000
+        values          = "0xc0000,0xc4000,0xc8000,0xcc000,0xd0000,0xd4000,0xd8000,0xdc000"
+	width           = ""
+        type            = "M.1"
+	generic         = "DU"
+        rep             = "nl"
+        nls_index       = 21
+
+PdAt:
+	uniquetype      = "adapter/isa/tokenring"
+	attribute       = "shared_mem_leng"
+	deflt           = "0x10000"
+	values          = "0x2000,0x4000,0x8000,0x10000"
+	width           = "shared_mem_addr"
+	type            = "W"
+	generic         = "DU"
+	rep             = "nl"
+	nls_index       = 32
+
+* "ring_speed" - Device attribute
+* Value needs to match the dip switch setup on the device.
+* Value modifiable by user.
+* Displayable with "lsattr" command.
+* Help text available.
+* Value also stored and updated in NVRAM
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "ring_speed"
+        deflt           = "16"
+        values          = "4,16"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "nl"
+        nls_index       = 12
+
+* "attn_mac" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "attn_mac"
+        deflt           = "no"
+        values          = "yes,no"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "sl"
+        nls_index       = 10
+
+* "beacon_mac" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "beacon_mac"
+        deflt           = "no"
+        values          = "yes,no"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "sl"
+        nls_index       = 15
+
+* "use_alt_addr" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "use_alt_addr"
+        deflt           = "no"
+        values          = "yes,no"
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "sl"
+        nls_index       = 13
+
+* "alt_addr" - Device attribute
+* Value modifiable by user through SMIT or command line.
+* Displayable with "lsattr" command.
+* Help text available.
+PdAt:
+        uniquetype      = "adapter/isa/tokenring"
+        attribute       = "alt_addr"
+        deflt           = "0x"
+        values          = ""
+        width           = ""
+        type            = "R"
+        generic         = "DU"
+        rep             = "s"
+        nls_index       = 14
+
+* "addl_dvdr" - Configurable attribute
+* Value modifiable through command line only.
+* Not displayable with "lsattr" command.
+* No help text.
+* This attribute is the name of the method to be executed to configure or
+* unconfigure an additional driver in the kernel for this device.
+PdAt:
+	uniquetype      = "adapter/isa/tokenring"
+	attribute       = "addl_dvdr"
+	deflt           = "/usr/lib/methods/cfgdmxtok"
+	values          = ""
+	width           = ""
+	type            = "R"
+	generic         = "U"
+	rep             = "s"
+	nls_index       = 0
+

@@ -1,0 +1,543 @@
+/* REXX */
+/*static char sccsid[] = "src/tcpip/usr/samples/tcpip/onhost/onhostmn.tso, tcpip, tcpip411, GOLD410 8/14/90 16:31:53";
+ *
+ * COMPONENT_NAME: TCPIP onhostmn.tso
+ *
+ * ORIGINS: 27
+ *
+ * (C) COPYRIGHT International Business Machines Corp. 1986, 1988, 1989
+ * All Rights Reserved
+ * Licensed Materials - Property of IBM
+ *
+ * US Government Users Restricted Rights - Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ */
+/*
+	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+
+ INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+ EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+ OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+ IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+ DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+ DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ * RISC System/6000 is a trademark of International Business Machines
+   Corporation.
+*/
+/*
+    AIXwhat is @(#) onhostmn.tso 1.5 PASC 1.5
+ */ version='onhost - version 1.1 - MVS/TSO'
+/*
+ * This file consists of header lines and manual lines
+ *   Header line - consists of '<' in column 1 followed by the
+ *                 command name in capital letters followed by '>'
+ *   when a match in found on the header line, all manual lines
+ *   between that header and the next (or eof) are listed on the
+ *   console (unless redirected to a file on the guest system).
+ */
+   say version
+   say "this Rexx exec should be processed by onhost and not executed"
+   exit
+<?>    list of supported commands
+onhost cat      - display host file contents
+onhost date     - host date and time
+onhost cd       - change host working directory/pds
+onhost cp       - copy host files or copy files to/from host
+onhost df       - disk (pds) free space
+onhost head     - display specified lines from 'head' of host file
+onhost ls       - list names of host files
+onhost logout   - end a host session
+onhost man      - display help on use of onhost commands
+onhost man subs - display info about onhost REXX subroutines
+onhost mkdir    - create a directory (pds)
+onhost pwd      - display name of working directory/pds
+onhost mv       - move host files
+onhost rm       - remove host files
+onhost tail     - display specified lines from 'tail' of host file
+onhost who      - display information about users
+onhost write    - send a message to a user
+ 
+onhost any-command           executes any unrecognized command
+ 
+<CAT>    display a file
+onhost cat(c)           Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost cat <filename>
+ 
+BEHAVIOR
+ 
+  Onhost cat will display the contents of the following file types:
+     Sequential, Partitioned (members), VSAM indexes, and VSAM data.
+     When displaying VSAM clusters, the VSAM data will be listed in
+     key sequence. When displaying Vsam AIX components the primary file
+     keys are displayed in the alternate sequence. When displaying VSAM
+     path components the primary VSAM data is displayed in the alternate
+     sequence. When displaying a GDG group the individual files will be
+     listed one after another beginning with the most recently generated
+     file.
+ 
+METHODOLOGY
+ 
+   After appending the prefix/level2 to the requested filename as
+appropriate, LISTC and LISTD are used to determine if the file exists
+and what its organization is.  If the file is one of the supported
+VSAM organizations, a temporary file is allocated with a variable record
+length up to 4096 bytes and the VSAM component is REPROed to the temp
+file.  The temp file is allocated to (or in the case of non-VSAM files,
+the actual file) and a DISKR/pull/say loop is used to display the file
+contents. The say will mask any garbage characters, and reading only
+one record at a time will avoid memory shortages on the stack for large
+files.
+<CD>        change the working directory
+onhost cd(c)            Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost cd <directory>
+ 
+BEHAVIOR
+ 
+     Onhost cd will change the current working directory. Directories
+in MVS are limited to two levels. The first level (called PREFIX) will
+match your userid upon connection, and is also used by TSO commands in
+developing filenames. The second level (Level2) may be the directory
+contained in a partitioned file, and is used only by onhost commands.
+You may move up or down through these directories just as you would
+in AIX. Note that there is no ROOT directory, but you may change
+directly to another prefix(ex: onhost cd /sys1).
+ 
+METHODOLOGY
+ 
+   As a part of logging on REXX exec ONHOSTLD will allocate and open a
+temporary file (to be deleted upon logging off) and write a blank record
+into it. This file (ddname ONHOSTXX) remains allocated while logged on.
+ 
+   After appending the prefix/level2 to the requested directory as
+appropriate, it is checked to see if it contains more than one node.
+If there is more than one node LISTC and LISTD are used to determine
+if the file is a PDS. If the file is a pds, the file name is saved in
+the first record of the ONHOSTXX file (sans the first node). If there
+is only one node a blank record is written to the ONHOSTXX file.  If
+all is well so far, the first node is saved with a PROFILE PREFIX(x)
+command. Note that the logic that appends prefix/level2 in routine
+Getfn will always return at least a prefix to prevent operating without
+a prefix. The portion of the filename in the ONHOSTXX file is referred
+to elsewhere as Level2.
+<CP>        copy a file
+onhost cp(c)            Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost cp <file1> <file2>
+ 
+BEHAVIOR
+ 
+     Onhost cp will copy file1 to file2, overlaying file2 if it exists.
+File name may be specified as follows: <TSO:/prefix/filename(member)>
+  TSO:      is assumed except when specified for one file and
+               not the other (indicating an intra-system transfer).
+  /prefix   is optional (the current working directory may be used).
+  /filename is optional only if the current working directory is a
+               partitioned file.
+  (member)  is contained in parentheses if the partitioned filename is
+               explicitly coded, however, if the current directory is
+               a partitioned file member should be coded without the
+               parentheses (as a filename).
+     A filename is taken as an AIX filename only if the other filename
+contains the TSO: specification.
+ 
+METHODOLOGY
+ 
+   Onhost cp will append the prefix/level2 to the requested file1 and
+file2. If file1 should exist in the TSO environment, LISTC and LISTD
+are used to determine if it does.  If the TSO: specification is
+supplied with only one filename and not the other, ONHOSTCP is called
+to perform an intra-system file transfer, otherwise control remains in
+the onhost exec.  Validation of the source file (file1) is performed
+to allow for sequential, pds, pds members, VSAM clusters and paths. If
+the destination file (file2) exists and is a QSAM file or a PDS member
+then the QSAM file or PDS member is deleted. Note that VSAM files are
+not deleted. The TSO copy command is used to copy entire PDS's only,
+and the REPRO is used in all other cases.
+<DATE>        display host system date
+onhost date(c)          Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost date
+ 
+BEHAVIOR
+ 
+     Onhost date will reply with the current host system date.
+ 
+     Such as:
+                Tue Aug 30 15:15:35 PDT 1988
+ 
+METHODOLOGY
+ 
+   In the very front of the onhost exec, site supported code initializes
+some variables with the cutoff dates for daylight savings time and the
+timezone where the host is located. You should modify this routine to
+look at the current year to determine the cutoff dates. This would allow
+the exec to go unmodified for several years. The system date is then
+compared to these variables to produce the desired output.
+<DF>
+onhost df(c)            Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost df <filesystem>
+ 
+BEHAVIOR
+ 
+     Onhost df will reply with a list of partitioned files (filesystems)
+and their current space utilizations that match the users current prefix
+or <filesystem> specification, such as:
+ 
+Filesystem  Mounted as                 bytes    used    free used
+SYS077     /warren/aix.load           196608  196608       0 100%
+SYS078     /warren/aix.obj             49152    5600   43552  11%
+SYS081     /warren/aix.fort            49152   12800   36352  26%
+ 
+METHODOLOGY
+ 
+   Onhost df will append the prefix/level2 to the specified filesystem
+and use LISTC and LISTD to produce records on the stack which match the
+specification <filesystem>. In fact, it uses the same subroutine as the
+'onhost ls' command. It then sorts the stack in volume id sequence and
+then pulls the records from the stack, displaying only the partitioned
+entries, calculating space utilization as it does so.
+<HEAD>   display the first few records of a file
+onhost head(c)          Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost head -n <filename>
+ 
+BEHAVIOR
+ 
+  Onhost head will display n lines of the following file types:
+     Sequential, Partitioned (members), VSAM indexes, and VSAM data.
+     When displaying VSAM clusters, the VSAM data will be listed in
+     key sequence. When displaying Vsam AIX components the primary file
+     keys are displayed in the alternate sequence. When displaying VSAM
+     path components the primary VSAM data is displayed in the alternate
+     sequence. When displaying a GDG group the individual files will be
+     listed one after another beginning with the most recently generated
+     file. If n is not supplied, 10 lines (records) will be displayed.
+ 
+METHODOLOGY
+ 
+   After appending the prefix/level2 to the requested filename as
+appropriate, LISTC and LISTD are used to determine if the file exists
+and what its organization is.  If the file is one of the supported
+VSAM organizations, a temporary file is allocated with a variable record
+length up to 4096 bytes and the VSAM component is REPROed to the temp
+file.  The temp file is allocated to (or in the case of non-VSAM files,
+the actual file) and a DISKR/pull/say loop is used to display the file
+contents. The say will mask any garbage characters, and reading only
+one record at a time will avoid memory shortages on the stack for large
+files.  The loop will be exited when n lines have been displayed.
+<LS>     display the contents of a directory
+onhost ls(c)            Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost ls <-lrtx1> <directory>
+ 
+BEHAVIOR
+ 
+  Onhost ls writes to standard output the contents of the specified
+    directory with the following options
+   l - long format    t - date created sequence      1 - single column
+   r - reverse order  x - horizontal multi-column listing
+ 
+METHODOLOGY
+ 
+   Onhost ls will append the prefix/level2 to the specified filename
+and use LISTC and LISTD to produce records on the stack which match the
+specification <filename>. These records are formatted as follows:
+     cols    1    record type <M=PDS member entry, D=Dataset Entry>
+     cols   3-8   creation date YY.DDD julian format
+     cols  10-15  volume serial no
+     cols  17-28  dataset organization
+     cols  30-74  file (entry) name
+     cols  76-83  member name (or blank)
+* the remaining data items are variable in length, separated by a blank
+                  allocated space (in bytes)
+                  used space (in bytes) based upon last record pointer
+                  share options (if vsam)
+   The records on the stack are then sorted as requested by options and
+replaced on the stack. Subroutine Typed will then pull the records from
+the stack displaying the items as requested by options. The only option
+of any complexity is the default (telephone book) multi-column sequence
+which loads the records into stem variables (an array) and then figures
+how many columns will fit on a screen (based on filename lengths). The
+array is effectively segmented and each line prepared for display.
+ 
+NOTES: 1. Unit type codes for offline devices such as tapes may vary
+          from shop to shop (See bottom of procedure stackd).
+       2. Disk track storage capacities are set for 3380 type devices
+          and may require customization (find all occurrences of 47476
+          in the onhost exec).
+<MAN>    display onhost documentation
+onhost man(c)           Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost man <command>
+ 
+BEHAVIOR
+ 
+  Onhost Man will display documentation on the host environment sample
+code.
+ 
+METHODOLOGY
+ 
+   Onhost Man first determines the DDNAME of the current command using
+parse system. It then performs a LISTA to identify all the DATASETs
+concatenated to that DDNAME, and then using a LISTDS 'MEMBERS' option
+it looks for the first file containing the member ONHOSTMN. It then
+allocates to the member and begins scanning the file looking for the
+text '<command>' beginning in column 1 of each record. When it finds
+one of these header records with command matching the requested command,
+it displays the records between that header and the next.
+<MKDIR>  allocates a pds (directory)
+onhost mkdir(c)         Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost mkdir <directory>
+ 
+BEHAVIOR
+ 
+  Onhost mkdir allocates a directory (pds).
+ 
+METHODOLOGY
+ 
+   Onhost mkdir will append the current prefix to the specified filename
+as required. Then it identifies the filetype and if it begins with 'FOR'
+'ASM' or 'COB', mkdir assumes a fixed record length of 80 is required,
+otherwise it allocates and catalogs a PDS with variable length records.
+<MV>     move a file or directory
+onhost mv(c)            Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost mv <file1> <file2>
+ 
+BEHAVIOR
+ 
+  Onhost mv copies file1 to file2 (overlaying file2) and then destroys
+    file1. If it can be done with a simple RENAME it will be done that
+    way. WARNING: If mv specifies a directory (Partitioned file) as
+    file1 and a sequential file (file2) already exists, file2 will be
+    destroyed and the directory will take its place.  Onhost mv allows
+    the specification <TSO:filename> as does copy but will not perform
+    an intra-system move if one is indicated. Onhost mv will also not
+    destroy a file that it cannot move complete with its structure.
+    This mean that it may mv the records from a VSAM file but will not
+    destroy the old file, since what it creates is a sequential file.
+ 
+METHODOLOGY
+ 
+  Onhost mv gets the standard prefix and level2 for each filename, if
+the environment is specified as TSO: for one file and not for the other
+indicating an intra-system transfer, the command is rejected and the
+user is recommended to use onhost cp. A check is then made to see if the
+source file exists (using LISTC and LISTDS) and if it is a PDS and
+a member name was supplied LISTDS is used again to verify the existence
+of the member. If the source file is all well, the destination file is
+verified the same way. Then based on the source and destination file
+names and organizations it is determined if a RENAME or COPY/DELETE
+needs to be used to accomplish the move (RENAME is faster, but can't
+always be used).
+<PWD>    move a file or directory
+onhost pwd(c)           Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost pwd
+ 
+BEHAVIOR
+ 
+  Onhost pwd displays the current working directory which may be either
+    the current PREFIX or a partitioned file (PDS).
+ 
+METHODOLOGY
+ 
+  Onhost pwd will first retrieve the prefix from the TSO profile, then
+read the first record from the file allocated to ddname ONHOSTXX during
+logon. The contents of the record will be appended to the prefix and
+the result will be displayed.
+<RM>     move a file or directory
+onhost rm(c)            Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost rm <filename>
+ 
+BEHAVIOR
+ 
+  Onhost rm will remove the file (or partitioned file member).
+ 
+METHODOLOGY
+ 
+  Onhost rm appends PREFIX and the onhost level2 value to the filename
+as required then verifies that the file exists using LISTC and LISDS. If
+the filename supplied points to the INDEX or DATA component of a VSAM
+file, or if it points to a GDG base catalog entry then removal is
+prevented. Otherwise, the file is deleted using a TSO DELETE command.
+<SUBS>   display information about onhost subroutines
+onhost subs             Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SUBROUTINES - DESCRIPTION
+ 
+  onhoste   - invokes the onhoste rexx exec which displays the standard
+              termination message required by the AIX Hostconnect.
+ 
+  typef     - formats and displays the 'df' listing from dataset records
+              (type 'D') on the stack. Note that only 'partitioned' file
+              types are listed.
+ 
+  getprofile- traps the PROFILE LIST command and parses the output,
+              primarily to retrieve the current PREFIX value.
+ 
+  getlevel2 - reads the first record from a file created by onhostld
+              and updated by the cd command to contain that portion
+              of a PDS file name which excludes the prefix.
+ 
+  getfn     - removes one filename from the variable arglist and then
+              evaluates the filename for any backward or root specifiers
+              '../' or '/' and appends prefix and level2 to the name
+              as required. it returns variables env(TSO or null),
+              fn(fully qualified filename), mn(member name), and flvl
+              which is all leading nodes exclusive of any containing
+              wildcards.
+ 
+  checkfile - uses SYSDSN function to verify the presence of file 'fn'.
+              if found, it then uses LISTC (and LISTDS for nonvsam) to
+              identify the dataset organization.
+ 
+  checkmember - uses LISTDS to verify the presence of member 'mn' in
+              file 'fn'.
+ 
+  membernotfound - generates a standard error message if the member
+              mn was not found in routine checkmember
+ 
+  getfilelist - flvl is used as input to LISTC and LISTDS to get records
+              onto the stack representing files that match the wildcard
+              specified in fn.
+ 
+  getmemberlist - produces member records on the stack for pds fn.
+ 
+  formatd   - formats sortable records from LISTDS command output.
+ 
+  formatc   - formats sortable records from LISTC command output.
+ 
+  calcext   - calculates space based upon beginning cyl/track and
+              ending cyl/track values from LISTDS output.
+ 
+  stackm    - places a member record on the stack complete with field
+              length formatting.
+ 
+  stackd    - places a dataset record on the stack complete with field
+              length formatting, and verification against a wildcard
+              mask if supplied.
+ 
+  wildcard  - performs character by character matching of two names
+              with provisions for wildcards '*' or '?' specifiers in
+              one of the names.
+ 
+  sortd     - a modified QSORT will be performed on all records on the
+              stack using keys beginning in columns specified in K1-K5
+              for lengths of L1-L5. If variable order contains REVERSE
+              the stack will be sorted in reverse order.
+ 
+  typed     - will format the ls listing from the sorted dataset and
+              member records on the stack.
+ 
+  jul2greg  - will return a gregorian date from the a system julian
+              date in variable 'julian'.
+ 
+  clockconvert - will reduce a hex output of the system hardware clock
+              to a date and time stamp.
+ 
+  halt      - will receive control on interrupt (PA1 key) and empty the
+              queue before exiting.
+ 
+  syntax    - will receive control on REXX detecting a syntax error and
+              it too will empty the queue before exiting.
+<TAIL>   display the last few records of a file
+onhost tail(c)          Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost tail -n <filename>
+ 
+BEHAVIOR
+ 
+  Onhost tail will display n lines of the end of the following;
+     Sequential, Partitioned (members), VSAM indexes, and VSAM data.
+     When displaying VSAM clusters, the VSAM data will be listed in
+     key sequence. When displaying Vsam AIX components the primary file
+     keys are displayed in the alternate sequence. When displaying VSAM
+     path components the primary VSAM data is displayed in the alternate
+     sequence. When displaying a GDG group the individual files will be
+     listed one after another beginning with the most recently generated
+     file. If n is not supplied, the last 10 lines (records) will be
+ 
+METHODOLOGY
+ 
+   After appending the prefix/level2 to the requested filename as
+appropriate, LISTC and LISTD are used to determine if the file exists
+and what its organization is.  If the file is one of the supported
+VSAM organizations, a temporary file is allocated with a variable record
+length up to 4096 bytes and the VSAM component is REPROed to the temp
+file.  The temp file is allocated to (or in the case of non-VSAM files,
+the actual file) and a DISKR/pull/say loop is used to queue records from
+the file on the stack. Once n records are stacked, or EOF is reached
+a second loop is entered which will queue one record and pull the oldest
+record on the stack, always leaving n records on the stack. When EOF is
+reached a third loop will pull the records on the stack and display
+them until the stack is empty. The number of records that can be viewed
+this way is only limited by the size of stack memory available.
+<WHO>    display information about users
+onhost who(c)           Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost who <am i>
+ 
+BEHAVIOR
+ 
+  Onhost who will display information about users or you.
+    The general format of who is name (login id), procedure (sometimes
+    indicates resources available), login date/time, idle time, and
+    process id.
+ 
+METHODOLOGY
+ 
+   This command makes extensive use of the storage command to peek into
+memory. It will first begin by locating the current tasks TCB pointer
+which in MVS is address 16 (10 hex) low memory. In the TCB is a pointer
+to the system QCB which contains a list of pointers to all ASCB's in the
+system. Stepping through this list allows us to look at the ASCB's for
+task start time, task wait time stamp, and a pointer to the logon id
+and procedure for each MVS task. To identify which tasks are TSO users
+and which are batch, we look for the presence of a pointer to a terminal
+control block. If present this is a TSO user and from this information
+a user line is formatted and queued on the stack. The stack is then
+sorted in login id sequence and a pull/say loop is used to produce the
+display.
+<WRITE>  send a message to a user
+onhost write(c)         Copyright IBM 1988          Onhost MVS/TSO
+-----------------------------------------------------------------------
+SYNTAX
+           onhost write ssss .... message text
+ 
+BEHAVIOR
+ 
+  Onhost write will send a message to user ssss if that user is logged
+on to the system at this time. If the system cannot send the message
+you will be informed. If the user is "OPERATOR" the message will be sent
+to the master system console of the host system.
+ 
+METHODOLOGY
+ 
+   This command uses the TSO 'SEND' command to pass the message and in
+the case where the message is for OPERATOR, it is sent without the USER
+parameter which should route the message to the master system console.

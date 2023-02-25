@@ -1,0 +1,47 @@
+# @(#)11        1.9  src/bos/usr/sbin/bootpd/bootptab, cmdnet, bos411, 9428A410j 5/24/94 18:43:16
+#
+# (C) COPYRIGHT International Business Machines Corp. 1991
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# Permission to use, copy, modify, and distribute this program for any
+# purpose and without fee is hereby granted, provided that this copyright,
+# permission and disclaimer notice appear on all copies and supporting
+# documentation; the name of IBM not be used in advertising or publicity
+# pertaining to distribution of the program without specific prior
+# permission; and notice be given in supporting documentation that copying
+# and distribution is by permission of IBM.  IBM makes no representations
+# about the suitability of this software for any purpose.  This program
+# is provided "as is" without any express or implied warranties, including,
+# without limitation, the implied warranties of merchantability and fitness
+# for a particular purpose.
+#				      
+# ORIGINS: 6,27
+#
+# /etc/bootptab: database for bootp server (/usr/sbin/bootpd)
+# Blank lines and lines beginning with '#' are ignored.
+#
+# Legend:
+#
+#       first field -- hostname
+#                       (may be full domain name and probably should be)
+#
+#      hd   -- home directory
+#      bf   -- bootfile
+#      sa   -- server IP address to tftp bootfile from
+#      gw   -- gateways
+#      ha   -- hardware address
+#      ht   -- hardware type
+#      ip   -- host IP address
+#      sm   -- subnet mask
+#      tc   -- template host (points to similar host entry)
+#      hn   -- name switch
+#      bs   -- boot image size
+#      dt   -- old style boot switch
+#      T170 -- (xstation only) -- server port number
+#      T175 -- (xstation only) -- primary / secondary boot host indicator 
+#      T176 -- (xstation only) -- enable tablet
+#      T177 -- (xstation only) -- xstation 130 hard file usage
+#      T178 -- (xstation only) -- enable XDMCP
+#      T179 -- (xstation only) -- XDMCP host
+#      T180 -- (xstation only) -- enable virtual screen

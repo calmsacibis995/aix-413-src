@@ -1,0 +1,192 @@
+#!/unix
+* @(#)20	1.7  src/nfs/kernext/clnt/clnt.exp, sysxnfs, nfs411, GOLD410 6/24/94 15:22:56
+*
+*   COMPONENT_NAME: SYSXNFS
+*
+*   FUNCTIONS: none
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1993
+*   All Rights Reserved
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+*
+*
+* NFS adds the following system calls and symbols:
+*
+async_daemon	syscall
+nfs_cntl	syscall
+getcfh		syscall
+*
+* nfsclnt_kmid is used to unload the kernel extension
+*
+nfsclnt_kmid
+*
+* ncsize is the size of the directory name look aside cache, exported for
+* manual tuning. ncache is the actual DNLC cache entries, ncstats are the
+* runtime cache statistics.  nc_lru is the LRU list, and doingcache controls
+* the usage of this cache.  (setting doingcache to zero eliminates the cache)
+*
+ncsize
+ncache
+ncstats
+nc_lru
+doingcache
+*
+* The following variables are the statistic structures used by the nfsstat
+* command to display symbols
+clstat
+svstat
+*
+* defined is clnt.ext so they can be set prior to starting the server
+*
+nfs_portmon
+nfs_so_ptr
+nfs_setattr_error
+* minimum size of write which will sleep before syncing to disk
+nfs_gather_threshold
+* This variable controls the size of the NFSD's receive queues
+nfs_socksize
+* Should the NFS client print multiples of the same message
+nfs_repeat_msg
+*
+* will the client use dynamic retransmission
+nfs_dynamic
+nfs_clientiopace_pages
+*
+*
+* NFS client side parameters for table sizes.  nrnode is the number of rnodes
+* to attempt to keep for the client. nchtable is the number of client handles
+* that will be kept.  nunixauthtab is the number of entries in the unix auth
+* table and the ndesauthtab is the number of entries in the des auth table.
+nrnode
+nchtable
+ndesauthtab
+nunixauthtab
+*
+* NFS client symbols needed by the nfs_kacl.ext
+*
+authget
+authfree
+*
+* added these exports from the client extension (nfs_clnt.ext) to the server
+*
+nfs_init
+init_svstat
+nfs_vfsops
+nfs_gn_vnodeops
+xdrmbuf_freebuf
+nfstsize
+xdr_attrstat
+xdr_creatargs
+xdr_diropargs
+xdr_diropres
+xdr_fhandle
+xdr_linkargs
+xdr_rddirargs
+xdr_putrddirres
+xdr_rdlnres
+xdr_rdresult
+xdr_readargs
+xdr_rnmargs
+xdr_saargs
+xdr_slargs
+xdr_writeargs
+xdr_statfs
+*
+* lock stuff
+*
+klm_lockctl
+*
+* Number of VMM bufs for NFS
+*
+nfs_vm_bufs
+*
+* List of vfs struct for paging/swap devices and lock to serialize the list
+*
+nfs_vfsp_swap_dev_lock
+vfsp_swap_devices
+async_daemon_kproc
+*
+* Used by the swap device
+*
+nfs_unmount
+*
+* Statistics about active rnodes
+*
+rreuse
+rnew
+ractive
+rreactive
+rnfree
+rnhash
+rnpages
+rpfreelist
+rtable
+*
+* These symbols are exported for debugging use only, not used by the
+* base or by normal users
+*
+*
+* Misc. server side
+*
+vattr_to_nattr
+console_printf
+*
+* Client side debug
+*
+nfs_open
+nfs_close
+nfs_rdwr
+nfs_getattr
+nfs_setattr
+nfs_access
+nfs_readlink
+nfs_fsync
+nfs_inactive
+nfs_lookup
+nfs_create
+nfs_remove
+nfs_link
+nfs_rename
+nfs_mkdir
+nfs_rmdir
+nfs_symlink
+nfs_readdir
+nfs_strategy
+nfs_lockctl
+nfs_cmp
+nfs_vnodeops
+nfs_swapvp
+nfs_gn_swap_strategy
+*
+* Good variables to find while debugging
+*
+*
+* I/O daemons queues and counts
+*
+async_bufwork
+async_bufwork_swap
+*
+* These are exported so that when the ACL extension is loaded the real
+* acl and pcl gnode ops for NFS can be assigned to these function pointers.
+*
+nfs_gn_getacl
+nfs_gn_setacl
+nfs_gn_getpcl
+nfs_gn_setpcl
+*
+* rfscall interface to be used by acl program
+*
+rfscall_progvers
+*
+* rnode locking primitives
+*
+rlock
+runlock

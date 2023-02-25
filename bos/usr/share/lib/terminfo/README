@@ -1,0 +1,65 @@
+# @(#)42        1.2  src/bos/usr/share/lib/terminfo/README, terminfo, bos411, 9428A410j 4/19/94 16:55:43
+#
+#   COMPONENT_NAME: TERMINFO
+#
+#   FUNCTIONS: README
+#
+#   ORIGINS: 27
+#
+#
+#   (C) COPYRIGHT International Business Machines Corp. 1994
+#   All Rights Reserved
+#   Licensed Materials - Property of IBM
+#   US Government Users Restricted Rights - Use, duplication or
+#   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+
+	The Terminfo library contains terminal descriptions for various
+	terminals.  The source for the terminal descriptions are stored
+	in the *.ti files in /usr/share/lib/terminfo.  /usr/bin/tic is used
+	to compile the source files into terminfo binaries. 
+
+        The binaries are stored in the subdirectory which has the first
+        letter of the binary's name. For example, vt220-pc.ti is located under
+        /usr/share/lib/terminfo/ and its binary output (which is
+        vt220-pc) is located under /usr/share/lib/terminfo/v/vt220-pc.
+        The same convention is followed with all the files.
+
+	The following commands are shipped with the bos.terminfo package.  
+
+                  /usr/bin/tic			terminfo compiler
+                  /usr/bin/captoinfo		termcap to terminfo converter
+                  /usr/bin/infocmp		compares terminfo binaries
+						(may also be used to convert a
+						 terminfo binary into source.)
+
+	Some of the terminfo capability and termcap code names have changed
+	between AIX V4 and AIX V3.  Applications which use the AIX V3 terminfo
+	capability names should still be o.k.   Binaries for termcap applications 
+	should still execute properly in AIX V4.  Termcap applications may need to make
+	modifications before re-compiling or port to terminfo as an alternative.
+	Since support for termcap may not be available in future releases of AIX,
+	porting to terminfo is strongly encouraged.
+
+	The differences are:
+
+			AIX4					AIX3
+			-----					-----
+
+	VARIABLE	TERMINFO   TERMCAP      VARIABLE      TERMINFO    TERMCAP
+	--------        --------   ------       --------      --------    -------
+	init_3string	"is3"	   "i3"	       init_3string    "is3"	  "i2"
+	key_btab        "kcbt"     "kB"	       key_back_tab    "kbtab"    "kO"
+	key_command     "kcmd"     "@4"        key_command     "kcmd"     "kc"
+	key_end         "kend"     "@7"        key_end         "kend"     "kw"
+	key_help        "khlp"     "%1"        key_help        "khlp"     "kq"
+	key_select      "kslt"     "*6"        key_select      "ksel"     "kU"
+	key_sf10	"ksf10"    "S0"        key_sf10	       "ksf10"    "SA"
+
+	In addition to the above differences, variables key_f11 through key_f63 have
+	different termcap code names in AIX V4 than AIX V3.  This may effect termcap
+	applications which are using AIX V4 curses routines.  
+
+	The terminfo capability names are the same.  
+
+

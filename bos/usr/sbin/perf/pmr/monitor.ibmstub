@@ -1,0 +1,142 @@
+#!/bin/ksh
+# @(#)80      1.7     src/bos/usr/sbin/perf/pmr/monitor.sh, perfpmr, bos411, 9428A410j 6/8/94 11:55:30
+#
+# COMPONENT_NAME: perfpmr
+#
+# FUNCTIONS: none
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1992, 1993
+# All Rights Reserved
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# monitor 
+#
+# invoke system performance monitors and collect interval and summary reports 
+#
+
+function usage
+{
+ echo  "monitor: usage: monitor time [-n] [-p]"
+ echo  "      time is total time in seconds to be measured."
+ echo  "      -n used if no netstat or nfsstat desired."
+ echo  "      -p used if no pprof desired."
+ exit -1
+}
+
+if [ $# -eq 0 -o $# -gt 3 ]
+then
+   usage
+fi
+
+# move to proper directory
+cd /var/perf/tmp
+
+# Make sure that the first parameter is an integer
+if [ "${1##*([0-9])}" != "" ]
+then
+   usage
+fi
+
+# check total time specified for minimum amount of 60 seconds
+if [ $1 -lt 60 ]
+then
+ echo Minimum time interval required is 60 seconds
+ exit -1
+fi
+
+# save seconds
+SLEEP=$1
+shift
+
+# check for -n or -p
+NET=1
+PROF=1
+if [ $# -gt 0 ]
+then
+ for i in $*
+ do case $i in
+    -n) NET=0;;
+    -p) PROF=0;;
+     *) usage;;
+    esac
+ done
+fi
+
+echo "\n     MONITOR: Starting system monitors for $SLEEP seconds...."
+
+# skip nfsstat and netstat if -n flag used
+if [ $NET = 1 ]
+then
+ if [ -x /usr/sbin/nfsstat ]
+ then
+  nfsstat_ $SLEEP > /dev/null &
+ fi
+ netstat_ $SLEEP > /dev/null &
+fi
+
+ps_ $SLEEP > /dev/null &
+
+vmstat_ $SLEEP > /dev/null &
+
+sar_ $SLEEP > /dev/null &
+
+iostat_ $SLEEP > /dev/null &
+
+if [ $PROF = 1 ]
+then
+  # Give some time for above processes to starup and stabilize
+  sleep 20
+  pprof_ $SLEEP >> monitor.int >> monitor.sum &
+fi
+
+# wait until all child processes finish
+echo "     MONITOR: Waiting for measurement period to end...."
+trap 'echo MONITOR: Stopping...but data collection continues.; exit -2' 1 2 3 24
+sleep $SLEEP &
+wait
+
+echo "     MONITOR: Generating reports...."
+
+# collect all reports into two grand reports
+
+echo "Interval File for System + Application\n" > monitor.int
+echo "Summary File for System + Application\n" > monitor.sum
+
+cat ps.int >> monitor.int
+cat ps.sum >> monitor.sum
+rm ps.int ps.sum
+
+echo "\f" >> monitor.int
+cat sar.int >> monitor.int
+echo "\f" >> monitor.sum
+cat sar.sum >> monitor.sum
+rm sar.int sar.sum
+
+echo "\f" >> monitor.int
+cat iostat.int >> monitor.int
+echo "\f" >> monitor.sum
+cat iostat.sum >> monitor.sum
+rm iostat.int iostat.sum
+
+echo "\f" >> monitor.int
+cat vmstat.int >> monitor.int
+echo "\f" >> monitor.sum
+cat vmstat.sum >> monitor.sum
+rm vmstat.int vmstat.sum
+
+# skip nfsstat and netstat if -n flag used
+if [ $NET = 1 ]
+then
+ if [ -x /usr/sbin/nfsstat ]
+ then
+  echo "     MONITOR: Network reports are in netstat.int and nfsstat.int"
+ else
+  echo "     MONITOR: Network report is in netstat.int"
+ fi
+fi
+
+echo "     MONITOR: Monitor reports are in monitor.int and monitor.sum"

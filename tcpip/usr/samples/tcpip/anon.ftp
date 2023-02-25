@@ -1,0 +1,185 @@
+#! /bin/sh
+# @(#)68	1.12  src/tcpip/usr/samples/tcpip/anon.ftp, tcpip, tcpip411, GOLD410 12/16/91 11:15:57
+# 
+# COMPONENT_NAME: TCPIP anon.ftp
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 27 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+#	    NOTICE TO USERS OF THE SOURCE CODE EXAMPLES
+#
+# INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THE SOURCE CODE
+# EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS, "AS IS" WITHOUT
+# WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+# LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+# PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+# OF THE SOURCE CODE EXAMPLES, BOTH INDIVIDUALLY AND AS ONE OR MORE GROUPS,
+# IS WITH YOU.  SHOULD ANY PART OF THE SOURCE CODE EXAMPLES PROVE
+# DEFECTIVE, YOU (AND NOT IBM OR AN AUTHORIZED RISC System/6000* WORKSTATION
+# DEALER) ASSUME THE ENTIRE COST OF ALL NECESSARY SERVICING, REPAIR OR
+# CORRECTION.
+#
+#  RISC System/6000 is a trademark of International Business Machines
+#   Corporation.
+#
+#
+#
+#	Shell script to create login account for anonymous ftp users:
+#	'ftp' and 'anonymous'.  One account is created, but both login
+#	names are set up to use the same account (same UID and $HOME).
+#	Note that the real login name of 'anonymous' is 'anonymou'.
+#
+
+CMD=`basename $0`
+PATH=/etc:/bin:/usr/bin
+export PATH
+TERM=ibm6153
+export TERM
+umask 0
+
+if [ -z "`/usr/bin/id | /bin/grep 'uid=0'`" ]
+then
+	echo 'sorry, you must be root to run this script.'
+	exit
+fi
+
+if [ -n "`/bin/grep '^ftp:' /etc/passwd`" ]
+then
+	echo 'Warning: user "ftp" already exists, proceeding anyway.'
+fi
+
+if [ -n "`/bin/grep '^anonymou' /etc/passwd`" ]
+then
+	echo 'Warning: user "anonymous" already exists, proceeding anyway.'
+fi
+
+echo 'Creating anonymous ftp user.'
+
+#  Now run the mkuser command to create user 'ftp'.
+/bin/mkuser ftp 1>/dev/null
+echo 'Added user ftp.'
+
+#  get the home directory of ftp user from /etc/passwd.
+FTPHOME=`awk -F: '/^ftp:/{print $6}' /etc/passwd`
+
+#
+# make sure that FTPHOME is reasonable, to protect against 
+# outherwise disastrous results.
+#
+if [ -z "$FTPHOME" ]; then
+	echo 'ftp login directory not set.'
+	exit 1;
+fi
+
+if [ ! -d "$FTPHOME" ]; then
+	echo "$FTPHOME: not a directory."
+	exit 1
+fi
+
+case $FTPHOME in
+    /|/etc|/bin|/usr|/usr/bin|/dev)
+	echo "$FTPHOME: not a wise choice."
+	exit 1
+	;;
+
+    *)
+	/bin/echo -n "Are you sure you want to modify $FTPHOME? "
+	read answer
+	case x$answer in
+	    x[Yy]*)
+		;;
+	
+	    *)
+		exit 1
+		;;
+	esac
+	;;
+esac
+
+#  Now run the mkuser command to create user 'anonymous'
+/bin/mkuser anonymou 1>/dev/null
+echo 'Added user anonymous.'
+
+#  Change home directory for anonymous user to ftp's home directory
+/bin/chuser "home=$FTPHOME" anonymou
+
+# make $FTPHOME/bin directory
+cd $FTPHOME
+mkdir bin 
+chown root bin
+cp /bin/ls $FTPHOME/bin/ls
+chmod 111 $FTPHOME/bin/ls
+chmod 555 $FTPHOME/bin
+chgrp system $FTPHOME/bin
+echo "Made $FTPHOME/bin directory."
+
+# make $FTPHOME/etc directory
+mkdir etc 
+chown root etc
+chmod 555 etc
+chgrp system $FTPHOME/etc
+if [ -f /etc/nls/ctab/default ]
+then
+	mkdir etc/nls
+	mkdir etc/nls/ctab
+	cp /etc/nls/ctab/default etc/nls/ctab/default
+	chmod 2755 $FTPHOME/etc/nls
+	chmod 2755 $FTPHOME/etc/nls/ctab
+	chown root $FTPHOME/etc/nls
+	chgrp system $FTPHOME/etc/nls
+	chown root $FTPHOME/etc/nls/ctab
+	chgrp system $FTPHOME/etc/nls/ctab
+	chown root $FTPHOME/etc/nls/ctab/default
+	chgrp system $FTPHOME/etc/nls/ctab/default
+fi
+echo "Made $FTPHOME/etc directory."
+
+# make $FTPHOME/pub directory
+mkdir pub
+chmod 777 pub
+chgrp system $FTPHOME/pub
+echo "Made $FTPHOME/pub directory."
+
+# make $FTPHOME/lib directory
+mkdir lib
+chmod 555 lib
+chgrp system $FTPHOME/lib
+cp /lib/libc.a lib/libc.a
+cp /lib/libcurses.a lib/libcurses.a
+echo "Made $FTPHOME/lib directory."
+
+# make $FTPHOME message catalog directory
+mkdir usr
+mkdir usr/lpp
+mkdir usr/lpp/msg
+mkdir usr/lpp/msg/$LANG
+chmod 555 usr
+chown root usr
+chgrp system usr
+chmod 555 usr/lpp
+chown root usr/lpp
+chgrp system usr/lpp
+chmod 555 usr/lpp/msg
+chown root usr/lpp/msg
+chgrp system usr/lpp/msg
+chmod 555 usr/lpp/msg/$LANG
+chown root usr/lpp/msg/$LANG
+chgrp system usr/lpp/msg/$LANG
+if [ -f /usr/lpp/msg/$LANG/ls.cat ]
+then
+cp /usr/lpp/msg/$LANG/ls.cat usr/lpp/msg/$LANG/ls.cat
+fi
+echo "Made $FTPHOME/usr/lpp/msg/$LANG directory."
+
+# fix up ftp's root directory
+chmod 555 $FTPHOME
+chown root $FTPHOME

@@ -1,0 +1,137 @@
+$ $Nhelpmenu
+$ $*@(#)45	1.2  src/tenplus/helpers/editorprf/helpmenu.psz, tenplus, tenplus411, GOLD410 4/13/94 12:15:26
+
+$ $*COMPONENT_NAME: (INED) INed Editor
+$ $*
+$ $*ORIGINS:  9, 10, 27
+$ $*
+$ $*This module contains IBM CONFIDENTIAL code. -- (IBM
+$ $*Confidential Restricted when combined with the aggregated
+$ $*modules for this product)                  SOURCE MATERIALS
+$ $*(C) COPYRIGHT International Business Machines Corp. 1985, 1994
+$ $*All Rights Reserved
+$ $*
+$ $*US Government Users Restricted Rights - Use, duplication or
+$ $*disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+$quote "
+
+$set 1
+$ $%1
+$ $.0
+$ $:/helpmenu
+$ $%3
+$ $.0
+$ $:/helpmenu/form
+$ $"phelp"
+$ $%3
+$ $.0
+$ $:/helpmenu/desc
+AA "%+P_HELP_OPT\n\
+HELP Options"
+$ $%1
+$ $.0
+$ $:/helpmenu/data
+$ $%1
+$ $.0
+$ $:/helpmenu/data/*
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/name
+$ $"$SYS/e.cmds"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/desc
+AB "%+P_COMM_LIST\n\
+Display an Alphabetic List of Editor Commands."
+$ $$
+$ $%1
+$ $.0
+$ $:/helpmenu/data/*
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/name
+$ $"$SYS/e.howtos"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/desc
+AC "%+P_ED_TASK\n\
+How to Perform Various Editing Tasks."
+$ $$
+$ $%1
+$ $.0
+$ $:/helpmenu/data/*
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/name
+$ $"$SYS/edprf.hdq"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/desc
+AD "%+P_CUSTOM\n\
+How to Customize the Editing System."
+$ $$
+$ $%1
+$ $.0
+$ $:/helpmenu/data/*
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/name
+$ $"$SYS/emenu"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/desc
+AE "%+P_MENU_SUGG\n\
+Suggestions for Your MENU."
+$ $$
+$ $%1
+$ $.0
+$ $:/helpmenu/data/*
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/name
+$ $"$SYS/prthelp"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/desc
+AF "%+P_PRNT_MENU\n\
+Suggestions for Your Print Menu."
+$ $$
+$ $%1
+$ $.0
+$ $:/helpmenu/data/*
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/name
+$ $"$SYS/keys.map"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/type
+$ $"file"
+$ $%3
+$ $.0
+$ $:/helpmenu/data/*/desc
+AG "%+P_KEY_LAYOUT\n\
+Keyboard Layouts."
+$ $$
+$ $$
+$ $$

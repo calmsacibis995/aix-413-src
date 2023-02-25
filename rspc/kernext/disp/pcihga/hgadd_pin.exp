@@ -1,0 +1,43 @@
+* @(#)83  1.4  src/rspc/kernext/disp/pcihga/hgadd_pin.exp, pcihga, rspc411, 9432B411a 8/8/94 16:04:16
+* hgadd_pin.exp
+* based on @(#)31        1.3  src/bos/kernext/disp/wga/wgadd_pin.exp, bos, bos410 10/29/93 15:19:20
+*
+*   COMPONENT_NAME: (PCIHGA) S3 PCI Graphics Adapter Device Driver
+*
+*   FUNCTIONS:
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1989, 1993
+*   All Rights Reserved
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+#!/usr/lib/drivers/pci/hgadd_pin
+
+hga_err
+hga_open
+hga_close
+hga_intr
+vttact
+vttcfl
+vttclr
+vttcpl
+vttdact
+vttdefc
+vttterm
+vttinit
+vttmovc
+vttrds
+vttsetm
+vttstct
+vtttext
+vttscr
+vttdpm
+hga_make_gp
+hga_unmake_gp

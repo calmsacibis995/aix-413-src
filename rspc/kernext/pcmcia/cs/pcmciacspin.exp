@@ -1,0 +1,36 @@
+#! /usr/lib/drivers/pcmciacspin
+*
+* COMPONENT_NAME: PCMCIAKER
+*
+* FUNCTIONS:
+*
+* ORIGINS: 27
+*
+* (C) COPYRIGHT International Business Machines Corp. 1994, 1995
+* All Rights Reserved
+* Licensed Materials - Property of IBM
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+* import from cs_pin.c 
+*
+adapters
+sockets
+windows
+numAdapters
+numSockets
+numWindows
+CSfunc
+OLintr
+cs_intr
+devlvlpm
+ConvertPower
+SocketServices
+cs_cfg_lock
+cs_intr_lock
+cs_io_lock
+cs_twin_lock
+*
+IntrEnqueue
+evhCoreClassp

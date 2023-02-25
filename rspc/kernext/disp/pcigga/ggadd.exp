@@ -1,0 +1,23 @@
+* @(#)72  1.1  src/rspc/kernext/disp/pcigga/ggadd.exp, pcigga, rspc411, 9435D411a 9/2/94 15:54:19 
+* ggadd.exp
+* based on @(#)30        1.3  src/bos/kernext/disp/wga/wgadd.exp, bos, bos410 10/29/93 14:47:44
+*
+*   COMPONENT_NAME: (PCIGGA) Weitek PCI Graphics Adapter Device Driver
+*
+*   FUNCTIONS:
+*
+*   ORIGINS: 27
+*
+*   IBM CONFIDENTIAL -- (IBM Confidential Restricted when
+*   combined with the aggregated modules for this product)
+*                    SOURCE MATERIALS
+*
+*   (C) COPYRIGHT International Business Machines Corp. 1994
+*   All Rights Reserved
+*   US Government Users Restricted Rights - Use, duplication or
+*   disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+
+#!/usr/lib/drivers/pci/ggadd
+
+gga_config
